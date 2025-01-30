@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Received help from ChatGPT
+// https://chatgpt.com/share/6798954b-e334-800f-9847-6a6089bdc211
+
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
