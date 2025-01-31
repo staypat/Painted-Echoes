@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactRange = 3f;
-    [SerializeField] private Text interactPrompt;
+    [SerializeField] private TMP_Text interactPrompt; // Use TMP_Text instead of Text
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
     private ObjectInteract currentInteractable;
+
+    void Start()
+    {
+        // Initialize the prompt as hidden
+        interactPrompt.gameObject.SetActive(false);
+    }
 
     void Update()
     {
@@ -21,23 +27,38 @@ public class PlayerInteract : MonoBehaviour
     private void HandleInteractionCheck()
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+        bool hitSomething = Physics.Raycast(ray, out RaycastHit hit, interactRange);
+
+        if (hitSomething)
         {
             ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
             
-            if (interactable != null && interactable != currentInteractable)
+            if (interactable != null)
             {
-                currentInteractable = interactable;
-                interactPrompt.text = $"Press {interactKey} to {interactable.interactionPrompt}";
-                interactPrompt.gameObject.SetActive(true);
+                // Show prompt only if new interactable is detected
+                if (currentInteractable != interactable)
+                {
+                    currentInteractable = interactable;
+                    interactPrompt.text = $"Press {interactKey} to {interactable.interactionPrompt}";
+                    interactPrompt.gameObject.SetActive(true);
+                }
             }
-            else if (interactable == null && currentInteractable != null)
+            else
             {
-                currentInteractable = null;
-                interactPrompt.gameObject.SetActive(false);
+                // Hide prompt if looking at a non-interactable object
+                ClearInteractable();
             }
         }
-        else if (currentInteractable != null)
+        else
+        {
+            // Hide prompt if nothing is hit
+            ClearInteractable();
+        }
+    }
+
+    private void ClearInteractable()
+    {
+        if (currentInteractable != null)
         {
             currentInteractable = null;
             interactPrompt.gameObject.SetActive(false);

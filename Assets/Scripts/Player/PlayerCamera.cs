@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
     public float sensitivity = 100f; // Mouse sensitivity
     public float maxYAngle = 80f; // Maximum vertical angle for the camera
 
-    private float rotationX = 15f; // Vertical rotation (slightly looking down)
+    private float rotationX = 0f; // Vertical rotation (slightly looking down)
     private float rotationY = 0f; // Horizontal rotation
 
     void Start()
@@ -21,8 +21,7 @@ public class PlayerCamera : MonoBehaviour
         Cursor.visible = false; // Hide cursor
 
         // Initialize camera rotation to look slightly downward
-        rotationY = player.eulerAngles.y; // Match the player's initial horizontal rotation
-        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        rotationY = player.eulerAngles.y;
     }
 
     void LateUpdate()
