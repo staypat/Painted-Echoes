@@ -1,3 +1,6 @@
+
+// This version makes it so that the gun absorbs the object color.  
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +52,16 @@ public class ColorAbsorptionGun : MonoBehaviour{
             gunRenderer.material.color = absorbedColors[1]; // Apply the first absorbed color
             Debug.Log("Applied color: " + absorbedColors[1]);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)){ 
+            if (absorbedColors.Count == 0){
+                Debug.LogWarning("No colors absorbed yet!");
+                return;
+            }
+
+            gunRenderer.material.color = absorbedColors[0]+ absorbedColors[1]; // Apply the first absorbed color
+            Debug.Log("Applied color: " + absorbedColors[0] + absorbedColors[1]);
+        }
     }
 
     // Function to print list of colors in console log.
@@ -81,9 +94,9 @@ public class ColorAbsorptionGun : MonoBehaviour{
                 hitRenderer.material.color = Color.white;
                 //Debug.Log("Object Color after Absorption: " + hitRenderer.material.color);
             }
-            else
-            {
-                //Debug.LogWarning("Hit object has no color property.");
+
+            if (hitRenderer.material.color == Color.white){
+                hitRenderer.material.color = gunRenderer.material.color;
             }
         }
     }
