@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //test to push this commits changes.
+// portions of this file were generated using GitHub Copilot
 public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
     private Color currentGunColor;
+    
+    // Get a reference to a game object
+    public GameObject brushTip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1)){ 
 
             gunRenderer.material.color = Color.white;
+            brushTip.GetComponent<Renderer>().material.color = Color.white;
             Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
@@ -38,6 +44,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)){ 
 
             gunRenderer.material.color =  Color.black;
+            brushTip.GetComponent<Renderer>().material.color = Color.black;
             Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
@@ -45,6 +52,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3)){ 
 
             gunRenderer.material.color =  Color.red;
+            brushTip.GetComponent<Renderer>().material.color = Color.red;
             Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
@@ -52,6 +60,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)){ 
 
             gunRenderer.material.color =  Color.blue;
+            brushTip.GetComponent<Renderer>().material.color = Color.blue;
             Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
@@ -59,6 +68,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5)){ 
 
             gunRenderer.material.color =  Color.yellow;
+            brushTip.GetComponent<Renderer>().material.color = Color.yellow;
             Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 

@@ -1394,6 +1394,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
+--- !u!1 &393294650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 987462755364283422, guid: 63d3f7c67d6ba5d4a89ab03f92b85055, type: 3}
+  m_PrefabInstance: {fileID: 701305823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &444120305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,6 +1886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b86c6a07f5059746a8c6c81d9265cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brushTip: {fileID: 393294650}
 --- !u!1001 &701305823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5871,12 +5877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35de38e83120284aa8a778ddbda8eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshairController: {fileID: 0}
-  currentBulletColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!1001 &7607344621330741064
 PrefabInstance:
   m_ObjectHideFlags: 0
