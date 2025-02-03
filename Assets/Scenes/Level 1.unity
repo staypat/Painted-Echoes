@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef51f54cacc5823408bb6730ee647038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAmmo: 30
 --- !u!4 &57628098
 Transform:
   m_ObjectHideFlags: 0
@@ -2183,7 +2184,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694720892}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b86c6a07f5059746a8c6c81d9265cf3, type: 3}
   m_Name: 
@@ -2196,7 +2197,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694720892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17f4d7a6b05e0d34e8b1b404ddcb40d6, type: 3}
   m_Name: 
