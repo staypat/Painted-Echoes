@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Yellow
+  - Blue
+  - White
+  - Black
+  - Red
   layers:
   - Default
   - TransparentFX

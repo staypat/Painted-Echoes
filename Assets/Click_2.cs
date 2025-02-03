@@ -6,24 +6,25 @@ public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
     private Color currentGunColor;
+
+    private string currentTag = "Default"; // Track the target tag
     
-    // Get a reference to a game object
+    // Reference to the brush tip
     public GameObject brushTip;
 
-    // Dictionary to store object names and their original RGB color values
-    private Dictionary<string, Color> objectColors;
-
     // List to track absorbed colors
-    private List<Color> absorbedColors = new List<Color>();
+    private List<Color> ammoCount = new List<Color>();
+
+    // Dictionary to store subparent names and their corresponding child object's original colors
+    private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
 
     void Start()
     {
         gunRenderer = GetComponent<Renderer>();
-        objectColors = new Dictionary<string, Color>();
 
         if (gunRenderer == null)
         {
-            //Debug.LogError("Gun Renderer not found.");
+            Debug.LogError("Gun Renderer not found.");
         }
         else
         {
@@ -31,50 +32,61 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        // Initialize dictionary with original colors
-        InitializeColorDictionary();
+        // Store all objects and their original colors at the start
+        StoreOriginalColors();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.white);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(Color.black);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(Color.red);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.white, "White");
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(Color.black, "Black");
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(Color.red, "Red");
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue, "Blue");
+        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow, "Yellow");
 
         if (Input.GetMouseButtonDown(0)) ColorOnClick();
     }
 
-    void InitializeColorDictionary()
+    void StoreOriginalColors()
     {
+        // Find all renderers in the scene and store their original colors based on the subparent name
         Renderer[] allRenderers = FindObjectsOfType<Renderer>();
+
         foreach (Renderer renderer in allRenderers)
         {
-            if (renderer.material.HasProperty("_Color"))
+            // Check if this renderer belongs to a child (not the root object)
+            if (renderer.transform.parent != null)
             {
-                objectColors[renderer.gameObject.name] = renderer.material.color;
+                Transform subparent = renderer.transform.parent;
+                string subparentName = subparent.name; // Get the subparent's name
+
+                // Store the color of the child in the dictionary using the subparent's name as the key
+                objectColors[subparentName] = renderer.material.color;
+                Debug.Log($"Stored {renderer.gameObject.name} (child) under subparent {subparentName} with color: {renderer.material.color}");
             }
         }
     }
 
-    void ApplyColor(Color newColor)
+    void ApplyColor(Color newColor, string tag)
     {
         if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
         {
             gunRenderer.material.color = newColor;
             brushTip.GetComponent<Renderer>().material.color = newColor;
 
-            if (!absorbedColors.Contains(newColor)) // Only increase ammo for new colors
+            currentTag = tag; // Update the brush's target tag
+
+            if (!ammoCount.Contains(newColor)) // Only increase ammo for new colors
             {
-                absorbedColors.Add(newColor);
+                ammoCount.Add(newColor);
                 AmmoManager.Instance.AddAmmo(1);
-                //Debug.Log("Ammo increased! New Color Absorbed: " + newColor + " - Ammo Remaining: " + AmmoManager.Instance.GetCurrentAmmo());
             }
+
+            Debug.Log("Brush changed to " + newColor + " and will now paint objects tagged: " + currentTag);
         }
         else
         {
-            //Debug.LogWarning("Not enough ammo to change color!");
+            Debug.LogWarning("Not enough ammo to change color!");
         }
     }
 
@@ -86,56 +98,56 @@ public class Click_2 : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             GameObject clickedObject = hit.collider.gameObject;
-            Debug.Log("Clicked on: " + clickedObject.name);
-
             Transform parent = clickedObject.transform.parent;
-            Transform grandParent = parent != null ? parent.parent : null;
+            Transform subparent = parent != null ? parent : null; // Get the subparent
 
-            if (grandParent != null)
+            if (subparent != null)
             {
-                //Debug.Log("Grandparent detected: " + grandParent.name);
+                string subparentTag = subparent.tag; // Get the subparent's tag
+                string subparentName = subparent.name; // Get the subparent's name
+                Debug.Log("Clicked on: " + clickedObject.name + ", Subparent: " + subparent.name + " (Tag: " + subparentTag + ")");
+
+                if (subparentTag == currentTag) // ✅ If tags match, restore original color from dictionary
+                {
+                    // Apply the original color to the entire subparent (all child objects)
+                    foreach (Transform child in subparent)
+                    {
+                        Renderer childRenderer = child.GetComponent<Renderer>();
+                        if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
+                        {
+                            // Get the original color from the dictionary using the subparent's name as the key
+                            if (objectColors.ContainsKey(subparentName))
+                            {
+                                Color originalColor = objectColors[subparentName];
+                                childRenderer.material.color = originalColor;
+                                Debug.Log("Restored " + child.name + " to its original color: " + originalColor);
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Original color for subparent " + subparentName + " not found in dictionary.");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // If the tags don't match, apply the paintbrush color to the entire subparent
+                    foreach (Transform child in subparent)
+                    {
+                        Renderer childRenderer = child.GetComponent<Renderer>();
+                        if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
+                        {
+                            // Apply the paintbrush color to all child objects
+                            childRenderer.material.color = gunRenderer.material.color;
+                        }
+                    }
+                    Debug.Log("Applied paintbrush color to the entire subparent.");
+                }
             }
             else
             {
-                //Debug.Log("No Grandparent found.");
-            }
-
-            // Change color if the clicked object's color is similar to the gun color
-            if (clickedObject.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
-            {
-                Color objectColor = clickedObject.GetComponent<Renderer>().material.color;
-
-                if (AreColorsSimilar(gunRenderer.material.color, objectColor))
-                {
-                    clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
-                }
-            }
-
-            if (parent != null && parent.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
-            {
-                Color parentColor = parent.GetComponent<Renderer>().material.color;
-
-                if (AreColorsSimilar(gunRenderer.material.color, parentColor))
-                {
-                    parent.GetComponent<Renderer>().material.color = gunRenderer.material.color;
-                }
-            }
-
-            // Increase ammo when painting an object
-            if (!absorbedColors.Contains(gunRenderer.material.color))
-            {
-                absorbedColors.Add(gunRenderer.material.color);
-                AmmoManager.Instance.AddAmmo(1);
-                //Debug.Log("Ammo increased! Current Ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+                Debug.Log("No subparent found for " + clickedObject.name + ", skipping paint.");
             }
         }
-    }
-
-    private bool AreColorsSimilar(Color color1, Color color2, float hueTolerance = 0.1f)
-    {
-        Color.RGBToHSV(color1, out float h1, out _, out _);
-        Color.RGBToHSV(color2, out float h2, out _, out _);
-
-        return Mathf.Abs(h1 - h2) < hueTolerance;
     }
 }
