@@ -11,7 +11,8 @@ public class Click_2 : MonoBehaviour
     // Get a reference to a game object
     public GameObject brushTip;
 
-    // Start is called before the first frame update
+    private List<Color> absorbedColors = new List<Color>(); // To track absorbed colors
+
     void Start()
     {
         gunRenderer = GetComponent<Renderer>();
@@ -22,59 +23,61 @@ public class Click_2 : MonoBehaviour
         else{
             // Ensure the gun has its own unique material instance
             gunRenderer.material = new Material(gunRenderer.material);
-
-            // This will be set to the default color (idk the RGB of it)
-            //gunRenderer.material.color = currentGunColor;
-
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // White
         if (Input.GetKeyDown(KeyCode.Alpha1)){ 
-
-            gunRenderer.material.color = Color.white;
-            brushTip.GetComponent<Renderer>().material.color = Color.white;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+            ApplyColor(Color.white);
         }
 
         // Black
         if (Input.GetKeyDown(KeyCode.Alpha2)){ 
-
-            gunRenderer.material.color =  Color.black;
-            brushTip.GetComponent<Renderer>().material.color = Color.black;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+            ApplyColor(Color.black);
         }
 
         // Red
         if (Input.GetKeyDown(KeyCode.Alpha3)){ 
-
-            gunRenderer.material.color =  Color.red;
-            brushTip.GetComponent<Renderer>().material.color = Color.red;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+            ApplyColor(Color.red);
         }
 
         // Blue
         if (Input.GetKeyDown(KeyCode.Alpha4)){ 
-
-            gunRenderer.material.color =  Color.blue;
-            brushTip.GetComponent<Renderer>().material.color = Color.blue;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+            ApplyColor(Color.blue);
         }
 
         // Yellow
         if (Input.GetKeyDown(KeyCode.Alpha5)){ 
-
-            gunRenderer.material.color =  Color.yellow;
-            brushTip.GetComponent<Renderer>().material.color = Color.yellow;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+            ApplyColor(Color.yellow);
         }
 
         // Left mouse click 
         if (Input.GetMouseButtonDown(0)){ 
             ColorOnClick();
+        }
+
+        void ApplyColor(Color newColor)
+        {
+            // Check if ammo is available before applying color
+            if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
+            {
+                gunRenderer.material.color = newColor;
+                brushTip.GetComponent<Renderer>().material.color = newColor;
+
+                // Increase ammo for each unique color absorbed
+                if (!absorbedColors.Contains(newColor)) // Only increase ammo for new colors
+                {
+                    absorbedColors.Add(newColor);
+                    AmmoManager.Instance.AddAmmo(1); // Add ammo for each new color absorbed
+                    Debug.Log("Ammo increased! New Color Absorbed: " + newColor + " - Ammo Remaining: " + AmmoManager.Instance.GetCurrentAmmo());
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Not enough ammo to change color!");
+            }
         }
 
         void ColorOnClick()
@@ -112,47 +115,16 @@ public class Click_2 : MonoBehaviour
                         clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
                     }
                 }
+
+                // Increase ammo count when painting an object
+                if (!absorbedColors.Contains(gunRenderer.material.color)) // Only increase ammo for new color
+                {
+                    absorbedColors.Add(gunRenderer.material.color);
+                    AmmoManager.Instance.AddAmmo(1);
+                    Debug.Log("Ammo increased! Current Ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+                }
             }
         }
-
-
-        // void ColorOnClick()
-        // {
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
-
-        //     if (Physics.Raycast(ray, out hit))
-        //     {
-        //         GameObject clickedObject = hit.collider.gameObject;
-        //         Debug.Log("Clicked on: " + clickedObject.name);
-
-        //         Transform subParent = clickedObject.transform.parent; // Get the immediate parent
-
-        //         if (subParent != null)
-        //         {
-        //             Debug.Log("Affected Sub-Parent: " + subParent.name);
-
-        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-
-        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
-        //             {
-        //                 clickedRenderer.material.color = gunRenderer.material.color;
-        //                 Debug.Log("Changed Color of: " + clickedObject.name);
-        //             }
-        //         }
-        //         else
-        //         {
-        //             Debug.Log("No Sub-Parent found. Only changing clicked object.");
-        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-
-        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
-        //             {
-        //                 clickedRenderer.material.color = gunRenderer.material.color;
-        //                 Debug.Log("Changed Color of: " + clickedObject.name);
-        //             }
-        //         }
-        //     }
-        // }
 
     }
 }
