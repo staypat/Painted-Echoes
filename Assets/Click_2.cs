@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//test to push this commits changes.
-// portions of this file were generated using GitHub Copilot
+
 public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
@@ -11,120 +10,132 @@ public class Click_2 : MonoBehaviour
     // Get a reference to a game object
     public GameObject brushTip;
 
-    private List<Color> absorbedColors = new List<Color>(); // To track absorbed colors
+    // Dictionary to store object names and their original RGB color values
+    private Dictionary<string, Color> objectColors;
+
+    // List to track absorbed colors
+    private List<Color> absorbedColors = new List<Color>();
 
     void Start()
     {
         gunRenderer = GetComponent<Renderer>();
+        objectColors = new Dictionary<string, Color>();
 
-        if (gunRenderer == null){
+        if (gunRenderer == null)
+        {
             //Debug.LogError("Gun Renderer not found.");
         }
-        else{
+        else
+        {
             // Ensure the gun has its own unique material instance
             gunRenderer.material = new Material(gunRenderer.material);
         }
+
+        // Initialize dictionary with original colors
+        InitializeColorDictionary();
     }
 
     void Update()
     {
-        // White
-        if (Input.GetKeyDown(KeyCode.Alpha1)){ 
-            ApplyColor(Color.white);
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.white);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(Color.black);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(Color.red);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow);
 
-        // Black
-        if (Input.GetKeyDown(KeyCode.Alpha2)){ 
-            ApplyColor(Color.black);
-        }
+        if (Input.GetMouseButtonDown(0)) ColorOnClick();
+    }
 
-        // Red
-        if (Input.GetKeyDown(KeyCode.Alpha3)){ 
-            ApplyColor(Color.red);
-        }
-
-        // Blue
-        if (Input.GetKeyDown(KeyCode.Alpha4)){ 
-            ApplyColor(Color.blue);
-        }
-
-        // Yellow
-        if (Input.GetKeyDown(KeyCode.Alpha5)){ 
-            ApplyColor(Color.yellow);
-        }
-
-        // Left mouse click 
-        if (Input.GetMouseButtonDown(0)){ 
-            ColorOnClick();
-        }
-
-        void ApplyColor(Color newColor)
+    void InitializeColorDictionary()
+    {
+        Renderer[] allRenderers = FindObjectsOfType<Renderer>();
+        foreach (Renderer renderer in allRenderers)
         {
-            // Check if ammo is available before applying color
-            if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
+            if (renderer.material.HasProperty("_Color"))
             {
-                gunRenderer.material.color = newColor;
-                brushTip.GetComponent<Renderer>().material.color = newColor;
+                objectColors[renderer.gameObject.name] = renderer.material.color;
+            }
+        }
+    }
 
-                // Increase ammo for each unique color absorbed
-                if (!absorbedColors.Contains(newColor)) // Only increase ammo for new colors
-                {
-                    absorbedColors.Add(newColor);
-                    AmmoManager.Instance.AddAmmo(1); // Add ammo for each new color absorbed
-                    Debug.Log("Ammo increased! New Color Absorbed: " + newColor + " - Ammo Remaining: " + AmmoManager.Instance.GetCurrentAmmo());
-                }
+    void ApplyColor(Color newColor)
+    {
+        if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
+        {
+            gunRenderer.material.color = newColor;
+            brushTip.GetComponent<Renderer>().material.color = newColor;
+
+            if (!absorbedColors.Contains(newColor)) // Only increase ammo for new colors
+            {
+                absorbedColors.Add(newColor);
+                AmmoManager.Instance.AddAmmo(1);
+                //Debug.Log("Ammo increased! New Color Absorbed: " + newColor + " - Ammo Remaining: " + AmmoManager.Instance.GetCurrentAmmo());
+            }
+        }
+        else
+        {
+            //Debug.LogWarning("Not enough ammo to change color!");
+        }
+    }
+
+    void ColorOnClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject clickedObject = hit.collider.gameObject;
+            Debug.Log("Clicked on: " + clickedObject.name);
+
+            Transform parent = clickedObject.transform.parent;
+            Transform grandParent = parent != null ? parent.parent : null;
+
+            if (grandParent != null)
+            {
+                //Debug.Log("Grandparent detected: " + grandParent.name);
             }
             else
             {
-                Debug.LogWarning("Not enough ammo to change color!");
+                //Debug.Log("No Grandparent found.");
             }
-        }
 
-        void ColorOnClick()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            // Change color if the clicked object's color is similar to the gun color
+            if (clickedObject.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
             {
-                GameObject clickedObject = hit.collider.gameObject;
-                Debug.Log("Clicked on: " + clickedObject.name);
+                Color objectColor = clickedObject.GetComponent<Renderer>().material.color;
 
-                Transform subParent = clickedObject.transform.parent; // Get the immediate parent
-
-                if (subParent != null)
+                if (AreColorsSimilar(gunRenderer.material.color, objectColor))
                 {
-                    Debug.Log("Affected Sub-Parent: " + subParent.name);
-
-                    Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
-
-                    foreach (Renderer renderer in renderers)
-                    {
-                        if (renderer.material.HasProperty("_Color"))
-                        {
-                            renderer.material.color = gunRenderer.material.color;
-                            Debug.Log("Changed Color: " + renderer.gameObject.name);
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.Log("No Sub-Parent found. Only changing clicked object.");
-                    if (clickedObject.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
-                    {
-                        clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
-                    }
-                }
-
-                // Increase ammo count when painting an object
-                if (!absorbedColors.Contains(gunRenderer.material.color)) // Only increase ammo for new color
-                {
-                    absorbedColors.Add(gunRenderer.material.color);
-                    AmmoManager.Instance.AddAmmo(1);
-                    Debug.Log("Ammo increased! Current Ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+                    clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
                 }
             }
-        }
 
+            if (parent != null && parent.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
+            {
+                Color parentColor = parent.GetComponent<Renderer>().material.color;
+
+                if (AreColorsSimilar(gunRenderer.material.color, parentColor))
+                {
+                    parent.GetComponent<Renderer>().material.color = gunRenderer.material.color;
+                }
+            }
+
+            // Increase ammo when painting an object
+            if (!absorbedColors.Contains(gunRenderer.material.color))
+            {
+                absorbedColors.Add(gunRenderer.material.color);
+                AmmoManager.Instance.AddAmmo(1);
+                //Debug.Log("Ammo increased! Current Ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+            }
+        }
+    }
+
+    private bool AreColorsSimilar(Color color1, Color color2, float hueTolerance = 0.1f)
+    {
+        Color.RGBToHSV(color1, out float h1, out _, out _);
+        Color.RGBToHSV(color2, out float h2, out _, out _);
+
+        return Mathf.Abs(h1 - h2) < hueTolerance;
     }
 }
