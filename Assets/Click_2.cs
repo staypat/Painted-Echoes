@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//test to push this commits changes.
-// portions of this file were generated using GitHub Copilot
+
 public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
@@ -11,148 +10,131 @@ public class Click_2 : MonoBehaviour
     // Get a reference to a game object
     public GameObject brushTip;
 
+    // Dictionary to store object names and their original RGB color values
+    private Dictionary<string, Color> objectColors;
+
     // Start is called before the first frame update
     void Start()
     {
         gunRenderer = GetComponent<Renderer>();
+        objectColors = new Dictionary<string, Color>();
 
-        if (gunRenderer == null){
+        if (gunRenderer == null)
+        {
             //Debug.LogError("Gun Renderer not found.");
         }
-        else{
+        else
+        {
             // Ensure the gun has its own unique material instance
             gunRenderer.material = new Material(gunRenderer.material);
-
-            // This will be set to the default color (idk the RGB of it)
-            //gunRenderer.material.color = currentGunColor;
-
         }
+
+        // Initialize dictionary with original colors
+        InitializeColorDictionary();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // White
-        if (Input.GetKeyDown(KeyCode.Alpha1)){ 
-
-            gunRenderer.material.color = Color.white;
-            brushTip.GetComponent<Renderer>().material.color = Color.white;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
+        { 
+            SetColor(Color.white);
         }
-
-        // Black
-        if (Input.GetKeyDown(KeyCode.Alpha2)){ 
-
-            gunRenderer.material.color =  Color.black;
-            brushTip.GetComponent<Renderer>().material.color = Color.black;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) 
+        { 
+            SetColor(Color.black);
         }
-
-        // Red
-        if (Input.GetKeyDown(KeyCode.Alpha3)){ 
-
-            gunRenderer.material.color =  Color.red;
-            brushTip.GetComponent<Renderer>().material.color = Color.red;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) 
+        { 
+            SetColor(Color.red);
         }
-
-        // Blue
-        if (Input.GetKeyDown(KeyCode.Alpha4)){ 
-
-            gunRenderer.material.color =  Color.blue;
-            brushTip.GetComponent<Renderer>().material.color = Color.blue;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) 
+        { 
+            SetColor(Color.blue);
         }
-
-        // Yellow
-        if (Input.GetKeyDown(KeyCode.Alpha5)){ 
-
-            gunRenderer.material.color =  Color.yellow;
-            brushTip.GetComponent<Renderer>().material.color = Color.yellow;
-            //Debug.Log("Applied color: " + gunRenderer.material.color);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) 
+        { 
+            SetColor(Color.yellow);
         }
 
         // Left mouse click 
-        if (Input.GetMouseButtonDown(0)){ 
+        if (Input.GetMouseButtonDown(0))
+        { 
             ColorOnClick();
         }
+    }
 
-        void ColorOnClick()
+    void InitializeColorDictionary()
+    {
+        // Find all renderers in the scene and store their original colors
+        Renderer[] allRenderers = FindObjectsOfType<Renderer>();
+
+        foreach (Renderer renderer in allRenderers)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (renderer.material.HasProperty("_Color"))
             {
-                GameObject clickedObject = hit.collider.gameObject;
-                Debug.Log("Clicked on: " + clickedObject.name);
+                objectColors[renderer.gameObject.name] = renderer.material.color;
+                //Debug.Log($"Stored {renderer.gameObject.name} in dictionary with color: {renderer.material.color}");
+            }
+        }
+    }
 
-                Transform subParent = clickedObject.transform.parent; // Get the immediate parent
+    void SetColor(Color color)
+    {
+        gunRenderer.material.color = color;
+        brushTip.GetComponent<Renderer>().material.color = color;
+    }
 
-                if (subParent != null)
+    // Gotten from ChatGPT modified by us.
+    void ColorOnClick()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject clickedObject = hit.collider.gameObject;
+            //Debug.Log("Clicked on: " + clickedObject.name);
+
+            Transform parent = clickedObject.transform.parent;
+            Transform grandParent = parent != null ? parent.parent : null;
+
+            if (grandParent != null)
+            {
+                //Debug.Log("Grandparent detected: " + grandParent.name);
+            }
+            else
+            {
+                //Debug.Log("No Grandparent found.");
+            }
+
+            // Change color of the clicked object and its parent if applicable
+            if (AreColorsSimilar(gunRenderer.material.color, clickedObject.GetComponent<Renderer>().material.color)){
+                if (objectColors.ContainsKey(clickedObject.name))
                 {
-                    Debug.Log("Affected Sub-Parent: " + subParent.name);
-
-                    Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
-
-                    foreach (Renderer renderer in renderers)
-                    {
-                        if (renderer.material.HasProperty("_Color"))
-                        {
-                            renderer.material.color = gunRenderer.material.color;
-                            Debug.Log("Changed Color: " + renderer.gameObject.name);
-                        }
-                    }
+                    clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
                 }
-                else
+
+                if (parent != null && objectColors.ContainsKey(parent.name))
                 {
-                    Debug.Log("No Sub-Parent found. Only changing clicked object.");
-                    if (clickedObject.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
-                    {
-                        clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
-                    }
+                    parent.GetComponent<Renderer>().material.color = gunRenderer.material.color;
                 }
             }
         }
+    }
 
 
-        // void ColorOnClick()
-        // {
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
+    // Gotten from ChatGPT
+    // Helper function to compare two colors
+    private bool AreColorsSimilar(Color color1, Color color2, float hueTolerance = 0.1f, float satTolerance = 0.3f, float valTolerance = 0.3f)
+    {
+        // Convert both colors from RGB to HSV
+        Color.RGBToHSV(color1, out float h1, out float s1, out float v1);
+        Color.RGBToHSV(color2, out float h2, out float s2, out float v2);
 
-        //     if (Physics.Raycast(ray, out hit))
-        //     {
-        //         GameObject clickedObject = hit.collider.gameObject;
-        //         Debug.Log("Clicked on: " + clickedObject.name);
 
-        //         Transform subParent = clickedObject.transform.parent; // Get the immediate parent
-
-        //         if (subParent != null)
-        //         {
-        //             Debug.Log("Affected Sub-Parent: " + subParent.name);
-
-        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-
-        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
-        //             {
-        //                 clickedRenderer.material.color = gunRenderer.material.color;
-        //                 Debug.Log("Changed Color of: " + clickedObject.name);
-        //             }
-        //         }
-        //         else
-        //         {
-        //             Debug.Log("No Sub-Parent found. Only changing clicked object.");
-        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-
-        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
-        //             {
-        //                 clickedRenderer.material.color = gunRenderer.material.color;
-        //                 Debug.Log("Changed Color of: " + clickedObject.name);
-        //             }
-        //         }
-        //     }
-        // }
+        // Compare the hue, saturation, and value within the given tolerances
+        return Mathf.Abs(h1 - h2) < hueTolerance;
 
     }
 }
