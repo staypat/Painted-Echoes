@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Red
+  m_Name: bed_blanket_material
   m_Shader: {fileID: -6465566751694194690, guid: 51348128bd6e44d499d4df4d88a5c712, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -45,7 +45,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.8509804, g: 0.015686275, b: 0.16078432, a: 0}
+    - _Color: {r: 0.24705882, g: 0.28235295, b: 0.49019608, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5892843022356513925
