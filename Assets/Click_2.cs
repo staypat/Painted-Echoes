@@ -37,7 +37,7 @@ public class Click_2 : MonoBehaviour
 
             gunRenderer.material.color = Color.white;
             brushTip.GetComponent<Renderer>().material.color = Color.white;
-            Debug.Log("Applied color: " + gunRenderer.material.color);
+            //Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
         // Black
@@ -45,7 +45,7 @@ public class Click_2 : MonoBehaviour
 
             gunRenderer.material.color =  Color.black;
             brushTip.GetComponent<Renderer>().material.color = Color.black;
-            Debug.Log("Applied color: " + gunRenderer.material.color);
+            //Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
         // Red
@@ -53,7 +53,7 @@ public class Click_2 : MonoBehaviour
 
             gunRenderer.material.color =  Color.red;
             brushTip.GetComponent<Renderer>().material.color = Color.red;
-            Debug.Log("Applied color: " + gunRenderer.material.color);
+            //Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
         // Blue
@@ -61,7 +61,7 @@ public class Click_2 : MonoBehaviour
 
             gunRenderer.material.color =  Color.blue;
             brushTip.GetComponent<Renderer>().material.color = Color.blue;
-            Debug.Log("Applied color: " + gunRenderer.material.color);
+            //Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
         // Yellow
@@ -69,7 +69,7 @@ public class Click_2 : MonoBehaviour
 
             gunRenderer.material.color =  Color.yellow;
             brushTip.GetComponent<Renderer>().material.color = Color.yellow;
-            Debug.Log("Applied color: " + gunRenderer.material.color);
+            //Debug.Log("Applied color: " + gunRenderer.material.color);
         }
 
         // Left mouse click 
@@ -77,20 +77,82 @@ public class Click_2 : MonoBehaviour
             ColorOnClick();
         }
 
-        void ColorOnClick(){
+        void ColorOnClick()
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit)){
-                Renderer hitRenderer = hit.collider.GetComponent<Renderer>();
-                
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+                Debug.Log("Clicked on: " + clickedObject.name);
 
-                if (hitRenderer != null && hitRenderer.material.HasProperty("_Color")){
-                    hitRenderer.material.color = gunRenderer.material.color;
+                Transform subParent = clickedObject.transform.parent; // Get the immediate parent
+
+                if (subParent != null)
+                {
+                    Debug.Log("Affected Sub-Parent: " + subParent.name);
+
+                    Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
+
+                    foreach (Renderer renderer in renderers)
+                    {
+                        if (renderer.material.HasProperty("_Color"))
+                        {
+                            renderer.material.color = gunRenderer.material.color;
+                            Debug.Log("Changed Color: " + renderer.gameObject.name);
+                        }
+                    }
                 }
-
-
+                else
+                {
+                    Debug.Log("No Sub-Parent found. Only changing clicked object.");
+                    if (clickedObject.GetComponent<Renderer>()?.material.HasProperty("_Color") == true)
+                    {
+                        clickedObject.GetComponent<Renderer>().material.color = gunRenderer.material.color;
+                    }
+                }
             }
         }
+
+
+        // void ColorOnClick()
+        // {
+        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //     RaycastHit hit;
+
+        //     if (Physics.Raycast(ray, out hit))
+        //     {
+        //         GameObject clickedObject = hit.collider.gameObject;
+        //         Debug.Log("Clicked on: " + clickedObject.name);
+
+        //         Transform subParent = clickedObject.transform.parent; // Get the immediate parent
+
+        //         if (subParent != null)
+        //         {
+        //             Debug.Log("Affected Sub-Parent: " + subParent.name);
+
+        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
+
+        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
+        //             {
+        //                 clickedRenderer.material.color = gunRenderer.material.color;
+        //                 Debug.Log("Changed Color of: " + clickedObject.name);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             Debug.Log("No Sub-Parent found. Only changing clicked object.");
+        //             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
+
+        //             if (clickedRenderer != null && clickedRenderer.material.HasProperty("_Color"))
+        //             {
+        //                 clickedRenderer.material.color = gunRenderer.material.color;
+        //                 Debug.Log("Changed Color of: " + clickedObject.name);
+        //             }
+        //         }
+        //     }
+        // }
+
     }
 }
