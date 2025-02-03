@@ -1,4 +1,3 @@
-
 // This version makes it so that the gun absorbs the object color.  
 
 using System.Collections;
@@ -73,29 +72,33 @@ public class ColorAbsorptionGun : MonoBehaviour{
         return colorList;
     }
 
-    void AbsorbColorOnClick(){
+    void AbsorbColorOnClick()
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit)){
+        if (Physics.Raycast(ray, out hit))
+        {
             Renderer hitRenderer = hit.collider.GetComponent<Renderer>();
-            
+
             // Checks if clicked object has a color and it's not white
-            if (hitRenderer != null && hitRenderer.material.HasProperty("_Color") && hitRenderer.material.color != Color.white){
+            if (hitRenderer != null && hitRenderer.material.HasProperty("_Color") && hitRenderer.material.color != Color.white)
+            {
                 Color hitObjectColor = hitRenderer.material.color;
-                //Debug.Log("Hit Object Color: " + hitObjectColor);
 
                 // Add object's color to absorbedColors
                 absorbedColors.Add(hitObjectColor);
 
-                //Debug.Log("Updated Gun Color: " + gunRenderer.material.color);
+                // Increase ammo count
+                AmmoManager.Instance.AddAmmo(1);
+                Debug.Log("Color absorbed and ammo added. Current ammo: " + AmmoManager.Instance.GetCurrentAmmo());
 
                 // Change clicked object's color to default color
                 hitRenderer.material.color = Color.white;
-                //Debug.Log("Object Color after Absorption: " + hitRenderer.material.color);
             }
 
-            if (hitRenderer.material.color == Color.white){
+            if (hitRenderer.material.color == Color.white)
+            {
                 hitRenderer.material.color = gunRenderer.material.color;
             }
         }
