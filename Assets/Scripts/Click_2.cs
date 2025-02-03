@@ -85,6 +85,7 @@ public class Click_2 : MonoBehaviour
         brushTip.GetComponent<Renderer>().material.color = color;
     }
 
+    // Gotten from ChatGPT modified by us.
     void ColorOnClick()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -123,6 +124,7 @@ public class Click_2 : MonoBehaviour
     }
 
 
+    // Gotten from ChatGPT
     // Helper function to compare two colors
     private bool AreColorsSimilar(Color color1, Color color2, float hueTolerance = 0.1f, float satTolerance = 0.3f, float valTolerance = 0.3f)
     {
