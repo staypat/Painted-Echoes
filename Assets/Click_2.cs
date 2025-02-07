@@ -45,6 +45,7 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow, "Yellow");
 
         if (Input.GetMouseButtonDown(0)) ColorOnClick();
+        if (Input.GetMouseButtonDown(1)) AbsorbColor(); // Right-click handler
     }
 
     void StoreOriginalColors()
@@ -147,6 +148,57 @@ public class Click_2 : MonoBehaviour
             else
             {
                 Debug.Log("No subparent found for " + clickedObject.name + ", skipping paint.");
+            }
+        }
+    }
+
+    void AbsorbColor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject clickedObject = hit.collider.gameObject;
+            Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
+
+            if (clickedRenderer == null) return;
+
+            Color absorbedColor = clickedRenderer.material.color;
+            Transform subparent = clickedObject.transform.parent;
+
+            // Apply absorbed color to brush
+            gunRenderer.material.color = absorbedColor;
+            brushTip.GetComponent<Renderer>().material.color = absorbedColor;
+
+            // Update ammo if new color
+            if (!ammoCount.Contains(absorbedColor))
+            {
+                ammoCount.Add(absorbedColor);
+                AmmoManager.Instance.AddAmmo(1);
+            }
+
+            // Turn the object and its subparent group gray
+            if (subparent != null)
+            {
+                currentTag = subparent.tag; // Update target tag to match absorbed object
+                Color grayColor = Color.gray; // Define the gray color
+
+                foreach (Transform child in subparent)
+                {
+                    Renderer childRenderer = child.GetComponent<Renderer>();
+                    if (childRenderer != null)
+                    {
+                        childRenderer.material.color = grayColor; // Set color to gray
+                    }
+                }
+                Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
+            }
+            else
+            {
+                // If no subparent, just turn the clicked object gray
+                clickedRenderer.material.color = Color.gray;
+                Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
         }
     }
