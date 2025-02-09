@@ -5411,6 +5411,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brushTip: {fileID: 393294650}
+  whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
+  blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
+  redMaterial: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 2da3c9f7216ae1e4e95b58ea8d9fde6f, type: 2}
+  yellowMaterial: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
+  orangeMaterial: {fileID: 2100000, guid: 6354c3b3a4ee5c149a942c006795d3e2, type: 2}
+  purpleMaterial: {fileID: 2100000, guid: cfd598f4a28775a41959ea5c8177e947, type: 2}
+  greenMaterial: {fileID: 2100000, guid: 0c652ced9e79c344b9a9c90e24610004, type: 2}
+  brownMaterial: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+  redOrangeMaterial: {fileID: 2100000, guid: b78bd6b499be549429b9ea8f60643e04, type: 2}
+  redPurpleMaterial: {fileID: 2100000, guid: 3c600cbfc71f08642ace64e86aa60da5, type: 2}
+  yellowOrangeMaterial: {fileID: 2100000, guid: c3ca8677355d7bc4296c8d84f0f2fc3b, type: 2}
+  yellowGreenMaterial: {fileID: 2100000, guid: dabcee0cc0e8ffa4d850c16b39117dc0, type: 2}
+  bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
+  blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
 --- !u!114 &694720897
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,6 +18,24 @@ public class Click_2 : MonoBehaviour
     // Dictionary to store subparent names and their corresponding child object's original colors
     private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
 
+    // Create serialized fields for the materials
+    [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Material blackMaterial;
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material blueMaterial;
+    [SerializeField] private Material yellowMaterial;
+    // add for orange purple green brown RedOrage RedPurple YellowOrange YellowGreen BluePurple BlueGreen
+    [SerializeField] private Material orangeMaterial;
+    [SerializeField] private Material purpleMaterial;
+    [SerializeField] private Material greenMaterial;
+    [SerializeField] private Material brownMaterial;
+    [SerializeField] private Material redOrangeMaterial;
+    [SerializeField] private Material redPurpleMaterial;
+    [SerializeField] private Material yellowOrangeMaterial;
+    [SerializeField] private Material yellowGreenMaterial;
+    [SerializeField] private Material bluePurpleMaterial;
+    [SerializeField] private Material blueGreenMaterial;
+
     void Start()
     {
         gunRenderer = GetComponent<Renderer>();
@@ -40,11 +58,11 @@ public class Click_2 : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.white, "White");
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(Color.black, "Black");
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(Color.red, "Red");
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue, "Blue");
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow, "Yellow");
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
+        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
         if (Input.GetMouseButtonDown(0)){
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
@@ -79,15 +97,15 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void ApplyColor(Color newColor, string tag)
+    void ApplyColor(Material newMaterial, string tag)
     {
         currentGunColor = tag; // Update the current gun color
-        gunRenderer.material.color = newColor;
-        brushTip.GetComponent<Renderer>().material.color = newColor;
+        gunRenderer.material = newMaterial;
+        brushTip.GetComponent<Renderer>().material = newMaterial;
 
         currentTag = tag; // Update the brush's target tag
 
-        Debug.Log("Brush changed to " + newColor + " and will now paint objects tagged: " + currentTag);
+        Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
     }
 
     void ColorOnClick()
