@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
-    private Color currentGunColor;
+    private string currentGunColor;
 
     private string currentTag = "Default"; // Track the target tag
     
@@ -17,6 +18,24 @@ public class Click_2 : MonoBehaviour
 
     // Dictionary to store subparent names and their corresponding child object's original colors
     private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
+
+    // Create serialized fields for the materials
+    [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Material blackMaterial;
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material blueMaterial;
+    [SerializeField] private Material yellowMaterial;
+    [SerializeField] private Material orangeMaterial;
+    [SerializeField] private Material purpleMaterial;
+    [SerializeField] private Material greenMaterial;
+    [SerializeField] private Material brownMaterial;
+    [SerializeField] private Material redOrangeMaterial;
+    [SerializeField] private Material redPurpleMaterial;
+    [SerializeField] private Material yellowOrangeMaterial;
+    [SerializeField] private Material yellowGreenMaterial;
+    [SerializeField] private Material bluePurpleMaterial;
+    [SerializeField] private Material blueGreenMaterial;
+    [SerializeField] private Material grayMaterial;
 
     void Start()
     {
@@ -32,19 +51,30 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
+        currentGunColor = "White"; // Default gun color
+
         // Store all objects and their original colors at the start
         StoreOriginalColors();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.white, "White");
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(Color.black, "Black");
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(Color.red, "Red");
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue, "Blue");
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow, "Yellow");
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
+        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
+        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
+        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
+        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
-        if (Input.GetMouseButtonDown(0)) ColorOnClick();
+        if (Input.GetMouseButtonDown(0)){
+            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
+                AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                ColorOnClick();
+            }
+            else{
+                Debug.Log("Not enough ammo to paint with " + currentGunColor);
+            }
+        }
+
         if (Input.GetMouseButtonDown(1)) AbsorbColor(); // Right-click handler
     }
 
@@ -68,27 +98,15 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void ApplyColor(Color newColor, string tag)
+    void ApplyColor(Material newMaterial, string tag)
     {
-        if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
-        {
-            gunRenderer.material.color = newColor;
-            brushTip.GetComponent<Renderer>().material.color = newColor;
+        currentGunColor = tag; // Update the current gun color
+        gunRenderer.material = newMaterial;
+        brushTip.GetComponent<Renderer>().material = newMaterial;
 
-            currentTag = tag; // Update the brush's target tag
+        currentTag = tag; // Update the brush's target tag
 
-            if (!ammoCount.Contains(newColor)) // Only increase ammo for new colors
-            {
-                ammoCount.Add(newColor);
-                AmmoManager.Instance.AddAmmo(1);
-            }
-
-            Debug.Log("Brush changed to " + newColor + " and will now paint objects tagged: " + currentTag);
-        }
-        else
-        {
-            Debug.LogWarning("Not enough ammo to change color!");
-        }
+        Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
     }
 
     void ColorOnClick()
@@ -164,32 +182,30 @@ public class Click_2 : MonoBehaviour
 
             if (clickedRenderer == null) return;
 
-            Color absorbedColor = clickedRenderer.material.color;
+            Material absorbedColor = clickedRenderer.material;
             Transform subparent = clickedObject.transform.parent;
 
-            // Apply absorbed color to brush
-            gunRenderer.material.color = absorbedColor;
-            brushTip.GetComponent<Renderer>().material.color = absorbedColor;
-
-            // Update ammo if new color
-            if (!ammoCount.Contains(absorbedColor))
+            // if the object is already gray, don't absorb the color
+            if (absorbedColor == grayMaterial)
             {
-                ammoCount.Add(absorbedColor);
-                AmmoManager.Instance.AddAmmo(1);
+                Debug.Log("Object is already gray, skipping absorption.");
+                return;
             }
+            // Apply absorbed color to brush
+            gunRenderer.material = absorbedColor;
+            brushTip.GetComponent<Renderer>().material = absorbedColor;
 
             // Turn the object and its subparent group gray
             if (subparent != null)
             {
                 currentTag = subparent.tag; // Update target tag to match absorbed object
-                Color grayColor = Color.gray; // Define the gray color
 
                 foreach (Transform child in subparent)
                 {
                     Renderer childRenderer = child.GetComponent<Renderer>();
                     if (childRenderer != null)
                     {
-                        childRenderer.material.color = grayColor; // Set color to gray
+                        childRenderer.material = grayMaterial; // Set color to gray
                     }
                 }
                 Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
@@ -197,7 +213,7 @@ public class Click_2 : MonoBehaviour
             else
             {
                 // If no subparent, just turn the clicked object gray
-                clickedRenderer.material.color = Color.gray;
+                clickedRenderer.material = grayMaterial;
                 Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
         }
