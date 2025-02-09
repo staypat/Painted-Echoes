@@ -1,72 +1,105 @@
-// This version makes it so that the gun absorbs the object color.  
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorAbsorptionGun : MonoBehaviour{
+public class ColorAbsorptionGun : MonoBehaviour
+{
     private Renderer gunRenderer;
+    private Renderer brushRenderer;
     private Color currentGunColor = Color.white; // Gun starts with white
     private List<Color> absorbedColors = new List<Color>(); // Stores absorbed colors
+    private int selectedColorIndex = -1; // Tracks the currently selected color
 
-    void Start(){
+    // Reference to the brush tip
+    public GameObject brushTip;
+    
+    void Start()
+    {
         gunRenderer = GetComponent<Renderer>();
+        brushRenderer = brushTip.GetComponent<Renderer>();
 
-        if (gunRenderer == null){
-            //Debug.LogError("Gun Renderer not found.");
+        if (gunRenderer == null)
+        {
+            Debug.LogError("Gun Renderer not found.");
         }
-        else{
+        else
+        {
             // Ensure the gun has its own unique material instance
             gunRenderer.material = new Material(gunRenderer.material);
             gunRenderer.material.color = currentGunColor;
-            //Debug.Log("Starting Gun Color: " + currentGunColor);
         }
     }
 
-    void Update(){
-        if (Input.GetMouseButtonDown(0)){ // Left mouse click{
+    void Update()
+    {
+        HandleScrollInput();
+
+        if (Input.GetMouseButtonDown(0)) // Left mouse click
+        {
             AbsorbColorOnClick();
-
-            // Print list of colors when mouse is clicked
-            Debug.Log("Absorbed Colors List: " + GetAbsorbedColorsString());
-
+            //Debug.Log("Absorbed Colors List: " + GetAbsorbedColorsString());
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)){ 
-            if (absorbedColors.Count == 0){
-                Debug.LogWarning("No colors absorbed yet!");
-                return;
-            }
+        // if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(Color.black);
+    }
 
-            gunRenderer.material.color = absorbedColors[0]; // Apply the first absorbed color
-            Debug.Log("Applied color: " + absorbedColors[0]);
+    // void ApplyColor(Color newColor)
+    // {
+
+    //     if (gunRenderer != null)
+    //         gunRenderer.material.color = newColor;
+
+    //     if (brushTip != null)
+    //     {
+    //         Renderer brushRenderer = brushTip.GetComponent<Renderer>();
+    //         if (brushRenderer != null)
+    //         {
+    //             brushRenderer.material.color = newColor;
+    //         }
+    //         else
+    //         {
+    //             Debug.LogWarning("Renderer component not found on brushTip!");
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("brushTip is not assigned!");
+    //     }
+    // }
+
+    void HandleScrollInput()
+    {
+        if (absorbedColors.Count == 0) return; // No colors to cycle through
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scroll > 0f)
+        {
+            selectedColorIndex = (selectedColorIndex + 1) % absorbedColors.Count;
+            UpdateGunColor();
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2)){ 
-            if (absorbedColors.Count == 0){
-                Debug.LogWarning("No colors absorbed yet!");
-                return;
-            }
-
-            gunRenderer.material.color = absorbedColors[1]; // Apply the first absorbed color
-            Debug.Log("Applied color: " + absorbedColors[1]);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3)){ 
-            if (absorbedColors.Count == 0){
-                Debug.LogWarning("No colors absorbed yet!");
-                return;
-            }
-
-            gunRenderer.material.color = absorbedColors[0]+ absorbedColors[1]; // Apply the first absorbed color
-            Debug.Log("Applied color: " + absorbedColors[0] + absorbedColors[1]);
+        else if (scroll < 0f)
+        {
+            selectedColorIndex = (selectedColorIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+            UpdateGunColor();
         }
     }
 
-    // Function to print list of colors in console log.
-    string GetAbsorbedColorsString(){
+    void UpdateGunColor()
+    {
+        if (selectedColorIndex >= 0 && selectedColorIndex < absorbedColors.Count)
+        {
+            gunRenderer.material.color = absorbedColors[selectedColorIndex];
+            brushRenderer.material.color = absorbedColors[selectedColorIndex];
+            //Debug.Log($"Gun color changed to: {absorbedColors[selectedColorIndex]} (Index {selectedColorIndex})");
+        }
+    }
+
+    string GetAbsorbedColorsString()
+    {
         string colorList = "";
-        for (int i = 0; i < absorbedColors.Count; i++){
+        for (int i = 0; i < absorbedColors.Count; i++)
+        {
             colorList += $"[{i}] {absorbedColors[i]}  ";
         }
         return colorList;
@@ -81,26 +114,58 @@ public class ColorAbsorptionGun : MonoBehaviour{
         {
             Renderer hitRenderer = hit.collider.GetComponent<Renderer>();
 
-            // Checks if clicked object has a color and it's not white
-            if (hitRenderer != null && hitRenderer.material.HasProperty("_Color") && hitRenderer.material.color != Color.white)
+            if (hitRenderer != null && hitRenderer.material.HasProperty("_Color"))
             {
                 Color hitObjectColor = hitRenderer.material.color;
 
-                // Add object's color to absorbedColors
-                absorbedColors.Add(hitObjectColor);
+                // If the object is gray and the brushTip has a color
+                if (hitObjectColor == Color.gray && absorbedColors.Count > 0)
+                {
+                    Color brushColor = brushRenderer.material.color;
 
-                // Increase ammo count
-                AmmoManager.Instance.AddAmmo(1);
-                Debug.Log("Color absorbed and ammo added. Current ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+                    // Apply the brushTip's color to the object
+                    hitRenderer.material.color = brushColor;
 
-                // Change clicked object's color to default color
-                hitRenderer.material.color = Color.white;
-            }
+                    // Loop through absorbedColors and find the matching color
+                    for (int i = 0; i < absorbedColors.Count; i++)
+                    {
+                        if (absorbedColors[i] == brushColor)
+                        {
+                            // Remove the color that matches the brushTip's color
+                            absorbedColors.RemoveAt(i);
+                            break; // Exit the loop once the color is removed
+                        }
+                    }
 
-            if (hitRenderer.material.color == Color.white)
-            {
-                hitRenderer.material.color = gunRenderer.material.color;
+                    // Reset the brushTip color (to white or another default color)
+                    brushRenderer.material.color = Color.white;
+
+                    // Update selectedColorIndex to avoid out-of-range errors
+                    if (absorbedColors.Count == 0)
+                    {
+                        selectedColorIndex = -1;
+                    }
+                    else
+                    {
+                        selectedColorIndex = Mathf.Clamp(selectedColorIndex, 0, absorbedColors.Count - 1);
+                    }
+                }
+                // If the object is not gray, absorb its color
+                else if (hitObjectColor != Color.gray)
+                {
+                    absorbedColors.Add(hitObjectColor);
+                    selectedColorIndex = absorbedColors.Count - 1; // Select the latest absorbed color
+                    UpdateGunColor();
+
+                    AmmoManager.Instance.AddAmmo(1, "Red"); // temp parameter
+
+                    // Change the object's color to gray after absorbing
+                    hitRenderer.material.color = Color.gray;
+                }
             }
         }
     }
+
+
+
 }
