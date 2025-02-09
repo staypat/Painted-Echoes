@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class Click_2 : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material yellowMaterial;
-    // add for orange purple green brown RedOrage RedPurple YellowOrange YellowGreen BluePurple BlueGreen
     [SerializeField] private Material orangeMaterial;
     [SerializeField] private Material purpleMaterial;
     [SerializeField] private Material greenMaterial;
@@ -35,6 +35,7 @@ public class Click_2 : MonoBehaviour
     [SerializeField] private Material yellowGreenMaterial;
     [SerializeField] private Material bluePurpleMaterial;
     [SerializeField] private Material blueGreenMaterial;
+    [SerializeField] private Material grayMaterial;
 
     void Start()
     {
@@ -181,25 +182,30 @@ public class Click_2 : MonoBehaviour
 
             if (clickedRenderer == null) return;
 
-            Color absorbedColor = clickedRenderer.material.color;
+            Material absorbedColor = clickedRenderer.material;
             Transform subparent = clickedObject.transform.parent;
 
+            // if the object is already gray, don't absorb the color
+            if (absorbedColor == grayMaterial)
+            {
+                Debug.Log("Object is already gray, skipping absorption.");
+                return;
+            }
             // Apply absorbed color to brush
-            gunRenderer.material.color = absorbedColor;
-            brushTip.GetComponent<Renderer>().material.color = absorbedColor;
+            gunRenderer.material = absorbedColor;
+            brushTip.GetComponent<Renderer>().material = absorbedColor;
 
             // Turn the object and its subparent group gray
             if (subparent != null)
             {
                 currentTag = subparent.tag; // Update target tag to match absorbed object
-                Color grayColor = Color.gray; // Define the gray color
 
                 foreach (Transform child in subparent)
                 {
                     Renderer childRenderer = child.GetComponent<Renderer>();
                     if (childRenderer != null)
                     {
-                        childRenderer.material.color = grayColor; // Set color to gray
+                        childRenderer.material = grayMaterial; // Set color to gray
                     }
                 }
                 Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
@@ -207,7 +213,7 @@ public class Click_2 : MonoBehaviour
             else
             {
                 // If no subparent, just turn the clicked object gray
-                clickedRenderer.material.color = Color.gray;
+                clickedRenderer.material = grayMaterial;
                 Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
         }
