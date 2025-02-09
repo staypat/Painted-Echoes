@@ -9,8 +9,8 @@ public class AmmoUI : MonoBehaviour
     {
         if (AmmoManager.Instance != null)
         {
-            ammoText.text = "Ammo: " + AmmoManager.Instance.GetCurrentAmmo();
-            Debug.Log("UI updated. Current ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+            ammoText.text = "Red Ammo: " + AmmoManager.Instance.GetCurrentAmmo("Red");
+            Debug.Log("UI updated. Current red ammo: " + AmmoManager.Instance.GetCurrentAmmo("Red"));
         }
     }
 }
