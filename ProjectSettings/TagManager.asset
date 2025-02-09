@@ -10,6 +10,16 @@ TagManager:
   - White
   - Black
   - Red
+  - Brown
+  - Orange
+  - Purple
+  - Green
+  - RedOrange
+  - YellowOrange
+  - YellowGreen
+  - BlueGreen
+  - BluePurple
+  - RedPurple
   layers:
   - Default
   - TransparentFX
