@@ -186,14 +186,21 @@ public class Click_2 : MonoBehaviour
             Transform subparent = clickedObject.transform.parent;
 
             // if the object is already gray, don't absorb the color
-            if (absorbedColor == grayMaterial)
+            if (absorbedColor.color == grayMaterial.color)
             {
                 Debug.Log("Object is already gray, skipping absorption.");
                 return;
             }
+
+            // Set current gun color to the absorbed color
+            currentGunColor = subparent.tag;
+
             // Apply absorbed color to brush
-            gunRenderer.material = absorbedColor;
-            brushTip.GetComponent<Renderer>().material = absorbedColor;
+            gunRenderer.material = GetMaterialFromString(currentGunColor);
+            brushTip.GetComponent<Renderer>().material = GetMaterialFromString(currentGunColor);
+
+            // Increse ammo count for the absorbed color
+            AmmoManager.Instance.AddAmmo(1, currentGunColor);
 
             // Turn the object and its subparent group gray
             if (subparent != null)
@@ -216,6 +223,46 @@ public class Click_2 : MonoBehaviour
                 clickedRenderer.material = grayMaterial;
                 Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
+        }
+    }
+
+    // Create a function to return the material based on the string
+    public Material GetMaterialFromString(string color)
+    {
+        switch (color)
+        {
+            case "White":
+                return whiteMaterial;
+            case "Black":
+                return blackMaterial;
+            case "Red":
+                return redMaterial;
+            case "Blue":
+                return blueMaterial;
+            case "Yellow":
+                return yellowMaterial;
+            case "Orange":
+                return orangeMaterial;
+            case "Purple":
+                return purpleMaterial;
+            case "Green":
+                return greenMaterial;
+            case "Brown":
+                return brownMaterial;
+            case "RedOrange":
+                return redOrangeMaterial;
+            case "RedPurple":
+                return redPurpleMaterial;
+            case "YellowOrange":
+                return yellowOrangeMaterial;
+            case "YellowGreen":
+                return yellowGreenMaterial;
+            case "BluePurple":
+                return bluePurpleMaterial;
+            case "BlueGreen":
+                return blueGreenMaterial;
+            default:
+                return whiteMaterial;
         }
     }
 }
