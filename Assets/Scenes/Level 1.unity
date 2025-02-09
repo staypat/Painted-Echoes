@@ -5426,6 +5426,7 @@ MonoBehaviour:
   yellowGreenMaterial: {fileID: 2100000, guid: dabcee0cc0e8ffa4d850c16b39117dc0, type: 2}
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
+  grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
 --- !u!114 &694720897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5438,6 +5439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f4d7a6b05e0d34e8b1b404ddcb40d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brushTip: {fileID: 0}
 --- !u!1001 &701305823
 PrefabInstance:
   m_ObjectHideFlags: 0

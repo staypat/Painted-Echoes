@@ -157,7 +157,7 @@ public class ColorAbsorptionGun : MonoBehaviour
                     selectedColorIndex = absorbedColors.Count - 1; // Select the latest absorbed color
                     UpdateGunColor();
 
-                    AmmoManager.Instance.AddAmmo(1);
+                    AmmoManager.Instance.AddAmmo(1, "Red"); // temp parameter
 
                     // Change the object's color to gray after absorbing
                     hitRenderer.material.color = Color.gray;
