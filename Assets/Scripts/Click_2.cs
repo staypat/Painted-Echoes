@@ -5,7 +5,7 @@ using UnityEngine;
 public class Click_2 : MonoBehaviour
 {
     private Renderer gunRenderer;
-    private Color currentGunColor;
+    private string currentGunColor;
 
     private string currentTag = "Default"; // Track the target tag
     
@@ -32,6 +32,8 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
+        currentGunColor = "White"; // Default gun color
+
         // Store all objects and their original colors at the start
         StoreOriginalColors();
     }
@@ -44,7 +46,16 @@ public class Click_2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(Color.blue, "Blue");
         if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(Color.yellow, "Yellow");
 
-        if (Input.GetMouseButtonDown(0)) ColorOnClick();
+        if (Input.GetMouseButtonDown(0)){
+            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
+                AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                ColorOnClick();
+            }
+            else{
+                Debug.Log("Not enough ammo to paint with " + currentGunColor);
+            }
+        }
+
         if (Input.GetMouseButtonDown(1)) AbsorbColor(); // Right-click handler
     }
 
@@ -70,25 +81,13 @@ public class Click_2 : MonoBehaviour
 
     void ApplyColor(Color newColor, string tag)
     {
-        if (AmmoManager.Instance.UseAmmo(1)) // Use 1 ammo per color change
-        {
-            gunRenderer.material.color = newColor;
-            brushTip.GetComponent<Renderer>().material.color = newColor;
+        currentGunColor = tag; // Update the current gun color
+        gunRenderer.material.color = newColor;
+        brushTip.GetComponent<Renderer>().material.color = newColor;
 
-            currentTag = tag; // Update the brush's target tag
+        currentTag = tag; // Update the brush's target tag
 
-            if (!ammoCount.Contains(newColor)) // Only increase ammo for new colors
-            {
-                ammoCount.Add(newColor);
-                AmmoManager.Instance.AddAmmo(1);
-            }
-
-            Debug.Log("Brush changed to " + newColor + " and will now paint objects tagged: " + currentTag);
-        }
-        else
-        {
-            Debug.LogWarning("Not enough ammo to change color!");
-        }
+        Debug.Log("Brush changed to " + newColor + " and will now paint objects tagged: " + currentTag);
     }
 
     void ColorOnClick()
@@ -170,13 +169,6 @@ public class Click_2 : MonoBehaviour
             // Apply absorbed color to brush
             gunRenderer.material.color = absorbedColor;
             brushTip.GetComponent<Renderer>().material.color = absorbedColor;
-
-            // Update ammo if new color
-            if (!ammoCount.Contains(absorbedColor))
-            {
-                ammoCount.Add(absorbedColor);
-                AmmoManager.Instance.AddAmmo(1);
-            }
 
             // Turn the object and its subparent group gray
             if (subparent != null)

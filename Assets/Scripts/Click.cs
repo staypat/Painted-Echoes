@@ -90,8 +90,8 @@ public class ColorAbsorptionGun : MonoBehaviour{
                 absorbedColors.Add(hitObjectColor);
 
                 // Increase ammo count
-                AmmoManager.Instance.AddAmmo(1);
-                Debug.Log("Color absorbed and ammo added. Current ammo: " + AmmoManager.Instance.GetCurrentAmmo());
+                AmmoManager.Instance.AddAmmo(1, "Red"); // Temp color to fix compile error
+                Debug.Log("Color absorbed and ammo added. Current ammo: " + AmmoManager.Instance.GetCurrentAmmo("Red")); // Temp color to fix compile error
 
                 // Change clicked object's color to default color
                 hitRenderer.material.color = Color.white;
