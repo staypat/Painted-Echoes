@@ -267,9 +267,9 @@ GameObject:
   - component: {fileID: 8250491}
   - component: {fileID: 8250490}
   - component: {fileID: 8250489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.4)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -823,9 +823,9 @@ GameObject:
   - component: {fileID: 70549979}
   - component: {fileID: 70549978}
   - component: {fileID: 70549977}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.1)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8015,7 +8015,7 @@ GameObject:
   - component: {fileID: 514058759}
   - component: {fileID: 514058758}
   - component: {fileID: 514058757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -15179,7 +15179,7 @@ GameObject:
   - component: {fileID: 910370809}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15780,9 +15780,9 @@ GameObject:
   - component: {fileID: 978953143}
   - component: {fileID: 978953142}
   - component: {fileID: 978953141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18579,9 +18579,9 @@ GameObject:
   - component: {fileID: 1173125389}
   - component: {fileID: 1173125388}
   - component: {fileID: 1173125387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.2)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19466,9 +19466,9 @@ GameObject:
   - component: {fileID: 1202895030}
   - component: {fileID: 1202895029}
   - component: {fileID: 1202895028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21078,7 +21078,7 @@ GameObject:
   - component: {fileID: 1379751198}
   - component: {fileID: 1379751197}
   - component: {fileID: 1379751196}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -24402,7 +24402,7 @@ GameObject:
   - component: {fileID: 1631319782}
   - component: {fileID: 1631319781}
   - component: {fileID: 1631319780}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stairs
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -32128,7 +32128,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 1710593391}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!54 &2137923605
 Rigidbody:
   m_ObjectHideFlags: 0
