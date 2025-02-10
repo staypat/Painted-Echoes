@@ -3354,6 +3354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: long_couch2
       objectReference: {fileID: 0}
+    - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_TagString
+      value: Yellow
+      objectReference: {fileID: 0}
     - target: {fileID: 3267867396034412946, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.556581
@@ -15173,7 +15177,7 @@ GameObject:
   - component: {fileID: 910370806}
   - component: {fileID: 910370805}
   - component: {fileID: 910370809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -28008,6 +28012,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: book4
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2248e0841d4905b47bff720dd51eff82, type: 3}
+      propertyPath: m_TagString
+      value: Yellow
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32118,6 +32126,9 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 5
   cameraTransform: {fileID: 1710593391}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &2137923605
 Rigidbody:
   m_ObjectHideFlags: 0
