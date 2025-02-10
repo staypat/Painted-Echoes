@@ -13,11 +13,12 @@ public class Click_2 : MonoBehaviour
     // Reference to the brush tip
     public GameObject brushTip;
 
-    // List to track absorbed colors
-    private List<Color> ammoCount = new List<Color>();
-
     // Dictionary to store subparent names and their corresponding child object's original colors
     private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
+
+
+    private List<Material> absorbedColors = new List<Material>();
+    private List<string> absorbedColorTags = new List<string>();
 
     // Create serialized fields for the materials
     [SerializeField] private Material whiteMaterial;
@@ -37,13 +38,27 @@ public class Click_2 : MonoBehaviour
     [SerializeField] private Material blueGreenMaterial;
     [SerializeField] private Material grayMaterial;
 
+    private int currentIndex = 0;
+    private int currentIndex2 = 0;
     void Start()
     {
+        absorbedColors.Add(whiteMaterial);
+        absorbedColors.Add(blackMaterial);
+        absorbedColors.Add(redMaterial);
+        absorbedColors.Add(blueMaterial);
+        absorbedColors.Add(yellowMaterial);
+
+        absorbedColorTags.Add("White");
+        absorbedColorTags.Add("Black");
+        absorbedColorTags.Add("Red");
+        absorbedColorTags.Add("Blue");
+        absorbedColorTags.Add("Yellow");
+
         gunRenderer = GetComponent<Renderer>();
 
         if (gunRenderer == null)
         {
-            Debug.LogError("Gun Renderer not found.");
+            //Debug.LogError("Gun Renderer not found.");
         }
         else
         {
@@ -53,17 +68,23 @@ public class Click_2 : MonoBehaviour
 
         currentGunColor = "White"; // Default gun color
 
+
         // Store all objects and their original colors at the start
         StoreOriginalColors();
     }
 
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
-        if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
-        if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
-        if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
-        if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
+
+
+        HandleScrollInput();
+
+        // if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
+        // if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
+        // if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
+        // if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
+        // if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
         if (Input.GetMouseButtonDown(0)){
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
@@ -71,12 +92,34 @@ public class Click_2 : MonoBehaviour
                 ColorOnClick();
             }
             else{
-                Debug.Log("Not enough ammo to paint with " + currentGunColor);
+                //Debug.Log("Not enough ammo to paint with " + currentGunColor);
             }
         }
 
         if (Input.GetMouseButtonDown(1)) AbsorbColor(); // Right-click handler
     }
+
+    void HandleScrollInput()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scroll > 0f) // Scroll up
+        {
+            currentIndex = (currentIndex + 1) % absorbedColors.Count;
+            currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
+            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2] );
+            //Debug.Log("Current index: " + currentIndex);
+        }
+        else if (scroll < 0f) // Scroll down
+        {
+            currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+            currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
+            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
+
+        }
+    }
+
+
 
     void StoreOriginalColors()
     {
@@ -93,7 +136,7 @@ public class Click_2 : MonoBehaviour
 
                 // Store the color of the child in the dictionary using the subparent's name as the key
                 objectColors[subparentName] = renderer.material.color;
-                Debug.Log($"Stored {renderer.gameObject.name} (child) under subparent {subparentName} with color: {renderer.material.color}");
+                //Debug.Log($"Stored {renderer.gameObject.name} (child) under subparent {subparentName} with color: {renderer.material.color}");
             }
         }
     }
@@ -106,7 +149,7 @@ public class Click_2 : MonoBehaviour
 
         currentTag = tag; // Update the brush's target tag
 
-        Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
+        //Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
     }
 
     void ColorOnClick()
@@ -124,7 +167,7 @@ public class Click_2 : MonoBehaviour
             {
                 string subparentTag = subparent.tag; // Get the subparent's tag
                 string subparentName = subparent.name; // Get the subparent's name
-                Debug.Log("Clicked on: " + clickedObject.name + ", Subparent: " + subparent.name + " (Tag: " + subparentTag + ")");
+                //Debug.Log("Clicked on: " + clickedObject.name + ", Subparent: " + subparent.name + " (Tag: " + subparentTag + ")");
 
                 if (subparentTag == currentTag) // ✅ If tags match, restore original color from dictionary
                 {
@@ -139,11 +182,11 @@ public class Click_2 : MonoBehaviour
                             {
                                 Color originalColor = objectColors[subparentName];
                                 childRenderer.material.color = originalColor;
-                                Debug.Log("Restored " + child.name + " to its original color: " + originalColor);
+                                //Debug.Log("Restored " + child.name + " to its original color: " + originalColor);
                             }
                             else
                             {
-                                Debug.LogWarning("Original color for subparent " + subparentName + " not found in dictionary.");
+                                //Debug.LogWarning("Original color for subparent " + subparentName + " not found in dictionary.");
                             }
                         }
                     }
@@ -160,12 +203,12 @@ public class Click_2 : MonoBehaviour
                             childRenderer.material.color = gunRenderer.material.color;
                         }
                     }
-                    Debug.Log("Applied paintbrush color to the entire subparent.");
+                    //Debug.Log("Applied paintbrush color to the entire subparent.");
                 }
             }
             else
             {
-                Debug.Log("No subparent found for " + clickedObject.name + ", skipping paint.");
+                //Debug.Log("No subparent found for " + clickedObject.name + ", skipping paint.");
             }
         }
     }
@@ -188,7 +231,7 @@ public class Click_2 : MonoBehaviour
             // if the object is already gray, don't absorb the color
             if (absorbedColor.color == grayMaterial.color)
             {
-                Debug.Log("Object is already gray, skipping absorption.");
+                //Debug.Log("Object is already gray, skipping absorption.");
                 return;
             }
 
@@ -266,3 +309,6 @@ public class Click_2 : MonoBehaviour
         }
     }
 }
+
+
+
