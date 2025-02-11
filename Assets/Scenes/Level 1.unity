@@ -267,9 +267,9 @@ GameObject:
   - component: {fileID: 8250491}
   - component: {fileID: 8250490}
   - component: {fileID: 8250489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.4)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -915,9 +915,9 @@ GameObject:
   - component: {fileID: 70549979}
   - component: {fileID: 70549978}
   - component: {fileID: 70549977}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.1)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3544,6 +3544,10 @@ PrefabInstance:
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_Name
       value: long_couch2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_TagString
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 3267867396034412946, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8560,7 +8564,7 @@ GameObject:
   - component: {fileID: 514058759}
   - component: {fileID: 514058758}
   - component: {fileID: 514058757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -16072,9 +16076,9 @@ GameObject:
   - component: {fileID: 910370806}
   - component: {fileID: 910370805}
   - component: {fileID: 910370809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16757,9 +16761,9 @@ GameObject:
   - component: {fileID: 978953143}
   - component: {fileID: 978953142}
   - component: {fileID: 978953141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19728,9 +19732,9 @@ GameObject:
   - component: {fileID: 1173125389}
   - component: {fileID: 1173125388}
   - component: {fileID: 1173125387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1.2)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20615,9 +20619,9 @@ GameObject:
   - component: {fileID: 1202895030}
   - component: {fileID: 1202895029}
   - component: {fileID: 1202895028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22247,7 +22251,7 @@ GameObject:
   - component: {fileID: 1379751198}
   - component: {fileID: 1379751197}
   - component: {fileID: 1379751196}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -25961,7 +25965,7 @@ GameObject:
   - component: {fileID: 1631319782}
   - component: {fileID: 1631319781}
   - component: {fileID: 1631319780}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stairs
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -29732,6 +29736,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2248e0841d4905b47bff720dd51eff82, type: 3}
       propertyPath: m_Name
       value: book4
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2248e0841d4905b47bff720dd51eff82, type: 3}
+      propertyPath: m_TagString
+      value: Yellow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34284,6 +34292,9 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 5
   cameraTransform: {fileID: 1710593391}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &2137923605
 Rigidbody:
   m_ObjectHideFlags: 0
