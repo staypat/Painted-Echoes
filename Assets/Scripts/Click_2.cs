@@ -13,10 +13,13 @@ public class Click_2 : MonoBehaviour
     // Reference to the brush tip
     public GameObject brushTip;
 
-    // Dictionary to store subparent names and their corresponding child object's original colors
-    private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
+    // Dictionary of Correctly colored house and objects
+    private Dictionary<string, Color> CorrectHouseColors = new Dictionary<string, Color>();
+    
+    // Dictionary of Mismatched House colors and objects
+    private Dictionary<string, Color> correctColors = new Dictionary<string, Color>(); 
 
-
+    // Two lists that help with scrolling through colors
     private List<Material> absorbedColors = new List<Material>();
     private List<string> absorbedColorTags = new List<string>();
 
@@ -73,18 +76,72 @@ public class Click_2 : MonoBehaviour
         StoreOriginalColors();
     }
 
+    private void OnEnable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.OnRoomChanged += HandleRoomChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.OnRoomChanged -= HandleRoomChanged;
+        }
+    }
+
+    private void HandleRoomChanged(GameObject newRoom)
+    {
+        //Debug.Log("Click_2 received room change: " + newRoom.name);
+        correctColors.Clear();
+        //Debug.Log("Cleared correctColors dictionary.");
+        // Get the subparent of the object (the immediate parent)
+        Transform subParent = newRoom.transform.parent;
+
+        if (subParent != null)
+        {
+            //Debug.Log("Subparent of " + newRoom.name + ": " + subParent.name);
+
+            // Now let's get all the renderers in the subparent and its children
+            Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
+
+            // Iterate over all renderers and store their color in the dictionary
+            foreach (var renderer in renderers)
+            {
+                // Get the color of the renderer's material (assuming the object uses a material with a color)
+                Color color = renderer.material.color;
+
+                // Add to the dictionary with the object's name as the key (not the subparent's name)
+                if (!correctColors.ContainsKey(renderer.gameObject.name))
+                {
+                    correctColors.Add(renderer.gameObject.name, color);
+                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                }
+                else
+                {
+                    // Optionally, if you want to update the color if the object already exists in the dictionary
+                    correctColors[renderer.gameObject.name] = color;
+                    Debug.Log($"Updated color for {renderer.gameObject.name}: {color}");
+                }
+            }
+        }
+        else
+        {
+            //Debug.Log(newRoom.name + " has no subparent.");
+        }
+
+
+    }
+
+
+
 
     void Update()
     {
-
-
+        
         HandleScrollInput();
-
-        // if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
-        // if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
-        // if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
-        // if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
-        // if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
         if (Input.GetMouseButtonDown(0)){
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
@@ -123,23 +180,26 @@ public class Click_2 : MonoBehaviour
 
     void StoreOriginalColors()
     {
-        // Find all renderers in the scene and store their original colors based on the subparent name
+        // Find all renderers in the scene
         Renderer[] allRenderers = FindObjectsOfType<Renderer>();
 
         foreach (Renderer renderer in allRenderers)
         {
-            // Check if this renderer belongs to a child (not the root object)
+            // Check if the renderer's parent is named "CorrectHouse"
             if (renderer.transform.parent != null)
+            //if (renderer.transform.parent != null && renderer.transform.parent.parent.name == "CorrectHouse")
             {
+                // Get the subparent's name
                 Transform subparent = renderer.transform.parent;
-                string subparentName = subparent.name; // Get the subparent's name
+                string subparentName = subparent.name;
 
                 // Store the color of the child in the dictionary using the subparent's name as the key
-                objectColors[subparentName] = renderer.material.color;
+                CorrectHouseColors[subparentName] = renderer.material.color;
                 //Debug.Log($"Stored {renderer.gameObject.name} (child) under subparent {subparentName} with color: {renderer.material.color}");
             }
         }
     }
+
 
     void ApplyColor(Material newMaterial, string tag)
     {
@@ -178,9 +238,9 @@ public class Click_2 : MonoBehaviour
                         if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
                         {
                             // Get the original color from the dictionary using the subparent's name as the key
-                            if (objectColors.ContainsKey(subparentName))
+                            if (CorrectHouseColors.ContainsKey(subparentName))
                             {
-                                Color originalColor = objectColors[subparentName];
+                                Color originalColor = CorrectHouseColors[subparentName];
                                 childRenderer.material.color = originalColor;
                                 //Debug.Log("Restored " + child.name + " to its original color: " + originalColor);
                             }
