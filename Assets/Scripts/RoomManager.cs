@@ -22,7 +22,7 @@ public class RoomManager : MonoBehaviour
 
     public void SetCurrentRoom(GameObject room)
     {
-        //Debug.Log("Room set to: " + room.name);
+        Debug.Log("Room set to: " + room.name);
 
         // Trigger the event when the room is set
         OnRoomChanged?.Invoke(room);

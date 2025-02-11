@@ -186,7 +186,8 @@ public class Click_2 : MonoBehaviour
         foreach (Renderer renderer in allRenderers)
         {
             // Check if the renderer's parent is named "CorrectHouse"
-            if (renderer.transform.parent != null && renderer.transform.parent.parent.name == "CorrectHouse")
+            if (renderer.transform.parent != null)
+            //if (renderer.transform.parent != null && renderer.transform.parent.parent.name == "CorrectHouse")
             {
                 // Get the subparent's name
                 Transform subparent = renderer.transform.parent;
