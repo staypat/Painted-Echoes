@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InventorySelection : MonoBehaviour
 {
+    public InventoryEquipper inventoryEquipper;
     public Image[] inventorySlots;
     public Color defaultColor = Color.white;
     public Color selectedColor = Color.green;
@@ -13,7 +14,7 @@ public class InventorySelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SelectSlot(selectedSlot);
     }
 
     // Update is called once per frame
@@ -31,6 +32,10 @@ public class InventorySelection : MonoBehaviour
 
     void SelectSlot(int slotIndex)
     {
+        if (slotIndex < 0 || slotIndex >= inventorySlots.Length) 
+        {
+            return;
+        }
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             inventorySlots[i].color = defaultColor;
@@ -38,5 +43,6 @@ public class InventorySelection : MonoBehaviour
 
         inventorySlots[slotIndex].color = selectedColor;
         selectedSlot = slotIndex;
+        inventoryEquipper.EquipItem(slotIndex);
     }
 }

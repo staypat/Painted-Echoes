@@ -4192,6 +4192,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184801644}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &187894182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 187894183}
+  m_Layer: 0
+  m_Name: Puzzle Photos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &187894183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187894182}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 83.99409, y: 186.43669, z: -1204.4056}
+  m_LocalScale: {x: 3.5336282, y: 3.5336282, z: 3.5336282}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1241533595}
+  m_Father: {fileID: 444120309}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &189175915
 GameObject:
   m_ObjectHideFlags: 0
@@ -8155,8 +8187,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 92923237}
-  - {fileID: 1199019161}
+  - {fileID: 187894183}
   - {fileID: 915980666}
+  - {fileID: 1199019161}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12736,6 +12769,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 63d3f7c67d6ba5d4a89ab03f92b85055, type: 3}
       propertyPath: m_Name
       value: paintbrush
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63d3f7c67d6ba5d4a89ab03f92b85055, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1410575966029984222, guid: 63d3f7c67d6ba5d4a89ab03f92b85055, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -17532,6 +17569,7 @@ GameObject:
   - component: {fileID: 915980667}
   - component: {fileID: 915980669}
   - component: {fileID: 915980670}
+  - component: {fileID: 915980671}
   m_Layer: 5
   m_Name: InventoryBar
   m_TagString: Untagged
@@ -17546,7 +17584,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915980665}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17559,7 +17597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 30, y: 98}
+  m_AnchoredPosition: {x: 30.000038, y: 98.00004}
   m_SizeDelta: {x: 850, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &915980667
@@ -17638,6 +17676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3848eef48978e26419cea25b692ef3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryEquipper: {fileID: 915980671}
   inventorySlots:
   - {fileID: 1120543637}
   - {fileID: 1482382836}
@@ -17645,6 +17684,22 @@ MonoBehaviour:
   - {fileID: 1047829030}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &915980671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915980665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f421ffaca963fd4a87ce60b69bb39d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldObjects:
+  - {fileID: 694720892}
+  heldImages:
+  - {fileID: 1241533596}
 --- !u!1001 &926416409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22865,6 +22920,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cddf95ec49916d949b564697d445732c, type: 3}
   m_PrefabInstance: {fileID: 350776178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1241533594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1241533595}
+  - component: {fileID: 1241533597}
+  - component: {fileID: 1241533596}
+  m_Layer: 5
+  m_Name: Living Room
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1241533595
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241533594}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 0, z: 340.84103}
+  m_LocalScale: {x: 2, y: 1.25, z: 0.28299525}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 187894183}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 90.1, y: -113.6}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1241533596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241533594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c8b25b230838c0743a879130df1c6fbb, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1241533597
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241533594}
+  m_CullTransparentMesh: 1
 --- !u!1 &1244562525
 GameObject:
   m_ObjectHideFlags: 0
