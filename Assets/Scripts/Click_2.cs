@@ -44,6 +44,8 @@ public class Click_2 : MonoBehaviour
 
     private int currentIndex = 0;
     private int currentIndex2 = 0;
+
+    public AmmoUI ammoUI;
     void Start()
     {
         absorbedColors.Add(whiteMaterial);
@@ -245,13 +247,14 @@ public class Click_2 : MonoBehaviour
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2] );
             //Debug.Log("Current index: " + currentIndex);
+            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
         else if (scroll < 0f) // Scroll down
         {
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
-
+            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
     }
 
