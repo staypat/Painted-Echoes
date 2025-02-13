@@ -537,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_TagString
-      value: Red
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 1417387239770150873, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1126,6 +1126,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 813000528}
     m_Modifications:
+    - target: {fileID: 2761415279991854993, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
+      propertyPath: m_Name
+      value: floor_shelf.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3249721229576260907, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
       propertyPath: m_LocalPosition.y
       value: -3.83
@@ -1544,7 +1548,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 39f09fd030de0b34b90cef59db432d74, type: 2}
     - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_Name
-      value: plant_pot4
+      value: plant_pot4.01
       objectReference: {fileID: 0}
     - target: {fileID: 422528716568746054, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -2837,6 +2841,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3204826251901928349, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
+      propertyPath: m_Name
+      value: lamp_shade.01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_Name
@@ -4171,7 +4179,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 3267867396034412946, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6931,6 +6939,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e01e7572d07d3be4e9a49895240e9752, type: 2}
+    - target: {fileID: 4250956962401004698, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
+      propertyPath: m_Name
+      value: lamp_body.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -3204826251901928349, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
@@ -8139,6 +8151,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3204826251901928349, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
+      propertyPath: m_Name
+      value: lamp_shade.01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_Name
@@ -12263,7 +12279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c5205ac2396c525409b74f462fbf39c7, type: 3}
       propertyPath: m_TagString
-      value: Blue
+      value: Red
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18439,7 +18455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_TagString
-      value: Red
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 1417387239770150873, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -24808,6 +24824,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 39f09fd030de0b34b90cef59db432d74, type: 2}
     - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
+      propertyPath: m_Name
+      value: plant_pot.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -27992,7 +28012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: m_TagString
-      value: Red
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 3995265086672805120, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31136,7 +31156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_TagString
-      value: Red
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 1622378444689953180, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -31146,6 +31166,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: e01e7572d07d3be4e9a49895240e9752, type: 2}
+    - target: {fileID: 4250956962401004698, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
+      propertyPath: m_Name
+      value: lamp_body.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -3204826251901928349, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
@@ -37356,7 +37380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2248e0841d4905b47bff720dd51eff82, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Blue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43804,7 +43828,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 39f09fd030de0b34b90cef59db432d74, type: 2}
     - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_Name
-      value: plant_pot4
+      value: plant_pot4.01
       objectReference: {fileID: 0}
     - target: {fileID: 422528716568746054, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -43816,7 +43840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 1792374213071883818, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -44019,6 +44043,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 39f09fd030de0b34b90cef59db432d74, type: 2}
     - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
+      propertyPath: m_Name
+      value: plant_pot.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -702605350939004668, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -44032,7 +44060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 1792374213071883818, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -44843,6 +44871,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 113310657}
     m_Modifications:
+    - target: {fileID: 2761415279991854993, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
+      propertyPath: m_Name
+      value: floor_shelf.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3249721229576260907, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
       propertyPath: m_LocalPosition.y
       value: -3.83
@@ -44857,7 +44889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3696969248653859129, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
       propertyPath: m_TagString
-      value: Red
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 4016909196410446546, guid: 795d5a7fd2abc0c4c839279ccc33e945, type: 3}
       propertyPath: m_LocalScale.y
@@ -45037,7 +45069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 3267867396034412946, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_LocalPosition.x
