@@ -76,10 +76,15 @@ public class Click_2 : MonoBehaviour
         // Store all objects and their original colors at the start
         StoreOriginalColors();
 
-        foreach (KeyValuePair<string, Color> entry in CorrectHouseColors)
-        {
-            //Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-        }
+        // foreach (KeyValuePair<string, Color> entry in CorrectHouseColors)
+        // {
+                //Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+        // }
+
+        //HandleRoomChanged(GameObject.Find("Livingroom"));
+
+
+
     }
 
     private void OnEnable()
@@ -156,7 +161,7 @@ public class Click_2 : MonoBehaviour
 
                 if (objTransform != null && objTransform.childCount > 0)
                 {
-                    Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
+                    //Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
                     continue; // Skip parent objects
                 }
             }
@@ -173,12 +178,12 @@ public class Click_2 : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
             {
-                Debug.Log($"❌ No match for key '{objectName}' in MismatchedColors dictionary.");
+                //Debug.Log($"❌ No match for key '{objectName}' in MismatchedColors dictionary.");
             }
         }
 
@@ -195,7 +200,7 @@ public class Click_2 : MonoBehaviour
 
             if (!CorrectHouseColors.ContainsKey(objectName))
             {
-                Debug.Log($"❌ No match for key '{objectName}' in CorrectHouseColors dictionary.");
+                //Debug.Log($"❌ No match for key '{objectName}' in CorrectHouseColors dictionary.");
             }
         }
     }
@@ -213,6 +218,7 @@ public class Click_2 : MonoBehaviour
                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
                 ColorOnClick();
                 CompareColorValues();
+
 
 
                 // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
