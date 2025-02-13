@@ -10,7 +10,7 @@ public class InventorySelection : MonoBehaviour
     public Color defaultColor = Color.white;
     public Color selectedColor = Color.green;
 
-    private int selectedSlot = -1;
+    private int selectedSlot = 0;
     // Start is called before the first frame update
     void Start()
     {
