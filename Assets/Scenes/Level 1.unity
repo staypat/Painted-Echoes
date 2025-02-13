@@ -4852,7 +4852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5b4cd403c324e1045a7c4cff1b313565, type: 3}
       propertyPath: m_TagString
-      value: Blue
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 4397493941182527471, guid: 5b4cd403c324e1045a7c4cff1b313565, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
