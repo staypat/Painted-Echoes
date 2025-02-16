@@ -60,4 +60,10 @@ public class AmmoManager : MonoBehaviour
     {
         return colorCount[color];
     }
+
+    public Dictionary<string, int> GetAmmoInventory()
+    {
+        return new Dictionary<string, int>(colorCount);
+    }
+
 }
