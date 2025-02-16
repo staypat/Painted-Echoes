@@ -38,6 +38,7 @@ public class MixerInteract : ObjectInteract
 
             if (mixerUIPanel.activeSelf)
             {
+                GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
                 // Enable cursor and disable camera movement
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -46,6 +47,7 @@ public class MixerInteract : ObjectInteract
             }
             else
             {
+                GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
                 // Hide cursor and re-enable camera movement
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;

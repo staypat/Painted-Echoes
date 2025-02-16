@@ -87,7 +87,7 @@ public class Click_2 : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
         if (Input.GetMouseButtonDown(0)){
-            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
+            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
                 ColorOnClick();
             }

@@ -25,10 +25,7 @@ public class AmmoManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    void Start()
-    {
         currentAmmo = maxAmmo;  // Initialize with max ammo
 
         // Initialize the color count dictionary
@@ -36,6 +33,11 @@ public class AmmoManager : MonoBehaviour
         {
             colorCount[color] = 10;
         }
+    }
+
+    void Start()
+    {
+        
     }
 
     // Use ammo method, returns true if ammo was used, false if not enough ammo

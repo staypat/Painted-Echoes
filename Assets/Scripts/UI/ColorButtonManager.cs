@@ -81,9 +81,10 @@ public class ColorButtonManager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        // Re-enable camera movement when closing the UI
-        if (playerCamera != null)
-            playerCamera.SetCameraActive(true);
+        // // Re-enable camera movement when closing the UI
+        // if (playerCamera != null)
+        //     playerCamera.SetCameraActive(true);
+        // We dont want this
     }
 
     private void PopulateAmmoButtons()
@@ -111,7 +112,10 @@ public class ColorButtonManager : MonoBehaviour
                 Debug.Log($"Spawning button for: {ammoType}");
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
-                newButton.GetComponentInChildren<Text>().text = $"{ammoType} ({amount})"; 
+                // change the position of the button to be in a row across the screen
+                newButton.transform.localPosition = new Vector3(-960 + 125 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
+
+                //newButton.GetComponentInChildren<Text>().text = $"{ammoType} ({amount})"; // Does not work
 
                 // Add button functionality
                 newButton.GetComponent<Button>().onClick.AddListener(() => SelectAmmo(ammoType));
@@ -124,6 +128,15 @@ public class ColorButtonManager : MonoBehaviour
     {
         Debug.Log($"Selected Ammo: {ammoType}");
         // Here, you can set the player's ammo type or update the UI
+
+        // Close the color selection panel after selection
+        CloseColorSelectionPanel();
+
+        // destroy all buttons in the buttonContainer
+        foreach (Transform child in buttonContainer)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private Color GetColorFromAmmoType(string ammoType)

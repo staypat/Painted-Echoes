@@ -20,18 +20,21 @@ public class FirstPerson : MonoBehaviour
 
     void Update()
     {
-        // Get mouse input
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (canLook){
+            // Get mouse input
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Rotate the camera vertically
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
+            // Rotate the camera vertically
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        
-        // Rotate the player horizontally
-        playerBody.Rotate(Vector3.up * mouseX);
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            
+            // Rotate the player horizontally
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
+
     }
 
     // Public function to enable/disable camera movement
