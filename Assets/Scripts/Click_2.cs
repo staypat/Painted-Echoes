@@ -10,6 +10,8 @@ public class Click_2 : MonoBehaviour
     private string currentGunColor;
 
     private string currentTag = "Default"; // Track the target tag
+
+    private GameObject currentRoom;
     
     // Reference to the brush tip
     public GameObject brushTip;
@@ -105,13 +107,62 @@ public class Click_2 : MonoBehaviour
         }
     }
 
+    // Function to keep track what room the player is in
     private void HandleRoomChanged(GameObject newRoom)
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
+        currentRoom = newRoom;
+        Debug.Log("Current room: " + currentRoom.name);
+
+
+        // MismatchedColors.Clear();
+        // //Debug.Log("Cleared MismatchedColors dictionary.");
+        // // Get the subparent of the object (the immediate parent)
+        // Transform subParent = newRoom.transform.parent;
+
+        // if (subParent != null)
+        // {
+        //     //Debug.Log("Subparent of " + newRoom.name + ": " + subParent.name);
+
+        //     // Now let's get all the renderers in the subparent and its children
+        //     Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
+
+        //     // Iterate over all renderers and store their color in the dictionary
+        //     foreach (var renderer in renderers)
+        //     {
+        //         // Get the color of the renderer's material (assuming the object uses a material with a color)
+        //         Color color = renderer.material.color;
+
+        //         // Add to the dictionary with the object's name as the key (not the subparent's name)
+        //         if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
+        //         {
+        //             MismatchedColors.Add(renderer.gameObject.name, color);
+        //             //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+        //         }
+        //         else
+        //         {
+        //             // Optionally, if you want to update the color if the object already exists in the dictionary
+
+        //             MismatchedColors[renderer.gameObject.name] = color;
+        //             //Debug.Log($"Updated color for {renderer.gameObject.name}: {color}");
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     //Debug.Log(newRoom.name + " has no subparent.");
+        // }
+
+
+    }
+
+    // Function to store all colors of objects in a dictionary in mismatched room
+    private void roomCheck(GameObject Room)
+    {
         MismatchedColors.Clear();
         //Debug.Log("Cleared MismatchedColors dictionary.");
         // Get the subparent of the object (the immediate parent)
-        Transform subParent = newRoom.transform.parent;
+        Transform subParent = Room.transform.parent;
 
         if (subParent != null)
         {
@@ -145,8 +196,6 @@ public class Click_2 : MonoBehaviour
         {
             //Debug.Log(newRoom.name + " has no subparent.");
         }
-
-
     }
 
     private void CompareColorValues()
@@ -180,7 +229,7 @@ public class Click_2 : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -219,8 +268,8 @@ public class Click_2 : MonoBehaviour
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
                 ColorOnClick();
+                roomCheck(currentRoom);
                 CompareColorValues();
-
 
 
                 // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
