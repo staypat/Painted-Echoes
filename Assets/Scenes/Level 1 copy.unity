@@ -2003,7 +2003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb668a832e5f45c4d80849821e4afd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoText: {fileID: 92923235}
 --- !u!1 &113310656
 GameObject:
   m_ObjectHideFlags: 0
@@ -7957,7 +7956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb668a832e5f45c4d80849821e4afd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoText: {fileID: 92923235}
 --- !u!1 &444578498
 GameObject:
   m_ObjectHideFlags: 0
@@ -11908,6 +11906,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  ammoUI: {fileID: 0}
 --- !u!114 &694720897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16827,6 +16826,7 @@ GameObject:
   - component: {fileID: 915980667}
   - component: {fileID: 915980669}
   - component: {fileID: 915980670}
+  - component: {fileID: 915980671}
   m_Layer: 5
   m_Name: InventoryBar
   m_TagString: Untagged
@@ -16933,6 +16933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3848eef48978e26419cea25b692ef3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryEquipper: {fileID: 915980671}
   inventorySlots:
   - {fileID: 1120543637}
   - {fileID: 1482382836}
@@ -16940,6 +16941,22 @@ MonoBehaviour:
   - {fileID: 1047829030}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &915980671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915980665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f421ffaca963fd4a87ce60b69bb39d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldObjects:
+  - {fileID: 694720892}
+  heldImages:
+  - {fileID: 915980667}
 --- !u!1001 &930371882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35273,6 +35290,9 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 5
   cameraTransform: {fileID: 1710593391}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &2137923605
 Rigidbody:
   m_ObjectHideFlags: 0
