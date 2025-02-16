@@ -34,7 +34,7 @@ public class AmmoManager : MonoBehaviour
         // Initialize the color count dictionary
         foreach (string color in colors)
         {
-            colorCount[color] = 3;
+            colorCount[color] = 10;
         }
     }
 

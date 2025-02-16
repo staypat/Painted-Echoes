@@ -9,6 +9,9 @@ public class FirstPerson : MonoBehaviour
     
     private float xRotation = 0f;
 
+    private bool canLook = true; // Flag to enable/disable camera movement
+
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; // Locks the cursor in the middle
@@ -29,5 +32,11 @@ public class FirstPerson : MonoBehaviour
         
         // Rotate the player horizontally
         playerBody.Rotate(Vector3.up * mouseX);
+    }
+
+    // Public function to enable/disable camera movement
+    public void SetCameraActive(bool state)
+    {
+        canLook = state;
     }
 }
