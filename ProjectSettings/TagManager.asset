@@ -20,6 +20,9 @@ TagManager:
   - BlueGreen
   - BluePurple
   - RedPurple
+  - LivingRoom
+  - Kitchen
+  - EntranceHallway
   layers:
   - Default
   - TransparentFX
@@ -27,7 +30,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 

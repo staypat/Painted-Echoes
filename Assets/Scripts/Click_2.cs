@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 // portions of this file were generated using GitHub Copilot
 
@@ -13,10 +14,13 @@ public class Click_2 : MonoBehaviour
     // Reference to the brush tip
     public GameObject brushTip;
 
-    // Dictionary to store subparent names and their corresponding child object's original colors
-    private Dictionary<string, Color> objectColors = new Dictionary<string, Color>();
+    // Dictionary of Correctly colored house and objects
+    private Dictionary<string, Color> CorrectHouseColors = new Dictionary<string, Color>();
+    
+    // Dictionary of Mismatched House colors and objects
+    private Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>(); 
 
-
+    // Two lists that help with scrolling through colors
     private List<Material> absorbedColors = new List<Material>();
     private List<string> absorbedColorTags = new List<string>();
 
@@ -40,6 +44,8 @@ public class Click_2 : MonoBehaviour
 
     private int currentIndex = 0;
     private int currentIndex2 = 0;
+
+    public AmmoUI ammoUI;
     void Start()
     {
         absorbedColors.Add(whiteMaterial);
@@ -71,25 +77,157 @@ public class Click_2 : MonoBehaviour
 
         // Store all objects and their original colors at the start
         StoreOriginalColors();
+
+        // foreach (KeyValuePair<string, Color> entry in CorrectHouseColors)
+        // {
+                //Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+        // }
+
+        //HandleRoomChanged(GameObject.Find("Livingroom"));
+
+
+
     }
+
+    private void OnEnable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.OnRoomChanged += HandleRoomChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.OnRoomChanged -= HandleRoomChanged;
+        }
+    }
+
+    private void HandleRoomChanged(GameObject newRoom)
+    {
+        //Debug.Log("Click_2 received room change: " + newRoom.name);
+        MismatchedColors.Clear();
+        //Debug.Log("Cleared MismatchedColors dictionary.");
+        // Get the subparent of the object (the immediate parent)
+        Transform subParent = newRoom.transform.parent;
+
+        if (subParent != null)
+        {
+            //Debug.Log("Subparent of " + newRoom.name + ": " + subParent.name);
+
+            // Now let's get all the renderers in the subparent and its children
+            Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
+
+            // Iterate over all renderers and store their color in the dictionary
+            foreach (var renderer in renderers)
+            {
+                // Get the color of the renderer's material (assuming the object uses a material with a color)
+                Color color = renderer.material.color;
+
+                // Add to the dictionary with the object's name as the key (not the subparent's name)
+                if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
+                {
+                    MismatchedColors.Add(renderer.gameObject.name, color);
+                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                }
+                else
+                {
+                    // Optionally, if you want to update the color if the object already exists in the dictionary
+
+                    MismatchedColors[renderer.gameObject.name] = color;
+                    //Debug.Log($"Updated color for {renderer.gameObject.name}: {color}");
+                }
+            }
+        }
+        else
+        {
+            //Debug.Log(newRoom.name + " has no subparent.");
+        }
+
+
+    }
+
+    private void CompareColorValues()
+    {
+        // Iterate through each key-value pair in the CorrectHouseColors dictionary
+        foreach (var correctPair in CorrectHouseColors)
+        {
+            string objectName = correctPair.Key;
+
+            // Ignore parent objects (assume they are at the top level without a parent)
+            if (CorrectHouseColors.ContainsKey(objectName) && MismatchedColors.ContainsKey(objectName))
+            {
+                Transform objTransform = GameObject.Find(objectName)?.transform;
+
+                if (objTransform != null && objTransform.childCount > 0)
+                {
+                    //Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
+                    continue; // Skip parent objects
+                }
+            }
+
+            // Check if the key exists in the MismatchedColors dictionary
+            if (MismatchedColors.ContainsKey(objectName))
+            {
+                Color mismatchColor = MismatchedColors[objectName];
+
+                // Compare child object colors
+                if (correctPair.Value != mismatchColor)
+                {
+                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                }
+                else
+                {
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                }
+            }
+            else
+            {
+                //Debug.Log($"❌ No match for key '{objectName}' in MismatchedColors dictionary.");
+            }
+        }
+
+        // Iterate through MismatchedColors to find keys missing in CorrectHouseColors
+        foreach (var mismatchPair in MismatchedColors)
+        {
+            string objectName = mismatchPair.Key;
+
+            // Ignore parent objects
+            if (CorrectHouseColors.ContainsKey(objectName) && GameObject.Find(objectName)?.transform.childCount > 0)
+            {
+                continue;
+            }
+
+            if (!CorrectHouseColors.ContainsKey(objectName))
+            {
+                //Debug.Log($"❌ No match for key '{objectName}' in CorrectHouseColors dictionary.");
+            }
+        }
+    }
+
+
 
 
     void Update()
     {
-
-
+        
         HandleScrollInput();
-
-        // if (Input.GetKeyDown(KeyCode.Alpha1)) ApplyColor(whiteMaterial, "White");
-        // if (Input.GetKeyDown(KeyCode.Alpha2)) ApplyColor(blackMaterial, "Black");
-        // if (Input.GetKeyDown(KeyCode.Alpha3)) ApplyColor(redMaterial, "Red");
-        // if (Input.GetKeyDown(KeyCode.Alpha4)) ApplyColor(blueMaterial, "Blue");
-        // if (Input.GetKeyDown(KeyCode.Alpha5)) ApplyColor(yellowMaterial, "Yellow");
 
         if (Input.GetMouseButtonDown(0)){
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
                 ColorOnClick();
+                CompareColorValues();
+
+
+
+                // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
+                // {
+                //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+                // }
+
             }
             else{
                 //Debug.Log("Not enough ammo to paint with " + currentGunColor);
@@ -109,13 +247,14 @@ public class Click_2 : MonoBehaviour
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2] );
             //Debug.Log("Current index: " + currentIndex);
+            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
         else if (scroll < 0f) // Scroll down
         {
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
-
+            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
     }
 
@@ -123,23 +262,34 @@ public class Click_2 : MonoBehaviour
 
     void StoreOriginalColors()
     {
-        // Find all renderers in the scene and store their original colors based on the subparent name
+        // Find all renderers in the scene
         Renderer[] allRenderers = FindObjectsOfType<Renderer>();
 
         foreach (Renderer renderer in allRenderers)
         {
-            // Check if this renderer belongs to a child (not the root object)
-            if (renderer.transform.parent != null)
+            // Traverse up the hierarchy to find the parent object
+            Transform parent = renderer.transform;
+            
+            // Check if the parent or any of its ancestors is named "CorrectHouse"
+            while (parent != null)
             {
-                Transform subparent = renderer.transform.parent;
-                string subparentName = subparent.name; // Get the subparent's name
+                if (parent.name == "CorrectHouse")
+                {
+                    // Store the color of the renderer in the dictionary using its full path as the key
+                    CorrectHouseColors[renderer.gameObject.name] = renderer.material.color;
+                    //Debug.Log($"Stored {renderer.gameObject.name} under CorrectHouse with color: {renderer.material.color}");
+                    break; // Once found, no need to check further ancestors
+                }
 
-                // Store the color of the child in the dictionary using the subparent's name as the key
-                objectColors[subparentName] = renderer.material.color;
-                //Debug.Log($"Stored {renderer.gameObject.name} (child) under subparent {subparentName} with color: {renderer.material.color}");
+                parent = parent.parent; // Move to the next parent in the hierarchy
             }
         }
     }
+
+
+
+
+
 
     void ApplyColor(Material newMaterial, string tag)
     {
@@ -171,23 +321,26 @@ public class Click_2 : MonoBehaviour
 
                 if (subparentTag == currentTag) // ✅ If tags match, restore original color from dictionary
                 {
-                    // Apply the original color to the entire subparent (all child objects)
+                    string parentKey = subparent.name; // Store parent name (e.g., "television")
+
                     foreach (Transform child in subparent)
                     {
-                        Renderer childRenderer = child.GetComponent<Renderer>();
-                        if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
+                        string childKey = child.name; // Each child has its own key in the dictionary
+
+                        if (CorrectHouseColors.ContainsKey(childKey))
                         {
-                            // Get the original color from the dictionary using the subparent's name as the key
-                            if (objectColors.ContainsKey(subparentName))
+                            Color originalColor = CorrectHouseColors[childKey]; // Retrieve original color
+                            Renderer childRenderer = child.GetComponent<Renderer>();
+
+                            if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
                             {
-                                Color originalColor = objectColors[subparentName];
                                 childRenderer.material.color = originalColor;
-                                //Debug.Log("Restored " + child.name + " to its original color: " + originalColor);
+                                //Debug.Log($"Restored {child.name} to its original color: {originalColor}");
                             }
-                            else
-                            {
-                                //Debug.LogWarning("Original color for subparent " + subparentName + " not found in dictionary.");
-                            }
+                        }
+                        else
+                        {
+                            //Debug.LogWarning($"Original color for {childKey} not found in dictionary.");
                         }
                     }
                 }
