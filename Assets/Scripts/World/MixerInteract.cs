@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class MixerInteract : ObjectInteract
 {
     [SerializeField] private GameObject mixerUIPanel;
+    [SerializeField] private GameObject slotThreeButton; // Assign in Unity Inspector
     private FirstPerson playerCamera;
 
     private void Start()
@@ -35,6 +36,8 @@ public class MixerInteract : ObjectInteract
         {
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
+            // disable the slotThreeButton
+            slotThreeButton.SetActive(false);
 
             if (mixerUIPanel.activeSelf)
             {

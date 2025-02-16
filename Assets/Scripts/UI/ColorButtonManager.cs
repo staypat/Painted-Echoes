@@ -9,8 +9,16 @@ public class ColorButtonManager : MonoBehaviour
     [SerializeField] private GameObject mixerUIPanel;
     [SerializeField] private GameObject ammoButtonPrefab; // Assign in Unity Inspector
     [SerializeField] private Transform buttonContainer;  // Assign the UI parent container in Inspector
+    [SerializeField] private GameObject slotOneButton; // Assign in Unity Inspector
+    [SerializeField] private GameObject slotTwoButton; // Assign in Unity Inspector
+    [SerializeField] private GameObject slotThreeButton; // Assign in Unity Inspector
 
     private FirstPerson playerCamera;
+
+    private string slotOneColor;
+    private string slotTwoColor;
+    private string slotThreeColor;
+    private int currentSlot;
 
     private void Start()
     {
@@ -33,12 +41,12 @@ public class ColorButtonManager : MonoBehaviour
             if (colorSelectionPanel.activeSelf)
             {
                 Debug.Log("Closing ColorSelectionPanel");
-                CloseColorSelectionPanel();
+                CloseColorSelectionPanel(null);
             }
         }
     }
 
-    public void ShowColorSelectionPanel()
+    public void ShowColorSelectionPanel(int slot)
     {
         if (colorSelectionPanel != null)
         {
@@ -47,6 +55,7 @@ public class ColorButtonManager : MonoBehaviour
 
             if (colorSelectionPanel.activeSelf)
             {
+                currentSlot = slot; // Set the current slot for color selection
                 Debug.Log("Opening ColorSelectionPanel");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
@@ -64,7 +73,7 @@ public class ColorButtonManager : MonoBehaviour
         }
     }
 
-    public void CloseColorSelectionPanel()
+    public void CloseColorSelectionPanel(string ammoType)
     {
         if (colorSelectionPanel != null)
         {
@@ -78,13 +87,52 @@ public class ColorButtonManager : MonoBehaviour
             mixerUIPanel.SetActive(true);
         }
 
+        if (currentSlot == 1) { slotOneColor = ammoType; } else { slotTwoColor = ammoType; }
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        
+        // change the color of the button to the color of the ammo type selected
+        if (currentSlot == 1) { slotOneButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType); } else { slotTwoButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType); }
+
+        // If the player has selected two colors, mix them and add the new color to the ammo inventory
+        if (slotOneColor != null && slotTwoColor != null) { MixColors(slotOneColor, slotTwoColor); }
 
         // // Re-enable camera movement when closing the UI
         // if (playerCamera != null)
         //     playerCamera.SetCameraActive(true);
         // We dont want this
+    }
+
+    private void MixColors(string color1, string color2) { // Mix the two colors and add the new color to the ammo inventory }
+        if (color1 == "Red" && color2 == "Blue" || color1 == "Blue" && color2 == "Red") { 
+            slotThreeButton.SetActive(true);
+            slotThreeColor = "Purple";
+            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+        }
+        else if (color1 == "Red" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Red"){
+            slotThreeButton.SetActive(true);
+            slotThreeColor = "Orange";
+            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+        }
+        else if (color1 == "Blue" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Blue") {
+            slotThreeButton.SetActive(true);
+            slotThreeColor = "Green";
+            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+        }
+        else{ 
+            Debug.Log("Invalid color combination"); 
+            slotThreeButton.SetActive(false);
+        }
+    }
+
+    public void GainMixedColor() {
+        // Add the new color to the ammo inventory and update the UI
+        AmmoManager.Instance.AddAmmo(1, slotThreeColor);
+        // remove the two colors used from the ammo inventory and update the UI
+        AmmoManager.Instance.UseAmmo(1, slotOneColor); AmmoManager.Instance.UseAmmo(1, slotTwoColor);
+        // clear all slots and colors
+        slotOneColor = null; slotTwoColor = null; slotThreeColor = null; currentSlot = 0; slotOneButton.GetComponent<Image>().color = Color.white; slotTwoButton.GetComponent<Image>().color = Color.white; slotThreeButton.GetComponent<Image>().color = Color.white; slotThreeButton.SetActive(false);
     }
 
     private void PopulateAmmoButtons()
@@ -130,7 +178,7 @@ public class ColorButtonManager : MonoBehaviour
         // Here, you can set the player's ammo type or update the UI
 
         // Close the color selection panel after selection
-        CloseColorSelectionPanel();
+        CloseColorSelectionPanel(ammoType);
 
         // destroy all buttons in the buttonContainer
         foreach (Transform child in buttonContainer)
