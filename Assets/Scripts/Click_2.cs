@@ -216,7 +216,7 @@ public class Click_2 : MonoBehaviour
         HandleScrollInput();
 
         if (Input.GetMouseButtonDown(0)){
-            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0){
+            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
                 ColorOnClick();
                 CompareColorValues();
@@ -350,7 +350,7 @@ public class Click_2 : MonoBehaviour
                     foreach (Transform child in subparent)
                     {
                         Renderer childRenderer = child.GetComponent<Renderer>();
-                        if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
+                        if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
                         {
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
@@ -388,8 +388,38 @@ public class Click_2 : MonoBehaviour
                 return;
             }
 
-            // Set current gun color to the absorbed color
-            currentGunColor = subparent.tag;
+            // Set current gun color to the absorbed color, only if the color of the absorbed material matches one of the predefined materials
+            if (absorbedColor.color == whiteMaterial.color) {
+                currentGunColor = "White";
+            } else if (absorbedColor.color == blackMaterial.color) {
+                currentGunColor = "Black";
+            } else if (absorbedColor.color == redMaterial.color) {
+                currentGunColor = "Red";
+            } else if (absorbedColor.color == blueMaterial.color) {
+                currentGunColor = "Blue";
+            } else if (absorbedColor.color == yellowMaterial.color) {
+                currentGunColor = "Yellow";
+            } else if (absorbedColor.color == orangeMaterial.color) {
+                currentGunColor = "Orange";
+            } else if (absorbedColor.color == purpleMaterial.color) {
+                currentGunColor = "Purple";
+            } else if (absorbedColor.color == greenMaterial.color) {
+                currentGunColor = "Green";
+            } else if (absorbedColor.color == brownMaterial.color) {
+                currentGunColor = "Brown";
+            } else if (absorbedColor.color == redOrangeMaterial.color) {
+                currentGunColor = "RedOrange";
+            } else if (absorbedColor.color == redPurpleMaterial.color) {
+                currentGunColor = "RedPurple";
+            } else if (absorbedColor.color == yellowOrangeMaterial.color) {
+                currentGunColor = "YellowOrange";
+            } else if (absorbedColor.color == yellowGreenMaterial.color) {
+                currentGunColor = "YellowGreen";
+            } else if (absorbedColor.color == bluePurpleMaterial.color) {
+                currentGunColor = "BluePurple";
+            } else if (absorbedColor.color == blueGreenMaterial.color) {
+                currentGunColor = "BlueGreen";
+            } else { return; } // If the color doesn't match any of the predefined materials, don't absorb the color
 
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);

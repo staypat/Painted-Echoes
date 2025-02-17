@@ -11,7 +11,7 @@ public class AmmoManager : MonoBehaviour
     // Create a list of all the colors we want to use as strings
     private List<string> colors = new List<string> { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "RedPurple", "RedOrange", "YellowOrange", "YellowGreen", "BlueGreen", "BluePurple", "White", "Black", "Brown" };
     // Create a dictionary to store the color and the number of times it appears
-    private Dictionary<string, int> colorCount = new Dictionary<string, int>();
+    public Dictionary<string, int> colorCount = new Dictionary<string, int>();
 
     // Make sure there's only one AmmoManager in the scene
     void Awake()
@@ -25,10 +25,7 @@ public class AmmoManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    void Start()
-    {
         currentAmmo = maxAmmo;  // Initialize with max ammo
 
         // Initialize the color count dictionary
@@ -36,6 +33,11 @@ public class AmmoManager : MonoBehaviour
         {
             colorCount[color] = 10;
         }
+    }
+
+    void Start()
+    {
+        
     }
 
     // Use ammo method, returns true if ammo was used, false if not enough ammo
@@ -60,4 +62,10 @@ public class AmmoManager : MonoBehaviour
     {
         return colorCount[color];
     }
+
+    public Dictionary<string, int> GetAmmoInventory()
+    {
+        return new Dictionary<string, int>(colorCount);
+    }
+
 }
