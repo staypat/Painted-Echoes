@@ -5,6 +5,24 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Yellow
+  - Blue
+  - White
+  - Black
+  - Red
+  - Brown
+  - Orange
+  - Purple
+  - Green
+  - RedOrange
+  - YellowOrange
+  - YellowGreen
+  - BlueGreen
+  - BluePurple
+  - RedPurple
+  - LivingRoom
+  - Kitchen
+  - EntranceHallway
   layers:
   - Default
   - TransparentFX
@@ -12,7 +30,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 

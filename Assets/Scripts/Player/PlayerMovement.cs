@@ -10,14 +10,21 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public Transform cameraTransform; // Assign in Inspector
+    public LayerMask groundLayer; // Assign in Inspector
 
     private Rigidbody rb;
     private bool isGrounded;
+    private float groundCheckDistance = 0.3f; // Slightly increased
+    private float playerHeight;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        // Auto-detect player height (useful for capsules)
+        Collider playerCollider = GetComponent<Collider>();
+        playerHeight = playerCollider.bounds.extents.y;
     }
 
     void Update()
@@ -26,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
         }
     }
 
@@ -46,13 +52,12 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movement = (camForward * vertical + camRight * horizontal) * moveSpeed;
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-    }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        // Improved Ground Check - Raycast from player's base
+        Vector3 rayOrigin = transform.position + Vector3.down * (playerHeight - 0.1f);
+        isGrounded = Physics.Raycast(rayOrigin, Vector3.down, groundCheckDistance, groundLayer);
+
+        // Debugging - Visualize Ray
+        Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
     }
 }
