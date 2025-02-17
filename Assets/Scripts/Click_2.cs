@@ -388,9 +388,38 @@ public class Click_2 : MonoBehaviour
                 return;
             }
 
-            // Set current gun color to the absorbed color
-            
-            currentGunColor = GetStringFromMaterial(absorbedColor);
+            // Set current gun color to the absorbed color, only if the color of the absorbed material matches one of the predefined materials
+            if (absorbedColor.color == whiteMaterial.color) {
+                currentGunColor = "White";
+            } else if (absorbedColor.color == blackMaterial.color) {
+                currentGunColor = "Black";
+            } else if (absorbedColor.color == redMaterial.color) {
+                currentGunColor = "Red";
+            } else if (absorbedColor.color == blueMaterial.color) {
+                currentGunColor = "Blue";
+            } else if (absorbedColor.color == yellowMaterial.color) {
+                currentGunColor = "Yellow";
+            } else if (absorbedColor.color == orangeMaterial.color) {
+                currentGunColor = "Orange";
+            } else if (absorbedColor.color == purpleMaterial.color) {
+                currentGunColor = "Purple";
+            } else if (absorbedColor.color == greenMaterial.color) {
+                currentGunColor = "Green";
+            } else if (absorbedColor.color == brownMaterial.color) {
+                currentGunColor = "Brown";
+            } else if (absorbedColor.color == redOrangeMaterial.color) {
+                currentGunColor = "RedOrange";
+            } else if (absorbedColor.color == redPurpleMaterial.color) {
+                currentGunColor = "RedPurple";
+            } else if (absorbedColor.color == yellowOrangeMaterial.color) {
+                currentGunColor = "YellowOrange";
+            } else if (absorbedColor.color == yellowGreenMaterial.color) {
+                currentGunColor = "YellowGreen";
+            } else if (absorbedColor.color == bluePurpleMaterial.color) {
+                currentGunColor = "BluePurple";
+            } else if (absorbedColor.color == blueGreenMaterial.color) {
+                currentGunColor = "BlueGreen";
+            } else { return; } // If the color doesn't match any of the predefined materials, don't absorb the color
 
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);
@@ -461,26 +490,6 @@ public class Click_2 : MonoBehaviour
             default:
                 return whiteMaterial;
         }
-    }
-
-    public string GetStringFromMaterial(Material material)
-    {
-        if (material == whiteMaterial) return "White";
-        if (material == blackMaterial) return "Black";
-        if (material == redMaterial) return "Red";
-        if (material == blueMaterial) return "Blue";
-        if (material == yellowMaterial) return "Yellow";
-        if (material == orangeMaterial) return "Orange";
-        if (material == purpleMaterial) return "Purple";
-        if (material == greenMaterial) return "Green";
-        if (material == brownMaterial) return "Brown";
-        if (material == redOrangeMaterial) return "RedOrange";
-        if (material == redPurpleMaterial) return "RedPurple";
-        if (material == yellowOrangeMaterial) return "YellowOrange";
-        if (material == yellowGreenMaterial) return "YellowGreen";
-        if (material == bluePurpleMaterial) return "BluePurple";
-        if (material == blueGreenMaterial) return "BlueGreen";
-        return "White"; // Default to white if no match is found
     }
 }
 

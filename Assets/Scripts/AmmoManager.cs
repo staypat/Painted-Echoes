@@ -11,7 +11,7 @@ public class AmmoManager : MonoBehaviour
     // Create a list of all the colors we want to use as strings
     private List<string> colors = new List<string> { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "RedPurple", "RedOrange", "YellowOrange", "YellowGreen", "BlueGreen", "BluePurple", "White", "Black", "Brown" };
     // Create a dictionary to store the color and the number of times it appears
-    private Dictionary<string, int> colorCount = new Dictionary<string, int>();
+    public Dictionary<string, int> colorCount = new Dictionary<string, int>();
 
     // Make sure there's only one AmmoManager in the scene
     void Awake()
