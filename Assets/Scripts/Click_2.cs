@@ -368,7 +368,7 @@ public class Click_2 : MonoBehaviour
                 string subparentName = subparent.name; // Get the subparent's name
                 //Debug.Log("Clicked on: " + clickedObject.name + ", Subparent: " + subparent.name + " (Tag: " + subparentTag + ")");
 
-                if (subparentTag == currentTag) // ✅ If tags match, restore original color from dictionary
+                if (subparentTag == currentGunColor) // ✅ If tags match, restore original color from dictionary
                 {
                     string parentKey = subparent.name; // Store parent name (e.g., "television")
 

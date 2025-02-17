@@ -20527,7 +20527,7 @@ GameObject:
   - component: {fileID: 910370809}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25193,7 +25193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
-      value: Blue
+      value: Green
       objectReference: {fileID: 0}
     - target: {fileID: 984296312593272878, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_Name
@@ -32010,7 +32010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 1622378444689953180, guid: 5857598fef7aa4649bf6aee654eb4ab7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -37271,7 +37271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_TagString
-      value: Blue
+      value: Green
       objectReference: {fileID: 0}
     - target: {fileID: 984296312593272878, guid: 6fcc107fff9a3ca42ad8243ad92bb249, type: 3}
       propertyPath: m_Name
@@ -38200,7 +38200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2248e0841d4905b47bff720dd51eff82, type: 3}
       propertyPath: m_TagString
-      value: Blue
+      value: Green
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
