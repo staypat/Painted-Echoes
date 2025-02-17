@@ -20527,7 +20527,7 @@ GameObject:
   - component: {fileID: 910370809}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Yellow
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45185,7 +45185,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 1710593391}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!54 &2137923605
 Rigidbody:
   m_ObjectHideFlags: 0
