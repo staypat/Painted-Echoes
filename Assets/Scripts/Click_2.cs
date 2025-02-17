@@ -350,7 +350,7 @@ public class Click_2 : MonoBehaviour
                     foreach (Transform child in subparent)
                     {
                         Renderer childRenderer = child.GetComponent<Renderer>();
-                        if (childRenderer != null && childRenderer.material.HasProperty("_Color"))
+                        if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
                         {
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
@@ -389,7 +389,8 @@ public class Click_2 : MonoBehaviour
             }
 
             // Set current gun color to the absorbed color
-            currentGunColor = subparent.tag;
+            
+            currentGunColor = GetStringFromMaterial(absorbedColor);
 
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);
@@ -460,6 +461,26 @@ public class Click_2 : MonoBehaviour
             default:
                 return whiteMaterial;
         }
+    }
+
+    public string GetStringFromMaterial(Material material)
+    {
+        if (material == whiteMaterial) return "White";
+        if (material == blackMaterial) return "Black";
+        if (material == redMaterial) return "Red";
+        if (material == blueMaterial) return "Blue";
+        if (material == yellowMaterial) return "Yellow";
+        if (material == orangeMaterial) return "Orange";
+        if (material == purpleMaterial) return "Purple";
+        if (material == greenMaterial) return "Green";
+        if (material == brownMaterial) return "Brown";
+        if (material == redOrangeMaterial) return "RedOrange";
+        if (material == redPurpleMaterial) return "RedPurple";
+        if (material == yellowOrangeMaterial) return "YellowOrange";
+        if (material == yellowGreenMaterial) return "YellowGreen";
+        if (material == bluePurpleMaterial) return "BluePurple";
+        if (material == blueGreenMaterial) return "BlueGreen";
+        return "White"; // Default to white if no match is found
     }
 }
 

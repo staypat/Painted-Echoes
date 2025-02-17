@@ -14473,7 +14473,7 @@ GameObject:
   - component: {fileID: 669725035}
   m_Layer: 0
   m_Name: Ceiling
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20527,7 +20527,7 @@ GameObject:
   - component: {fileID: 910370809}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21518,7 +21518,7 @@ GameObject:
   - component: {fileID: 969381185}
   m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39959,7 +39959,7 @@ GameObject:
   - component: {fileID: 1826068872}
   m_Layer: 0
   m_Name: Ceiling
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
