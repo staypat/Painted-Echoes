@@ -535,6 +535,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: end_table_shelf_drawers.001
       objectReference: {fileID: 0}
+    - target: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_shelf_model
@@ -555,9 +559,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: end_table_shelf_body.001
       objectReference: {fileID: 0}
+    - target: {fileID: 1969438611635300834, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_legs.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7858174412337642223, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -16285,6 +16297,8 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  currentIndex: 12
+  currentIndex2: 12
 --- !u!114 &694720897
 MonoBehaviour:
   m_ObjectHideFlags: 0

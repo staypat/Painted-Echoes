@@ -46,6 +46,7 @@ public class Click_2 : MonoBehaviour
 
     public int currentIndex = 12;
     public int currentIndex2 = 12;
+    
     void Start()
     {
         absorbedColors.Add(redMaterial);
@@ -437,6 +438,7 @@ public class Click_2 : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        bool ammoFlag = true;
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -466,7 +468,12 @@ public class Click_2 : MonoBehaviour
                             if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
                             {
                                 childRenderer.material.color = originalColor;
-                                AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                                if (ammoFlag)
+                                {
+                                    AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                                    ammoFlag = false;
+                                }
+                                
                                 FindObjectOfType<AudioManager>().Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
                                 //Debug.Log($"Restored {child.name} to its original color: {originalColor}");
                             }
@@ -476,6 +483,7 @@ public class Click_2 : MonoBehaviour
                             //Debug.LogWarning($"Original color for {childKey} not found in dictionary.");
                         }
                     }
+                    ammoFlag = true;
                 }
                 else
                 {
@@ -487,11 +495,17 @@ public class Click_2 : MonoBehaviour
                         {
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
-                            AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                            if (ammoFlag)
+                            {
+                                AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                                ammoFlag = false;
+                            }
+                            
                             FindObjectOfType<AudioManager>().Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
                         }
                     }
                     //Debug.Log("Applied paintbrush color to the entire subparent.");
+                    ammoFlag = true;
                 }
             }
             else
