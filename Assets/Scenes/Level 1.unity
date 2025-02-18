@@ -22135,6 +22135,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978953139}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &980191105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980191107}
+  - component: {fileID: 980191106}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &980191106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980191105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebe0fa9cab9662498a4e7e15cbb61b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Paint1
+    clip: {fileID: 8300000, guid: f7c5ead4d8b314e4199fa8f4b2fb1dd9, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Paint2
+    clip: {fileID: 8300000, guid: 707933b1d9d116d4bbd02e31f0cc62f5, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Paint3
+    clip: {fileID: 8300000, guid: 4e62c8c539b3b7a44be0169ae8d0bec9, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb1
+    clip: {fileID: 8300000, guid: fbf575c9cf723a145a8b426c22fd001d, type: 3}
+    volume: 0.744
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb2
+    clip: {fileID: 8300000, guid: b09a4fabfb96eb54f98334682f9c706c, type: 3}
+    volume: 0.744
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb3
+    clip: {fileID: 8300000, guid: d3f442975cc57c044b62483f3c9ace17, type: 3}
+    volume: 0.752
+    loop: 0
+    source: {fileID: 0}
+  - name: Select
+    clip: {fileID: 8300000, guid: 82d6e37d62bd9ec4fab92e43f6ac4e8c, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Theme
+    clip: {fileID: 8300000, guid: e7a4b719f9d646648b7c2420b7e53bc6, type: 3}
+    volume: 0.256
+    loop: 1
+    source: {fileID: 0}
+--- !u!4 &980191107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980191105}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &990188148 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
@@ -24262,11 +24347,11 @@ PrefabInstance:
     - target: {fileID: -3886152462560808737, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: -3747583890322468642, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 919132149155446097, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: m_Name
       value: television
@@ -29466,7 +29551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Brown
       objectReference: {fileID: 0}
     - target: {fileID: 3995265086672805120, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -47744,15 +47829,16 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1080414741}
+  - {fileID: 270241469}
+  - {fileID: 57628098}
+  - {fileID: 980191107}
   - {fileID: 1316330466}
   - {fileID: 2137923603}
   - {fileID: 444120309}
   - {fileID: 1093211972}
-  - {fileID: 57628098}
-  - {fileID: 270241469}
   - {fileID: 1479584512}
   - {fileID: 274857458}
-  - {fileID: 1080414741}
   - {fileID: 1369150960}
   - {fileID: 1971165378}
   - {fileID: 1001189986}
