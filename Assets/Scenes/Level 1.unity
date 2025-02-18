@@ -531,6 +531,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_drawers.001
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_shelf_model
@@ -547,6 +551,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0c652ced9e79c344b9a9c90e24610004, type: 2}
+    - target: {fileID: 1969438611635300834, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_body.001
+      objectReference: {fileID: 0}
     - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_legs.001
@@ -4210,9 +4218,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 113310657}
     m_Modifications:
+    - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_Name
+      value: long_couch2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_Name
-      value: long_couch4
+      value: long_couch2
       objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
@@ -10457,6 +10469,8 @@ Transform:
   - {fileID: 572390171}
   - {fileID: 1550439204}
   - {fileID: 385128118}
+  - {fileID: 1369150960}
+  - {fileID: 1971165378}
   m_Father: {fileID: 1479584512}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &482146182
@@ -10467,9 +10481,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 813000528}
     m_Modifications:
+    - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_Name
+      value: long_couch2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_Name
-      value: long_couch4
+      value: long_couch2
       objectReference: {fileID: 0}
     - target: {fileID: 3184608156584153018, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
@@ -19200,9 +19218,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_drawers2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
-      value: end_table_shelf_model4
+      value: end_table_shelf_model2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_TagString
@@ -19216,9 +19238,13 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 0c652ced9e79c344b9a9c90e24610004, type: 2}
+    - target: {fileID: 1969438611635300834, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_body2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
-      value: end_table_legs.001
+      value: end_table_legs2.001
       objectReference: {fileID: 0}
     - target: {fileID: 7858174412337642223, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -23364,6 +23390,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1894e83509b20439c28465cbe43bda, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e37d419c0bdd8b247a7fcf305777894d, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1894e83509b20439c28465cbe43bda, type: 3}
       propertyPath: m_Name
       value: enterance_frame
@@ -28944,6 +28974,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 813000528}
     m_Modifications:
     - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_Name
+      value: long_couch.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -29925,12 +29959,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369150956}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.733, y: 2.8289955, z: -35.76399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.8644867, y: 0.10635376, z: 5.836014}
   m_LocalScale: {x: 5.5055814, y: 4.657991, z: 0.1476}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 481909316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1379751194
 GameObject:
@@ -42908,9 +42942,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_drawers2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
-      value: end_table_shelf_model4
+      value: end_table_shelf_model2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_TagString
@@ -42924,9 +42962,13 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: dbf4643b1fb0b3a4d9af2906dceddffa, type: 2}
+    - target: {fileID: 1969438611635300834, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_body2.001
+      objectReference: {fileID: 0}
     - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
-      value: end_table_legs.001
+      value: end_table_legs2.001
       objectReference: {fileID: 0}
     - target: {fileID: 7858174412337642223, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -43631,12 +43673,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971165374}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.43, y: 2.8289955, z: -35.76399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.561493, y: 0.10635376, z: 5.836014}
   m_LocalScale: {x: 5.5055814, y: 4.657991, z: 0.1476}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 481909316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1971635089
 GameObject:
@@ -44711,6 +44753,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_drawers.001
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_shelf_model
@@ -44727,6 +44773,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: dbf4643b1fb0b3a4d9af2906dceddffa, type: 2}
+    - target: {fileID: 1969438611635300834, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      propertyPath: m_Name
+      value: end_table_shelf_body.001
+      objectReference: {fileID: 0}
     - target: {fileID: 7202527681515160362, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       propertyPath: m_Name
       value: end_table_legs.001
@@ -48450,6 +48500,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 113310657}
     m_Modifications:
     - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
+      propertyPath: m_Name
+      value: long_couch.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 173221308602954797, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -48863,7 +48917,5 @@ SceneRoots:
   - {fileID: 1093211972}
   - {fileID: 1479584512}
   - {fileID: 274857458}
-  - {fileID: 1369150960}
-  - {fileID: 1971165378}
   - {fileID: 1001189986}
   - {fileID: 1544911603}
