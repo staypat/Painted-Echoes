@@ -44,23 +44,44 @@ public class Click_2 : MonoBehaviour
     [SerializeField] private Material blueGreenMaterial;
     [SerializeField] private Material grayMaterial;
 
-    private int currentIndex = 0;
-    private int currentIndex2 = 0;
-
-    public AmmoUI ammoUI;
+    public int currentIndex = 12;
+    public int currentIndex2 = 12;
     void Start()
     {
+        absorbedColors.Add(redMaterial);
+        absorbedColors.Add(redOrangeMaterial);
+        absorbedColors.Add(orangeMaterial);
+        absorbedColors.Add(yellowOrangeMaterial);
+        absorbedColors.Add(yellowMaterial);
+        absorbedColors.Add(yellowGreenMaterial);
+        absorbedColors.Add(greenMaterial);
+        absorbedColors.Add(blueGreenMaterial);
+        absorbedColors.Add(blueMaterial);
+        absorbedColors.Add(bluePurpleMaterial);
+        absorbedColors.Add(purpleMaterial);
+        absorbedColors.Add(redPurpleMaterial);
         absorbedColors.Add(whiteMaterial);
         absorbedColors.Add(blackMaterial);
-        absorbedColors.Add(redMaterial);
-        absorbedColors.Add(blueMaterial);
-        absorbedColors.Add(yellowMaterial);
+        absorbedColors.Add(brownMaterial);
+        
+        
 
+        absorbedColorTags.Add("Red");
+        absorbedColorTags.Add("RedOrange");
+        absorbedColorTags.Add("Orange");
+        absorbedColorTags.Add("YellowOrange");
+        absorbedColorTags.Add("Yellow");
+        absorbedColorTags.Add("YellowGreen");
+        absorbedColorTags.Add("Green");
+        absorbedColorTags.Add("BlueGreen");
+        absorbedColorTags.Add("Blue");
+        absorbedColorTags.Add("BluePurple");
+        absorbedColorTags.Add("Purple");
+        absorbedColorTags.Add("RedPurple");
         absorbedColorTags.Add("White");
         absorbedColorTags.Add("Black");
-        absorbedColorTags.Add("Red");
-        absorbedColorTags.Add("Blue");
-        absorbedColorTags.Add("Yellow");
+        absorbedColorTags.Add("Brown");
+        
 
         gunRenderer = GetComponent<Renderer>();
 
@@ -351,22 +372,20 @@ public class Click_2 : MonoBehaviour
         if (GameManager.inMenu) return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scroll > 0f) // Scroll up
+        if (scroll < 0f) // Scroll down
         {
             FindObjectOfType<AudioManager>().Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2] );
             //Debug.Log("Current index: " + currentIndex);
-            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
-        else if (scroll < 0f) // Scroll down
+        else if (scroll > 0f) // Scroll up
         {
             FindObjectOfType<AudioManager>().Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
-            ammoUI.UpdateSelectedColorIcon(absorbedColorTags[currentIndex]);
         }
     }
 
@@ -403,7 +422,7 @@ public class Click_2 : MonoBehaviour
 
 
 
-    void ApplyColor(Material newMaterial, string tag)
+    public void ApplyColor(Material newMaterial, string tag)
     {
         currentGunColor = tag; // Update the current gun color
         gunRenderer.material = newMaterial;
