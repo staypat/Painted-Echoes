@@ -135,46 +135,6 @@ public class Click_2 : MonoBehaviour
         currentRoom = newRoom;
         Debug.Log("Current room: " + currentRoom.name);
 
-
-        // MismatchedColors.Clear();
-        // //Debug.Log("Cleared MismatchedColors dictionary.");
-        // // Get the subparent of the object (the immediate parent)
-        // Transform subParent = newRoom.transform.parent;
-
-        // if (subParent != null)
-        // {
-        //     //Debug.Log("Subparent of " + newRoom.name + ": " + subParent.name);
-
-        //     // Now let's get all the renderers in the subparent and its children
-        //     Renderer[] renderers = subParent.GetComponentsInChildren<Renderer>();
-
-        //     // Iterate over all renderers and store their color in the dictionary
-        //     foreach (var renderer in renderers)
-        //     {
-        //         // Get the color of the renderer's material (assuming the object uses a material with a color)
-        //         Color color = renderer.material.color;
-
-        //         // Add to the dictionary with the object's name as the key (not the subparent's name)
-        //         if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
-        //         {
-        //             MismatchedColors.Add(renderer.gameObject.name, color);
-        //             //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
-        //         }
-        //         else
-        //         {
-        //             // Optionally, if you want to update the color if the object already exists in the dictionary
-
-        //             MismatchedColors[renderer.gameObject.name] = color;
-        //             //Debug.Log($"Updated color for {renderer.gameObject.name}: {color}");
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     //Debug.Log(newRoom.name + " has no subparent.");
-        // }
-
-
     }
 
     // Function to store all colors of objects in a dictionary in mismatched room
@@ -199,8 +159,13 @@ public class Click_2 : MonoBehaviour
                 Color color = renderer.material.color;
 
                 // Add to the dictionary with the object's name as the key (not the subparent's name)
+ 
                 if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
                 {
+                    if (renderer.gameObject.name.StartsWith("Barrier")) 
+                    {
+                        continue; // Skip the barrier object
+                    }
                     MismatchedColors.Add(renderer.gameObject.name, color);
                     //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
@@ -221,6 +186,9 @@ public class Click_2 : MonoBehaviour
 
     private void CompareColorValues()
     {
+        int count = 0;
+        int CorrectTotal = MismatchedColors.Count;
+
         // Iterate through each key-value pair in the CorrectHouseColors dictionary
         foreach (var correctPair in CorrectHouseColors)
         {
@@ -234,8 +202,10 @@ public class Click_2 : MonoBehaviour
                 if (objTransform != null && objTransform.childCount > 0)
                 {
                     //Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
-                    continue; // Skip parent objects
+                    CorrectTotal -= 1;
+                    continue; // Skip parent objects or objects related to "Barrier"
                 }
+
             }
 
             // Check if the key exists in the MismatchedColors dictionary
@@ -246,11 +216,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    count += 1;
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -275,9 +246,98 @@ public class Click_2 : MonoBehaviour
                 //Debug.Log($"❌ No match for key '{objectName}' in CorrectHouseColors dictionary.");
             }
         }
+
+
+        Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
+
+        if (count == CorrectTotal)
+        {
+
+            turnOffBarrier();
+
+            // // Log the current room (can be a GameObject name, for example)
+            // Debug.Log(currentRoom);
+
+            // // Get the parent of the current room
+            // Transform parentTransform = currentRoom.transform.parent;
+
+            // if (parentTransform != null)
+            // {
+            //     // Find all Renderer components in the parent and its children
+            //     Renderer[] renderers = parentTransform.GetComponentsInChildren<Renderer>();
+            //     Collider[] colliders = parentTransform.GetComponentsInChildren<Collider>();
+
+            //     // Loop through all the renderers and check for objects starting with "Barrier"
+            //     foreach (var renderer in renderers)
+            //     {
+            //         if (renderer.gameObject.name.StartsWith("Barrier"))
+            //         {
+            //             // Disable the renderer
+            //             renderer.enabled = false;
+            //             Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
+            //         }
+            //     }
+
+            //     // Loop through all colliders and check for objects starting with "Barrier"
+            //     foreach (var collider in colliders)
+            //     {
+            //         if (collider.gameObject.name.StartsWith("Barrier"))
+            //         {
+            //             // Disable the collider
+            //             collider.enabled = false;
+            //             Debug.Log($"Disabled Collider on: {collider.gameObject.name}");
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     Debug.Log("The current room has no parent.");
+            // }
+        }
+
+
+
+
     }
 
+    void turnOffBarrier(){
 
+        // Get the parent of the current room
+        Transform parentTransform = currentRoom.transform.parent;
+
+        if (parentTransform != null)
+        {
+            // Find all Renderer components in the parent and its children
+            Renderer[] renderers = parentTransform.GetComponentsInChildren<Renderer>();
+            Collider[] colliders = parentTransform.GetComponentsInChildren<Collider>();
+
+            // Loop through all the renderers and check for objects starting with "Barrier"
+            foreach (var renderer in renderers)
+            {
+                if (renderer.gameObject.name.StartsWith("Barrier"))
+                {
+                    // Disable the renderer
+                    renderer.enabled = false;
+                    Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
+                }
+            }
+
+            // Loop through all colliders and check for objects starting with "Barrier"
+            foreach (var collider in colliders)
+            {
+                if (collider.gameObject.name.StartsWith("Barrier"))
+                {
+                    // Disable the collider
+                    collider.enabled = false;
+                    Debug.Log($"Disabled Collider on: {collider.gameObject.name}");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("The current room has no parent.");
+        }
+    }
 
 
     void Update()
