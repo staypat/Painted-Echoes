@@ -26,37 +26,33 @@ public class MixerInteract : ObjectInteract
 
     public override void Interact()
     {
-        Debug.Log("Mixing colors...");
-        MixColors();
+        if (GameManager.inMenu)
+        {
+            if (mixerUIPanel.activeSelf) {
+                mixerUIPanel.SetActive(false); // Hide the UI if in menu
+                GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
+            }
+            else
+            {
+                return;
+            }
+        }
+        else {
+            Debug.Log("Mixing colors...");
+            MixColors();
+        }
+        
     }
 
     private void MixColors()
     {
         if (mixerUIPanel != null)
         {
+            GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
             // disable the slotThreeButton
             slotThreeButton.SetActive(false);
-
-            if (mixerUIPanel.activeSelf)
-            {
-                GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
-                // Enable cursor and disable camera movement
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                if (playerCamera != null)
-                    playerCamera.SetCameraActive(false);
-            }
-            else
-            {
-                GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
-                // Hide cursor and re-enable camera movement
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                if (playerCamera != null)
-                    playerCamera.SetCameraActive(true);
-            }
         }
     }
 }

@@ -10,8 +10,6 @@ public class AmmoUI : MonoBehaviour
     public GameObject ammoBar;
     public List<Image> colorIcons;
     public List<TextMeshProUGUI> ammoTexts;
-
-    public bool isUIActive = false;
     private FirstPerson playerCamera;
     public Click_2 clickInteraction;
     
@@ -50,28 +48,25 @@ public class AmmoUI : MonoBehaviour
 
     void ToggleUI()
     {
-        isUIActive = !isUIActive;
-        ammoBar.SetActive(isUIActive);
-
-        if (isUIActive)
+        if (GameManager.inMenu)
+        {
+            if(ammoBar.activeSelf)
+            {
+                ammoBar.SetActive(false); // Hide the UI if in menu
+                GameManager.Instance.ExitMenu();
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
         {
             GameManager.Instance.EnterMenu();
-            Crosshair.SetActive(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            if (playerCamera != null)
-            {
-                playerCamera.SetCameraActive(false);
-            }
             UpdateAmmoUI();
-        }else{
-            GameManager.Instance.ExitMenu();
-            Crosshair.SetActive(true);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            if (playerCamera != null)
-                playerCamera.SetCameraActive(true);
+            ammoBar.SetActive(true);
         }
+        
     }
 
     void UpdateAmmoUI()
