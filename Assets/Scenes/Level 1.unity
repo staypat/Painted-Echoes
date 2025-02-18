@@ -24347,11 +24347,11 @@ PrefabInstance:
     - target: {fileID: -3886152462560808737, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: -3747583890322468642, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 919132149155446097, guid: d2d4d736189383e4f8fff9b4f1001a4f, type: 3}
       propertyPath: m_Name
       value: television
@@ -29551,7 +29551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: m_TagString
-      value: Yellow
+      value: Brown
       objectReference: {fileID: 0}
     - target: {fileID: 3995265086672805120, guid: 001948e111d9c8c4e95a3829c1c15366, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
