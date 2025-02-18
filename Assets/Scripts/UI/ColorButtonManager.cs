@@ -120,51 +120,6 @@ public class ColorButtonManager : MonoBehaviour
             slotThreeColor = "Green";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Red" && color2 == "Purple" || color1 == "Purple" && color2 == "Red") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "RedPurple";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Red" && color2 == "Orange" || color1 == "Orange" && color2 == "Red") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "RedOrange";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Yellow" && color2 == "Orange" || color1 == "Orange" && color2 == "Yellow") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "YellowOrange";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Yellow" && color2 == "Green" || color1 == "Green" && color2 == "Yellow") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "YellowGreen";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Blue" && color2 == "Green" || color1 == "Green" && color2 == "Blue") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "BlueGreen";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Blue" && color2 == "Purple" || color1 == "Purple" && color2 == "Blue") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "BluePurple";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Red" && color2 == "Green" || color1 == "Green" && color2 == "Red") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "Brown";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Yellow" && color2 == "Purple" || color1 == "Purple" && color2 == "Yellow") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "Brown";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
-        else if (color1 == "Blue" && color2 == "Orange" || color1 == "Orange" && color2 == "Blue") {
-            slotThreeButton.SetActive(true);
-            slotThreeColor = "Brown";
-            slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
-        }
         else{ 
             Debug.Log("Invalid color combination"); 
             slotThreeButton.SetActive(false);
