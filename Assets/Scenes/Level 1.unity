@@ -562,6 +562,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 990188149}
+    - targetCorrespondingSourceObject: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1231489604}
   m_SourcePrefab: {fileID: 100100000, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
 --- !u!1001 &33077953
 PrefabInstance:
@@ -27469,6 +27472,27 @@ Transform:
   - {fileID: 783843675}
   m_Father: {fileID: 1786517974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1231489599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1351933116772475824, guid: 41c593788770bbc41aae37195e900ae8, type: 3}
+  m_PrefabInstance: {fileID: 22146426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1231489604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231489599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ca4116d0300a44dbfb4f567b5c9968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionPrompt: Interact
+  moveAxis: 0
+  moveDistance: 0.6
+  moveSpeed: 2
 --- !u!1 &1234990066
 GameObject:
   m_ObjectHideFlags: 0
