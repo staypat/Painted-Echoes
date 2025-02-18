@@ -5422,6 +5422,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dining_table
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38f7da2aeae22c94d85012e8e0effffc, type: 3}
+      propertyPath: m_TagString
+      value: Brown
+      objectReference: {fileID: 0}
     - target: {fileID: 7235174748393678088, guid: 38f7da2aeae22c94d85012e8e0effffc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -8643,6 +8647,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: m_TagString
+      value: Brown
       objectReference: {fileID: 0}
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -22909,6 +22917,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dining_chair (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: m_TagString
+      value: Brown
+      objectReference: {fileID: 0}
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -29099,6 +29111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dining_chair (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: m_TagString
+      value: Brown
+      objectReference: {fileID: 0}
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -33112,6 +33128,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: m_TagString
+      value: Brown
       objectReference: {fileID: 0}
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
