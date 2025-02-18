@@ -630,7 +630,7 @@ PrefabInstance:
     - target: {fileID: -7070497641330680183, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: m_Name
       value: cupboard (2)
@@ -638,7 +638,7 @@ PrefabInstance:
     - target: {fileID: 3742315480857193675, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1427,7 +1427,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (4)
@@ -3634,7 +3634,7 @@ PrefabInstance:
     - target: {fileID: -4934735975988297369, guid: a3b0b107b7b88d74dbe8ce9cac8473bd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -3834321651845048377, guid: a3b0b107b7b88d74dbe8ce9cac8473bd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -3646,7 +3646,7 @@ PrefabInstance:
     - target: {fileID: -55793637055109753, guid: a3b0b107b7b88d74dbe8ce9cac8473bd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: a3b0b107b7b88d74dbe8ce9cac8473bd, type: 3}
       propertyPath: m_Name
       value: kitchen_sink
@@ -3658,7 +3658,7 @@ PrefabInstance:
     - target: {fileID: 7912409800172609012, guid: a3b0b107b7b88d74dbe8ce9cac8473bd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5417,7 +5417,7 @@ PrefabInstance:
     - target: {fileID: -7803135807859127850, guid: 38f7da2aeae22c94d85012e8e0effffc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 13220734710eac945af29a70710cb757, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 919132149155446097, guid: 38f7da2aeae22c94d85012e8e0effffc, type: 3}
       propertyPath: m_Name
       value: dining_table
@@ -5425,7 +5425,7 @@ PrefabInstance:
     - target: {fileID: 7235174748393678088, guid: 38f7da2aeae22c94d85012e8e0effffc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 13220734710eac945af29a70710cb757, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5530,7 +5530,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (1)
@@ -7328,7 +7328,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (6)
@@ -8639,7 +8639,7 @@ PrefabInstance:
     - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair (2)
@@ -8647,11 +8647,11 @@ PrefabInstance:
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 4166893480458100020, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 7839929714241571570, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -11013,11 +11013,11 @@ PrefabInstance:
     - target: {fileID: -7878086903909054412, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -2798604689719620633, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: m_Name
       value: counter_cabinet (1)
@@ -11029,11 +11029,11 @@ PrefabInstance:
     - target: {fileID: 4772161284225768611, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 5060883015807020101, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14135,7 +14135,7 @@ PrefabInstance:
     - target: {fileID: -7070497641330680183, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: m_Name
       value: cupboard
@@ -14143,7 +14143,7 @@ PrefabInstance:
     - target: {fileID: 3742315480857193675, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15246,11 +15246,11 @@ PrefabInstance:
     - target: {fileID: -1791063174022518717, guid: 5359e9b505f0f464d826e6721ceb209c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3e9070957f316ae45855c33c9f64eda9, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -1134441342925425382, guid: 5359e9b505f0f464d826e6721ceb209c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3e9070957f316ae45855c33c9f64eda9, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 5359e9b505f0f464d826e6721ceb209c, type: 3}
       propertyPath: m_Name
       value: fridge
@@ -15258,7 +15258,7 @@ PrefabInstance:
     - target: {fileID: 4893385393787235976, guid: 5359e9b505f0f464d826e6721ceb209c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3e9070957f316ae45855c33c9f64eda9, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16065,7 +16065,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (5)
@@ -19590,7 +19590,7 @@ PrefabInstance:
     - target: {fileID: -7070497641330680183, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: m_Name
       value: cupboard (1)
@@ -19598,7 +19598,7 @@ PrefabInstance:
     - target: {fileID: 3742315480857193675, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21388,7 +21388,7 @@ PrefabInstance:
     - target: {fileID: -7070497641330680183, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: m_Name
       value: cupboard (6)
@@ -21396,7 +21396,7 @@ PrefabInstance:
     - target: {fileID: 3742315480857193675, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22904,7 +22904,7 @@ PrefabInstance:
     - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair (1)
@@ -22912,11 +22912,11 @@ PrefabInstance:
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 4166893480458100020, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: 7839929714241571570, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -29094,7 +29094,7 @@ PrefabInstance:
     - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 2da3c9f7216ae1e4e95b58ea8d9fde6f, type: 2}
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair (3)
@@ -29102,11 +29102,11 @@ PrefabInstance:
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 2da3c9f7216ae1e4e95b58ea8d9fde6f, type: 2}
     - target: {fileID: 4166893480458100020, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 2da3c9f7216ae1e4e95b58ea8d9fde6f, type: 2}
     - target: {fileID: 7839929714241571570, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -30614,11 +30614,11 @@ PrefabInstance:
     - target: {fileID: -7878086903909054412, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -2798604689719620633, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: m_Name
       value: counter_cabinet (3)
@@ -30630,11 +30630,11 @@ PrefabInstance:
     - target: {fileID: 4772161284225768611, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 5060883015807020101, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33108,7 +33108,7 @@ PrefabInstance:
     - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 919132149155446097, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: m_Name
       value: dining_chair
@@ -33116,11 +33116,11 @@ PrefabInstance:
     - target: {fileID: 3316382014518865757, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 4166893480458100020, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3255f1cb2edcaad4faa33c662c1902d4, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ca5d7d9e77e2f240baf36c63aa8cf65, type: 2}
     - target: {fileID: 7839929714241571570, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -38421,7 +38421,7 @@ PrefabInstance:
     - target: {fileID: -7070497641330680183, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: m_Name
       value: cupboard (3)
@@ -38429,7 +38429,7 @@ PrefabInstance:
     - target: {fileID: 3742315480857193675, guid: 275e7114c56b4584e92ff63e098709c2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39124,11 +39124,11 @@ PrefabInstance:
     - target: {fileID: -7878086903909054412, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -2798604689719620633, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: m_Name
       value: counter_cabinet
@@ -39140,11 +39140,11 @@ PrefabInstance:
     - target: {fileID: 4772161284225768611, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 5060883015807020101, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39913,7 +39913,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter
@@ -40949,7 +40949,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (2)
@@ -42572,7 +42572,7 @@ PrefabInstance:
     - target: {fileID: -1533478027190374827, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: 50171bedce32397469359ece38e1a000, type: 3}
       propertyPath: m_Name
       value: counter (3)
@@ -44004,11 +44004,11 @@ PrefabInstance:
     - target: {fileID: -7878086903909054412, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: -2798604689719620633, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 919132149155446097, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: m_Name
       value: counter_cabinet (2)
@@ -44020,11 +44020,11 @@ PrefabInstance:
     - target: {fileID: 4772161284225768611, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 16f2b03121d04524bbd692a3b84585c7, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     - target: {fileID: 5060883015807020101, guid: dd68826aa77fb354da7d2d505b343a63, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 6cfbbeb6b10593840aadbb79bd87feab, type: 2}
+      objectReference: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
