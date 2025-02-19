@@ -11460,7 +11460,7 @@ PrefabInstance:
     - target: {fileID: 6480191130546832620, guid: 4f3d51378297b4649a423b71f162a77e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c30285d0f1da4c349ba0d740d0554fad, type: 2}
+      objectReference: {fileID: 2100000, guid: 6354c3b3a4ee5c149a942c006795d3e2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25541,7 +25541,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
+    - target: {fileID: -6045176121234252976, guid: cddf95ec49916d949b564697d445732c, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
     - target: {fileID: -1258594499244236456, guid: cddf95ec49916d949b564697d445732c, type: 3}
@@ -51740,7 +51748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec037b369ee9c3040911ce8ad0608bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 6
   jumpForce: 5
   cameraTransform: {fileID: 1710593391}
   groundLayer:
@@ -51792,10 +51800,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
+  m_Radius: 0.14777932
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.014490635, y: 0, z: 0.010000005}
 --- !u!114 &2137923607
 MonoBehaviour:
   m_ObjectHideFlags: 0
