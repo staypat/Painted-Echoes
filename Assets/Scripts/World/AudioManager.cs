@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
+    public static AudioManager instance;
     public Sound[] sounds;
 
-    public static AudioManager instance;
+    public static float musicVolume = 1f;
+    public static float sfxVolume = 1f;
     void Awake()
     {
         if (instance == null)
@@ -24,7 +25,7 @@ public class AudioManager : MonoBehaviour
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
 
-            s.source.volume = s.volume;
+            s.source.volume = (s.name == "Theme" ? musicVolume : sfxVolume);
             s.source.loop = s.loop;
         }
     }
@@ -54,5 +55,27 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.UnPause();
+    }
+
+    public void UpdateMusicVolume()
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.name == "Theme")
+            {
+                s.source.volume = musicVolume;
+            }
+        }
+    }
+
+    public void UpdateSFXVolume()
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.name != "Theme")
+            {
+                s.source.volume = sfxVolume;
+            }
+        }
     }
 }
