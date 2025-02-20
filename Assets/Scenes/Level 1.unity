@@ -700,7 +700,7 @@ RectTransform:
   m_Father: {fileID: 135420619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14885,7 +14885,7 @@ RectTransform:
   m_Father: {fileID: 1918267891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -28074,42 +28074,34 @@ MonoBehaviour:
   sounds:
   - name: Paint1
     clip: {fileID: 8300000, guid: f7c5ead4d8b314e4199fa8f4b2fb1dd9, type: 3}
-    volume: 0.5
     loop: 0
     source: {fileID: 0}
   - name: Paint2
     clip: {fileID: 8300000, guid: 707933b1d9d116d4bbd02e31f0cc62f5, type: 3}
-    volume: 0.5
     loop: 0
     source: {fileID: 0}
   - name: Paint3
     clip: {fileID: 8300000, guid: 4e62c8c539b3b7a44be0169ae8d0bec9, type: 3}
-    volume: 0.5
     loop: 0
     source: {fileID: 0}
   - name: Absorb1
     clip: {fileID: 8300000, guid: fbf575c9cf723a145a8b426c22fd001d, type: 3}
-    volume: 0.744
     loop: 0
     source: {fileID: 0}
   - name: Absorb2
     clip: {fileID: 8300000, guid: b09a4fabfb96eb54f98334682f9c706c, type: 3}
-    volume: 0.744
     loop: 0
     source: {fileID: 0}
   - name: Absorb3
     clip: {fileID: 8300000, guid: d3f442975cc57c044b62483f3c9ace17, type: 3}
-    volume: 0.752
     loop: 0
     source: {fileID: 0}
   - name: Select
     clip: {fileID: 8300000, guid: 82d6e37d62bd9ec4fab92e43f6ac4e8c, type: 3}
-    volume: 0.5
     loop: 0
     source: {fileID: 0}
   - name: Theme
     clip: {fileID: 8300000, guid: e7a4b719f9d646648b7c2420b7e53bc6, type: 3}
-    volume: 0.256
     loop: 1
     source: {fileID: 0}
 --- !u!4 &980191107
@@ -39922,8 +39914,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1413999658}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -43811,8 +43803,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1958405751}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -49963,7 +49955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1737936390
 RectTransform:
   m_ObjectHideFlags: 0
