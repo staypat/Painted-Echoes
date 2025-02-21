@@ -14,7 +14,7 @@ public class InventorySelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SelectSlot(selectedSlot);
+        selectedSlot = -1; // No item equipped at start
     }
 
     // Update is called once per frame
@@ -31,18 +31,26 @@ public class InventorySelection : MonoBehaviour
     }
 
     void SelectSlot(int slotIndex)
+{
+    if (slotIndex == 0 && !GameManager.Instance.hasPaintbrush)
     {
-        if (slotIndex < 0 || slotIndex >= inventorySlots.Length) 
-        {
-            return;
-        }
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            inventorySlots[i].color = defaultColor;
-        }
-
-        inventorySlots[slotIndex].color = selectedColor;
-        selectedSlot = slotIndex;
-        inventoryEquipper.EquipItem(slotIndex);
+        Debug.Log("You haven't picked up the paintbrush yet!");
+        return; // Prevent selection
     }
+
+    if (slotIndex < 0 || slotIndex >= inventorySlots.Length) 
+    {
+        return;
+    }
+
+    for (int i = 0; i < inventorySlots.Length; i++)
+    {
+        inventorySlots[i].color = defaultColor;
+    }
+
+    inventorySlots[slotIndex].color = selectedColor;
+    selectedSlot = slotIndex;
+    inventoryEquipper.EquipItem(slotIndex);
+}
+
 }
