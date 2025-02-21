@@ -163,7 +163,7 @@ public class Click_2 : MonoBehaviour
  
                 if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
                 {
-                    if (renderer.gameObject.name.StartsWith("Barrier")) 
+                    if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("window") || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling")) 
                     {
                         continue; // Skip the barrier object
                     }
@@ -317,10 +317,10 @@ public class Click_2 : MonoBehaviour
                 CompareColorValues();
 
 
-                foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-                {
-                    Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-                }
+                // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
+                // {
+                //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+                // }
 
             }
             else{
