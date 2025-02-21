@@ -202,7 +202,7 @@ public class Click_2 : MonoBehaviour
 
                 if (objTransform != null && objTransform.childCount > 0)
                 {
-                    //Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
+                    Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
                     CorrectTotal -= 1;
                     continue; // Skip parent objects or objects related to "Barrier"
                 }
@@ -217,12 +217,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
                     count += 1;
-                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -256,44 +256,7 @@ public class Click_2 : MonoBehaviour
 
             turnOffBarrier();
 
-            // // Log the current room (can be a GameObject name, for example)
-            // Debug.Log(currentRoom);
 
-            // // Get the parent of the current room
-            // Transform parentTransform = currentRoom.transform.parent;
-
-            // if (parentTransform != null)
-            // {
-            //     // Find all Renderer components in the parent and its children
-            //     Renderer[] renderers = parentTransform.GetComponentsInChildren<Renderer>();
-            //     Collider[] colliders = parentTransform.GetComponentsInChildren<Collider>();
-
-            //     // Loop through all the renderers and check for objects starting with "Barrier"
-            //     foreach (var renderer in renderers)
-            //     {
-            //         if (renderer.gameObject.name.StartsWith("Barrier"))
-            //         {
-            //             // Disable the renderer
-            //             renderer.enabled = false;
-            //             Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
-            //         }
-            //     }
-
-            //     // Loop through all colliders and check for objects starting with "Barrier"
-            //     foreach (var collider in colliders)
-            //     {
-            //         if (collider.gameObject.name.StartsWith("Barrier"))
-            //         {
-            //             // Disable the collider
-            //             collider.enabled = false;
-            //             Debug.Log($"Disabled Collider on: {collider.gameObject.name}");
-            //         }
-            //     }
-            // }
-            // else
-            // {
-            //     Debug.Log("The current room has no parent.");
-            // }
         }
 
 
@@ -354,10 +317,10 @@ public class Click_2 : MonoBehaviour
                 CompareColorValues();
 
 
-                // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-                // {
-                //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-                // }
+                foreach (KeyValuePair<string, Color> entry in MismatchedColors)
+                {
+                    Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+                }
 
             }
             else{
