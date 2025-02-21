@@ -317,10 +317,10 @@ public class Click_2 : MonoBehaviour
                 CompareColorValues();
 
 
-                foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-                {
-                    Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-                }
+                // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
+                // {
+                //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+                // }
 
             }
             else{
