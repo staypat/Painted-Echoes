@@ -9,7 +9,7 @@ public class PaintbrushInteract : ObjectInteract
 
     void Awake()
     {
-        objectToDisable.SetActive(false);
+
     }
 
     public override void Interact()
