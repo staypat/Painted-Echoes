@@ -90,84 +90,15 @@ public class AmmoUI : MonoBehaviour
     {
         if(AmmoManager.Instance.GetCurrentAmmo(colorKey) != 0){
             Debug.Log("Selected color: " + colorKey);
-            Material selectedMaterial = null;
-            switch (colorKey)
+            Material selectedMaterial = clickInteraction.GetMaterialFromString(colorKey);
+            int index = clickInteraction.absorbedColorTags.IndexOf(colorKey);
+            if (index != -1)
             {
-                case "Red":
-                    selectedMaterial = redMaterial;
-                    // clickInteraction.currentIndex = 0;
-                    // clickInteraction.currentIndex = 0;
-                    break;
-                case "RedOrange":
-                    selectedMaterial = redOrangeMaterial;
-                    // clickInteraction.currentIndex = 1;
-                    // clickInteraction.currentIndex = 1;
-                    break;
-                case "Orange":
-                    selectedMaterial = orangeMaterial;
-                    // clickInteraction.currentIndex = 2;
-                    // clickInteraction.currentIndex = 2;
-                    break;
-                case "YellowOrange":
-                    selectedMaterial = yellowOrangeMaterial;
-                    // clickInteraction.currentIndex = 3;
-                    // clickInteraction.currentIndex = 3;
-                    break;
-                case "Yellow":
-                    selectedMaterial = yellowMaterial;
-                    // clickInteraction.currentIndex = 4;
-                    // clickInteraction.currentIndex = 4;
-                    break;
-                case "YellowGreen":
-                    selectedMaterial = yellowGreenMaterial;
-                    // clickInteraction.currentIndex = 5;
-                    // clickInteraction.currentIndex = 5;
-                    break;
-                case "Green":
-                    selectedMaterial = greenMaterial;
-                    // clickInteraction.currentIndex = 6;
-                    // clickInteraction.currentIndex = 6;
-                    break;
-                case "BlueGreen":
-                    selectedMaterial = blueGreenMaterial;
-                    // clickInteraction.currentIndex = 7;
-                    // clickInteraction.currentIndex = 7;
-                    break;
-                case "Blue":
-                    selectedMaterial = blueMaterial;
-                    // clickInteraction.currentIndex = 8;
-                    // clickInteraction.currentIndex = 8;
-                    break;
-                case "BluePurple":  
-                    selectedMaterial = bluePurpleMaterial;
-                    // clickInteraction.currentIndex = 9;
-                    // clickInteraction.currentIndex = 9;
-                    break;
-                case "Purple":
-                    selectedMaterial = purpleMaterial;
-                    // clickInteraction.currentIndex = 10;
-                    // clickInteraction.currentIndex = 10;
-                    break;
-                case "RedPurple":
-                    selectedMaterial = redPurpleMaterial;
-                    // clickInteraction.currentIndex = 11;
-                    // clickInteraction.currentIndex = 11;
-                    break;
-                case "White":
-                    selectedMaterial = whiteMaterial;
-                    // clickInteraction.currentIndex = 12;
-                    // clickInteraction.currentIndex = 12;
-                    break;
-                case "Black":    
-                    selectedMaterial = blackMaterial;
-                    // clickInteraction.currentIndex = 13;
-                    // clickInteraction.currentIndex = 13;
-                    break;
-                case "Brown":    
-                    selectedMaterial = brownMaterial;
-                    // clickInteraction.currentIndex = 14;
-                    // clickInteraction.currentIndex = 14;
-                    break;
+                clickInteraction.currentIndex = index;
+                clickInteraction.currentIndex2 = index;
+            }else
+            {
+                Debug.Log("Color not in absorbedColor lists");
             }
             clickInteraction.ApplyColor(selectedMaterial, colorKey);
         }else

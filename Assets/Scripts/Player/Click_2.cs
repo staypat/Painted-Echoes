@@ -23,8 +23,8 @@ public class Click_2 : MonoBehaviour
     private Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>(); 
 
     // Two lists that help with scrolling through colors
-    private List<Material> absorbedColors = new List<Material>();
-    private List<string> absorbedColorTags = new List<string>();
+    public List<Material> absorbedColors = new List<Material>();
+    public List<string> absorbedColorTags = new List<string>();
 
     // Create serialized fields for the materials
     [SerializeField] private Material whiteMaterial;
@@ -613,31 +613,6 @@ public class Click_2 : MonoBehaviour
                 return blueGreenMaterial;
             default:
                 return whiteMaterial;
-        }
-    }
-
-    public void UpdateBrushTip()
-    {
-        if(absorbedColors.Count > 1 || absorbedColorTags.Count > 1)
-        {
-            return;
-        }
-        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
-        {
-            ApplyColor(absorbedColors[0], absorbedColorTags[0]);
-        }
-        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
-        {
-            ApplyColor(GetMaterialFromString("White"), "White");
-        }
-
-        if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
-        {
-            absorbedColors.Remove(GetMaterialFromString(currentGunColor));
-            absorbedColorTags.Remove(currentGunColor);
-            currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
-            currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
-            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
         }
     }
 }
