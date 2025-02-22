@@ -44,45 +44,11 @@ public class Click_2 : MonoBehaviour
     [SerializeField] private Material blueGreenMaterial;
     [SerializeField] private Material grayMaterial;
 
-    public int currentIndex = 12;
-    public int currentIndex2 = 12;
+    public int currentIndex = 0;
+    public int currentIndex2 = 0;
     
     void Start()
-    {
-        absorbedColors.Add(redMaterial);
-        absorbedColors.Add(redOrangeMaterial);
-        absorbedColors.Add(orangeMaterial);
-        absorbedColors.Add(yellowOrangeMaterial);
-        absorbedColors.Add(yellowMaterial);
-        absorbedColors.Add(yellowGreenMaterial);
-        absorbedColors.Add(greenMaterial);
-        absorbedColors.Add(blueGreenMaterial);
-        absorbedColors.Add(blueMaterial);
-        absorbedColors.Add(bluePurpleMaterial);
-        absorbedColors.Add(purpleMaterial);
-        absorbedColors.Add(redPurpleMaterial);
-        absorbedColors.Add(whiteMaterial);
-        absorbedColors.Add(blackMaterial);
-        absorbedColors.Add(brownMaterial);
-        
-        
-
-        absorbedColorTags.Add("Red");
-        absorbedColorTags.Add("RedOrange");
-        absorbedColorTags.Add("Orange");
-        absorbedColorTags.Add("YellowOrange");
-        absorbedColorTags.Add("Yellow");
-        absorbedColorTags.Add("YellowGreen");
-        absorbedColorTags.Add("Green");
-        absorbedColorTags.Add("BlueGreen");
-        absorbedColorTags.Add("Blue");
-        absorbedColorTags.Add("BluePurple");
-        absorbedColorTags.Add("Purple");
-        absorbedColorTags.Add("RedPurple");
-        absorbedColorTags.Add("White");
-        absorbedColorTags.Add("Black");
-        absorbedColorTags.Add("Brown");
-        
+    {   
 
         gunRenderer = GetComponent<Renderer>();
 
@@ -308,6 +274,7 @@ public class Click_2 : MonoBehaviour
     {
         
         HandleScrollInput();
+        // UpdateBrushTip();
 
         if (Input.GetMouseButtonDown(0)){
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
@@ -336,15 +303,15 @@ public class Click_2 : MonoBehaviour
         if (GameManager.inMenu) return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scroll < 0f) // Scroll down
+        if (scroll < 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
         {
             FindObjectOfType<AudioManager>().Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
-            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2] );
+            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
             //Debug.Log("Current index: " + currentIndex);
         }
-        else if (scroll > 0f) // Scroll up
+        else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
             FindObjectOfType<AudioManager>().Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
@@ -446,6 +413,24 @@ public class Click_2 : MonoBehaviour
                             //Debug.LogWarning($"Original color for {childKey} not found in dictionary.");
                         }
                     }
+                    if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
+                    {
+                        absorbedColors.Remove(GetMaterialFromString(currentGunColor));
+                        absorbedColorTags.Remove(currentGunColor);
+                        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
+                        {
+                            ApplyColor(absorbedColors[0], absorbedColorTags[0]);
+                        }
+                        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
+                        {
+                            ApplyColor(GetMaterialFromString("White"), "White");
+                        }else
+                        {
+                            currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+                            currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
+                            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
+                        }
+                    }
                     ammoFlag = true;
                 }
                 else
@@ -468,6 +453,24 @@ public class Click_2 : MonoBehaviour
                         }
                     }
                     //Debug.Log("Applied paintbrush color to the entire subparent.");
+                    if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
+                    {
+                        absorbedColors.Remove(GetMaterialFromString(currentGunColor));
+                        absorbedColorTags.Remove(currentGunColor);
+                        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
+                        {
+                            ApplyColor(absorbedColors[0], absorbedColorTags[0]);
+                        }
+                        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
+                        {
+                            ApplyColor(GetMaterialFromString("White"), "White");
+                        }else
+                        {
+                            currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+                            currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
+                            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
+                        }
+                    }
                     ammoFlag = true;
                 }
             }
@@ -539,6 +542,13 @@ public class Click_2 : MonoBehaviour
 
             // Increse ammo count for the absorbed color
             AmmoManager.Instance.AddAmmo(1, currentGunColor);
+            if (!absorbedColors.Contains(absorbedColor) && !absorbedColorTags.Contains(currentGunColor))
+            {
+                absorbedColors.Add(GetMaterialFromString(currentGunColor)); // Add the absorbed color to the list
+                absorbedColorTags.Add(currentGunColor); // Add the absorbed color tag to the list
+                currentIndex = absorbedColors.Count - 1;
+                currentIndex2 = absorbedColorTags.Count - 1;
+            }
 
             FindObjectOfType<AudioManager>().Play("Absorb" + Random.Range(1, 4)); // Play absorb sound effect
 
@@ -603,6 +613,31 @@ public class Click_2 : MonoBehaviour
                 return blueGreenMaterial;
             default:
                 return whiteMaterial;
+        }
+    }
+
+    public void UpdateBrushTip()
+    {
+        if(absorbedColors.Count > 1 || absorbedColorTags.Count > 1)
+        {
+            return;
+        }
+        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
+        {
+            ApplyColor(absorbedColors[0], absorbedColorTags[0]);
+        }
+        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
+        {
+            ApplyColor(GetMaterialFromString("White"), "White");
+        }
+
+        if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
+        {
+            absorbedColors.Remove(GetMaterialFromString(currentGunColor));
+            absorbedColorTags.Remove(currentGunColor);
+            currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+            currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
+            ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
         }
     }
 }
