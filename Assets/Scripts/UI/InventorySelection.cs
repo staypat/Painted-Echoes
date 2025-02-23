@@ -38,6 +38,12 @@ public class InventorySelection : MonoBehaviour
         return; // Prevent selection
     }
 
+    if (slotIndex == 1 && !GameManager.Instance.hasPhotograph)
+    {
+        Debug.Log("You haven't picked up the photograph yet!");
+        return; // Prevent selection
+    }
+
     if (slotIndex < 0 || slotIndex >= inventorySlots.Length) 
     {
         return;
