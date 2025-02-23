@@ -100,7 +100,7 @@ public class Click_2 : MonoBehaviour
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
         currentRoom = newRoom;
-        Debug.Log("Current room: " + currentRoom.name);
+        //Debug.Log("Current room: " + currentRoom.name);
 
     }
 
@@ -129,7 +129,8 @@ public class Click_2 : MonoBehaviour
  
                 if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
                 {
-                    if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("window") || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling")) 
+                    if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
+                        || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")) 
                     {
                         continue; // Skip the barrier object
                     }
