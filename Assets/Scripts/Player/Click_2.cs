@@ -7,6 +7,7 @@ using TMPro;
 
 public class Click_2 : MonoBehaviour
 {
+    float maxDistance = 4.5f;
     private Renderer gunRenderer;
     private string currentGunColor;
 
@@ -373,7 +374,7 @@ public class Click_2 : MonoBehaviour
         RaycastHit hit;
         bool ammoFlag = true;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, maxDistance))
         {
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
@@ -489,7 +490,7 @@ public class Click_2 : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, maxDistance))
         {
             GameObject clickedObject = hit.collider.gameObject;
             Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
