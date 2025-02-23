@@ -31,9 +31,61 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Material blackMaterial;
     [SerializeField] private Material brownMaterial;
 
+    // Checks if color has been discovered
+    private Dictionary<string, bool> discoveredColors = new Dictionary<string, bool>();
+    public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
+    public Sprite undiscoveredColorIcon;
+    [SerializeField] private Sprite redIcon;
+    [SerializeField] private Sprite redOrangeIcon;
+    [SerializeField] private Sprite orangeIcon;
+    [SerializeField] private Sprite yellowOrangeIcon;
+    [SerializeField] private Sprite yellowIcon;
+    [SerializeField] private Sprite yellowGreenIcon;
+    [SerializeField] private Sprite greenIcon;
+    [SerializeField] private Sprite blueGreenIcon;
+    [SerializeField] private Sprite blueIcon;
+    [SerializeField] private Sprite bluePurpleIcon;
+    [SerializeField] private Sprite purpleIcon;
+    [SerializeField] private Sprite redPurpleIcon;
+    [SerializeField] private Sprite whiteIcon;
+    [SerializeField] private Sprite blackIcon;
+    [SerializeField] private Sprite brownIcon;
+
     void Start()
     {
         playerCamera = FindObjectOfType<FirstPerson>();
+
+
+        string[] allColors = { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "Brown",
+                           "RedOrange", "RedPurple", "YellowOrange", "YellowGreen",
+                           "BluePurple", "BlueGreen", "White", "Black"};
+        foreach (string color in allColors)
+        {
+            discoveredColors[color] = false;
+        }
+        foreach (Image icon in colorIcons)
+        {
+            icon.sprite = undiscoveredColorIcon;
+        }
+        foreach (TextMeshProUGUI text in ammoTexts)
+        {
+            text.text = "";
+        }
+        colorSprites["Red"] = redIcon;
+        colorSprites["RedOrange"] = redOrangeIcon;
+        colorSprites["Orange"] = orangeIcon;
+        colorSprites["YellowOrange"] = yellowOrangeIcon;
+        colorSprites["Yellow"] = yellowIcon;
+        colorSprites["YellowGreen"] = yellowGreenIcon;
+        colorSprites["Green"] = greenIcon;
+        colorSprites["BlueGreen"] = blueGreenIcon;
+        colorSprites["Blue"] = blueIcon;
+        colorSprites["BluePurple"] = bluePurpleIcon;
+        colorSprites["Purple"] = purpleIcon;
+        colorSprites["RedPurple"] = redPurpleIcon;
+        colorSprites["White"] = whiteIcon;
+        colorSprites["Black"] = blackIcon;
+        colorSprites["Brown"] = brownIcon;
     }
 
     // Update is called once per frame
@@ -45,7 +97,7 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    void ToggleUI()
+    private void ToggleUI()
     {
         if (GameManager.inMenu)
         {
@@ -68,7 +120,7 @@ public class AmmoUI : MonoBehaviour
         
     }
 
-    void UpdateAmmoUI()
+    private void UpdateAmmoUI()
     {
         Dictionary<string, int> ammoInventory = AmmoManager.Instance.GetAmmoInventory();
         for (int i = 0; i < colorIcons.Count; i++)
@@ -77,16 +129,23 @@ public class AmmoUI : MonoBehaviour
 
             if (ammoInventory.ContainsKey(colorKey))
             {
-                ammoTexts[i].text = ammoInventory.ContainsKey(colorKey) ? ammoInventory[colorKey].ToString() : "0";
-
-                Button iconButton = colorIcons[i].GetComponent<Button>();
-                iconButton.onClick.RemoveAllListeners();
-                iconButton.onClick.AddListener(() => SelectColor(colorKey));
+                if(!discoveredColors[colorKey])
+                {
+                    colorIcons[i].sprite = undiscoveredColorIcon;
+                }
+                else
+                {
+                    colorIcons[i].sprite = colorSprites[colorKey];
+                    ammoTexts[i].text = ammoInventory[colorKey].ToString();
+                    Button iconButton = colorIcons[i].GetComponent<Button>();
+                    iconButton.onClick.RemoveAllListeners();
+                    iconButton.onClick.AddListener(() => SelectColor(colorKey));
+                }
             }
         }
     }
 
-    void SelectColor(string colorKey)
+    private void SelectColor(string colorKey)
     {
         if(AmmoManager.Instance.GetCurrentAmmo(colorKey) != 0){
             Debug.Log("Selected color: " + colorKey);
@@ -107,5 +166,14 @@ public class AmmoUI : MonoBehaviour
             return;
         }
         FindObjectOfType<AudioManager>().Play("Select");
+    }
+
+    public void DiscoverColor(string colorKey)
+    {
+        if(!discoveredColors[colorKey])
+        {
+            discoveredColors[colorKey] = true;
+            UpdateAmmoUI();
+        }
     }
 }
