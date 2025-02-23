@@ -20,6 +20,9 @@ public class ColorButtonManager : MonoBehaviour
     private string slotThreeColor;
     private int currentSlot;
 
+    public Click_2 colorTracker;
+    public AmmoUI ammoUI;
+
     private void Start()
     {
         if (colorSelectionPanel != null)
@@ -174,8 +177,39 @@ public class ColorButtonManager : MonoBehaviour
     public void GainMixedColor() {
         // Add the new color to the ammo inventory and update the UI
         AmmoManager.Instance.AddAmmo(1, slotThreeColor);
+        ammoUI.DiscoverColor(slotThreeColor);
+
+        // Add color to the scrolling on brush
+        if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
+            {
+                colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotThreeColor)); // Add the absorbed color to the list
+                colorTracker.absorbedColorTags.Add(slotThreeColor); // Add the absorbed color tag to the list
+                colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+            }
         // remove the two colors used from the ammo inventory and update the UI
         AmmoManager.Instance.UseAmmo(1, slotOneColor); AmmoManager.Instance.UseAmmo(1, slotTwoColor);
+
+        // Remove the colors to the scrolling on brush
+        if(AmmoManager.Instance.GetCurrentAmmo(slotThreeColor) == 0)
+        {
+            colorTracker.absorbedColors.Remove(colorTracker.GetMaterialFromString(slotThreeColor));
+            colorTracker.absorbedColorTags.Remove(slotThreeColor);
+            if(colorTracker.absorbedColorTags.Count == 1)
+            {
+                colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
+            }
+            else if(colorTracker.absorbedColorTags.Count == 0)
+            {
+                colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+            }else
+            {
+                colorTracker.currentIndex = (colorTracker.currentIndex - 1 + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
+                colorTracker.currentIndex2 = (colorTracker.currentIndex2 - 1 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
+                colorTracker.ApplyColor(colorTracker.absorbedColors[colorTracker.currentIndex], colorTracker.absorbedColorTags[colorTracker.currentIndex2]);
+            }
+        }
+
         // clear all slots and colors
         slotOneColor = null; slotTwoColor = null; slotThreeColor = null; currentSlot = 0; slotOneButton.GetComponent<Image>().color = Color.white; slotTwoButton.GetComponent<Image>().color = Color.white; slotThreeButton.GetComponent<Image>().color = Color.white; slotThreeButton.SetActive(false);
     }

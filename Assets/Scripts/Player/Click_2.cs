@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 // portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
@@ -48,6 +49,7 @@ public class Click_2 : MonoBehaviour
     public int currentIndex2 = 0;
 
     public AmmoUI ammoUI;
+    public VictoryUI victoryUI;
     
     void Start()
     {   
@@ -222,10 +224,8 @@ public class Click_2 : MonoBehaviour
 
         if (count == CorrectTotal)
         {
-
+            victoryUI.ShowVictoryMessage();
             turnOffBarrier();
-
-
         }
 
 

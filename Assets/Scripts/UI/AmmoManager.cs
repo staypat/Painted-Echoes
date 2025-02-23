@@ -6,7 +6,6 @@ using UnityEngine;
 public class AmmoManager : MonoBehaviour
 {
     public static AmmoManager Instance { get; private set; }
-    public int maxAmmo = 30;  // Max ammo that can be held
     private int currentAmmo;   // Current ammo
     // Create a list of all the colors we want to use as strings
     private List<string> colors = new List<string> { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "RedPurple", "RedOrange", "YellowOrange", "YellowGreen", "BlueGreen", "BluePurple", "White", "Black", "Brown" };
@@ -25,8 +24,6 @@ public class AmmoManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        currentAmmo = maxAmmo;  // Initialize with max ammo
 
         // Initialize the color count dictionary
         foreach (string color in colors)
@@ -50,11 +47,9 @@ public class AmmoManager : MonoBehaviour
         }
         return false;  // Not enough ammo
     }
-
-    // Add ammo, but cap it at maxAmmo
     public void AddAmmo(int amount, string color)
     {
-        colorCount[color] = Mathf.Min(colorCount[color] + amount, maxAmmo);
+        colorCount[color] = colorCount[color] + amount;
     }
 
     // Get current ammo count
