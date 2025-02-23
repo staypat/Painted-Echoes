@@ -9900,7 +9900,7 @@ RectTransform:
   m_GameObject: {fileID: 345119278}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.2727273, y: 1.7857144, z: 1}
+  m_LocalScale: {x: 2.2727275, y: 1.7857144, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1447409495}
@@ -20482,6 +20482,7 @@ MonoBehaviour:
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
   currentIndex: 12
   currentIndex2: 12
+  ammoUI: {fileID: 1601193341}
 --- !u!114 &694720897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36861,7 +36862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90.7, y: -4}
+  m_AnchoredPosition: {x: 89, y: -4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254661131
@@ -41995,7 +41996,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90.9, y: -4}
+  m_AnchoredPosition: {x: 90, y: -4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1447409496
@@ -45717,6 +45718,22 @@ MonoBehaviour:
   whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
   blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
   brownMaterial: {fileID: 2100000, guid: f65ae2328b917444e825f50d7707f768, type: 2}
+  undiscoveredColorIcon: {fileID: 21300000, guid: 32e6ccef1ebca44439f774c85cb89e47, type: 3}
+  redIcon: {fileID: 21300000, guid: 8afb6599ff75265409ef8b89d201c665, type: 3}
+  redOrangeIcon: {fileID: 21300000, guid: 2a14ea49cb255d7498266bc8d180452b, type: 3}
+  orangeIcon: {fileID: 21300000, guid: 6e2992f4935e26a4ab14d6051cf93e6e, type: 3}
+  yellowOrangeIcon: {fileID: 21300000, guid: b33de3f62d64be34d838b331e70f34d5, type: 3}
+  yellowIcon: {fileID: 21300000, guid: 81d990259b8deba4fa60287f632bd18d, type: 3}
+  yellowGreenIcon: {fileID: 21300000, guid: 06772814fa2676042b2ac0d7915f01ad, type: 3}
+  greenIcon: {fileID: 21300000, guid: 8de2b46cc750a354e893deffa85e7ee8, type: 3}
+  blueGreenIcon: {fileID: 21300000, guid: 1b3dce468c6732d45a6ca9d7d423e799, type: 3}
+  blueIcon: {fileID: 21300000, guid: 9ceebf5147029b14c9c97d4300e542e3, type: 3}
+  bluePurpleIcon: {fileID: 21300000, guid: 574b54e7c114b794a81c5d2dc5aabb98, type: 3}
+  purpleIcon: {fileID: 21300000, guid: 80635ac652c52f54487519f68c6ce1bb, type: 3}
+  redPurpleIcon: {fileID: 21300000, guid: 2f59426a493a3ff40a2109d3b5352b25, type: 3}
+  whiteIcon: {fileID: 21300000, guid: 6ad15ed7b86c990429a8e83d69971fd4, type: 3}
+  blackIcon: {fileID: 21300000, guid: e8d3ce9c40fd4dc46aeb2c3e364969f3, type: 3}
+  brownIcon: {fileID: 21300000, guid: c3b236510b0d1ab49a28246ee3de9ac9, type: 3}
 --- !u!1 &1605050045
 GameObject:
   m_ObjectHideFlags: 0
@@ -60122,7 +60139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90.4, y: -4}
+  m_AnchoredPosition: {x: 89.5, y: -4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2090223872

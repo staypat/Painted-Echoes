@@ -46,6 +46,8 @@ public class Click_2 : MonoBehaviour
 
     public int currentIndex = 0;
     public int currentIndex2 = 0;
+
+    public AmmoUI ammoUI;
     
     void Start()
     {   
@@ -542,6 +544,10 @@ public class Click_2 : MonoBehaviour
 
             // Increse ammo count for the absorbed color
             AmmoManager.Instance.AddAmmo(1, currentGunColor);
+            if (ammoUI != null)
+            {
+                ammoUI.DiscoverColor(currentGunColor);
+            }
             if (!absorbedColors.Contains(absorbedColor) && !absorbedColorTags.Contains(currentGunColor))
             {
                 absorbedColors.Add(GetMaterialFromString(currentGunColor)); // Add the absorbed color to the list
