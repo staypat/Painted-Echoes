@@ -5,7 +5,8 @@ using UnityEngine;
 public class PaintbrushInteract : ObjectInteract
 {
     [SerializeField] private GameObject uiElement; // Assign in Inspector
-    // [SerializeField] private GameObject objectToEnable; // Assign in Inspector
+    [SerializeField] private GameObject objectToEnable; // Assign in Inspector
+    public InventorySelection inventorySelection; // Assign in Inspector
 
     void Awake()
     {
@@ -17,6 +18,6 @@ public class PaintbrushInteract : ObjectInteract
         base.Interact(); // Optional: Call the base method for debug log
         GameManager.Instance.hasPaintbrush = true; // Mark that the player now owns the paintbrush
         uiElement.SetActive(true); // Enable UI
-        // objectToEnable.SetActive(true); // Enable other GameObject
+        inventorySelection.SelectSlot(0); // Select the paintbrush slot
     }
 }
