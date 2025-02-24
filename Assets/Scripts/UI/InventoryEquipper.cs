@@ -50,6 +50,16 @@ public class InventoryEquipper : MonoBehaviour
             heldImages[0].enabled = true;
             heldImages[0].color = new Color(255, 255, 255, 255);
         }
+        if (index == 2 && index <= heldImages.Length)
+        {
+            heldImages[1].enabled = true;
+            heldImages[1].color = new Color(255, 255, 255, 255);
+        }
+        if (index == 3 && index <= heldImages.Length)
+        {
+            heldImages[2].enabled = true;
+            heldImages[2].color = new Color(255, 255, 255, 255);
+        }
 
         selectedIndex = index;
     }
