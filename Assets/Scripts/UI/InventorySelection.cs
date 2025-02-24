@@ -44,6 +44,18 @@ public class InventorySelection : MonoBehaviour
             return;
         }
 
+        if (slotIndex == 1 && !GameManager.Instance.hasPhotograph)
+        {
+            for (int i = 0; i < inventorySlots.Length; i++)
+            {
+                inventorySlots[i].color = defaultColor;
+            }
+            inventorySlots[slotIndex].color = selectedColor;
+            selectedSlot = slotIndex;
+            inventoryEquipper.EquipItem(3);
+            return;
+        }
+
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             inventorySlots[i].color = defaultColor;

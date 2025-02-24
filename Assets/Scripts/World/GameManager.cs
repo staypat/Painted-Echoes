@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public static bool inMenu = false; // Flag to check if the player is in the menu or not
-    public bool hasPaintbrush = false; // Track if the player has picked up the paintbrush
+    public bool hasPaintbrush = false; // Track if the player has picked up the paintbrush;
+    public bool hasPhotograph = false; // Track if the player has picked up the photograph
+
 
     private FirstPerson playerCamera;
     void Awake() {
