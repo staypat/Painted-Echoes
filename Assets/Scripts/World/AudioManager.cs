@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public Sound[] sounds;
 
-    public static float musicVolume = 1f;
+    public static float musicVolume = 0f; // temp disable music to save your sanity
     public static float sfxVolume = 1f;
     void Awake()
     {

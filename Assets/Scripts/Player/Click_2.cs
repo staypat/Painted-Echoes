@@ -226,6 +226,7 @@ public class Click_2 : MonoBehaviour
         if (count == CorrectTotal)
         {
             victoryUI.ShowVictoryMessage();
+            FindObjectOfType<AudioManager>().Play("LevelComplete");
             turnOffBarrier();
         }
 
