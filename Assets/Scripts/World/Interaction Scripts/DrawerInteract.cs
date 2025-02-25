@@ -6,7 +6,7 @@ public class DrawerInteract : ObjectInteract
 {
     [SerializeField] private Axis moveAxis = Axis.Z;
     [SerializeField] private float moveDistance = 0.6f;
-    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float moveSpeed = 1.2f;
     
     private Vector3 closedLocalPosition;
     private bool isOpen;
@@ -23,6 +23,14 @@ public class DrawerInteract : ObjectInteract
     public override void Interact()
     {
         if (isMoving) return;
+        if (isOpen)
+        {
+            FindObjectOfType<AudioManager>().Play("DrawerClose");
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("DrawerOpen");
+        }
         StartCoroutine(MoveDrawer());
     }
 

@@ -41,6 +41,7 @@ public class InventoryEquipper : MonoBehaviour
         if (index == 0 && index < heldObjects.Length)
         {
             heldObjects[index].SetActive(true);
+            FindObjectOfType<AudioManager>().Play("GunEquip");
         }
 
         // Hardcoded; will need to fix for additional photos
@@ -49,16 +50,19 @@ public class InventoryEquipper : MonoBehaviour
         {
             heldImages[0].enabled = true;
             heldImages[0].color = new Color(255, 255, 255, 255);
+            FindObjectOfType<AudioManager>().Play("PhotoEquip");
         }
         if (index == 2 && index <= heldImages.Length)
         {
             heldImages[1].enabled = true;
             heldImages[1].color = new Color(255, 255, 255, 255);
+            FindObjectOfType<AudioManager>().Play("PhotoEquip");
         }
         if (index == 3 && index <= heldImages.Length)
         {
             heldImages[2].enabled = true;
             heldImages[2].color = new Color(255, 255, 255, 255);
+            FindObjectOfType<AudioManager>().Play("PhotoEquip");
         }
 
         selectedIndex = index;

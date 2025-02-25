@@ -22,6 +22,7 @@ public class MouseOverButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.localScale = originalScale * scaleFactor;
+        FindObjectOfType<AudioManager>().Play("UIMove");
     }
 
     public void OnPointerExit(PointerEventData eventData)
