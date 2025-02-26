@@ -7,9 +7,9 @@ public class FirstPerson : MonoBehaviour
     public float mouseSensitivity = 100f;
     public Transform playerBody;
     
-    private float xRotation = 0f;
+    public float xRotation = 0f;
 
-    private bool canLook = true; // Flag to enable/disable camera movement
+    public bool canLook = true; // Flag to enable/disable camera movement
 
 
     void Start()
