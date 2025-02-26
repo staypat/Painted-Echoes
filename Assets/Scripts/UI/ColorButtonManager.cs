@@ -240,7 +240,7 @@ public class ColorButtonManager : MonoBehaviour
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
                 // change the position of the button to be in a row across the screen
-                newButton.transform.localPosition = new Vector3(-960 + 125 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
+                newButton.transform.localPosition = new Vector3(-960 + 80 + 120 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
 
                 //newButton.GetComponentInChildren<Text>().text = $"{ammoType} ({amount})"; // Does not work
 
@@ -270,7 +270,7 @@ public class ColorButtonManager : MonoBehaviour
     {
         switch (ammoType)
         {
-            case "Red": return Color.red;
+            case "Red": return GameManager.Instance.whiteMaterial.color;
             case "Blue": return Color.blue;
             case "Yellow": return Color.yellow;
             case "Orange": return new Color(1.0f, 0.5f, 0f);

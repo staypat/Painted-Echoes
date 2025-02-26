@@ -78,4 +78,10 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    public bool IsPaused(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        return !s.source.isPlaying;
+    }
 }

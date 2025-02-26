@@ -10,6 +10,22 @@ public class GameManager : MonoBehaviour
     public bool hasPaintbrush = false; // Track if the player has picked up the paintbrush;
     public bool hasPhotograph = false; // Track if the player has picked up the photograph
 
+    public Material whiteMaterial; // Material for the white color
+    public Material blackMaterial;
+    public Material redMaterial;
+    public Material blueMaterial;
+    public Material yellowMaterial;
+    public Material orangeMaterial;
+    public Material purpleMaterial;
+    public Material greenMaterial;
+    public Material brownMaterial;
+    public Material redOrangeMaterial;
+    public Material redPurpleMaterial;
+    public Material yellowOrangeMaterial;
+    public Material yellowGreenMaterial;
+    public Material bluePurpleMaterial;
+    public Material blueGreenMaterial;
+    public Material grayMaterial;
 
     private FirstPerson playerCamera;
     void Awake() {
@@ -26,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         playerCamera = FindObjectOfType<FirstPerson>();
+        //Screen.fullScreen = true;
     }
 
     public void EnterMenu() {
