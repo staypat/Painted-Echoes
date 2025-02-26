@@ -16,19 +16,30 @@ public class GameState
 
     // Click_2-related variables
     public float maxDistance;
+    public string gunRendererName;
     public string currentGunColor;
     public string currentTag;
-    public int currentIndex;
-    public int currentIndex2;
-    public string gunRendererName;
     public string currentRoomName;
     public string brushTipName;
+    public List<string> absorbedColorTags = new List<string>();
+    public List<string> absorbedColorMaterialNames = new List<string>(); // Store material names instead of references
+    public int currentIndex;
+    public int currentIndex2;
+
+    // Dictionary storage (Converting Dictionary<string, Color> to Lists)
+    public List<string> correctHouseColorKeys = new List<string>();
+    public List<Color> correctHouseColorValues = new List<Color>();
+    public List<string> mismatchedColorKeys = new List<string>();
+    public List<Color> mismatchedColorValues = new List<Color>();
 
     // Renderer-related variables
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
 
-
+    // AmmoManager-related variables
+    public int currentAmmo;
+    public List<string> colors = new List<string>();
+    public List<int> colorCounts = new List<int>(); // Parallel list to store color quantities
 
 
 
@@ -100,15 +111,44 @@ public class GameManager : MonoBehaviour
     {
         GameState gameState = new GameState();
 
-        // Save variables from Click_2
-        gameState.maxDistance = clickScript.maxDistance;
-        gameState.currentGunColor = clickScript.currentGunColor;
-        gameState.currentTag = clickScript.currentTag;
-        gameState.currentIndex = clickScript.currentIndex;
-        gameState.currentIndex2 = clickScript.currentIndex2;
-        gameState.gunRendererName = clickScript.gunRenderer != null ? clickScript.gunRenderer.gameObject.name : "";
-        gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
-        gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
+        Click_2 clickScript = FindObjectOfType<Click_2>();
+        if (clickScript != null)
+        {
+            gameState.maxDistance = clickScript.maxDistance;
+            gameState.currentGunColor = clickScript.currentGunColor;
+            gameState.currentTag = clickScript.currentTag;
+            gameState.currentIndex = clickScript.currentIndex;
+            gameState.currentIndex2 = clickScript.currentIndex2;
+            gameState.gunRendererName = clickScript.gunRenderer != null ? clickScript.gunRenderer.gameObject.name : "";
+            gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
+            gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
+
+            // Save absorbed colors
+            gameState.absorbedColorTags = new List<string>(clickScript.absorbedColorTags);
+            gameState.absorbedColorMaterialNames.Clear();
+            foreach (Material mat in clickScript.absorbedColors)
+            {
+                gameState.absorbedColorMaterialNames.Add(mat.name); // Save material names
+            }
+
+            // Save CorrectHouseColors dictionary
+            gameState.correctHouseColorKeys.Clear();
+            gameState.correctHouseColorValues.Clear();
+            foreach (var pair in clickScript.CorrectHouseColors)
+            {
+                gameState.correctHouseColorKeys.Add(pair.Key);
+                gameState.correctHouseColorValues.Add(pair.Value);
+            }
+
+            // Save MismatchedColors dictionary
+            gameState.mismatchedColorKeys.Clear();
+            gameState.mismatchedColorValues.Clear();
+            foreach (var pair in clickScript.MismatchedColors)
+            {
+                gameState.mismatchedColorKeys.Add(pair.Key);
+                gameState.mismatchedColorValues.Add(pair.Value);
+            }
+        }
 
         // Save camera settings
         gameState.mouseSensitivity = playerCamera.mouseSensitivity;
@@ -143,6 +183,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // Save ammo data
+        AmmoManager ammoManager = AmmoManager.Instance;
+        if (ammoManager != null)
+        {
+            gameState.currentAmmo = ammoManager.currentAmmo;
+            gameState.colors = ammoManager.colors;
+            gameState.colorCounts.Clear();
+
+            foreach (var color in ammoManager.colors)
+            {
+                int count = ammoManager.colorCount.ContainsKey(color) ? ammoManager.colorCount[color] : 0;
+                gameState.colorCounts.Add(count);
+            }
+        }
+
+
         // Serialize and save to file
         string json = JsonUtility.ToJson(gameState, true);
         File.WriteAllText(filePath, json);
@@ -156,7 +212,10 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
-            // Load variables into Click_2
+        // Load Click_2 data
+        Click_2 clickScript = FindObjectOfType<Click_2>();
+        if (clickScript != null)
+        {
             clickScript.maxDistance = gameState.maxDistance;
             clickScript.currentGunColor = gameState.currentGunColor;
             clickScript.currentTag = gameState.currentTag;
@@ -165,6 +224,33 @@ public class GameManager : MonoBehaviour
             clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
             clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
             clickScript.brushTip = GameObject.Find(gameState.brushTipName);
+
+            // Load absorbed colors
+            clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+            clickScript.absorbedColors.Clear();
+            foreach (string matName in gameState.absorbedColorMaterialNames)
+            {
+                Material foundMaterial = Resources.Load<Material>(matName);
+                if (foundMaterial != null)
+                {
+                    clickScript.absorbedColors.Add(foundMaterial);
+                }
+            }
+
+            // Load CorrectHouseColors dictionary
+            clickScript.CorrectHouseColors.Clear();
+            for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
+            {
+                clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+            }
+
+            // Load MismatchedColors dictionary
+            clickScript.MismatchedColors.Clear();
+            for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+            {
+                clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+            }
+        }
 
             // Load camera settings
             playerCamera.mouseSensitivity = gameState.mouseSensitivity;
@@ -194,6 +280,21 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+
+            // Load ammo data
+            AmmoManager ammoManager = AmmoManager.Instance;
+            if (ammoManager != null)
+            {
+                ammoManager.currentAmmo = gameState.currentAmmo;
+                ammoManager.colors = gameState.colors;
+                ammoManager.colorCount.Clear();
+
+                for (int i = 0; i < gameState.colors.Count; i++)
+                {
+                    ammoManager.colorCount[gameState.colors[i]] = gameState.colorCounts[i];
+                }
+            }
+
 
             Debug.Log("Game State Loaded Successfully");
         }
