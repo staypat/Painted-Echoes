@@ -50,7 +50,23 @@ public class GameManager : MonoBehaviour
     public bool hasPhotograph = false; // Track if the player has picked up the photograph
     public bool tutorialKey = false; // Track if the player has picked up the tutorial key
 
-    // Reference to the player camera and Click_2 script
+    public Material whiteMaterial; // Material for the white color
+    public Material blackMaterial;
+    public Material redMaterial;
+    public Material blueMaterial;
+    public Material yellowMaterial;
+    public Material orangeMaterial;
+    public Material purpleMaterial;
+    public Material greenMaterial;
+    public Material brownMaterial;
+    public Material redOrangeMaterial;
+    public Material redPurpleMaterial;
+    public Material yellowOrangeMaterial;
+    public Material yellowGreenMaterial;
+    public Material bluePurpleMaterial;
+    public Material blueGreenMaterial;
+    public Material grayMaterial;
+
     private FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
 
@@ -74,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
     
         playerCamera = FindObjectOfType<FirstPerson>();
+        //Screen.fullScreen = true;
         clickScript = FindObjectOfType<Click_2>(); // Make sure Click_2 is attached to a GameObject in the scene
         filePath = Application.persistentDataPath + "/gameState.json"; // Path to save/load game state
     }
@@ -196,7 +213,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         if (playerCamera != null)
             playerCamera.SetCameraActive(false);
-        Time.timeScale = 0.0f; // Pause the game
+        //Time.timeScale = 0.0f; // Pause the game
     }
 
     public void ExitMenu()
@@ -207,7 +224,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         if (playerCamera != null)
             playerCamera.SetCameraActive(true);
-        Time.timeScale = 1.0f; // Unpause the game
+        //Time.timeScale = 1.0f; // Unpause the game
     }
 
     void Update()

@@ -166,9 +166,10 @@ public class AmmoUI : MonoBehaviour
         }else
         {
             Debug.Log("No ammo for color: " + colorKey);
+            AudioManager.instance.Play("UIError");
             return;
         }
-        FindObjectOfType<AudioManager>().Play("Select");
+        AudioManager.instance.Play("Select");
     }
 
     public void DiscoverColor(string colorKey)

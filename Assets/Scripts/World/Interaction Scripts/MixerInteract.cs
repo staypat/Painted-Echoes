@@ -29,8 +29,7 @@ public class MixerInteract : ObjectInteract
         if (GameManager.inMenu)
         {
             if (mixerUIPanel.activeSelf) {
-                mixerUIPanel.SetActive(false); // Hide the UI if in menu
-                GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
+                ExitMixer();
             }
             else
             {
@@ -44,6 +43,16 @@ public class MixerInteract : ObjectInteract
         
     }
 
+    public void ExitMixer()
+    {
+        if (mixerUIPanel != null)
+        {
+            mixerUIPanel.SetActive(false); // Hide the UI if in menu
+            GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
+            AudioManager.instance.Play("UIBack");
+        }
+    }
+
     private void MixColors()
     {
         if (mixerUIPanel != null)
@@ -51,6 +60,7 @@ public class MixerInteract : ObjectInteract
             GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
+            AudioManager.instance.Play("UIOpen");
             // disable the slotThreeButton
             slotThreeButton.SetActive(false);
         }
