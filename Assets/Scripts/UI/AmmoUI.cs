@@ -8,6 +8,7 @@ public class AmmoUI : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject ammoBar;
+    public GameObject ammoPanel;
     public List<Image> colorIcons;
     public List<TextMeshProUGUI> ammoTexts;
     private FirstPerson playerCamera;
@@ -104,6 +105,7 @@ public class AmmoUI : MonoBehaviour
             if(ammoBar.activeSelf)
             {
                 ammoBar.SetActive(false); // Hide the UI if in menu
+                ammoPanel.SetActive(false);
                 GameManager.Instance.ExitMenu();
             }
             else
@@ -116,6 +118,7 @@ public class AmmoUI : MonoBehaviour
             GameManager.Instance.EnterMenu();
             UpdateAmmoUI();
             ammoBar.SetActive(true);
+            ammoPanel.SetActive(true);
         }
         
     }
