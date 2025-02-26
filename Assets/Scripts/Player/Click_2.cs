@@ -28,24 +28,6 @@ public class Click_2 : MonoBehaviour
     public List<Material> absorbedColors = new List<Material>();
     public List<string> absorbedColorTags = new List<string>();
 
-    // Create serialized fields for the materials
-    [SerializeField] private Material whiteMaterial;
-    [SerializeField] private Material blackMaterial;
-    [SerializeField] private Material redMaterial;
-    [SerializeField] private Material blueMaterial;
-    [SerializeField] private Material yellowMaterial;
-    [SerializeField] private Material orangeMaterial;
-    [SerializeField] private Material purpleMaterial;
-    [SerializeField] private Material greenMaterial;
-    [SerializeField] private Material brownMaterial;
-    [SerializeField] private Material redOrangeMaterial;
-    [SerializeField] private Material redPurpleMaterial;
-    [SerializeField] private Material yellowOrangeMaterial;
-    [SerializeField] private Material yellowGreenMaterial;
-    [SerializeField] private Material bluePurpleMaterial;
-    [SerializeField] private Material blueGreenMaterial;
-    [SerializeField] private Material grayMaterial;
-
     public int currentIndex = 0;
     public int currentIndex2 = 0;
 
@@ -400,7 +382,7 @@ public class Click_2 : MonoBehaviour
                             Color originalColor = CorrectHouseColors[childKey]; // Retrieve original color
                             Renderer childRenderer = child.GetComponent<Renderer>();
 
-                            if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
+                            if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == GameManager.Instance.grayMaterial.color)
                             {
                                 childRenderer.material.color = originalColor;
                                 if (ammoFlag)
@@ -444,7 +426,7 @@ public class Click_2 : MonoBehaviour
                     foreach (Transform child in subparent)
                     {
                         Renderer childRenderer = child.GetComponent<Renderer>();
-                        if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
+                        if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == GameManager.Instance.grayMaterial.color)
                         {
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
@@ -502,42 +484,42 @@ public class Click_2 : MonoBehaviour
             Transform subparent = clickedObject.transform.parent;
 
             // if the object is already gray, don't absorb the color
-            if (absorbedColor.color == grayMaterial.color)
+            if (absorbedColor.color == GameManager.Instance.grayMaterial.color)
             {
                 //Debug.Log("Object is already gray, skipping absorption.");
                 return;
             }
 
             // Set current gun color to the absorbed color, only if the color of the absorbed material matches one of the predefined materials
-            if (absorbedColor.color == whiteMaterial.color) {
+            if (absorbedColor.color == GameManager.Instance.whiteMaterial.color) {
                 currentGunColor = "White";
-            } else if (absorbedColor.color == blackMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.blackMaterial.color) {
                 currentGunColor = "Black";
-            } else if (absorbedColor.color == redMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.redMaterial.color) {
                 currentGunColor = "Red";
-            } else if (absorbedColor.color == blueMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.blueMaterial.color) {
                 currentGunColor = "Blue";
-            } else if (absorbedColor.color == yellowMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.yellowMaterial.color) {
                 currentGunColor = "Yellow";
-            } else if (absorbedColor.color == orangeMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.orangeMaterial.color) {
                 currentGunColor = "Orange";
-            } else if (absorbedColor.color == purpleMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.purpleMaterial.color) {
                 currentGunColor = "Purple";
-            } else if (absorbedColor.color == greenMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.greenMaterial.color) {
                 currentGunColor = "Green";
-            } else if (absorbedColor.color == brownMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.brownMaterial.color) {
                 currentGunColor = "Brown";
-            } else if (absorbedColor.color == redOrangeMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.redOrangeMaterial.color) {
                 currentGunColor = "RedOrange";
-            } else if (absorbedColor.color == redPurpleMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.redPurpleMaterial.color) {
                 currentGunColor = "RedPurple";
-            } else if (absorbedColor.color == yellowOrangeMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.yellowOrangeMaterial.color) {
                 currentGunColor = "YellowOrange";
-            } else if (absorbedColor.color == yellowGreenMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.yellowGreenMaterial.color) {
                 currentGunColor = "YellowGreen";
-            } else if (absorbedColor.color == bluePurpleMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.bluePurpleMaterial.color) {
                 currentGunColor = "BluePurple";
-            } else if (absorbedColor.color == blueGreenMaterial.color) {
+            } else if (absorbedColor.color == GameManager.Instance.blueGreenMaterial.color) {
                 currentGunColor = "BlueGreen";
             } else { return; } // If the color doesn't match any of the predefined materials, don't absorb the color
 
@@ -571,7 +553,7 @@ public class Click_2 : MonoBehaviour
                     Renderer childRenderer = child.GetComponent<Renderer>();
                     if (childRenderer != null)
                     {
-                        childRenderer.material = grayMaterial; // Set color to gray
+                        childRenderer.material = GameManager.Instance.grayMaterial; // Set color to gray
                     }
                 }
                 Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
@@ -579,7 +561,7 @@ public class Click_2 : MonoBehaviour
             else
             {
                 // If no subparent, just turn the clicked object gray
-                clickedRenderer.material = grayMaterial;
+                clickedRenderer.material = GameManager.Instance.grayMaterial;
                 Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
         }
@@ -591,37 +573,37 @@ public class Click_2 : MonoBehaviour
         switch (color)
         {
             case "White":
-                return whiteMaterial;
+                return GameManager.Instance.whiteMaterial;
             case "Black":
-                return blackMaterial;
+                return GameManager.Instance.blackMaterial;
             case "Red":
-                return redMaterial;
+                return GameManager.Instance.redMaterial;
             case "Blue":
-                return blueMaterial;
+                return GameManager.Instance.blueMaterial;
             case "Yellow":
-                return yellowMaterial;
+                return GameManager.Instance.yellowMaterial;
             case "Orange":
-                return orangeMaterial;
+                return GameManager.Instance.orangeMaterial;
             case "Purple":
-                return purpleMaterial;
+                return GameManager.Instance.purpleMaterial;
             case "Green":
-                return greenMaterial;
+                return GameManager.Instance.greenMaterial;
             case "Brown":
-                return brownMaterial;
+                return GameManager.Instance.brownMaterial;
             case "RedOrange":
-                return redOrangeMaterial;
+                return GameManager.Instance.redOrangeMaterial;
             case "RedPurple":
-                return redPurpleMaterial;
+                return GameManager.Instance.redPurpleMaterial;
             case "YellowOrange":
-                return yellowOrangeMaterial;
+                return GameManager.Instance.yellowOrangeMaterial;
             case "YellowGreen":
-                return yellowGreenMaterial;
+                return GameManager.Instance.yellowGreenMaterial;
             case "BluePurple":
-                return bluePurpleMaterial;
+                return GameManager.Instance.bluePurpleMaterial;
             case "BlueGreen":
-                return blueGreenMaterial;
+                return GameManager.Instance.blueGreenMaterial;
             default:
-                return whiteMaterial;
+                return GameManager.Instance.whiteMaterial;
         }
     }
 }
