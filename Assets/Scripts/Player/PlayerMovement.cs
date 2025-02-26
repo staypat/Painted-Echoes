@@ -38,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.inMenu)
+        {
+            rb.velocity = Vector3.zero; // Stop movement when in menu
+            return;
+        }
         // Get input axes
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");

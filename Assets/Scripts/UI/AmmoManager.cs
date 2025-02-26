@@ -28,7 +28,7 @@ public class AmmoManager : MonoBehaviour
         // Initialize the color count dictionary
         foreach (string color in colors)
         {
-            colorCount[color] = 0;
+            colorCount[color] = 0; // change back to 0
         }
     }
 
@@ -63,4 +63,15 @@ public class AmmoManager : MonoBehaviour
         return new Dictionary<string, int>(colorCount);
     }
 
+    public bool HasAmmo()
+    {
+        foreach (KeyValuePair<string, int> kvp in colorCount)
+        {
+            if (kvp.Value > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

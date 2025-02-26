@@ -44,19 +44,28 @@ public class OpenMenu : MonoBehaviour
     {
         menuUI.SetActive(false);
         optionsUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
     }
 
     public void CloseOptions()
     {
         optionsUI.SetActive(false);
         menuUI.SetActive(true);
+        AudioManager.instance.Play("UIBack");
+        // if the theme is unpaused
+        if(!AudioManager.instance.IsPaused("Theme"))
+        {
+            AudioManager.instance.Pause("Theme");
+        }
     }
 
     public void PauseGame()
     {
         GameManager.Instance.EnterMenu();
         menuUI.SetActive(true);
-        //AudioManager.instance.Pause("Theme");
+        AudioManager.instance.Pause("Theme"); // Remove to hear theme music
+        AudioManager.instance.Play("UIOpen");
+
     }
 
     public void UnPauseGame()
@@ -64,24 +73,32 @@ public class OpenMenu : MonoBehaviour
         menuUI.SetActive(false);
         GameManager.Instance.ExitMenu();
         AudioManager.instance.UnPause("Theme");
+        AudioManager.instance.Play("UIBack");
     }
     
     public void OpenEditControls()
     {
         optionsUI.SetActive(false);
         controlsUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.Pause("Theme");
     }
 
     public void CloseEditControls()
     {
         controlsUI.SetActive(false);
         optionsUI.SetActive(true);
+        AudioManager.instance.Play("UIBack");
     }
 
     public void ChangeMusicVolume()
     {
+        // if theme is paused
+        if(AudioManager.instance.IsPaused("Theme"))
+        {
+            AudioManager.instance.UnPause("Theme");
+        }
         AudioManager.musicVolume = MusicVolumeSlider.value;
-        Debug.Log("Music Volume: " + AudioManager.musicVolume);
         AudioManager.instance.UpdateMusicVolume();
     }
 
