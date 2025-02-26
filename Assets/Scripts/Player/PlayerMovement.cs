@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
     private bool isGrounded;
-    private float groundCheckDistance = 0.3f; // Slightly increased
-    private float playerHeight;
+    public float groundCheckDistance = 0.3f; // Slightly increased
+    public float playerHeight;
 
     void Start()
     {
