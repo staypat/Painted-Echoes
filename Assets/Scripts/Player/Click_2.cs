@@ -7,44 +7,44 @@ using TMPro;
 
 public class Click_2 : MonoBehaviour
 {
-    float maxDistance = 4.5f;
-    private Renderer gunRenderer;
-    private string currentGunColor;
+    public float maxDistance = 4.5f;
+    public Renderer gunRenderer;
+    public string currentGunColor;
 
-    private string currentTag = "Default"; // Track the target tag
+    public string currentTag = "Default"; // Track the target tag
 
-    private GameObject currentRoom;
+    public GameObject currentRoom;
     
     // Reference to the brush tip
     public GameObject brushTip;
 
     // Dictionary of Correctly colored house and objects
-    private Dictionary<string, Color> CorrectHouseColors = new Dictionary<string, Color>();
+    public Dictionary<string, Color> CorrectHouseColors = new Dictionary<string, Color>();
     
     // Dictionary of Mismatched House colors and objects
-    private Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>(); 
+    public Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>(); 
 
     // Two lists that help with scrolling through colors
     public List<Material> absorbedColors = new List<Material>();
     public List<string> absorbedColorTags = new List<string>();
 
     // Create serialized fields for the materials
-    [SerializeField] private Material whiteMaterial;
-    [SerializeField] private Material blackMaterial;
-    [SerializeField] private Material redMaterial;
-    [SerializeField] private Material blueMaterial;
-    [SerializeField] private Material yellowMaterial;
-    [SerializeField] private Material orangeMaterial;
-    [SerializeField] private Material purpleMaterial;
-    [SerializeField] private Material greenMaterial;
-    [SerializeField] private Material brownMaterial;
-    [SerializeField] private Material redOrangeMaterial;
-    [SerializeField] private Material redPurpleMaterial;
-    [SerializeField] private Material yellowOrangeMaterial;
-    [SerializeField] private Material yellowGreenMaterial;
-    [SerializeField] private Material bluePurpleMaterial;
-    [SerializeField] private Material blueGreenMaterial;
-    [SerializeField] private Material grayMaterial;
+    [SerializeField] public Material whiteMaterial;
+    [SerializeField] public Material blackMaterial;
+    [SerializeField] public Material redMaterial;
+    [SerializeField] public Material blueMaterial;
+    [SerializeField] public Material yellowMaterial;
+    [SerializeField] public Material orangeMaterial;
+    [SerializeField] public Material purpleMaterial;
+    [SerializeField] public Material greenMaterial;
+    [SerializeField] public Material brownMaterial;
+    [SerializeField] public Material redOrangeMaterial;
+    [SerializeField] public Material redPurpleMaterial;
+    [SerializeField] public Material yellowOrangeMaterial;
+    [SerializeField] public Material yellowGreenMaterial;
+    [SerializeField] public Material bluePurpleMaterial;
+    [SerializeField] public Material blueGreenMaterial;
+    [SerializeField] public Material grayMaterial;
 
     public int currentIndex = 0;
     public int currentIndex2 = 0;
