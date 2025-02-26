@@ -53,6 +53,7 @@ public class Click_2 : MonoBehaviour
     public VictoryUI victoryUI;
 
     public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
+    public PaletteManager paletteManager;
     
     void Start()
     {   
@@ -448,6 +449,7 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
                         }
                     }
+                    paletteManager.updatePaletteUI();
                     ammoFlag = true;
                 }
                 else
@@ -488,6 +490,7 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
                         }
                     }
+                    paletteManager.updatePaletteUI();
                     ammoFlag = true;
                 }
             }
@@ -594,6 +597,9 @@ public class Click_2 : MonoBehaviour
                 clickedRenderer.material = grayMaterial;
                 Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
+            
+            // Update palette UI
+            paletteManager.updatePaletteUI();
         }
     }
 
