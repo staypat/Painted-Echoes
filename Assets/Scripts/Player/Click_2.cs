@@ -51,6 +51,8 @@ public class Click_2 : MonoBehaviour
 
     public AmmoUI ammoUI;
     public VictoryUI victoryUI;
+
+    public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
     
     void Start()
     {   
@@ -403,6 +405,16 @@ public class Click_2 : MonoBehaviour
                             if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == grayMaterial.color)
                             {
                                 childRenderer.material.color = originalColor;
+
+                                if (PaintSplatterPS != null)
+                                {
+                                    ParticleSystem effect = Instantiate(PaintSplatterPS, child.position, Quaternion.identity);
+                                    effect.Play(); // Ensure it's playing
+                                    Debug.Log("Particle System Instantiated at: " + child.position);
+
+                                    Destroy(effect.gameObject, effect.main.duration); // Destroy after it finishes
+                                }
+
                                 if (ammoFlag)
                                 {
                                     AmmoManager.Instance.UseAmmo(1, currentGunColor);
