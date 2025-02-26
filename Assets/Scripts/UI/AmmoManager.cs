@@ -63,4 +63,15 @@ public class AmmoManager : MonoBehaviour
         return new Dictionary<string, int>(colorCount);
     }
 
+    public bool HasAmmo()
+    {
+        foreach (KeyValuePair<string, int> kvp in colorCount)
+        {
+            if (kvp.Value > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

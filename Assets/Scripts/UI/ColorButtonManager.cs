@@ -51,7 +51,7 @@ public class ColorButtonManager : MonoBehaviour
 
     public void ShowColorSelectionPanel(int slot)
     {
-        if (colorSelectionPanel != null)
+        if (colorSelectionPanel != null && AmmoManager.Instance.HasAmmo())
         {
             bool isActive = colorSelectionPanel.activeSelf;
             colorSelectionPanel.SetActive(!isActive);
@@ -72,7 +72,12 @@ public class ColorButtonManager : MonoBehaviour
 
                 // Populate ammo buttons dynamically
                 PopulateAmmoButtons();
+
+                AudioManager.instance.Play("UIOpen");
             }
+        }
+        else{
+            AudioManager.instance.Play("UIError");
         }
     }
 
@@ -212,6 +217,8 @@ public class ColorButtonManager : MonoBehaviour
 
         // clear all slots and colors
         slotOneColor = null; slotTwoColor = null; slotThreeColor = null; currentSlot = 0; slotOneButton.GetComponent<Image>().color = Color.white; slotTwoButton.GetComponent<Image>().color = Color.white; slotThreeButton.GetComponent<Image>().color = Color.white; slotThreeButton.SetActive(false);
+
+        AudioManager.instance.Play("UIApply");
     }
 
     private void PopulateAmmoButtons()
@@ -253,6 +260,11 @@ public class ColorButtonManager : MonoBehaviour
 
     private void SelectAmmo(string ammoType)
     {
+        if ((ammoType == slotOneColor && currentSlot == 2)|| ammoType == slotTwoColor && currentSlot == 1)
+        {
+            AudioManager.instance.Play("UIError");
+            return;
+        }
         Debug.Log($"Selected Ammo: {ammoType}");
         // Here, you can set the player's ammo type or update the UI
 
@@ -264,28 +276,30 @@ public class ColorButtonManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        AudioManager.instance.Play("Select");
     }
 
     private Color GetColorFromAmmoType(string ammoType)
     {
         switch (ammoType)
         {
-            case "Red": return GameManager.Instance.whiteMaterial.color;
-            case "Blue": return Color.blue;
-            case "Yellow": return Color.yellow;
-            case "Orange": return new Color(1.0f, 0.5f, 0f);
-            case "Purple": return new Color(0.5f, 0f, 0.5f);
-            case "Green": return Color.green;
-            case "RedPurple": return new Color(0.7f, 0f, 0.4f);
-            case "RedOrange": return new Color(1.0f, 0.3f, 0f);
-            case "YellowOrange": return new Color(1.0f, 0.8f, 0.2f);
-            case "YellowGreen": return new Color(0.6f, 1.0f, 0.2f);
-            case "BlueGreen": return new Color(0f, 0.6f, 0.6f);
-            case "BluePurple": return new Color(0.4f, 0f, 0.7f);
-            case "White": return Color.white;
-            case "Black": return Color.black;
-            case "Brown": return new Color(0.6f, 0.3f, 0f);
-            default: return Color.gray;
+            case "Red": return GameManager.Instance.redMaterial.color;
+            case "Blue": return GameManager.Instance.blueMaterial.color;
+            case "Yellow": return GameManager.Instance.yellowMaterial.color;
+            case "Orange": return GameManager.Instance.orangeMaterial.color;
+            case "Purple": return GameManager.Instance.purpleMaterial.color;
+            case "Green": return GameManager.Instance.greenMaterial.color;
+            case "RedPurple": return GameManager.Instance.redPurpleMaterial.color;
+            case "RedOrange": return GameManager.Instance.redOrangeMaterial.color;
+            case "YellowOrange": return GameManager.Instance.yellowOrangeMaterial.color;
+            case "YellowGreen": return GameManager.Instance.yellowGreenMaterial.color;
+            case "BluePurple": return GameManager.Instance.bluePurpleMaterial.color;
+            case "BlueGreen": return GameManager.Instance.blueGreenMaterial.color;
+            case "White": return GameManager.Instance.whiteMaterial.color;
+            case "Black": return GameManager.Instance.blackMaterial.color;
+            case "Brown": return GameManager.Instance.brownMaterial.color;
+            default: return GameManager.Instance.grayMaterial.color; // Default to white if not found
         }
     }
 }
