@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         if (playerCamera != null)
             playerCamera.SetCameraActive(false);
-        Time.timeScale = 0.0f; // Pause the game
+        //Time.timeScale = 0.0f; // Pause the game
     }
 
     public void ExitMenu()
@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         if (playerCamera != null)
             playerCamera.SetCameraActive(true);
-        Time.timeScale = 1.0f; // Unpause the game
+        //Time.timeScale = 1.0f; // Unpause the game
     }
 
     void Update()
