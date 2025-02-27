@@ -88,6 +88,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             Debug.Log("Hiding ColorSelectionPanel");
             colorSelectionPanel.SetActive(false);
+            Debug.Log("Testing why this is active?" + colorSelectionPanel != null);
         }
 
         if (mixerUIPanel != null)
@@ -109,7 +110,7 @@ public class ColorButtonManager : MonoBehaviour
 
         // // Re-enable camera movement when closing the UI
         // if (playerCamera != null)
-        //     playerCamera.SetCameraActive(true);
+        // playerCamera.SetCameraActive(true);
         // We dont want this
     }
 
