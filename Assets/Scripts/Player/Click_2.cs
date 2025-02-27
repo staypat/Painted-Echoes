@@ -426,6 +426,7 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(GetMaterialFromString("White"), "White");
                         }else
                         {
+                            //GameManager.Instance.SaveGameState();
                             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
                             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
@@ -467,7 +468,10 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(GetMaterialFromString("White"), "White");
                         }else
                         {
+
+                            //GameManager.Instance.SaveGameState();
                             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+
                             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
                         }

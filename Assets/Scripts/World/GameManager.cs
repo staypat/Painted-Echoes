@@ -22,17 +22,14 @@ public class GameState
     public string currentRoomName;
     public string brushTipName;
     public List<string> absorbedColorTags = new List<string>();
-    public List<string> absorbedColorMaterialNames = new List<string>(); // Store material names instead of references
+    public List<string> absorbedColors = new List<string>(); // Store material names instead of references
     public int currentIndex;
     public int currentIndex2;
-
-    // Dictionary storage (Converting Dictionary<string, Color> to Lists)
     public List<string> correctHouseColorKeys = new List<string>();
     public List<Color> correctHouseColorValues = new List<Color>();
     public List<string> mismatchedColorKeys = new List<string>();
     public List<Color> mismatchedColorValues = new List<Color>();
 
-    // Renderer-related variables
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
 
@@ -125,10 +122,11 @@ public class GameManager : MonoBehaviour
 
             // Save absorbed colors
             gameState.absorbedColorTags = new List<string>(clickScript.absorbedColorTags);
-            gameState.absorbedColorMaterialNames.Clear();
+            gameState.absorbedColors.Clear();
             foreach (Material mat in clickScript.absorbedColors)
             {
-                gameState.absorbedColorMaterialNames.Add(mat.name); // Save material names
+                gameState.absorbedColors.Add(mat.name); // Save material names
+                Debug.Log("Saved Absorbed Color: " + mat.name);
             }
 
             // Save CorrectHouseColors dictionary
@@ -225,17 +223,15 @@ public class GameManager : MonoBehaviour
             clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
             clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
+            gameState.absorbedColors.Clear();
             // Load absorbed colors
             clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-            clickScript.absorbedColors.Clear();
-            foreach (string matName in gameState.absorbedColorMaterialNames)
+            foreach (Material mat in clickScript.absorbedColors)
             {
-                Material foundMaterial = Resources.Load<Material>(matName);
-                if (foundMaterial != null)
-                {
-                    clickScript.absorbedColors.Add(foundMaterial);
-                }
+                gameState.absorbedColors.Add(mat.name); 
+                Debug.Log("Loaded Absorbed Color: " + mat.name);
             }
+
 
             // Load CorrectHouseColors dictionary
             clickScript.CorrectHouseColors.Clear();
@@ -343,8 +339,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void OnApplicationQuit()
-    {
-        SaveGameState(); // Automatically save the game when the application is quitting
-    }
+    // void OnApplicationQuit()
+    // {
+    //     SaveGameState(); // Automatically save the game when the application is quitting
+    // }
 }
