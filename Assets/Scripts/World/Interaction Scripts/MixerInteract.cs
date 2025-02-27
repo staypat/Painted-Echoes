@@ -50,6 +50,8 @@ public class MixerInteract : ObjectInteract
             mixerUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
             AudioManager.instance.Play("UIBack");
+            if (playerCamera != null)
+                playerCamera.SetCameraActive(true);
         }
     }
 
