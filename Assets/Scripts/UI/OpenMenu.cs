@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OpenMenu : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class OpenMenu : MonoBehaviour
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -49,14 +51,31 @@ public class OpenMenu : MonoBehaviour
 
     public void CloseOptions()
     {
-        optionsUI.SetActive(false);
-        menuUI.SetActive(true);
-        AudioManager.instance.Play("UIBack");
-        // if the theme is unpaused
-        if(!AudioManager.instance.IsPaused("Theme"))
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            AudioManager.instance.Pause("Theme");
+            optionsUI.SetActive(false);
+            AudioManager.instance.Play("UIBack");
+
+            if(!AudioManager.instance.IsPaused("Theme"))
+            {
+                AudioManager.instance.Pause("Theme");
+            }
         }
+        else
+        {
+            optionsUI.SetActive(false);
+            menuUI.SetActive(true);
+            AudioManager.instance.Play("UIBack");
+            // if the theme is unpaused
+            
+            if(!AudioManager.instance.IsPaused("Theme"))
+            {
+                AudioManager.instance.Pause("Theme");
+            }
+
+        }
+
     }
 
     public void PauseGame()
