@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     public bool hasPaintbrush = false; // Track if the player has picked up the paintbrush
     public bool hasPhotograph = false; // Track if the player has picked up the photograph
     public bool tutorialKey = false; // Track if the player has picked up the tutorial key
+    public bool holdingPaintbrush = false; // Track if the player is holding the paintbrush
+    public bool holdingPhotograph = false; // Track if the player is holding the photograph
 
     public Material whiteMaterial; // Material for the white color
     public Material blackMaterial;
