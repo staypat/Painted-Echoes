@@ -76,7 +76,7 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush)
         {
             ToggleUI();
         }

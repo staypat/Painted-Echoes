@@ -187,12 +187,12 @@ public class ColorButtonManager : MonoBehaviour
 
         // Add color to the scrolling on brush and update the UI
         if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
-            {
-                colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotThreeColor)); // Add the absorbed color to the list
-                colorTracker.absorbedColorTags.Add(slotThreeColor); // Add the absorbed color tag to the list
-                colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
-                colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
-            }
+        {
+            colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotThreeColor)); // Add the absorbed color to the list
+            colorTracker.absorbedColorTags.Add(slotThreeColor); // Add the absorbed color tag to the list
+            colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+            colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+        }
         // remove the two colors used from the ammo inventory and update the UI
         AmmoManager.Instance.UseAmmo(1, slotOneColor); 
         AmmoManager.Instance.UseAmmo(1, slotTwoColor);
