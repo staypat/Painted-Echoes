@@ -6,6 +6,8 @@ public class PaintbrushInteract : ObjectInteract
 {
     [SerializeField] private GameObject uiElement; // Assign in Inspector
     [SerializeField] private GameObject objectToEnable; // Assign in Inspector
+    [SerializeField] private GameObject iconToEnable; // Assign in Inspector
+    [SerializeField] private GameObject paletteToEnable; // Assign in Inspector
     [SerializeField] private GameObject uiToDisable; // Assign in Inspector
     public InventorySelection inventorySelection; // Assign in Inspector
 
@@ -19,6 +21,8 @@ public class PaintbrushInteract : ObjectInteract
     void Start()
     {
         startPosition = transform.position; // Store the initial position
+        iconToEnable.SetActive(false); // Disable icon
+        paletteToEnable.SetActive(false); // Disable palette
 
         // If rotationTarget is assigned, use its position as the base floating position
         if (rotationTarget != null)
@@ -57,6 +61,8 @@ public class PaintbrushInteract : ObjectInteract
         base.Interact(); // Optional: Call the base method for debug log
         GameManager.Instance.hasPaintbrush = true; // Mark that the player now owns the paintbrush
         uiElement.SetActive(true); // Enable UI
+        iconToEnable.SetActive(true); // Enable icon
+        paletteToEnable.SetActive(true); // Enable palette
 
         if (uiToDisable != null)
         {
