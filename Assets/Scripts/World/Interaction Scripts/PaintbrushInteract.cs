@@ -9,6 +9,7 @@ public class PaintbrushInteract : ObjectInteract
     [SerializeField] private GameObject paintbrushIconToEnable; // Assign in Inspector
     [SerializeField] private GameObject paletteToEnable; // Assign in Inspector
     [SerializeField] private GameObject uiToDisable; // Assign in Inspector
+    [SerializeField] private GameObject uiToEnable; // New: Assign UI Text to enable
 
     [SerializeField] private GameObject rotationTarget;
     [SerializeField] private float floatSpeed = 1.0f; // Speed of floating motion
@@ -27,6 +28,12 @@ public class PaintbrushInteract : ObjectInteract
         if (rotationTarget != null)
         {
             startPosition = rotationTarget.transform.position;
+        }
+
+        // Ensure UI is disabled at start
+        if (uiToEnable != null)
+        {
+            uiToEnable.SetActive(false);
         }
     }
 
@@ -49,15 +56,9 @@ public class PaintbrushInteract : ObjectInteract
         }
     }
 
-
-    void Awake()
-    {
-
-    }
-
     public override void Interact()
     {
-        base.Interact(); // Optional: Call the base method for debug log
+        base.Interact();
         GameManager.Instance.hasPaintbrush = true; // Mark that the player now owns the paintbrush
         inventoryIconToEnable.SetActive(true); // Enable icon
         paletteToEnable.SetActive(true); // Enable palette
@@ -66,9 +67,17 @@ public class PaintbrushInteract : ObjectInteract
         {
             uiToDisable.SetActive(false); // Disable specified UI element
         }
-        if(GameManager.Instance.hasPhotograph){
+
+        if (GameManager.Instance.hasPhotograph)
+        {
             paintbrushIconToEnable.SetActive(true); // Enable paintbrush icon
         }
+
+        if (uiToEnable != null)
+        {
+            uiToEnable.SetActive(true); // Enable the UI text when the paintbrush is picked up
+        }
+
         gameObject.SetActive(false); // Disable the game object
         objectToEnable.SetActive(true); // Enable paintbrush
     }
