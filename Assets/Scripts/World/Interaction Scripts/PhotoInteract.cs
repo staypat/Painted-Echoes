@@ -9,17 +9,18 @@ public class PhotoInteract : ObjectInteract
     public GameObject paintbrush;
     public GameObject paletteUI;
     public GameObject paintbrushIcon;
-    // Start is called before the first frame update
+    [SerializeField] private GameObject uiToDisable; // New: Assign UI Text to disable
+
     void Start()
     {
         photoIcon.SetActive(false);
         paintbrushIcon.SetActive(false);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        // Ensure UI is enabled at start
+        if (uiToDisable != null)
+        {
+            uiToDisable.SetActive(true);
+        }
     }
 
     public override void Interact()
@@ -34,6 +35,11 @@ public class PhotoInteract : ObjectInteract
         PhotoController photoController = FindObjectOfType<PhotoController>();
         photoController.CollectPhoto(photoID);
         photoController.UpdatePhotoInventoryUI();
+
+        if (uiToDisable != null)
+        {
+            uiToDisable.SetActive(false); // Disable the UI text when the photograph is picked up
+        }
 
         gameObject.SetActive(false); // Hide the object after pickup
     }
