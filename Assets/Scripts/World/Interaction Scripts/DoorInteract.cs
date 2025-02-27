@@ -6,6 +6,8 @@ public class DoorInteract : ObjectInteract
 {
     [SerializeField] private float openAngle = 90f; // Adjust in Inspector
     [SerializeField] private float openSpeed = 2f; // Time to open/close
+    [SerializeField] private string openPrompt = "Open Door"; // Editable in Inspector
+    [SerializeField] private string closePrompt = "Close Door"; // Editable in Inspector
 
     private bool isOpen = false;
     private bool isMoving = false;
@@ -16,7 +18,7 @@ public class DoorInteract : ObjectInteract
     {
         closedRotation = transform.rotation;
         openRotation = closedRotation * Quaternion.Euler(0, 0, openAngle);
-        interactionPrompt = "Open Door"; // Initial prompt
+        interactionPrompt = openPrompt; // Uses Inspector-assigned value
     }
 
     public override void Interact()
@@ -24,7 +26,7 @@ public class DoorInteract : ObjectInteract
         if (isMoving) return; // Prevent interaction during movement
 
         isOpen = !isOpen;
-        interactionPrompt = isOpen ? "Close Door" : "Open Door"; // Update prompt
+        interactionPrompt = isOpen ? closePrompt : openPrompt; // Use dynamic prompt
         StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
     }
 
