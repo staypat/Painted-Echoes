@@ -57,6 +57,8 @@ public class PhotoController : MonoBehaviour
 
             photoPanel.SetActive(false); // Ensure the photo UI is closed
             ownedPhotos.SetActive(false);
+
+            AudioManager.instance.Play("GunEquip");
         }
     }
 
@@ -123,6 +125,7 @@ public class PhotoController : MonoBehaviour
 
             GameManager.Instance.holdingPaintbrush = false;
             GameManager.Instance.holdingPhotograph = true;
+            AudioManager.instance.Play("UIBack");
         }
         else if (GameManager.Instance.holdingPhotograph)
         {
@@ -130,6 +133,7 @@ public class PhotoController : MonoBehaviour
             photoPanel.SetActive(true);
             ownedPhotos.SetActive(true);
             GameManager.Instance.EnterMenu();
+            AudioManager.instance.Play("UIOpen");
         }
         else
         {
@@ -137,6 +141,7 @@ public class PhotoController : MonoBehaviour
             if (!string.IsNullOrEmpty(lastPhotoID))
             {
                 SwitchToPhoto(lastPhotoID);
+                AudioManager.instance.Play("PhotoEquip");
             }
         }
     }
@@ -169,5 +174,6 @@ public class PhotoController : MonoBehaviour
         photoPanel.SetActive(false);
         ownedPhotos.SetActive(false);
         SwitchToPhoto(photoID);
+        AudioManager.instance.Play("PhotoEquip");
     }
 }
