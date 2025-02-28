@@ -4,24 +4,43 @@ using UnityEngine;
 
 public class PhotoInteract : ObjectInteract
 {
-    [SerializeField] private GameObject uiElement;
-    // Start is called before the first frame update
+    [SerializeField] private GameObject photoIcon;
+    public string photoID;
+    public GameObject paintbrush;
+    public GameObject paletteUI;
+    public GameObject paintbrushIcon;
+    [SerializeField] private GameObject uiToDisable; // New: Assign UI Text to disable
+
     void Start()
     {
-        
-    }
+        photoIcon.SetActive(false);
+        paintbrushIcon.SetActive(false);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Ensure UI is enabled at start
+        if (uiToDisable != null)
+        {
+            uiToDisable.SetActive(true);
+        }
     }
 
     public override void Interact()
     {
         base.Interact();
         GameManager.Instance.hasPhotograph = true; // Mark that the player has picked up the photograph
-        uiElement.SetActive(true); // Enable UI element
+        GameManager.Instance.holdingPhotograph = true; // Mark that the player is holding the photograph
+        GameManager.Instance.holdingPaintbrush = false; // Mark that the player is not holding the paintbrush
+        photoIcon.SetActive(true); // Show the photo icon
+
+        // Show photo in UI and disable paintbrush and palette
+        PhotoController photoController = FindObjectOfType<PhotoController>();
+        photoController.CollectPhoto(photoID);
+        photoController.UpdatePhotoInventoryUI();
+
+        if (uiToDisable != null)
+        {
+            uiToDisable.SetActive(false); // Disable the UI text when the photograph is picked up
+        }
+
         gameObject.SetActive(false); // Hide the object after pickup
     }
 }

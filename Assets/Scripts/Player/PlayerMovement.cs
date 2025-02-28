@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Received help from ChatGPT
 // https://chatgpt.com/share/6798954b-e334-800f-9847-6a6089bdc211
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump (Spacebar)
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            Debug.Log("key pressed");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }

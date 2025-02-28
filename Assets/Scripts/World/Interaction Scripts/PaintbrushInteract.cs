@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PaintbrushInteract : ObjectInteract
 {
-    [SerializeField] private GameObject uiElement; // Assign in Inspector
     [SerializeField] private GameObject objectToEnable; // Assign in Inspector
+    [SerializeField] private GameObject inventoryIconToEnable; // Assign in Inspector
+    [SerializeField] private GameObject paintbrushIconToEnable; // Assign in Inspector
+    [SerializeField] private GameObject paletteToEnable; // Assign in Inspector
     [SerializeField] private GameObject uiToDisable; // Assign in Inspector
-    public InventorySelection inventorySelection; // Assign in Inspector
+    [SerializeField] private GameObject uiToEnable; // New: Assign UI Text to enable
 
     [SerializeField] private GameObject rotationTarget;
     [SerializeField] private float floatSpeed = 1.0f; // Speed of floating motion
@@ -19,11 +21,19 @@ public class PaintbrushInteract : ObjectInteract
     void Start()
     {
         startPosition = transform.position; // Store the initial position
+        inventoryIconToEnable.SetActive(false); // Disable icon
+        paletteToEnable.SetActive(false); // Disable palette
 
         // If rotationTarget is assigned, use its position as the base floating position
         if (rotationTarget != null)
         {
             startPosition = rotationTarget.transform.position;
+        }
+
+        // Ensure UI is disabled at start
+        if (uiToEnable != null)
+        {
+            uiToEnable.SetActive(false);
         }
     }
 
@@ -46,24 +56,29 @@ public class PaintbrushInteract : ObjectInteract
         }
     }
 
-
-    void Awake()
-    {
-
-    }
-
     public override void Interact()
     {
-        base.Interact(); // Optional: Call the base method for debug log
+        base.Interact();
         GameManager.Instance.hasPaintbrush = true; // Mark that the player now owns the paintbrush
-        uiElement.SetActive(true); // Enable UI
+        inventoryIconToEnable.SetActive(true); // Enable icon
+        paletteToEnable.SetActive(true); // Enable palette
 
         if (uiToDisable != null)
         {
             uiToDisable.SetActive(false); // Disable specified UI element
         }
 
-        inventorySelection.SelectSlot(0); // Select the paintbrush slot
+        if (GameManager.Instance.hasPhotograph)
+        {
+            paintbrushIconToEnable.SetActive(true); // Enable paintbrush icon
+        }
+
+        if (uiToEnable != null)
+        {
+            uiToEnable.SetActive(true); // Enable the UI text when the paintbrush is picked up
+        }
+
         gameObject.SetActive(false); // Disable the game object
+        objectToEnable.SetActive(true); // Enable paintbrush
     }
 }

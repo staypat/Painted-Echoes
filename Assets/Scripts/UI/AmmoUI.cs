@@ -16,22 +16,6 @@ public class AmmoUI : MonoBehaviour
     
     public GameObject Crosshair;
 
-    [SerializeField] private Material redMaterial;
-    [SerializeField] private Material redOrangeMaterial;
-    [SerializeField] private Material orangeMaterial;
-    [SerializeField] private Material yellowOrangeMaterial;
-    [SerializeField] private Material yellowMaterial;
-    [SerializeField] private Material yellowGreenMaterial;
-    [SerializeField] private Material greenMaterial;
-    [SerializeField] private Material blueGreenMaterial;
-    [SerializeField] private Material blueMaterial;
-    [SerializeField] private Material bluePurpleMaterial;
-    [SerializeField] private Material purpleMaterial;
-    [SerializeField] private Material redPurpleMaterial;
-    [SerializeField] private Material whiteMaterial;
-    [SerializeField] private Material blackMaterial;
-    [SerializeField] private Material brownMaterial;
-
     // Checks if color has been discovered
     private Dictionary<string, bool> discoveredColors = new Dictionary<string, bool>();
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
@@ -92,7 +76,7 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush)
         {
             ToggleUI();
         }

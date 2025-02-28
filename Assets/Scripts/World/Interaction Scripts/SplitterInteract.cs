@@ -21,6 +21,10 @@ public class SplitterInteract : ObjectInteract
     private string slotOneColor;
     private string slotTwoColor;
     private string slotThreeColor;
+    [SerializeField] private AmmoUI ammoUI;
+    [SerializeField] private PaletteManager paletteManager;
+
+    [SerializeField] private Click_2 colorTracker;
 
     private void Start()
     {
@@ -81,6 +85,12 @@ public class SplitterInteract : ObjectInteract
         if (currentColor != null)
         {
             AmmoManager.Instance.UseAmmo(1, currentColor);
+            // Remove the colors to the scrolling on brush
+            if(AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
+            {
+                colorTracker.absorbedColors.Remove(colorTracker.GetMaterialFromString(currentColor));
+                colorTracker.absorbedColorTags.Remove(currentColor);
+            }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
             AudioManager.instance.Play("UIApply");
@@ -91,6 +101,29 @@ public class SplitterInteract : ObjectInteract
             {
                 Debug.Log($"Collecting color from slot 1: {slotOneColor}");
                 AmmoManager.Instance.AddAmmo(1, slotOneColor);
+                ammoUI.DiscoverColor(slotOneColor);
+                // Add color to the scrolling on brush and update the UI
+                if (!colorTracker.absorbedColorTags.Contains(slotOneColor))
+                {
+                    colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotOneColor)); // Add the absorbed color to the list
+                    colorTracker.absorbedColorTags.Add(slotOneColor); // Add the absorbed color tag to the list
+                    colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                    colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+                }
+                // Update brush
+                if(colorTracker.absorbedColorTags.Count == 1)
+                {
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
+                }
+                else if(colorTracker.absorbedColorTags.Count == 0)
+                {
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+                }else
+                {
+                    colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
+                    colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[colorTracker.currentIndex], colorTracker.absorbedColorTags[colorTracker.currentIndex2]);
+                }
                 slotOneButton.SetActive(false);
                 slotOneColor = null;
             }
@@ -101,6 +134,29 @@ public class SplitterInteract : ObjectInteract
             {
                 Debug.Log($"Collecting color from slot 2: {slotTwoColor}");
                 AmmoManager.Instance.AddAmmo(1, slotTwoColor);
+                ammoUI.DiscoverColor(slotTwoColor);
+                // Add color to the scrolling on brush and update the UI
+                if (!colorTracker.absorbedColorTags.Contains(slotTwoColor))
+                {
+                    colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotTwoColor)); // Add the absorbed color to the list
+                    colorTracker.absorbedColorTags.Add(slotTwoColor); // Add the absorbed color tag to the list
+                    colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                    colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+                }
+                // Update brush
+                if(colorTracker.absorbedColorTags.Count == 1)
+                {
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
+                }
+                else if(colorTracker.absorbedColorTags.Count == 0)
+                {
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+                }else
+                {
+                    colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
+                    colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[colorTracker.currentIndex], colorTracker.absorbedColorTags[colorTracker.currentIndex2]);
+                }
                 slotTwoButton.SetActive(false);
                 slotTwoColor = null;
             }
@@ -111,6 +167,29 @@ public class SplitterInteract : ObjectInteract
             {
                 Debug.Log($"Collecting color from slot 3: {slotThreeColor}");
                 AmmoManager.Instance.AddAmmo(1, slotThreeColor);
+                ammoUI.DiscoverColor(slotThreeColor);
+                // Add color to the scrolling on brush and update the UI
+                if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
+                {
+                    colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotThreeColor)); // Add the absorbed color to the list
+                    colorTracker.absorbedColorTags.Add(slotThreeColor); // Add the absorbed color tag to the list
+                    colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                    colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+                }
+                // Update brush
+                if(colorTracker.absorbedColorTags.Count == 1)
+                {
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
+                }
+                else if(colorTracker.absorbedColorTags.Count == 0)
+                {
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+                }else
+                {
+                    colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
+                    colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
+                    colorTracker.ApplyColor(colorTracker.absorbedColors[colorTracker.currentIndex], colorTracker.absorbedColorTags[colorTracker.currentIndex2]);
+                }
                 slotThreeButton.SetActive(false);
                 slotThreeColor = null;
             }
@@ -119,6 +198,8 @@ public class SplitterInteract : ObjectInteract
         {
             collectAllButton.SetActive(false);
         }
+
+        paletteManager.updatePaletteUI();
         AudioManager.instance.Play("Select");
     }
 
@@ -133,6 +214,12 @@ public class SplitterInteract : ObjectInteract
         if (currentColor != null)
         {
             AmmoManager.Instance.UseAmmo(1, currentColor);
+            // Remove the colors to the scrolling on brush
+            if(AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
+            {
+                colorTracker.absorbedColors.Remove(colorTracker.GetMaterialFromString(currentColor));
+                colorTracker.absorbedColorTags.Remove(currentColor);
+            }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
         }
@@ -140,6 +227,14 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 1: {slotOneColor}");
             AmmoManager.Instance.AddAmmo(1, slotOneColor);
+            // Add color to the scrolling on brush and update the UI
+            if (!colorTracker.absorbedColorTags.Contains(slotOneColor))
+            {
+                colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotOneColor)); // Add the absorbed color to the list
+                colorTracker.absorbedColorTags.Add(slotOneColor); // Add the absorbed color tag to the list
+                colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+            }
             slotOneButton.SetActive(false);
             slotOneColor = null;
         }
@@ -147,6 +242,14 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 2: {slotTwoColor}");
             AmmoManager.Instance.AddAmmo(1, slotTwoColor);
+            // Add color to the scrolling on brush and update the UI
+            if (!colorTracker.absorbedColorTags.Contains(slotTwoColor))
+            {
+                colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotTwoColor)); // Add the absorbed color to the list
+                colorTracker.absorbedColorTags.Add(slotTwoColor); // Add the absorbed color tag to the list
+                colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+            }
             slotTwoButton.SetActive(false);
             slotTwoColor = null;
         }
@@ -154,9 +257,33 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 3: {slotThreeColor}");
             AmmoManager.Instance.AddAmmo(1, slotThreeColor);
+            // Add color to the scrolling on brush and update the UI
+            if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
+            {
+                colorTracker.absorbedColors.Add(colorTracker.GetMaterialFromString(slotThreeColor)); // Add the absorbed color to the list
+                colorTracker.absorbedColorTags.Add(slotThreeColor); // Add the absorbed color tag to the list
+                colorTracker.currentIndex = colorTracker.absorbedColors.Count - 1;
+                colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
+            }
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
         }
+
+        // Update brush color
+        if(colorTracker.absorbedColorTags.Count == 1)
+        {
+            colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
+        }
+        else if(colorTracker.absorbedColorTags.Count == 0)
+        {
+            colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+        }else
+        {
+            colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
+            colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
+            colorTracker.ApplyColor(colorTracker.absorbedColors[colorTracker.currentIndex], colorTracker.absorbedColorTags[colorTracker.currentIndex2]);
+        }
+        paletteManager.updatePaletteUI();
         collectAllButton.SetActive(false);
     }
 

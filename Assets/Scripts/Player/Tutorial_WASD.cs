@@ -17,6 +17,16 @@ public class Tutorial_WASD : MonoBehaviour
 
     void Update()
     {
+        // If the player has picked up the key, disable the tutorial text
+        if (GameManager.Instance != null && GameManager.Instance.tutorialKey)
+        {
+            if (tutorialText != null)
+            {
+                tutorialText.SetActive(false);
+            }
+            return; // Exit early to prevent further UI updates
+        }
+
         // Track each key press
         if (Input.GetKeyDown(KeyCode.W)) pressedW = true;
         if (Input.GetKeyDown(KeyCode.A)) pressedA = true;
