@@ -159,7 +159,7 @@ public class Click_2 : MonoBehaviour
 
                 if (objTransform != null && objTransform.childCount > 0)
                 {
-                    Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
+                    //Debug.Log($"🟡 Ignoring parent object '{objectName}' in color comparison.");
                     CorrectTotal -= 1;
                     continue; // Skip parent objects or objects related to "Barrier"
                 }
@@ -174,12 +174,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
                     count += 1;
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -431,6 +431,7 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(GetMaterialFromString("White"), "White");
                         }else
                         {
+                            //GameManager.Instance.SaveGameState();
                             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
                             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
@@ -472,7 +473,10 @@ public class Click_2 : MonoBehaviour
                             ApplyColor(GetMaterialFromString("White"), "White");
                         }else
                         {
+
+                            //GameManager.Instance.SaveGameState();
                             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
+
                             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
                             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
                         }

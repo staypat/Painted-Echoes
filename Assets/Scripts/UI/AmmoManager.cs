@@ -6,9 +6,9 @@ using UnityEngine;
 public class AmmoManager : MonoBehaviour
 {
     public static AmmoManager Instance { get; private set; }
-    private int currentAmmo;   // Current ammo
+    public int currentAmmo;   // Current ammo
     // Create a list of all the colors we want to use as strings
-    private List<string> colors = new List<string> { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "RedPurple", "RedOrange", "YellowOrange", "YellowGreen", "BlueGreen", "BluePurple", "White", "Black", "Brown" };
+    public List<string> colors = new List<string> { "Red", "Blue", "Yellow", "Orange", "Purple", "Green", "RedPurple", "RedOrange", "YellowOrange", "YellowGreen", "BlueGreen", "BluePurple", "White", "Black", "Brown" };
     // Create a dictionary to store the color and the number of times it appears
     public Dictionary<string, int> colorCount = new Dictionary<string, int>();
 

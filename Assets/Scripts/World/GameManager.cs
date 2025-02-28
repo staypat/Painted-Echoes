@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;  // For file handling
+using UnityEngine.UI;
 
 [System.Serializable]
 public class GameState
@@ -16,21 +17,30 @@ public class GameState
 
     // Click_2-related variables
     public float maxDistance;
+    public string gunRendererName;
     public string currentGunColor;
     public string currentTag;
-    public int currentIndex;
-    public int currentIndex2;
-    public string gunRendererName;
     public string currentRoomName;
     public string brushTipName;
+    public List<string> absorbedColorTags = new List<string>();
+    public List<string> absorbedColors = new List<string>(); // Store material names instead of references
+    public int currentIndex;
+    public int currentIndex2;
+    public List<string> correctHouseColorKeys = new List<string>();
+    public List<Color> correctHouseColorValues = new List<Color>();
+    public List<string> mismatchedColorKeys = new List<string>();
+    public List<Color> mismatchedColorValues = new List<Color>();
 
-    // Renderer-related variables
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
 
+    // AmmoManager-related variables
+    public int currentAmmo;
+    public List<string> colors = new List<string>();
+    public List<int> colorCounts = new List<int>(); // Parallel list to store color quantities
 
-
-
+    // PhotoController-related variables
+    public List<string> collectedPhotos = new List<string>();
 
     public string rbName;
 
@@ -69,14 +79,39 @@ public class GameManager : MonoBehaviour
     public Material blueGreenMaterial;
     public Material grayMaterial;
 
+    private Dictionary<string, Material> materialDictionary;
+
     private FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
+
+
 
     private string filePath;
 
     void Awake()
     {
-        LoadGameState();
+        materialDictionary = new Dictionary<string, Material>
+        {
+            { "White", whiteMaterial },
+            { "Black", blackMaterial },
+            { "Red", redMaterial },
+            { "Blue", blueMaterial },
+            { "Yellow", yellowMaterial },
+            { "Orange", orangeMaterial },
+            { "Purple", purpleMaterial },
+            { "Green", greenMaterial },
+            { "Brown", brownMaterial },
+            { "RedOrange", redOrangeMaterial },
+            { "RedPurple", redPurpleMaterial },
+            { "YellowOrange", yellowOrangeMaterial },
+            { "YellowGreen", yellowGreenMaterial },
+            { "BluePurple", bluePurpleMaterial },
+            { "BlueGreen", blueGreenMaterial },
+            { "Gray", grayMaterial }
+        };
+
+
+        //LoadGameState();
         if (Instance == null)
         {
             Instance = this;
@@ -102,15 +137,45 @@ public class GameManager : MonoBehaviour
     {
         GameState gameState = new GameState();
 
-        // Save variables from Click_2
-        gameState.maxDistance = clickScript.maxDistance;
-        gameState.currentGunColor = clickScript.currentGunColor;
-        gameState.currentTag = clickScript.currentTag;
-        gameState.currentIndex = clickScript.currentIndex;
-        gameState.currentIndex2 = clickScript.currentIndex2;
-        gameState.gunRendererName = clickScript.gunRenderer != null ? clickScript.gunRenderer.gameObject.name : "";
-        gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
-        gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
+        Click_2 clickScript = FindObjectOfType<Click_2>();
+        if (clickScript != null)
+        {
+            gameState.maxDistance = clickScript.maxDistance;
+            gameState.currentGunColor = clickScript.currentGunColor;
+            gameState.currentTag = clickScript.currentTag;
+            gameState.currentIndex = clickScript.currentIndex;
+            gameState.currentIndex2 = clickScript.currentIndex2;
+            gameState.gunRendererName = clickScript.gunRenderer != null ? clickScript.gunRenderer.gameObject.name : "";
+            gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
+            gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
+
+            // Save absorbed colors
+            gameState.absorbedColorTags = new List<string>(clickScript.absorbedColorTags);
+            gameState.absorbedColors.Clear();
+            foreach (Material mat in clickScript.absorbedColors)
+            {
+                gameState.absorbedColors.Add(mat.name); // Save material names
+                //Debug.Log("Saved Absorbed Color: " + mat.name);
+            }
+
+            // Save CorrectHouseColors dictionary
+            gameState.correctHouseColorKeys.Clear();
+            gameState.correctHouseColorValues.Clear();
+            foreach (var pair in clickScript.CorrectHouseColors)
+            {
+                gameState.correctHouseColorKeys.Add(pair.Key);
+                gameState.correctHouseColorValues.Add(pair.Value);
+            }
+
+            // Save MismatchedColors dictionary
+            gameState.mismatchedColorKeys.Clear();
+            gameState.mismatchedColorValues.Clear();
+            foreach (var pair in clickScript.MismatchedColors)
+            {
+                gameState.mismatchedColorKeys.Add(pair.Key);
+                gameState.mismatchedColorValues.Add(pair.Value);
+            }
+        }
 
         // Save camera settings
         gameState.mouseSensitivity = playerCamera.mouseSensitivity;
@@ -145,6 +210,34 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // Save ammo data
+        AmmoManager ammoManager = AmmoManager.Instance;
+        if (ammoManager != null)
+        {
+            gameState.currentAmmo = ammoManager.currentAmmo;
+            gameState.colors = ammoManager.colors;
+            gameState.colorCounts.Clear();
+
+            foreach (var color in ammoManager.colors)
+            {
+                int count = ammoManager.colorCount.ContainsKey(color) ? ammoManager.colorCount[color] : 0;
+                gameState.colorCounts.Add(count);
+            }
+        }
+
+        PhotoController photocontroller = FindObjectOfType<PhotoController>();
+        if (photocontroller != null)
+        {
+            foreach (string photoID in photocontroller.collectedPhotos)
+            {
+                //Debug.Log("Saved Photo: " + photoID);
+                gameState.collectedPhotos.Add(photoID);
+            }
+
+
+
+        }
+
         // Serialize and save to file
         string json = JsonUtility.ToJson(gameState, true);
         File.WriteAllText(filePath, json);
@@ -158,7 +251,10 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
-            // Load variables into Click_2
+        // Load Click_2 data
+        Click_2 clickScript = FindObjectOfType<Click_2>();
+        if (clickScript != null)
+        {
             clickScript.maxDistance = gameState.maxDistance;
             clickScript.currentGunColor = gameState.currentGunColor;
             clickScript.currentTag = gameState.currentTag;
@@ -167,6 +263,43 @@ public class GameManager : MonoBehaviour
             clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
             clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
             clickScript.brushTip = GameObject.Find(gameState.brushTipName);
+
+            clickScript.absorbedColors.Clear();
+            // Load absorbed colors
+            clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+            foreach (string mat in gameState.absorbedColors)
+            {
+                //Debug.Log("Trying to load absorbed color: " + mat);
+
+                // Use GetMaterialByName to fetch the correct material
+                Material loadedMaterial = GetMaterialByName(mat);
+
+                // If the material wasn't found, default to whiteMaterial
+                if (loadedMaterial == null)
+                {
+                    loadedMaterial = GetMaterialByName("gray");
+                    //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                }
+
+                clickScript.absorbedColors.Add(loadedMaterial);
+                //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
+            }
+
+
+            // Load CorrectHouseColors dictionary
+            clickScript.CorrectHouseColors.Clear();
+            for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
+            {
+                clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+            }
+
+            // Load MismatchedColors dictionary
+            clickScript.MismatchedColors.Clear();
+            for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+            {
+                clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+            }
+        }
 
             // Load camera settings
             playerCamera.mouseSensitivity = gameState.mouseSensitivity;
@@ -197,11 +330,50 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            Debug.Log("Game State Loaded Successfully");
+            // Load ammo datav
+            AmmoManager ammoManager = AmmoManager.Instance;
+            if (ammoManager != null)
+            {
+                ammoManager.currentAmmo = gameState.currentAmmo;
+                ammoManager.colors = gameState.colors;
+                ammoManager.colorCount.Clear();
+
+                for (int i = 0; i < gameState.colors.Count; i++)
+                {
+                    ammoManager.colorCount[gameState.colors[i]] = gameState.colorCounts[i];
+                }
+            }
+
+            PhotoController photocontroller = FindObjectOfType<PhotoController>();
+            //Debug.Log("Loading Photo Mode");
+            holdingPaintbrush = false;
+            photocontroller.EquipPaintbrush();
+
+            //Debug.Log("Pallet is bricked");
+            // Load PaletteManager data
+            PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
+            paletteManager.updatePaletteUI();
+    
+
+            if (photocontroller != null)
+            {
+                photocontroller.collectedPhotos.Clear();
+                foreach (string photoID in gameState.collectedPhotos)
+                {
+                    //Debug.Log("Loading Photo Mode 2");
+                    //Debug.Log("Loaded Photo: " + photoID);
+                    photocontroller.collectedPhotos.Add(photoID);
+                    photocontroller.SwitchToPhoto(photoID);
+                }
+                photocontroller.UpdatePhotoInventoryUI();
+                //Debug.Log("Loaded Photo Inventory UI");
+            }
+
+            //Debug.Log("Game State Loaded Successfully");
         }
         else
         {
-            Debug.Log("No saved game state found.");
+            //Debug.Log("No saved game state found.");
         }
     }
 
@@ -229,23 +401,38 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = 1.0f; // Unpause the game
     }
 
-    void Update()
+    // Function to help load materials by string name
+    public Material GetMaterialByName(string colorName)
     {
-        // Test Save and Load with key presses
-        if (Input.GetKeyDown(KeyCode.C)) // Save game state
+        // Try to get the material, if not found, return null or a default material
+        if (materialDictionary.TryGetValue(colorName, out Material material))
         {
-            SaveGameState();
-            Debug.Log("Game state saved.");
+            return material;
         }
-        if (Input.GetKeyDown(KeyCode.V)) // Load game state
+        else
         {
-            LoadGameState();
-            Debug.Log("Game state loaded.");
+            //Debug.LogWarning("Material not found for color: " + colorName);
+            return null; // You can change this to a default material if needed
         }
     }
 
-    void OnApplicationQuit()
+    void Update()
     {
-        SaveGameState(); // Automatically save the game when the application is quitting
+        // Test Save and Load with key presses
+        // if (Input.GetKeyDown(KeyCode.C)) // Save game state
+        // {
+        //     SaveGameState();
+        //     Debug.Log("Game state saved.");
+        // }
+        // if (Input.GetKeyDown(KeyCode.V)) // Load game state
+        // {
+        //     LoadGameState();
+        //     Debug.Log("Game state loaded.");
+        // }
     }
+
+    // void OnApplicationQuit()
+    // {
+    //     SaveGameState(); // Automatically save the game when the application is quitting
+    // }
 }
