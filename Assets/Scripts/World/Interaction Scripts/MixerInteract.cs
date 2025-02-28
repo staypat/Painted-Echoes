@@ -10,6 +10,8 @@ public class MixerInteract : ObjectInteract
     [SerializeField] private GameObject mixerUIPanel;
     [SerializeField] private GameObject slotThreeButton; // Assign in Unity Inspector
     private FirstPerson playerCamera;
+    public GameObject notificationObj;
+    private bool hasBeenInteracted = false;
 
     private void Start()
     {
@@ -26,6 +28,12 @@ public class MixerInteract : ObjectInteract
 
     public override void Interact()
     {
+        if (!hasBeenInteracted) 
+        {
+            hasBeenInteracted = true;
+            Destroy(notificationObj);
+        }
+
         if (GameManager.inMenu)
         {
             if (mixerUIPanel.activeSelf) {
