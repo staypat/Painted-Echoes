@@ -31,7 +31,7 @@ public class PhotoController : MonoBehaviour
             EquipPaintbrush();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !GameManager.inMenu)
         {
             TogglePhotoMode();
         }
