@@ -9,21 +9,21 @@ public class PaletteManager : MonoBehaviour
     public Click_2 colorManager;
 
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
-    [SerializeField] private Sprite redIcon;
-    [SerializeField] private Sprite redOrangeIcon;
-    [SerializeField] private Sprite orangeIcon;
-    [SerializeField] private Sprite yellowOrangeIcon;
-    [SerializeField] private Sprite yellowIcon;
-    [SerializeField] private Sprite yellowGreenIcon;
-    [SerializeField] private Sprite greenIcon;
-    [SerializeField] private Sprite blueGreenIcon;
-    [SerializeField] private Sprite blueIcon;
-    [SerializeField] private Sprite bluePurpleIcon;
-    [SerializeField] private Sprite purpleIcon;
-    [SerializeField] private Sprite redPurpleIcon;
-    [SerializeField] private Sprite whiteIcon;
-    [SerializeField] private Sprite blackIcon;
-    [SerializeField] private Sprite brownIcon;
+    public Sprite redIcon;
+    public Sprite redOrangeIcon;
+    public Sprite orangeIcon;
+    public Sprite yellowOrangeIcon;
+    public Sprite yellowIcon;
+    public Sprite yellowGreenIcon;
+    public Sprite greenIcon;
+    public Sprite blueGreenIcon;
+    public Sprite blueIcon;
+    public Sprite bluePurpleIcon;
+    public Sprite purpleIcon;
+    public Sprite redPurpleIcon;
+    public Sprite whiteIcon;
+    public Sprite blackIcon;
+    public Sprite brownIcon;
 
     
     // Start is called before the first frame update
@@ -53,7 +53,6 @@ public class PaletteManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void updatePaletteUI()
@@ -69,4 +68,16 @@ public class PaletteManager : MonoBehaviour
         colorIcons[i].enabled = true;
         }
     }
+
+    public Sprite GetSpriteByName(string spriteName)
+    {
+        if (colorSprites.TryGetValue(spriteName, out Sprite sprite))
+        {
+            return sprite;
+        }
+        
+        Debug.LogWarning("Sprite not found for name: " + spriteName);
+        return null;
+    }
 }
+

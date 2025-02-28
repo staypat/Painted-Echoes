@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;  // For file handling
+using UnityEngine.UI;
 
 [System.Serializable]
 public class GameState
@@ -38,7 +39,8 @@ public class GameState
     public List<string> colors = new List<string>();
     public List<int> colorCounts = new List<int>(); // Parallel list to store color quantities
 
-
+    // PhotoController-related variables
+    public List<string> collectedPhotos = new List<string>();
 
     public string rbName;
 
@@ -77,14 +79,39 @@ public class GameManager : MonoBehaviour
     public Material blueGreenMaterial;
     public Material grayMaterial;
 
+    private Dictionary<string, Material> materialDictionary;
+
     private FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
+
+
 
     private string filePath;
 
     void Awake()
     {
-        LoadGameState();
+        materialDictionary = new Dictionary<string, Material>
+        {
+            { "White", whiteMaterial },
+            { "Black", blackMaterial },
+            { "Red", redMaterial },
+            { "Blue", blueMaterial },
+            { "Yellow", yellowMaterial },
+            { "Orange", orangeMaterial },
+            { "Purple", purpleMaterial },
+            { "Green", greenMaterial },
+            { "Brown", brownMaterial },
+            { "RedOrange", redOrangeMaterial },
+            { "RedPurple", redPurpleMaterial },
+            { "YellowOrange", yellowOrangeMaterial },
+            { "YellowGreen", yellowGreenMaterial },
+            { "BluePurple", bluePurpleMaterial },
+            { "BlueGreen", blueGreenMaterial },
+            { "Gray", grayMaterial }
+        };
+
+
+        //LoadGameState();
         if (Instance == null)
         {
             Instance = this;
@@ -128,7 +155,7 @@ public class GameManager : MonoBehaviour
             foreach (Material mat in clickScript.absorbedColors)
             {
                 gameState.absorbedColors.Add(mat.name); // Save material names
-                Debug.Log("Saved Absorbed Color: " + mat.name);
+                //Debug.Log("Saved Absorbed Color: " + mat.name);
             }
 
             // Save CorrectHouseColors dictionary
@@ -198,6 +225,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        PhotoController photocontroller = FindObjectOfType<PhotoController>();
+        if (photocontroller != null)
+        {
+            foreach (string photoID in photocontroller.collectedPhotos)
+            {
+                //Debug.Log("Saved Photo: " + photoID);
+                gameState.collectedPhotos.Add(photoID);
+            }
+
+
+
+        }
 
         // Serialize and save to file
         string json = JsonUtility.ToJson(gameState, true);
@@ -230,15 +269,20 @@ public class GameManager : MonoBehaviour
             clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
             foreach (string mat in gameState.absorbedColors)
             {
-                Debug.Log("Trying to load absorbed color: " + mat);
+                //Debug.Log("Trying to load absorbed color: " + mat);
 
-                // Do something with this material
-                Material loadedMaterial = whiteMaterial;
-                if (mat == "Brown") {
-                    loadedMaterial = brownMaterial;
+                // Use GetMaterialByName to fetch the correct material
+                Material loadedMaterial = GetMaterialByName(mat);
+
+                // If the material wasn't found, default to whiteMaterial
+                if (loadedMaterial == null)
+                {
+                    loadedMaterial = GetMaterialByName("gray");
+                    //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
                 }
-                clickScript.absorbedColors.Add(loadedMaterial); 
-                Debug.Log("Loaded Absorbed Color: " + loadedMaterial);
+
+                clickScript.absorbedColors.Add(loadedMaterial);
+                //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
             }
 
 
@@ -286,7 +330,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            // Load ammo data
+            // Load ammo datav
             AmmoManager ammoManager = AmmoManager.Instance;
             if (ammoManager != null)
             {
@@ -300,12 +344,36 @@ public class GameManager : MonoBehaviour
                 }
             }
 
+            PhotoController photocontroller = FindObjectOfType<PhotoController>();
+            //Debug.Log("Loading Photo Mode");
+            holdingPaintbrush = false;
+            photocontroller.EquipPaintbrush();
 
-            Debug.Log("Game State Loaded Successfully");
+            //Debug.Log("Pallet is bricked");
+            // Load PaletteManager data
+            PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
+            paletteManager.updatePaletteUI();
+    
+
+            if (photocontroller != null)
+            {
+                photocontroller.collectedPhotos.Clear();
+                foreach (string photoID in gameState.collectedPhotos)
+                {
+                    //Debug.Log("Loading Photo Mode 2");
+                    //Debug.Log("Loaded Photo: " + photoID);
+                    photocontroller.collectedPhotos.Add(photoID);
+                    photocontroller.SwitchToPhoto(photoID);
+                }
+                photocontroller.UpdatePhotoInventoryUI();
+                //Debug.Log("Loaded Photo Inventory UI");
+            }
+
+            //Debug.Log("Game State Loaded Successfully");
         }
         else
         {
-            Debug.Log("No saved game state found.");
+            //Debug.Log("No saved game state found.");
         }
     }
 
@@ -333,19 +401,34 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = 1.0f; // Unpause the game
     }
 
+    // Function to help load materials by string name
+    public Material GetMaterialByName(string colorName)
+    {
+        // Try to get the material, if not found, return null or a default material
+        if (materialDictionary.TryGetValue(colorName, out Material material))
+        {
+            return material;
+        }
+        else
+        {
+            //Debug.LogWarning("Material not found for color: " + colorName);
+            return null; // You can change this to a default material if needed
+        }
+    }
+
     void Update()
     {
         // Test Save and Load with key presses
-        if (Input.GetKeyDown(KeyCode.C)) // Save game state
-        {
-            SaveGameState();
-            Debug.Log("Game state saved.");
-        }
-        if (Input.GetKeyDown(KeyCode.V)) // Load game state
-        {
-            LoadGameState();
-            Debug.Log("Game state loaded.");
-        }
+        // if (Input.GetKeyDown(KeyCode.C)) // Save game state
+        // {
+        //     SaveGameState();
+        //     Debug.Log("Game state saved.");
+        // }
+        // if (Input.GetKeyDown(KeyCode.V)) // Load game state
+        // {
+        //     LoadGameState();
+        //     Debug.Log("Game state loaded.");
+        // }
     }
 
     // void OnApplicationQuit()

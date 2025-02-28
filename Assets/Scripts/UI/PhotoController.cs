@@ -10,9 +10,11 @@ public class PhotoController : MonoBehaviour
     public GameObject paintbrushIcon;
     public GameObject photoPanel;
     public GameObject ownedPhotos;
+
+    // public bool holdingPhoto = false;
     private string lastPhotoID = "";
-    private List<string> collectedPhotos = new List<string>();
-    [SerializeField] private List<Image> photoIcons;
+    public List<string> collectedPhotos = new List<string>();
+    [SerializeField] public List<Image> photoIcons;
     public Sprite undiscoveredPhotoIcon;
     // Start is called before the first frame update
     void Start()
@@ -37,7 +39,7 @@ public class PhotoController : MonoBehaviour
         }
     }
 
-    void EquipPaintbrush()
+    public void EquipPaintbrush()
     {
         if (GameManager.Instance.hasPaintbrush && !GameManager.Instance.holdingPaintbrush && !GameManager.inMenu) // Only switch if not already in paintbrush mode
         {
@@ -72,7 +74,7 @@ public class PhotoController : MonoBehaviour
         UpdatePhotoInventoryUI();
     }
 
-    void SwitchToPhoto(string photoID)
+    public void SwitchToPhoto(string photoID)
     {
         GameManager.Instance.holdingPaintbrush = false;
         GameManager.Instance.holdingPhotograph = true;
@@ -101,8 +103,9 @@ public class PhotoController : MonoBehaviour
         }
     }
 
-    void TogglePhotoMode()
+    public void TogglePhotoMode()
     {
+        // holdingPhoto = !holdingPhoto;
         PhotoManager photoManager = FindObjectOfType<PhotoManager>();
 
         if (photoPanel.activeSelf)
