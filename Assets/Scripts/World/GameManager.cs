@@ -225,13 +225,20 @@ public class GameManager : MonoBehaviour
             clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
             clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
-            gameState.absorbedColors.Clear();
+            clickScript.absorbedColors.Clear();
             // Load absorbed colors
             clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-            foreach (Material mat in clickScript.absorbedColors)
+            foreach (string mat in gameState.absorbedColors)
             {
-                gameState.absorbedColors.Add(mat.name); 
-                Debug.Log("Loaded Absorbed Color: " + mat.name);
+                Debug.Log("Trying to load absorbed color: " + mat);
+
+                // Do something with this material
+                Material loadedMaterial = whiteMaterial;
+                if (mat == "Brown") {
+                    loadedMaterial = brownMaterial;
+                }
+                clickScript.absorbedColors.Add(loadedMaterial); 
+                Debug.Log("Loaded Absorbed Color: " + loadedMaterial);
             }
 
 
