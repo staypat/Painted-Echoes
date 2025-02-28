@@ -26,6 +26,9 @@ public class SplitterInteract : ObjectInteract
 
     [SerializeField] private Click_2 colorTracker;
 
+    public GameObject notificationObj;
+    private bool hasBeenInteracted = false;
+
     private void Start()
     {
         currentColor = null;
@@ -42,6 +45,12 @@ public class SplitterInteract : ObjectInteract
 
     public override void Interact()
     {
+        if (!hasBeenInteracted) 
+        {
+            hasBeenInteracted = true;
+            Destroy(notificationObj);
+        }
+        
         if (GameManager.inMenu)
         {
             if (SplitterUIPanel.activeSelf) {
