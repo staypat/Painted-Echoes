@@ -389,9 +389,14 @@ public class Click_2 : MonoBehaviour
                             {
                                 childRenderer.material.color = originalColor;
 
-                                if (PaintSplatterPS != null)
+                                if (PaintSplatterPS != null && ammoFlag)
                                 {
                                     ParticleSystem effect = Instantiate(PaintSplatterPS, child.position, Quaternion.identity);
+                                    // set the color of the particle system to the color of the paint
+                                    effect.GetComponent<ParticleSystem>().startColor = originalColor;
+                                    // set the color of the subemitter to the color of the paint
+                                    effect.GetComponent<ParticleSystem>().subEmitters.GetSubEmitterSystem(0).startColor = originalColor;
+
                                     effect.Play(); // Ensure it's playing
                                     Debug.Log("Particle System Instantiated at: " + child.position);
 
