@@ -530,6 +530,7 @@ public class SplitterInteract : ObjectInteract
             slotTwoColor = null;
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
+            collectAllButton.SetActive(false);
         }
     }
 

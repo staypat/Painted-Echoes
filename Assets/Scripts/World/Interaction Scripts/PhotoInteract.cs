@@ -42,5 +42,6 @@ public class PhotoInteract : ObjectInteract
         }
 
         gameObject.SetActive(false); // Hide the object after pickup
+        AudioManager.instance.Play("PhotoEquip");
     }
 }

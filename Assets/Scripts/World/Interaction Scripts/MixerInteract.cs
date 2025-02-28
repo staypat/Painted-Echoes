@@ -72,7 +72,7 @@ public class MixerInteract : ObjectInteract
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
             AudioManager.instance.Play("UIOpen");
             // disable the slotThreeButton
-            slotThreeButton.SetActive(false);
+            //slotThreeButton.SetActive(false);
         }
     }
 }

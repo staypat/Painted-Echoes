@@ -12,17 +12,18 @@ public class OpenMenu : MonoBehaviour
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        MusicVolumeSlider.value = AudioManager.musicVolume;
+        SFXVolumeSlider.value = AudioManager.sfxVolume;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameManager.inMenu)
             {
@@ -59,7 +60,7 @@ public class OpenMenu : MonoBehaviour
 
             if(!AudioManager.instance.IsPaused("Theme"))
             {
-                AudioManager.instance.Pause("Theme");
+                //AudioManager.instance.Pause("Theme"); // this way for now until main menu music exists
             }
         }
         else

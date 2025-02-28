@@ -80,5 +80,7 @@ public class PaintbrushInteract : ObjectInteract
 
         gameObject.SetActive(false); // Disable the game object
         objectToEnable.SetActive(true); // Enable paintbrush
+        GameManager.Instance.holdingPaintbrush = true; // Mark that the player is now holding the paintbrush
+        AudioManager.instance.Play("GunEquip");
     }
 }
