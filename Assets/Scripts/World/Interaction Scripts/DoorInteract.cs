@@ -6,19 +6,20 @@ public class DoorInteract : ObjectInteract
 {
     [SerializeField] private float openAngle = 90f; // Adjust in Inspector
     [SerializeField] private float openSpeed = 2f; // Time to open/close
-    [SerializeField] private string openPrompt = "Open Door"; // Editable in Inspector
-    [SerializeField] private string closePrompt = "Close Door"; // Editable in Inspector
+    [SerializeField] private Axis rotationAxis = Axis.Y; // Choose rotation axis (default: Y)
 
     private bool isOpen = false;
     private bool isMoving = false;
     private Quaternion closedRotation;
     private Quaternion openRotation;
 
+    private enum Axis { X, Y, Z }
+
     void Start()
     {
         closedRotation = transform.rotation;
-        openRotation = closedRotation * Quaternion.Euler(0, 0, openAngle);
-        interactionPrompt = openPrompt; // Uses Inspector-assigned value
+        Vector3 rotationVector = GetRotationVector(openAngle);
+        openRotation = closedRotation * Quaternion.Euler(rotationVector);
     }
 
     public override void Interact()
@@ -26,7 +27,7 @@ public class DoorInteract : ObjectInteract
         if (isMoving) return; // Prevent interaction during movement
 
         isOpen = !isOpen;
-        interactionPrompt = isOpen ? closePrompt : openPrompt; // Use dynamic prompt
+        Debug.Log(interactionPrompt); // Log the interaction prompt set in the Inspector
         StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
     }
 
@@ -45,5 +46,16 @@ public class DoorInteract : ObjectInteract
 
         transform.rotation = targetRotation; // Ensure exact rotation
         isMoving = false;
+    }
+
+    private Vector3 GetRotationVector(float angle)
+    {
+        switch (rotationAxis)
+        {
+            case Axis.X: return new Vector3(angle, 0, 0);
+            case Axis.Y: return new Vector3(0, angle, 0);
+            case Axis.Z: return new Vector3(0, 0, angle);
+            default: return Vector3.zero;
+        }
     }
 }

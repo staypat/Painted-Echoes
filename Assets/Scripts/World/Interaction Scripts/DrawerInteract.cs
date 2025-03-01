@@ -7,7 +7,7 @@ public class DrawerInteract : ObjectInteract
     [SerializeField] private Axis moveAxis = Axis.Z;
     [SerializeField] private float moveDistance = 0.6f;
     [SerializeField] private float moveSpeed = 1.2f;
-    
+
     private Vector3 closedLocalPosition;
     private bool isOpen;
     private bool isMoving;
@@ -17,12 +17,12 @@ public class DrawerInteract : ObjectInteract
     void Start()
     {
         closedLocalPosition = transform.localPosition;
-        UpdateInteractionPrompt();
     }
 
     public override void Interact()
     {
         if (isMoving) return;
+
         if (isOpen)
         {
             FindObjectOfType<AudioManager>().Play("DrawerClose");
@@ -31,17 +31,18 @@ public class DrawerInteract : ObjectInteract
         {
             FindObjectOfType<AudioManager>().Play("DrawerOpen");
         }
+
+        Debug.Log(interactionPrompt); // Logs the current interaction prompt
         StartCoroutine(MoveDrawer());
     }
 
     private IEnumerator MoveDrawer()
     {
-        Debug.Log($"Start: {transform.localPosition}, Target: {(isOpen ? closedLocalPosition : GetOpenPosition())}");
         isMoving = true;
         Vector3 targetLocalPosition = isOpen ? closedLocalPosition : GetOpenPosition();
         Vector3 startLocalPosition = transform.localPosition;
 
-        float duration = 1f / moveSpeed; // Calculate duration based on speed
+        float duration = 1f / moveSpeed;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -53,7 +54,6 @@ public class DrawerInteract : ObjectInteract
         }
 
         isOpen = !isOpen;
-        UpdateInteractionPrompt();
         isMoving = false;
     }
 
@@ -66,10 +66,5 @@ public class DrawerInteract : ObjectInteract
             _ => Vector3.zero
         };
         return closedLocalPosition + offset;
-    }
-
-    private void UpdateInteractionPrompt()
-    {
-        interactionPrompt = isOpen ? "Close" : "Open";
     }
 }
