@@ -389,6 +389,7 @@ public class Click_2 : MonoBehaviour
                             {
                                 childRenderer.material.color = originalColor;
 
+                                child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                                 if (PaintSplatterPS != null && ammoFlag)
                                 {
                                     ParticleSystem effect = Instantiate(PaintSplatterPS, child.position, Quaternion.identity);
