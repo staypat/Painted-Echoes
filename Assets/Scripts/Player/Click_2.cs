@@ -120,7 +120,8 @@ public class Click_2 : MonoBehaviour
                 if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
                 {
                     if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
-                        || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")) 
+                        || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
+                        || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")) 
                     {
                         continue; // Skip the barrier object
                     }
@@ -174,12 +175,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
                     count += 1;
-                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
