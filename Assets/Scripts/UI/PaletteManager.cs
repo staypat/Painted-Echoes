@@ -6,48 +6,37 @@ using UnityEngine.UI;
 public class PaletteManager : MonoBehaviour
 {
     public List<Image> colorIcons;
+    public List<GameObject> targetObjects;
+    public List<Material> materialsList;
+    private Dictionary<string, Material> materialsDict = new Dictionary<string, Material>();
+
     public Click_2 colorManager;
 
-    public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
-    public Sprite redIcon;
-    public Sprite redOrangeIcon;
-    public Sprite orangeIcon;
-    public Sprite yellowOrangeIcon;
-    public Sprite yellowIcon;
-    public Sprite yellowGreenIcon;
-    public Sprite greenIcon;
-    public Sprite blueGreenIcon;
-    public Sprite blueIcon;
-    public Sprite bluePurpleIcon;
-    public Sprite purpleIcon;
-    public Sprite redPurpleIcon;
-    public Sprite whiteIcon;
-    public Sprite blackIcon;
-    public Sprite brownIcon;
 
     
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Image icon in colorIcons)
+        materialsDict.Add("Red", materialsList[0]);
+        materialsDict.Add("Orange", materialsList[1]);
+        materialsDict.Add("Yellow", materialsList[2]);
+        materialsDict.Add("Green", materialsList[3]);
+        materialsDict.Add("Blue", materialsList[4]);
+        materialsDict.Add("Purple", materialsList[5]);
+        materialsDict.Add("Brown", materialsList[6]);
+        materialsDict.Add("White", materialsList[7]);
+        materialsDict.Add("Gray", materialsList[8]);
+        materialsDict.Add("Black", materialsList[9]);
+        materialsDict.Add("RedOrange", materialsList[10]);
+        materialsDict.Add("BlueGreen", materialsList[11]);
+        materialsDict.Add("YellowGreen", materialsList[12]);
+        materialsDict.Add("YellowOrange", materialsList[13]);
+        materialsDict.Add("BluePurple", materialsList[14]);
+
+        foreach (var targetObject in targetObjects)
         {
-            icon.enabled = false;
+            targetObject.SetActive(false);
         }
-        colorSprites["Red"] = redIcon;
-        colorSprites["RedOrange"] = redOrangeIcon;
-        colorSprites["Orange"] = orangeIcon;
-        colorSprites["YellowOrange"] = yellowOrangeIcon;
-        colorSprites["Yellow"] = yellowIcon;
-        colorSprites["YellowGreen"] = yellowGreenIcon;
-        colorSprites["Green"] = greenIcon;
-        colorSprites["BlueGreen"] = blueGreenIcon;
-        colorSprites["Blue"] = blueIcon;
-        colorSprites["BluePurple"] = bluePurpleIcon;
-        colorSprites["Purple"] = purpleIcon;
-        colorSprites["RedPurple"] = redPurpleIcon;
-        colorSprites["White"] = whiteIcon;
-        colorSprites["Black"] = blackIcon;
-        colorSprites["Brown"] = brownIcon;
     }
 
     // Update is called once per frame
@@ -57,27 +46,29 @@ public class PaletteManager : MonoBehaviour
 
     public void updatePaletteUI()
     {
-        foreach (Image icon in colorIcons)
+        foreach (var targetObject in targetObjects)
         {
-            icon.enabled = false;
+            targetObject.SetActive(false);
         }
-        for (int i = 0; i < colorManager.absorbedColorTags.Count; i++)
+
+        for (int i = 0; i < Mathf.Min(colorManager.absorbedColorTags.Count, targetObjects.Count); i++)
         {
-        string color = colorManager.absorbedColorTags[i];
-        colorIcons[i].sprite = colorSprites[color];
-        colorIcons[i].enabled = true;
+            targetObjects[i].SetActive(true);
+
+            string color = colorManager.absorbedColorTags[i];
+            Renderer objectRenderer = targetObjects[i].GetComponent<Renderer>();
+            objectRenderer.material = materialsDict[color];
         }
     }
 
     public Sprite GetSpriteByName(string spriteName)
     {
-        if (colorSprites.TryGetValue(spriteName, out Sprite sprite))
-        {
-            return sprite;
-        }
+        // if (colorSprites.TryGetValue(spriteName, out Sprite sprite))
+        // {
+        //     return sprite;
+        // }
         
-        Debug.LogWarning("Sprite not found for name: " + spriteName);
+        // Debug.LogWarning("Sprite not found for name: " + spriteName);
         return null;
     }
 }
-
