@@ -5,16 +5,17 @@ using TMPro;
 
 public class DoorInteractTutorial : ObjectInteract
 {
-    [SerializeField] private GameObject noKeyText;
     [SerializeField] private GameObject removeLastText; // Assign the GameObject containing TMP_Text
-    [SerializeField] private GameObject afterNoKeyText; // New GameObject to enable after noKeyText disappears
-    [SerializeField] private float noKeyTextDuration = 2f; // Duration before noKeyText disappears
+    [SerializeField] private GameObject findKey; // New GameObject to enable when the player fails
+    [SerializeField] private GameObject disableMovementTutorial; // Assign GameObject to disable
+    [SerializeField] private MonoBehaviour scriptToDisable; // Assign script to disable
+
     [SerializeField] private float openAngle = 90f;
     [SerializeField] private float openSpeed = 2f;
-
+    
     private bool isOpen = false;
     private bool isMoving = false;
-    private bool hasShownNoKeyText = false; // Prevents repeated display
+    
     private Quaternion closedRotation;
     private Quaternion openRotation;
 
@@ -55,15 +56,12 @@ public class DoorInteractTutorial : ObjectInteract
         {
             Debug.Log("Opening the door...");
 
-            if (noKeyText != null) noKeyText.SetActive(false);
-            if (afterNoKeyText != null) afterNoKeyText.SetActive(false);
+            if (findKey != null) findKey.SetActive(false);
 
             isOpen = !isOpen;
             interactionPrompt = isOpen ? "Close Door" : "Open Door";
             StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
         }
-
-
     }
 
     private void ShowNoKeyMessage()
@@ -73,20 +71,23 @@ public class DoorInteractTutorial : ObjectInteract
             removeLastText.SetActive(false);
         }
 
-        if (!hasShownNoKeyText && noKeyText != null)
+        // Show "findKey" message
+        if (findKey != null)
         {
-            noKeyText.SetActive(true);
-            hasShownNoKeyText = true;
-            StartCoroutine(HandleNoKeyText());
+            findKey.SetActive(true);
         }
-    }
 
-    private IEnumerator HandleNoKeyText()
-    {
-        yield return new WaitForSeconds(noKeyTextDuration);
+        // Disable movement tutorial
+        if (disableMovementTutorial != null)
+        {
+            disableMovementTutorial.SetActive(false);
+        }
 
-        if (noKeyText != null) noKeyText.SetActive(false);
-        if (afterNoKeyText != null) afterNoKeyText.SetActive(true);
+        // Disable assigned script
+        if (scriptToDisable != null)
+        {
+            scriptToDisable.enabled = false;
+        }
     }
 
     private IEnumerator MoveDoor(Quaternion targetRotation)
@@ -114,8 +115,5 @@ public class DoorInteractTutorial : ObjectInteract
             transform.rotation = targetRotation;
             isMoving = false;
         }
-
     }
-
-
 }
