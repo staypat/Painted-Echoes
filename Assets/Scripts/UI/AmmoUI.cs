@@ -20,6 +20,8 @@ public class AmmoUI : MonoBehaviour
     private Dictionary<string, bool> discoveredColors = new Dictionary<string, bool>();
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
     public Sprite undiscoveredColorIcon;
+    public GameObject tabTutorialDisable;
+    public GameObject photographTextEnable;
     [SerializeField] private Sprite redIcon;
     [SerializeField] private Sprite redOrangeIcon;
     [SerializeField] private Sprite orangeIcon;
@@ -35,6 +37,8 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Sprite whiteIcon;
     [SerializeField] private Sprite blackIcon;
     [SerializeField] private Sprite brownIcon;
+
+    private bool hasPressedTabFirstTime = false;
 
     void Start()
     {
@@ -78,7 +82,20 @@ public class AmmoUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush)
         {
-            ToggleUI();
+            if (!hasPressedTabFirstTime)
+                {
+                    hasPressedTabFirstTime = true;
+
+                    if (tabTutorialDisable != null) 
+                    {
+                        tabTutorialDisable.SetActive(false);
+                    }
+                    if (photographTextEnable != null)
+                    {
+                        photographTextEnable.SetActive(true);
+                    }
+                }
+        ToggleUI();
         }
     }
 
