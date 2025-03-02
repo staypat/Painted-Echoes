@@ -300,6 +300,7 @@ public class Click_2 : MonoBehaviour
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
+            paletteManager.updatePaletteUI();
             //Debug.Log("Current index: " + currentIndex);
         }
         else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
@@ -308,6 +309,7 @@ public class Click_2 : MonoBehaviour
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
+            paletteManager.updatePaletteUI();
         }
     }
 

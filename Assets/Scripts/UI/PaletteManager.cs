@@ -9,6 +9,8 @@ public class PaletteManager : MonoBehaviour
     public List<GameObject> targetObjects;
     public List<Material> materialsList;
     private Dictionary<string, Material> materialsDict = new Dictionary<string, Material>();
+    private Dictionary<int, Vector3> originalScales = new Dictionary<int, Vector3>();
+
 
     public Click_2 colorManager;
 
@@ -37,6 +39,10 @@ public class PaletteManager : MonoBehaviour
         {
             targetObject.SetActive(false);
         }
+        for (int i = 0; i < targetObjects.Count; i++)
+        {
+            originalScales[i] = targetObjects[i].transform.localScale;
+        }
     }
 
     // Update is called once per frame
@@ -59,6 +65,11 @@ public class PaletteManager : MonoBehaviour
             Renderer objectRenderer = targetObjects[i].GetComponent<Renderer>();
             objectRenderer.material = materialsDict[color];
         }
+        foreach (var scale in originalScales)
+        {
+            targetObjects[scale.Key].transform.localScale = scale.Value;
+        }
+        targetObjects[colorManager.currentIndex2].transform.localScale = originalScales[colorManager.currentIndex2] * 1.2f;
     }
 
     public Sprite GetSpriteByName(string spriteName)
