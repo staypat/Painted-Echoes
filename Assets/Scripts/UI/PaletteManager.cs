@@ -27,6 +27,11 @@ public class PaletteManager : MonoBehaviour
         materialsDict.Add("White", materialsList[7]);
         materialsDict.Add("Gray", materialsList[8]);
         materialsDict.Add("Black", materialsList[9]);
+        materialsDict.Add("RedOrange", materialsList[10]);
+        materialsDict.Add("BlueGreen", materialsList[11]);
+        materialsDict.Add("YellowGreen", materialsList[12]);
+        materialsDict.Add("YellowOrange", materialsList[13]);
+        materialsDict.Add("BluePurple", materialsList[14]);
 
         foreach (var targetObject in targetObjects)
         {
