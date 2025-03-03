@@ -23,7 +23,7 @@ public class EnlargeCrosshair : MonoBehaviour
         if (Physics.Raycast(ray, out hit, raycastDistance))
         {
             Transform parentObject = hit.collider.transform.parent;
-            if (parentObject != null && parentObject.tag != "Untagged")
+            if ((parentObject != null && parentObject.tag != "Untagged") || (parentObject == null && hit.collider.tag != "Untagged"))
             {
                 crosshair.transform.localScale = originalScale * enlargedScale;
             }
