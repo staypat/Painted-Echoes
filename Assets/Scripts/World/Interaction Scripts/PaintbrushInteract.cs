@@ -4,72 +4,90 @@ using UnityEngine;
 
 public class PaintbrushInteract : ObjectInteract
 {
-    [SerializeField] private GameObject objectToEnable; // Assign in Inspector
-    [SerializeField] private GameObject inventoryIconToEnable; // Assign in Inspector
-    [SerializeField] private GameObject paintbrushIconToEnable; // Assign in Inspector
-    [SerializeField] private GameObject paletteToEnable; // Assign in Inspector
-    [SerializeField] private GameObject uiToDisable; // Assign in Inspector
-    [SerializeField] private GameObject uiToEnable; // New: Assign UI Text to enable
+    [SerializeField] private GameObject objectToEnable;
+    [SerializeField] private GameObject inventoryIconToEnable;
+    [SerializeField] private GameObject paintbrushIconToEnable;
+    [SerializeField] private GameObject paletteToEnable;
+    [SerializeField] private GameObject uiToDisable;
+    [SerializeField] private GameObject uiToEnable;
 
-    [SerializeField] private GameObject rotationTarget;
-    [SerializeField] private float floatSpeed = 1.0f; // Speed of floating motion
-    [SerializeField] private float floatAmplitude = 0.2f; // Amplitude (height variation)
-    [SerializeField] private float rotationSpeed = 50f; // Speed of Y-axis rotation
+    [SerializeField] private GameObject rotationTarget; // Empty parent (pivot point)
+    [SerializeField] private float floatSpeed = 1.0f;
+    [SerializeField] private float floatAmplitude = 0.2f;
+    [SerializeField] private float rotationSpeed = 50f;
 
-    private Vector3 startPosition;
+    [SerializeField] private Axis floatAxis = Axis.Y;
+    [SerializeField] private Axis rotateAxis = Axis.Y;
+
+    private Vector3 startLocalPosition; // Store local position relative to the pivot
+    private enum Axis { X, Y, Z }
 
     void Start()
     {
-        startPosition = transform.position; // Store the initial position
-        inventoryIconToEnable.SetActive(false); // Disable icon
-        paletteToEnable.SetActive(false); // Disable palette
-
-        // If rotationTarget is assigned, use its position as the base floating position
+        // If rotationTarget (empty parent) exists, use its position as the pivot point
         if (rotationTarget != null)
         {
-            startPosition = rotationTarget.transform.position;
+            startLocalPosition = transform.localPosition; // Store position relative to pivot
+        }
+        else
+        {
+            startLocalPosition = transform.position; // Default to world position
         }
 
-        // Ensure UI is disabled at start
-        if (uiToEnable != null)
-        {
-            uiToEnable.SetActive(false);
-        }
+        Debug.Log($"Stored Start Local Position: {startLocalPosition}");
+
+        // Ensure UI starts disabled
+        if (uiToEnable != null) uiToEnable.SetActive(false);
+        if (inventoryIconToEnable != null) inventoryIconToEnable.SetActive(false);
+        if (paletteToEnable != null) paletteToEnable.SetActive(false);
     }
 
     void Update()
     {
-        // Make the object float up and down using sine wave
-        float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
-        transform.position = new Vector3(startPosition.x, newY, startPosition.z);
+        // Calculate floating offset
+        float floatOffset = Mathf.Sin(Time.time * floatSpeed) * floatAmplitude;
+        Vector3 newLocalPosition = startLocalPosition; // Base position
 
-        // Rotate around the Y-axis
+        // Apply floating on the selected axis
+        if (floatAxis == Axis.X) newLocalPosition.x += floatOffset;
+        if (floatAxis == Axis.Y) newLocalPosition.y += floatOffset;
+        if (floatAxis == Axis.Z) newLocalPosition.z += floatOffset;
+
+        // Apply floating position relative to the pivot (empty parent)
+        transform.localPosition = newLocalPosition;
+
+        // Determine rotation axis
+        Vector3 rotationVector = Vector3.zero;
+        if (rotateAxis == Axis.X) rotationVector.x = 1;
+        if (rotateAxis == Axis.Y) rotationVector.y = 1;
+        if (rotateAxis == Axis.Z) rotationVector.z = 1;
+
+        // Rotate only the pivot (empty parent)
         if (rotationTarget != null)
         {
-            rotationTarget.transform.position = new Vector3(startPosition.x, newY, startPosition.z);
-            rotationTarget.transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime); // Rotate assigned object
+            rotationTarget.transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
         }
         else
         {
-            transform.position = new Vector3(startPosition.x, newY, startPosition.z);
-            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime); // Rotate self if no target assigned
+            transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
         }
     }
 
     public override void Interact()
     {
         base.Interact();
-        GameManager.Instance.hasPaintbrush = true; // Mark that the player now owns the paintbrush
-        inventoryIconToEnable.SetActive(true); // Enable icon
-        paletteToEnable.SetActive(true); // Enable palette
+        GameManager.Instance.hasPaintbrush = true;
+        if (inventoryIconToEnable != null) inventoryIconToEnable.SetActive(true);
+        if (paletteToEnable != null) paletteToEnable.SetActive(true);
 
-        if (uiToDisable != null)
+        if (uiToDisable != null) uiToDisable.SetActive(false);
+        if (GameManager.Instance.hasPhotograph && paintbrushIconToEnable != null)
         {
-            uiToDisable.SetActive(false); // Disable specified UI element
+            paintbrushIconToEnable.SetActive(true);
         }
         if (uiToEnable != null)
         {
-            uiToEnable.SetActive(true); // Enable the UI text when the paintbrush is picked up
+            uiToEnable.SetActive(true);
         }
 
         gameObject.SetActive(false); // Disable the game object
