@@ -67,12 +67,6 @@ public class PaintbrushInteract : ObjectInteract
         {
             uiToDisable.SetActive(false); // Disable specified UI element
         }
-
-        if (GameManager.Instance.hasPhotograph)
-        {
-            paintbrushIconToEnable.SetActive(true); // Enable paintbrush icon
-        }
-
         if (uiToEnable != null)
         {
             uiToEnable.SetActive(true); // Enable the UI text when the paintbrush is picked up
@@ -81,6 +75,7 @@ public class PaintbrushInteract : ObjectInteract
         gameObject.SetActive(false); // Disable the game object
         objectToEnable.SetActive(true); // Enable paintbrush
         GameManager.Instance.holdingPaintbrush = true; // Mark that the player is now holding the paintbrush
+        paintbrushIconToEnable.SetActive(true); // Enable paintbrush icon
         AudioManager.instance.Play("GunEquip");
     }
 }
