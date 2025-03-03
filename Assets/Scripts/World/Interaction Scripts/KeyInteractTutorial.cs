@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class KeyInteractTutorial : ObjectInteract
 {
-    [SerializeField] private GameObject disableObject; // Assign in Inspector (object to disable)
-    [SerializeField] private GameObject enableObject;  // Assign in Inspector (object to enable)
+    [SerializeField] private GameObject disableObject; // First object to disable
+    [SerializeField] private GameObject disableTutorialText; // Second object to disable
+    [SerializeField] private GameObject enableObject;  // Object to enable
 
     public override void Interact()
     {
@@ -19,10 +20,16 @@ public class KeyInteractTutorial : ObjectInteract
             Debug.LogError("GameManager instance is NULL! tutorialKey not set.");
         }
 
-        // Disable the specified GameObject
+        // Disable the first specified GameObject
         if (disableObject != null)
         {
             disableObject.SetActive(false);
+        }
+
+        // Disable the second specified GameObject
+        if (disableTutorialText != null)
+        {
+            disableTutorialText.SetActive(false);
         }
 
         // Enable the specified GameObject
