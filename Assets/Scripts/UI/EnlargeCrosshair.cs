@@ -20,9 +20,17 @@ public class EnlargeCrosshair : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, raycastDistance) && hit.collider.tag != "Untagged")
+        if (Physics.Raycast(ray, out hit, raycastDistance))
         {
-            crosshair.transform.localScale = originalScale * enlargedScale;
+            Transform parentObject = hit.collider.transform.parent;
+            if (parentObject != null && parentObject.tag != "Untagged")
+            {
+                crosshair.transform.localScale = originalScale * enlargedScale;
+            }
+            else
+            {
+                crosshair.transform.localScale = originalScale;
+            }
         }
         else
         {
