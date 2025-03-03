@@ -48,7 +48,6 @@ public class PhotoController : MonoBehaviour
 
             paintbrush.SetActive(true);
             paletteUI.SetActive(true);
-            paintbrushIcon.SetActive(false);
 
             // Hide all active photos
             PhotoManager photoManager = FindObjectOfType<PhotoManager>();
