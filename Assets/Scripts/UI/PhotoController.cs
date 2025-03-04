@@ -137,4 +137,28 @@ public class PhotoController : MonoBehaviour
         EquipPhoto(photoID);
         AudioManager.instance.Play("PhotoEquip");
     }
+
+    public void TogglePhotoInventoryUI()
+    {
+        if (GameManager.inMenu)
+        {
+            if (photoPanel.activeSelf)
+            {
+                photoPanel.SetActive(false);
+                ownedPhotos.SetActive(false);
+                GameManager.Instance.ExitMenu();
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            GameManager.Instance.EnterMenu();
+            UpdatePhotoInventoryUI();
+            photoPanel.SetActive(true);
+            ownedPhotos.SetActive(true);
+        }
+    }
 }
