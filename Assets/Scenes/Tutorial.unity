@@ -1610,6 +1610,7 @@ GameObject:
   - component: {fileID: 290796143}
   - component: {fileID: 290796142}
   - component: {fileID: 290796141}
+  - component: {fileID: 290796149}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1772,6 +1773,21 @@ Transform:
   - {fileID: 1856166695}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -89.082, z: 0}
+--- !u!114 &290796149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290796140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7254692c0d473e143aace91b18e3a3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 1771321872}
+  enlargedScale: 1.5
+  raycastDistance: 4.5
 --- !u!1 &291147121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,7 +2750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Nice! Open that door and go inside
+  m_text: Open the door to go inside
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -2769,7 +2785,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2799,7 +2815,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -22.619186, y: -8.481134, z: -13.67131, w: -124.248985}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5979,7 +5995,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Find the key!
+  m_text: Find the key
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -6014,7 +6030,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -6044,7 +6060,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -32.201252, z: 11.145882, w: -62.917923}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8905,7 +8921,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -8935,7 +8951,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 21.764748, y: -32.142395, z: 28.693031, w: -32.692154}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9550,7 +9566,7 @@ GameObject:
   - component: {fileID: 1468692188}
   m_Layer: 0
   m_Name: HomeTextBlocks
-  m_TagString: Untagged
+  m_TagString: LivingRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9882,7 +9898,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -9912,7 +9928,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -38.3368, y: -15.10709, z: -16.501022, w: -134.27582}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10018,7 +10034,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -10048,7 +10064,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -22.76358, y: -50.47242, z: -16.799911, w: -82.64954}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10666,6 +10682,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &1743905755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743905756}
+  m_Layer: 0
+  m_Name: Door
+  m_TagString: LivingRoom
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1743905756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743905755}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 931626683236809700}
+  - {fileID: 5920097386785435529}
+  m_Father: {fileID: 543450653004687931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1766893435
 GameObject:
   m_ObjectHideFlags: 0
@@ -10819,8 +10868,8 @@ RectTransform:
   m_GameObject: {fileID: 1771321872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.60039, y: 0.60459, z: 0.71128}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 0.37777668, z: 0.44444168}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 694328921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10883,7 +10932,7 @@ GameObject:
   - component: {fileID: 1777732683}
   m_Layer: 0
   m_Name: mat
-  m_TagString: Untagged
+  m_TagString: LivingRoom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11234,7 +11283,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -11264,7 +11313,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -11.845566, y: -25.705463, z: -3.632721, w: -89.45061}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -13790,10 +13839,9 @@ Transform:
   - {fileID: 8667948376907642678}
   - {fileID: 175694172517939458}
   - {fileID: 1235020918968220286}
-  - {fileID: 931626683236809700}
+  - {fileID: 1743905756}
   - {fileID: 538445698942557829}
   - {fileID: 3709465263378614716}
-  - {fileID: 5920097386785435529}
   - {fileID: 6621163166662946469}
   - {fileID: 5614516452131389154}
   - {fileID: 1976767515493242875}
@@ -14188,12 +14236,12 @@ Transform:
   m_GameObject: {fileID: 2047121945936587551}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5000001, y: -0.49999988, z: -0.4999999, w: 0.5000001}
-  m_LocalPosition: {x: -6.673524, y: 1.0000001, z: 8.444314}
+  m_LocalPosition: {x: -6.673524, y: 1, z: 8.444313}
   m_LocalScale: {x: 106.87309, y: 128.24773, z: 106.87309}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6996622383109362379}
-  m_Father: {fileID: 543450653004687931}
+  m_Father: {fileID: 1743905756}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &960310555370060852
 MeshRenderer:
@@ -22251,11 +22299,11 @@ Transform:
   m_GameObject: {fileID: 2679584325534687534}
   serializedVersion: 2
   m_LocalRotation: {x: -0.50000006, y: -0.49999994, z: -0.49999997, w: 0.50000006}
-  m_LocalPosition: {x: -7.632161, y: 4.283232, z: 8.422378}
+  m_LocalPosition: {x: -7.632161, y: 4.283232, z: 8.422379}
   m_LocalScale: {x: 146.20271, y: 128.24773, z: 106.87309}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 543450653004687931}
+  m_Father: {fileID: 1743905756}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5931670230280313510
 GameObject:
