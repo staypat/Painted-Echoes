@@ -8305,6 +8305,34 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 57b660d3ce5ff994a837f67fa0e0d724, type: 3}
     loop: 0
     source: {fileID: 0}
+  - name: DoorOpen
+    clip: {fileID: 8300000, guid: b28a627cbe2317748ba4ffb1fb6a9298, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorClose
+    clip: {fileID: 8300000, guid: a9f9da6de06b1484ebba6178206a8609, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorLocked
+    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: CupboardOpen
+    clip: {fileID: 8300000, guid: 7c80a41ec1badb74589f36e2a6416109, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: CupboardClose
+    clip: {fileID: 8300000, guid: a46f2f1a21d9ceb4bb82542ef1bedf6d, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: FridgeOpen
+    clip: {fileID: 8300000, guid: 20a47cc6fe7cd0e48873fcc94970c525, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: FridgeClose
+    clip: {fileID: 8300000, guid: a0fad0145012318448ca7b2f0c8a859a, type: 3}
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &740280090
 Transform:
   m_ObjectHideFlags: 0

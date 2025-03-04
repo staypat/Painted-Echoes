@@ -404,7 +404,7 @@ public class Click_2 : MonoBehaviour
                                     effect.Play(); // Ensure it's playing
                                     Debug.Log("Particle System Instantiated at: " + child.position);
 
-                                    AudioManager.instance.Play("ColorCorrect"); // Play paint splatter sound effect
+                                    AudioManager.instance.PlayOneShot("ColorCorrect"); // Play paint splatter sound effect
 
                                     Destroy(effect.gameObject, effect.main.duration); // Destroy after it finishes
                                 }

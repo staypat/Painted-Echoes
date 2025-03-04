@@ -25,11 +25,11 @@ public class DrawerInteract : ObjectInteract
 
         if (isOpen)
         {
-            FindObjectOfType<AudioManager>().Play("DrawerClose");
+            AudioManager.instance.PlayOneShot("DrawerClose");
         }
         else
         {
-            FindObjectOfType<AudioManager>().Play("DrawerOpen");
+            AudioManager.instance.PlayOneShot("DrawerOpen");
         }
 
         Debug.Log(interactionPrompt); // Logs the current interaction prompt
