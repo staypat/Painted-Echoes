@@ -41,6 +41,7 @@ public class DoorInteractTutorial : ObjectInteract
         else
         {
             Debug.Log("Player does not have the key.");
+            AudioManager.instance.Play("DoorLocked");
             ShowNoKeyMessage();
         }
     }
@@ -58,6 +59,11 @@ public class DoorInteractTutorial : ObjectInteract
 
             if (findKey != null) findKey.SetActive(false);
 
+            if (isOpen){
+                AudioManager.instance.Play("DoorClose");
+            } else {
+                AudioManager.instance.Play("DoorOpen");
+            }
             isOpen = !isOpen;
             interactionPrompt = isOpen ? "Close Door" : "Open Door";
             StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
