@@ -102,6 +102,14 @@ public class AmmoUI : MonoBehaviour
         {
             photoController.TogglePhotoInventoryUI();
         }
+        if (GameManager.inMenu && Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.holdingPhotograph)
+        {
+            photoController.TogglePhotoInventoryUI();
+        }
+        if (GameManager.inMenu && Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.holdingPaintbrush)
+        {
+            ToggleAmmoInventoryUI();
+        }
     }
 
     private void ToggleAmmoInventoryUI()
