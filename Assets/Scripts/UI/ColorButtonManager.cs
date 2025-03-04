@@ -38,15 +38,12 @@ public class ColorButtonManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Escape) && colorSelectionPanel.activeSelf)
         {
-            Debug.Log("Q Pressed");
-
-            if (colorSelectionPanel.activeSelf)
-            {
-                Debug.Log("Closing ColorSelectionPanel");
-                CloseColorSelectionPanel(null);
-            }
+            AudioManager.instance.Play("UIBack");
+            DestroyChildren();
+            CloseColorSelectionPanel("White");
+            
         }
     }
 
@@ -255,10 +252,7 @@ public class ColorButtonManager : MonoBehaviour
         }
 
         // Clear previous buttons
-        foreach (Transform child in buttonContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        DestroyChildren();
 
         foreach (var entry in ammo)
         {
@@ -278,6 +272,14 @@ public class ColorButtonManager : MonoBehaviour
                 // Add button functionality
                 newButton.GetComponent<Button>().onClick.AddListener(() => SelectAmmo(ammoType));
             }
+        }
+    }
+
+    public void DestroyChildren()
+    {
+        foreach (Transform child in buttonContainer)
+        {
+            Destroy(child.gameObject);
         }
     }
 
