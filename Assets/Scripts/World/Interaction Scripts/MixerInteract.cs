@@ -12,6 +12,7 @@ public class MixerInteract : ObjectInteract
     private FirstPerson playerCamera;
     public GameObject notificationObj;
     private bool hasBeenInteracted = false;
+    public ColorButtonManager colorButtonManager;
 
     private void Start()
     {
@@ -24,6 +25,26 @@ public class MixerInteract : ObjectInteract
 
         // Find the FirstPerson script on the player
         playerCamera = FindObjectOfType<FirstPerson>();
+    }
+
+    private void Update()
+    {
+        if (mixerUIPanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ExitMixer();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                colorButtonManager.ShowColorSelectionPanel(1);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                colorButtonManager.ShowColorSelectionPanel(2);
+            }
+        }
+        
     }
 
     public override void Interact()

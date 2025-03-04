@@ -43,6 +43,23 @@ public class SplitterInteract : ObjectInteract
         playerCamera = FindObjectOfType<FirstPerson>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && SplitterUIPanel.activeSelf)
+        {
+            ExitSplitter();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && ColorSelectionPanel.activeSelf)
+        {
+            AudioManager.instance.Play("UIBack");
+            CloseColorSelectionPanel("White");
+            foreach (Transform child in buttonContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
     public override void Interact()
     {
         if (!hasBeenInteracted) 
