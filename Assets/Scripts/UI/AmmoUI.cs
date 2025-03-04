@@ -112,7 +112,7 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    private void ToggleAmmoInventoryUI()
+    public void ToggleAmmoInventoryUI()
     {
         if (GameManager.inMenu)
         {
