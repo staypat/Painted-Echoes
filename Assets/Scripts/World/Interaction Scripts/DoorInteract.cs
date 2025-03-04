@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorInteract : ObjectInteract
 {
     [SerializeField] private float openAngle = 90f; // Adjust in Inspector
-    [SerializeField] private float openSpeed = 2f; // Time to open/close
+    [SerializeField] private float openSpeed = 1f; // Time to open/close
     [SerializeField] private Axis rotationAxis = Axis.Y; // Choose rotation axis (default: Y)
 
     private bool isOpen = false;
@@ -26,8 +26,42 @@ public class DoorInteract : ObjectInteract
     {
         if (isMoving) return; // Prevent interaction during movement
 
+        if (interactionPrompt == "open fridge") {
+            openSpeed = 0.95f;
+            if (isOpen){
+                AudioManager.instance.PlayOneShot("FridgeClose");
+            } 
+            else
+            {
+                AudioManager.instance.PlayOneShot("FridgeOpen");
+            }
+            
+        }
+        else if (interactionPrompt == "open door") {
+            openSpeed = 0.7f;
+            if (isOpen){
+                AudioManager.instance.PlayOneShot("DoorClose");
+            } 
+            else
+            {
+                AudioManager.instance.PlayOneShot("DoorOpen");
+            }
+        }
+        else if (interactionPrompt == "open cabinet")
+        {
+            openSpeed = 0.65f;
+            if (isOpen){
+                AudioManager.instance.PlayOneShot("CupboardClose");
+            } 
+            else
+            {
+                AudioManager.instance.PlayOneShot("CupboardOpen");
+            }
+        }
+
         isOpen = !isOpen;
         Debug.Log(interactionPrompt); // Log the interaction prompt set in the Inspector
+
         StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
     }
 
