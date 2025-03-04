@@ -30,6 +30,9 @@ public class Click_2 : MonoBehaviour
 
     public int currentIndex = 0;
     public int currentIndex2 = 0;
+    
+    public bool isRoomComplete = false; // Flag to track completion
+    private bool hasVictoryBeenTriggered = false; // Add this at the class level
 
     public AmmoUI ammoUI;
     public VictoryUI victoryUI;
@@ -90,6 +93,8 @@ public class Click_2 : MonoBehaviour
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
         currentRoom = newRoom;
+        isRoomComplete = false;
+        hasVictoryBeenTriggered = false;
         //Debug.Log("Current room: " + currentRoom.name);
 
     }
@@ -143,7 +148,7 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    private void CompareColorValues()
+    private bool CompareColorValues()
     {
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
@@ -209,16 +214,18 @@ public class Click_2 : MonoBehaviour
 
         Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
 
-        if (count == CorrectTotal)
+        if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
-            victoryUI.ShowVictoryMessage();
-            AudioManager.instance.Play("LevelComplete");
+            //hasVictoryBeenTriggered = true; // Prevent multiple triggers
+            isRoomComplete = true;
+
             turnOffBarrier();
+            return true;
         }
-
-
-
-
+        else
+        {
+            return false;
+        }
     }
 
     void turnOffBarrier(){
@@ -271,9 +278,13 @@ public class Click_2 : MonoBehaviour
             if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
                 
                 ColorOnClick();
-                roomCheck(currentRoom);
-                CompareColorValues();
 
+                roomCheck(currentRoom);
+                if (CompareColorValues()== true)
+                {
+                    victoryUI.ShowVictoryMessage();
+                    AudioManager.instance.Play("LevelComplete");
+                }
 
                 // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
                 // {
@@ -286,7 +297,16 @@ public class Click_2 : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1)) AbsorbColor(); // Right-click handler
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            roomCheck(currentRoom);
+            if (CompareColorValues()== false)
+            {
+                AbsorbColor();
+            }
+
+        }
+
     }
 
     void HandleScrollInput()
@@ -392,7 +412,7 @@ public class Click_2 : MonoBehaviour
                             {
                                 childRenderer.material.color = originalColor;
 
-                                child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                                //child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                                 if (PaintSplatterPS != null && ammoFlag)
                                 {
                                     ParticleSystem effect = Instantiate(PaintSplatterPS, child.position, Quaternion.identity);
@@ -499,7 +519,7 @@ public class Click_2 : MonoBehaviour
     }
 
     void AbsorbColor()
-    {
+    {   
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
