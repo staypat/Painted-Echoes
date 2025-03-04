@@ -96,19 +96,15 @@ public class AmmoUI : MonoBehaviour
                         photographTextEnable.SetActive(true);
                     }
                 }
-            ToggleUI();
+            ToggleAmmoInventoryUI();
         }
-        else if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPhotograph && GameManager.Instance.holdingPhotograph)
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPhotograph && GameManager.Instance.holdingPhotograph)
         {
-            // If already holding a photo, open the photo collection UI
-            photoController.photoPanel.SetActive(true);
-            photoController.ownedPhotos.SetActive(true);
-            GameManager.Instance.EnterMenu();
-            AudioManager.instance.Play("UIOpen");
+            photoController.TogglePhotoInventoryUI();
         }
     }
 
-    private void ToggleUI()
+    private void ToggleAmmoInventoryUI()
     {
         if (GameManager.inMenu)
         {
@@ -130,7 +126,6 @@ public class AmmoUI : MonoBehaviour
             ammoBar.SetActive(true);
             ammoPanel.SetActive(true);
         }
-        
     }
 
     private void UpdateAmmoUI()
@@ -161,21 +156,19 @@ public class AmmoUI : MonoBehaviour
     private void SelectColor(string colorKey)
     {
         if(AmmoManager.Instance.GetCurrentAmmo(colorKey) != 0){
-            Debug.Log("Selected color: " + colorKey);
             Material selectedMaterial = clickInteraction.GetMaterialFromString(colorKey);
             int index = clickInteraction.absorbedColorTags.IndexOf(colorKey);
             if (index != -1)
             {
                 clickInteraction.currentIndex = index;
                 clickInteraction.currentIndex2 = index;
-            }else
-            {
-                Debug.Log("Color not in absorbedColor lists");
             }
             clickInteraction.ApplyColor(selectedMaterial, colorKey);
+            GameManager.Instance.ExitMenu();
+            ammoBar.SetActive(false);
+            ammoPanel.SetActive(false);
         }else
         {
-            Debug.Log("No ammo for color: " + colorKey);
             AudioManager.instance.Play("UIError");
             return;
         }
