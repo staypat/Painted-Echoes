@@ -363,7 +363,7 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                     //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
-                    photocontroller.SwitchToPhoto(photoID);
+                    photocontroller.EquipPhoto(photoID);
                 }
                 photocontroller.UpdatePhotoInventoryUI();
                 //Debug.Log("Loaded Photo Inventory UI");
