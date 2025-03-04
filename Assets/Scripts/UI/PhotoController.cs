@@ -7,11 +7,10 @@ public class PhotoController : MonoBehaviour
 {
     public GameObject paintbrush;
     public GameObject paletteUI;
-    public GameObject paintbrushIcon;
     public GameObject photoPanel;
     public GameObject ownedPhotos;
-
-    // public bool holdingPhoto = false;
+    public GameObject ammoInventoryIcon;
+    public GameObject photoInventoryIcon;
     private string lastPhotoID = "";
     public List<string> collectedPhotos = new List<string>();
     [SerializeField] public List<Image> photoIcons;
@@ -33,9 +32,9 @@ public class PhotoController : MonoBehaviour
             EquipPaintbrush();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !GameManager.inMenu)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            TogglePhotoMode();
+            EquipPhoto(lastPhotoID);
         }
     }
 
@@ -48,6 +47,8 @@ public class PhotoController : MonoBehaviour
 
             paintbrush.SetActive(true);
             paletteUI.SetActive(true);
+            ammoInventoryIcon.SetActive(true);
+            photoInventoryIcon.SetActive(false);
 
             // Hide all active photos
             PhotoManager photoManager = FindObjectOfType<PhotoManager>();
@@ -71,78 +72,36 @@ public class PhotoController : MonoBehaviour
         }
 
         lastPhotoID = photoID; // Update the last active photo
-        SwitchToPhoto(photoID);
+        EquipPhoto(photoID);
         UpdatePhotoInventoryUI();
     }
 
-    public void SwitchToPhoto(string photoID)
+    public void EquipPhoto(string photoID)
     {
-        GameManager.Instance.holdingPaintbrush = false;
-        GameManager.Instance.holdingPhotograph = true;
-
-        paintbrush.SetActive(false);
-        paletteUI.SetActive(false);
-        if (GameManager.Instance.hasPaintbrush)
+        if (GameManager.Instance.hasPhotograph && !GameManager.inMenu)
         {
-            paintbrushIcon.SetActive(true);
-        }
-
-        PhotoManager photoManager = FindObjectOfType<PhotoManager>();
-
-        // Hide all active photos
-        foreach (var photoImage in photoManager.GetAllPhotos())
-        {
-            photoImage.color = new Color(255, 255, 255, 0);
-        }
-
-        // Show the selected photo
-        Image photo = photoManager.GetPhoto(photoID);
-        if (photo != null)
-        {
-            photo.color = new Color(255, 255, 255, 255);
-            lastPhotoID = photoID;
-        }
-    }
-
-    public void TogglePhotoMode()
-    {
-        // holdingPhoto = !holdingPhoto;
-        PhotoManager photoManager = FindObjectOfType<PhotoManager>();
-
-        if (photoPanel.activeSelf)
-        {
-            // If the UI is open, close it and return to the last photo
-            photoPanel.SetActive(false);
-            ownedPhotos.SetActive(false);
-            GameManager.Instance.ExitMenu();
-
-            if (!string.IsNullOrEmpty(lastPhotoID))
-            {
-                Image photo = photoManager.GetPhoto(lastPhotoID);
-                if (photo != null)
-                {
-                    photo.color = new Color(255, 255, 255, 255);
-                }
-            }
-
             GameManager.Instance.holdingPaintbrush = false;
             GameManager.Instance.holdingPhotograph = true;
-            AudioManager.instance.Play("UIBack");
-        }
-        else if (GameManager.Instance.holdingPhotograph)
-        {
-            // If already holding a photo, open the photo collection UI
-            photoPanel.SetActive(true);
-            ownedPhotos.SetActive(true);
-            GameManager.Instance.EnterMenu();
-            AudioManager.instance.Play("UIOpen");
-        }
-        else
-        {
-            // If in paintbrush mode, switch to the last held photo
-            if (!string.IsNullOrEmpty(lastPhotoID))
+
+            paintbrush.SetActive(false);
+            paletteUI.SetActive(false);
+            ammoInventoryIcon.SetActive(false);
+            photoInventoryIcon.SetActive(true);
+
+            PhotoManager photoManager = FindObjectOfType<PhotoManager>();
+
+            // Hide all active photos
+            foreach (var photoImage in photoManager.GetAllPhotos())
             {
-                SwitchToPhoto(lastPhotoID);
+                photoImage.color = new Color(255, 255, 255, 0);
+            }
+
+            // Show the selected photo
+            Image photo = photoManager.GetPhoto(photoID);
+            if (photo != null)
+            {
+                photo.color = new Color(255, 255, 255, 255);
+                lastPhotoID = photoID;
                 AudioManager.instance.Play("PhotoEquip");
             }
         }
@@ -175,7 +134,7 @@ public class PhotoController : MonoBehaviour
         GameManager.Instance.ExitMenu();
         photoPanel.SetActive(false);
         ownedPhotos.SetActive(false);
-        SwitchToPhoto(photoID);
+        EquipPhoto(photoID);
         AudioManager.instance.Play("PhotoEquip");
     }
 }

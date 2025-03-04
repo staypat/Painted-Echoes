@@ -8,13 +8,11 @@ public class PhotoInteract : ObjectInteract
     public string photoID;
     public GameObject paintbrush;
     public GameObject paletteUI;
-    public GameObject paintbrushIcon;
     [SerializeField] private GameObject uiToDisable; // New: Assign UI Text to disable
 
     void Start()
     {
         photoIcon.SetActive(false);
-        paintbrushIcon.SetActive(false);
 
         // Ensure UI is enabled at start
         if (uiToDisable != null)

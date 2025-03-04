@@ -39,6 +39,7 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Sprite brownIcon;
 
     private bool hasPressedTabFirstTime = false;
+    public PhotoController photoController;
 
     void Start()
     {
@@ -80,7 +81,7 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush)
+        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush && GameManager.Instance.holdingPaintbrush)
         {
             if (!hasPressedTabFirstTime)
                 {
@@ -95,7 +96,15 @@ public class AmmoUI : MonoBehaviour
                         photographTextEnable.SetActive(true);
                     }
                 }
-        ToggleUI();
+            ToggleUI();
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPhotograph && GameManager.Instance.holdingPhotograph)
+        {
+            // If already holding a photo, open the photo collection UI
+            photoController.photoPanel.SetActive(true);
+            photoController.ownedPhotos.SetActive(true);
+            GameManager.Instance.EnterMenu();
+            AudioManager.instance.Play("UIOpen");
         }
     }
 
