@@ -16,6 +16,8 @@ public class SplitterInteract : ObjectInteract
     [SerializeField] private GameObject slotTwoButton; // Assign in Unity Inspector
     [SerializeField] private GameObject slotThreeButton; // Assign in Unity Inspector
     [SerializeField] private GameObject collectAllButton; // Assign in Unity Inspector
+    [SerializeField] private GameObject instructions;
+    [SerializeField] private GameObject exitButton;
     private FirstPerson playerCamera;
     private string currentColor;
     private string slotOneColor;
@@ -52,11 +54,8 @@ public class SplitterInteract : ObjectInteract
         else if (Input.GetKeyDown(KeyCode.Escape) && ColorSelectionPanel.activeSelf)
         {
             AudioManager.instance.Play("UIBack");
+            DestroyChildren();
             CloseColorSelectionPanel("White");
-            foreach (Transform child in buttonContainer)
-            {
-                Destroy(child.gameObject);
-            }
         }
     }
 
@@ -323,6 +322,8 @@ public class SplitterInteract : ObjectInteract
         if (AmmoManager.Instance.HasAmmo() && ((!slotOneButton.activeSelf && !slotTwoButton.activeSelf && !slotThreeButton.activeSelf) || (currentColor != null)))
         {
             ColorSelectionPanel.SetActive(true);
+            instructions.SetActive(true);
+            exitButton.SetActive(true);
             SplitterUIPanel.SetActive(false);
             AudioManager.instance.Play("UIOpen");
             PopulateAmmoButtons();
@@ -392,6 +393,9 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log("Hiding ColorSelectionPanel");
             ColorSelectionPanel.SetActive(false);
+            instructions.SetActive(false);
+            exitButton.SetActive(false);
+            AudioManager.instance.Play("UIBack");
         }
 
         if (SplitterUIPanel != null)
@@ -551,6 +555,13 @@ public class SplitterInteract : ObjectInteract
         }
     }
 
+    public void DestroyChildren()
+    {
+        foreach (Transform child in buttonContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     private Color GetColorFromAmmoType(string ammoType)
     {
         switch (ammoType)
