@@ -12,6 +12,8 @@ public class ColorButtonManager : MonoBehaviour
     [SerializeField] private GameObject slotOneButton; // Assign in Unity Inspector
     [SerializeField] private GameObject slotTwoButton; // Assign in Unity Inspector
     [SerializeField] private GameObject slotThreeButton; // Assign in Unity Inspector
+    [SerializeField] private GameObject instructions;
+    [SerializeField] private GameObject exitButton;
 
     private FirstPerson playerCamera;
 
@@ -60,6 +62,8 @@ public class ColorButtonManager : MonoBehaviour
                 Debug.Log("Opening ColorSelectionPanel");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                instructions.SetActive(true);
+                exitButton.SetActive(true);
 
                 if (mixerUIPanel != null)
                     mixerUIPanel.SetActive(false);
@@ -85,6 +89,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             Debug.Log("Hiding ColorSelectionPanel");
             colorSelectionPanel.SetActive(false);
+            AudioManager.instance.Play("UIBack");
             Debug.Log("Testing why this is active?" + colorSelectionPanel != null);
         }
 
@@ -95,6 +100,9 @@ public class ColorButtonManager : MonoBehaviour
         }
 
         if (currentSlot == 1) { slotOneColor = ammoType; } else { slotTwoColor = ammoType; }
+
+        instructions.SetActive(false);
+        exitButton.SetActive(false);
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
