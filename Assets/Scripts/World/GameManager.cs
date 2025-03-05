@@ -251,55 +251,54 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
-        // Load Click_2 data
-        Click_2 clickScript = FindObjectOfType<Click_2>();
-        if (clickScript != null)
-        {
-            clickScript.maxDistance = gameState.maxDistance;
-            clickScript.currentGunColor = gameState.currentGunColor;
-            clickScript.currentTag = gameState.currentTag;
-            clickScript.currentIndex = gameState.currentIndex;
-            clickScript.currentIndex2 = gameState.currentIndex2;
-            clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
-            clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
-            clickScript.brushTip = GameObject.Find(gameState.brushTipName);
-
-            clickScript.absorbedColors.Clear();
-            // Load absorbed colors
-            clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-            foreach (string mat in gameState.absorbedColors)
+            // Load Click_2 data
+            Click_2 clickScript = FindObjectOfType<Click_2>();
+            if (clickScript != null)
             {
-                //Debug.Log("Trying to load absorbed color: " + mat);
+                clickScript.maxDistance = gameState.maxDistance;
+                clickScript.currentGunColor = gameState.currentGunColor;
+                clickScript.currentTag = gameState.currentTag;
+                clickScript.currentIndex = gameState.currentIndex;
+                clickScript.currentIndex2 = gameState.currentIndex2;
+                clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
+                clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
+                clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
-                // Use GetMaterialByName to fetch the correct material
-                Material loadedMaterial = GetMaterialByName(mat);
-
-                // If the material wasn't found, default to whiteMaterial
-                if (loadedMaterial == null)
+                clickScript.absorbedColors.Clear();
+                // Load absorbed colors
+                clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+                foreach (string mat in gameState.absorbedColors)
                 {
-                    loadedMaterial = GetMaterialByName("gray");
-                    //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                    //Debug.Log("Trying to load absorbed color: " + mat);
+
+                    // Use GetMaterialByName to fetch the correct material
+                    Material loadedMaterial = GetMaterialByName(mat);
+
+                    // If the material wasn't found, default to whiteMaterial
+                    if (loadedMaterial == null)
+                    {
+                        loadedMaterial = GetMaterialByName("gray");
+                        //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                    }
+
+                    clickScript.absorbedColors.Add(loadedMaterial);
+                    //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
                 }
 
-                clickScript.absorbedColors.Add(loadedMaterial);
-                //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
-            }
+                // Load CorrectHouseColors dictionary
+                clickScript.CorrectHouseColors.Clear();
+                for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
+                {
+                    clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+                }
 
-
-            // Load CorrectHouseColors dictionary
-            clickScript.CorrectHouseColors.Clear();
-            for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
-            {
-                clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+                // Load MismatchedColors dictionary
+                clickScript.MismatchedColors.Clear();
+                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+                {
+                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+                }
             }
-
-            // Load MismatchedColors dictionary
-            clickScript.MismatchedColors.Clear();
-            for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-            {
-                clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
-            }
-        }
 
             // Load camera settings
             playerCamera.mouseSensitivity = gameState.mouseSensitivity;
