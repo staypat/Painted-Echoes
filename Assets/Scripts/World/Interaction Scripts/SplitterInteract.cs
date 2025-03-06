@@ -372,6 +372,11 @@ public class SplitterInteract : ObjectInteract
 
     private void SelectAmmo(string ammoType)
     {
+        if (ammoType == "White" || ammoType == "Black" || ammoType == "Red" || ammoType == "Blue" || ammoType == "Yellow")
+        {
+            AudioManager.instance.Play("UIError");
+            return;
+        }
         Debug.Log($"Selected Ammo: {ammoType}");
         // Here, you can set the player's ammo type or update the UI
 
