@@ -1,3 +1,5 @@
+// made using ChatGPT
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +10,7 @@ public class PickUpObj : ObjectInteract
     [SerializeField] private Transform objectToMove;
     [SerializeField] private float distanceInFront = 60f;
     private bool objPickedUp = false;
+    private bool canPlace = true;
     private Rigidbody rb;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float rotateX = 0f;
@@ -24,11 +27,16 @@ public class PickUpObj : ObjectInteract
     void Update()
     {
         // If the object is picked up and "E" key is pressed, drop the object
-        if (objPickedUp && Input.GetKeyDown(KeyCode.F))
+        if (objPickedUp && Input.GetKeyDown(KeyCode.F) && canPlace)
         {
             objPickedUp = false;
-            rb.useGravity = true;
+            // rb.useGravity = true;
+            rb.isKinematic = false;
             objectToMove.SetParent(room);
+        }
+        else if (Input.GetKeyDown(KeyCode.F) && !canPlace)
+        {
+            Debug.LogWarning("Can't place inside another object!");
         }
 
         if (objPickedUp) 
@@ -53,12 +61,19 @@ public class PickUpObj : ObjectInteract
         if (!objPickedUp)
         {
             objPickedUp = true;
-            rb.useGravity = false;
+            // rb.useGravity = false;
+            rb.isKinematic = true;
             objectToMove.SetParent(playerCam);
-            // Move in front of player
-            Vector3 targetPosition = playerCam.position + playerCam.forward * distanceInFront;
-            targetPosition.y += moveY; 
-            objectToMove.position = Vector3.Lerp(objectToMove.position, targetPosition, Time.deltaTime * rotationSpeed);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        canPlace = false;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        canPlace = true;
     }
 }
