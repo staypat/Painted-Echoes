@@ -1799,7 +1799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  jumpForce: 5
+  jumpForce: 1.75
   cameraTransform: {fileID: 1856166695}
   groundLayer:
     serializedVersion: 2

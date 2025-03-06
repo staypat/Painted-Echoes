@@ -6,7 +6,34 @@
             "id": "ecf0baba-0a65-4db6-ab99-e63dbdad8096",
             "actions": [
                 {
-                    "name": "Fire",
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "dcdb7d5b-b7e5-477a-a57b-6365758ea3b7",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Paintbrush",
+                    "type": "Button",
+                    "id": "559608c9-b4e2-4446-9aec-d638e305d85b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Photo",
+                    "type": "Button",
+                    "id": "7b8119fe-d374-48c8-90ba-92c0398113e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shoot",
                     "type": "Button",
                     "id": "dfa772c9-61de-4788-9605-bf3c76ad7e28",
                     "expectedControlType": "Button",
@@ -15,10 +42,37 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move",
-                    "type": "PassThrough",
-                    "id": "dcdb7d5b-b7e5-477a-a57b-6365758ea3b7",
-                    "expectedControlType": "Vector3",
+                    "name": "Absorb",
+                    "type": "Button",
+                    "id": "fb16eb3d-d700-431b-b533-9e87e1c28780",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "caa07062-5c62-4d33-90c5-6bfca3f86b9d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "f259c60c-47ee-4473-b1ba-ff65988c6b59",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "d3018ed1-a129-4910-859f-ade9da9b9c92",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -27,23 +81,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "cc7fe7ab-293e-42ee-b51e-d5ee43967df0",
-                    "path": "<Mouse>/leftButton",
+                    "id": "ff752dab-4588-475c-9773-ad08fcb8a915",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Computer",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "17802043-7ded-4161-9c7f-d0372b34fed7",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
+                    "groups": "",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -62,17 +105,6 @@
                     "name": "up",
                     "id": "bc577784-de81-4c94-8af9-8de6bd602982",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "e101309a-838a-4c92-a819-17332cf257dd",
-                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "Computer",
@@ -123,6 +155,72 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bdab356e-524c-4253-a01c-b952c007ef34",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dae5cf87-602c-4d91-b9d2-6dd411cf89a1",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Paintbrush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb575210-c257-481d-a0b0-f3de77d731fa",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Photo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc7fe7ab-293e-42ee-b51e-d5ee43967df0",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Computer",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11edeac6-207d-43cb-963c-49c0055474f1",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Absorb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c026f4dd-751f-4b36-9530-8ec70bf5a9ab",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

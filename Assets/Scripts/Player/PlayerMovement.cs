@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 1.75f;
     public Transform cameraTransform; // Assign in Inspector
     public LayerMask groundLayer; // Assign in Inspector
 
@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection;
     public InputActionReference move;
     public InputActionReference fire;
-
 
     void Start()
     {
@@ -37,10 +36,10 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDirection = move.action.ReadValue<Vector3>();
         // Jump (Spacebar)
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (moveDirection.y > 0.5f && isGrounded)
         {
-            Debug.Log("key pressed");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
@@ -51,9 +50,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.zero; // Stop movement when in menu
             return;
         }
-        // Get input axes
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
 
         // Calculate camera-relative movement direction
         Vector3 camForward = cameraTransform.forward;
@@ -63,9 +59,8 @@ public class PlayerMovement : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        Vector3 movement = (camForward * vertical + camRight * horizontal) * moveSpeed;
-        // rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+        Vector3 movement = (camForward * moveDirection.z + camRight * moveDirection.x) * moveSpeed;
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
 
         // Improved Ground Check - Raycast from player's base
         Vector3 rayOrigin = transform.position + Vector3.down * (playerHeight - 0.1f);
@@ -77,11 +72,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        move.action.Enable();
+        fire.action.Enable();
         fire.action.started += Fire;
     }
 
     private void OnDisable()
     {
+        move.action.Disable();
+        fire.action.Disable();
         fire.action.started -= Fire;
     }
 
