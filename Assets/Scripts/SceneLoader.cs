@@ -10,14 +10,15 @@ public class SceneLoader : MonoBehaviour
     {
         AudioManager.instance.Play("UIConfirm");
         GameManager.Instance.ExitMenu();
+        GameManager.Instance.Start();
         SceneManager.LoadScene("Tutorial"); 
     }
 
-    public void LoadMainMenu()
-    {
-        AudioManager.instance.Play("UIConfirm");
-        SceneManager.LoadScene("MainMenu"); 
-    }
+    // public void LoadMainMenu()
+    // {
+    //     AudioManager.instance.Play("UIConfirm");
+    //     SceneManager.LoadScene("MainMenu"); 
+    // }
 
     // Start is called before the first frame update
     void Start()

@@ -15935,6 +15935,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  playerCamera: {fileID: 0}
 --- !u!4 &1507832932
 Transform:
   m_ObjectHideFlags: 0

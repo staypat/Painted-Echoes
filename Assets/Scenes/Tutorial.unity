@@ -1559,7 +1559,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 982423426}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SaveGameState
         m_Mode: 1
@@ -5241,6 +5241,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  playerCamera: {fileID: 0}
 --- !u!65 &982423427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10009,9 +10010,8 @@ GameObject:
   - component: {fileID: 1477709778}
   - component: {fileID: 1477709777}
   - component: {fileID: 1477709776}
-  - component: {fileID: 1477709775}
   m_Layer: 5
-  m_Name: BackToMenu
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10037,18 +10037,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: -225}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1477709775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1477709773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7628ae77c0f1e6c48989936129756469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1477709776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10108,9 +10096,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1477709775}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadMainMenu
+      - m_Target: {fileID: 982423426}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnApplicationQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11223,7 +11211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Menu
+  m_text: 'Quit
 
 '
   m_isRightToLeft: 0

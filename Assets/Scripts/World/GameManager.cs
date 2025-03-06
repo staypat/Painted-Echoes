@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.IO;  // For file handling
 using UnityEngine.UI;
 
 [System.Serializable]
 public class GameState
 {
+
+    //
+    public string sceneName;
+
     // Camera-related variables
     public float mouseSensitivity;
     public string playerBodyName;
@@ -81,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<string, Material> materialDictionary;
 
-    private FirstPerson playerCamera;
+    public FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
 
 
@@ -117,18 +122,20 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);  // Keeps it persistent across scenes
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
-    void Start()
+    public void Start()
     {
-    
+        
         playerCamera = FindObjectOfType<FirstPerson>();
+
         //Screen.fullScreen = true;
         clickScript = FindObjectOfType<Click_2>(); // Make sure Click_2 is attached to a GameObject in the scene
+
         filePath = Application.persistentDataPath + "/gameState.json"; // Path to save/load game state
     }
 
@@ -136,6 +143,8 @@ public class GameManager : MonoBehaviour
     public void SaveGameState()
     {
         GameState gameState = new GameState();
+
+        gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
         Click_2 clickScript = FindObjectOfType<Click_2>();
         if (clickScript != null)
@@ -178,18 +187,39 @@ public class GameManager : MonoBehaviour
         }
 
         // Save camera settings
-        gameState.mouseSensitivity = playerCamera.mouseSensitivity;
-        gameState.xRotation = playerCamera.xRotation;
-        gameState.canLook = playerCamera.canLook;
-        gameState.playerBodyName = playerCamera.playerBody != null ? playerCamera.playerBody.gameObject.name : "";
+        Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
+        if (playerCamera != null)
+        {
+            gameState.mouseSensitivity = playerCamera.mouseSensitivity;
+            gameState.xRotation = playerCamera.xRotation;
+            gameState.canLook = playerCamera.canLook;
 
-        // Save camera position and rotation
-        //gameState.cameraPosition = playerCamera.cameraTransform.position;
-        //gameState.cameraRotation = playerCamera.cameraTransform.rotation;
+            if (playerCamera.playerBody != null)
+            {
+                gameState.playerBodyName = playerCamera.playerBody.gameObject.name;
+            }
+            else
+            {
+                gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
+                Debug.LogWarning("playerCamera.playerBody is null");
+            }
+        }
+        else
+        {
+            Debug.LogError("playerCamera is null, unable to save camera data.");
+        }
+
 
         // Save player position and rotation
-        gameState.playerPosition = playerCamera.playerBody.position;
-        gameState.playerRotation = playerCamera.playerBody.rotation;
+        if (playerCamera.playerBody != null)
+        {
+            gameState.playerPosition = playerCamera.playerBody.position;
+            gameState.playerRotation = playerCamera.playerBody.rotation;
+        }
+        else
+        {
+            Debug.LogError("playerBody is null in playerCamera.");
+        }
 
         // Save all Renderer components (materials/colors)
         Renderer[] renderers = GameObject.FindObjectsOfType<Renderer>(); // Get all renderers in the scene
@@ -239,68 +269,73 @@ public class GameManager : MonoBehaviour
         }
 
         // Serialize and save to file
+        Debug.Log("Game State Saved Successfully,");
         string json = JsonUtility.ToJson(gameState, true);
         File.WriteAllText(filePath, json);
+        Debug.Log(filePath);
     }
 
 
     public void LoadGameState()
     {
+
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
-            // Load Click_2 data
-            Click_2 clickScript = FindObjectOfType<Click_2>();
-            if (clickScript != null)
+        // Load Click_2 data
+        Click_2 clickScript = FindObjectOfType<Click_2>();
+        if (clickScript != null)
+        {
+            clickScript.maxDistance = gameState.maxDistance;
+            clickScript.currentGunColor = gameState.currentGunColor;
+            clickScript.currentTag = gameState.currentTag;
+            clickScript.currentIndex = gameState.currentIndex;
+            clickScript.currentIndex2 = gameState.currentIndex2;
+            clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
+            clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
+            clickScript.brushTip = GameObject.Find(gameState.brushTipName);
+
+            clickScript.absorbedColors.Clear();
+            // Load absorbed colors
+            clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+            foreach (string mat in gameState.absorbedColors)
             {
-                clickScript.maxDistance = gameState.maxDistance;
-                clickScript.currentGunColor = gameState.currentGunColor;
-                clickScript.currentTag = gameState.currentTag;
-                clickScript.currentIndex = gameState.currentIndex;
-                clickScript.currentIndex2 = gameState.currentIndex2;
-                clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
-                clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
-                clickScript.brushTip = GameObject.Find(gameState.brushTipName);
+                //Debug.Log("Trying to load absorbed color: " + mat);
 
-                clickScript.absorbedColors.Clear();
-                // Load absorbed colors
-                clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-                foreach (string mat in gameState.absorbedColors)
+                // Use GetMaterialByName to fetch the correct material
+                Material loadedMaterial = GetMaterialByName(mat);
+
+                // If the material wasn't found, default to whiteMaterial
+                if (loadedMaterial == null)
                 {
-                    //Debug.Log("Trying to load absorbed color: " + mat);
-
-                    // Use GetMaterialByName to fetch the correct material
-                    Material loadedMaterial = GetMaterialByName(mat);
-
-                    // If the material wasn't found, default to whiteMaterial
-                    if (loadedMaterial == null)
-                    {
-                        loadedMaterial = GetMaterialByName("gray");
-                        //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
-                    }
-
-                    clickScript.absorbedColors.Add(loadedMaterial);
-                    //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
+                    loadedMaterial = GetMaterialByName("gray");
+                    //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
                 }
 
-                // Load CorrectHouseColors dictionary
-                clickScript.CorrectHouseColors.Clear();
-                for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
-                {
-                    clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
-                }
-
-                // Load MismatchedColors dictionary
-                clickScript.MismatchedColors.Clear();
-                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-                {
-                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
-                }
+                clickScript.absorbedColors.Add(loadedMaterial);
+                //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
             }
 
+
+            // Load CorrectHouseColors dictionary
+            clickScript.CorrectHouseColors.Clear();
+            for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
+            {
+                clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+            }
+
+            // Load MismatchedColors dictionary
+            clickScript.MismatchedColors.Clear();
+            for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+            {
+                clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+            }
+        }
+
             // Load camera settings
+            playerCamera = FindObjectOfType<FirstPerson>();
             playerCamera.mouseSensitivity = gameState.mouseSensitivity;
             playerCamera.xRotation = gameState.xRotation;
             playerCamera.canLook = gameState.canLook;
@@ -423,15 +458,19 @@ public class GameManager : MonoBehaviour
         //     SaveGameState();
         //     Debug.Log("Game state saved.");
         // }
-        // if (Input.GetKeyDown(KeyCode.V)) // Load game state
-        // {
-        //     LoadGameState();
-        //     Debug.Log("Game state loaded.");
-        // }
+        if (Input.GetKeyDown(KeyCode.V)) // Load game state
+        {
+            LoadGameState();
+            Debug.Log("Game state loaded.");
+        }
     }
 
-    // void OnApplicationQuit()
-    // {
-    //     SaveGameState(); // Automatically save the game when the application is quitting
-    // }
+    public void OnApplicationQuit()
+    {
+        SaveGameState(); // Automatically save the game when the application is quitting
+        Debug.Log("Application ending after " + Time.time + " seconds");
+        Application.Quit();
+
+
+    }
 }
