@@ -693,6 +693,8 @@ MonoBehaviour:
   victoryUI: {fileID: 0}
   PaintSplatterPS: {fileID: 0}
   paletteManager: {fileID: 0}
+  fireAction: {fileID: 0}
+  absorbAction: {fileID: 0}
 --- !u!23 &78929666
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1798,7 +1800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec037b369ee9c3040911ce8ad0608bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 5
   jumpForce: 1.75
   cameraTransform: {fileID: 1856166695}
   groundLayer:
@@ -1806,8 +1808,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckDistance: 0.5
   playerHeight: 0
-  move: {fileID: -3425850697012310824, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
-  fire: {fileID: 5111276642113714343, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
+  moveAction: {fileID: -3425850697012310824, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
 --- !u!54 &290796143
 Rigidbody:
   m_ObjectHideFlags: 0

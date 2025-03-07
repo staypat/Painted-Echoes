@@ -19,8 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckDistance = 0.3f; // Slightly increased
     public float playerHeight;
     private Vector3 moveDirection;
-    public InputActionReference move;
-    public InputActionReference fire;
+    public InputActionReference moveAction; // Movement action
 
     void Start()
     {
@@ -34,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moveDirection = move.action.ReadValue<Vector3>();
+        moveDirection = moveAction.action.ReadValue<Vector3>();
         // Jump (Spacebar)
         if (moveDirection.y > 0.5f && isGrounded)
         {
@@ -72,20 +71,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        move.action.Enable();
-        fire.action.Enable();
-        fire.action.started += Fire;
+        moveAction.action.Enable();
     }
 
     private void OnDisable()
     {
-        move.action.Disable();
-        fire.action.Disable();
-        fire.action.started -= Fire;
-    }
-
-    private void Fire(InputAction.CallbackContext obj)
-    {
-        Debug.Log("Fire!");
+        moveAction.action.Disable();
     }
 }
