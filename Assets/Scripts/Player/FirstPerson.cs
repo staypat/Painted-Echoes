@@ -27,7 +27,7 @@ public class FirstPerson : MonoBehaviour
 
             // Rotate the camera vertically
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit vertical rotation
+            xRotation = Mathf.Clamp(xRotation, -60f, 60f); // Limit vertical rotation
 
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             
