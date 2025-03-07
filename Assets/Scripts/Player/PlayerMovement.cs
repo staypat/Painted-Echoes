@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 // Received help from ChatGPT
 // https://chatgpt.com/share/6798954b-e334-800f-9847-6a6089bdc211
@@ -9,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    public float jumpForce = 1.75f;
     public Transform cameraTransform; // Assign in Inspector
     public LayerMask groundLayer; // Assign in Inspector
 
@@ -17,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     public float groundCheckDistance = 0.3f; // Slightly increased
     public float playerHeight;
+    private Vector3 moveDirection;
+    public InputActionReference moveAction; // Movement action
 
     void Start()
     {
@@ -30,11 +33,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        moveDirection = moveAction.action.ReadValue<Vector3>();
         // Jump (Spacebar)
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (moveDirection.y > 0.5f && isGrounded)
         {
-            Debug.Log("key pressed");
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
@@ -45,9 +49,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector3.zero; // Stop movement when in menu
             return;
         }
-        // Get input axes
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
 
         // Calculate camera-relative movement direction
         Vector3 camForward = cameraTransform.forward;
@@ -57,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        Vector3 movement = (camForward * vertical + camRight * horizontal) * moveSpeed;
+        Vector3 movement = (camForward * moveDirection.z + camRight * moveDirection.x) * moveSpeed;
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
 
         // Improved Ground Check - Raycast from player's base
@@ -66,5 +67,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Debugging - Visualize Ray
         Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
+    }
+
+    private void OnEnable()
+    {
+        moveAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.action.Disable();
     }
 }

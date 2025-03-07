@@ -10,7 +10,6 @@ public class PaintbrushInteract : ObjectInteract
     [SerializeField] private GameObject paletteToEnable;
     [SerializeField] private GameObject uiToDisable;
     [SerializeField] private GameObject uiToEnable;
-
     [SerializeField] private GameObject rotationTarget; // Empty parent (pivot point)
     [SerializeField] private float floatSpeed = 1.0f;
     [SerializeField] private float floatAmplitude = 0.2f;

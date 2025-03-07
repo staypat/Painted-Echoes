@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 // portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
@@ -39,6 +40,8 @@ public class Click_2 : MonoBehaviour
 
     public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
     public PaletteManager paletteManager;
+    public InputActionReference fireAction; // fire color action
+    public InputActionReference absorbAction; // Absorb color action
     
     void Start()
     {   
@@ -78,6 +81,9 @@ public class Click_2 : MonoBehaviour
         {
             RoomManager.Instance.OnRoomChanged += HandleRoomChanged;
         }
+        fireAction.action.started += ColorOnClick;
+        absorbAction.action.started += AbsorbColor;
+
     }
 
     private void OnDisable()
@@ -86,6 +92,8 @@ public class Click_2 : MonoBehaviour
         {
             RoomManager.Instance.OnRoomChanged -= HandleRoomChanged;
         }
+        fireAction.action.started -= ColorOnClick;
+        absorbAction.action.started -= AbsorbColor;
     }
 
     // Function to keep track what room the player is in
@@ -216,7 +224,7 @@ public class Click_2 : MonoBehaviour
 
         if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
-            //hasVictoryBeenTriggered = true; // Prevent multiple triggers
+            hasVictoryBeenTriggered = true; // Prevent multiple triggers
             isRoomComplete = true;
 
             turnOffBarrier();
@@ -270,42 +278,42 @@ public class Click_2 : MonoBehaviour
 
     void Update()
     {
-        
         HandleScrollInput();
-        // UpdateBrushTip();
+        // HandleScrollInput();
+        // // UpdateBrushTip();
 
-        if (Input.GetMouseButtonDown(0)){
-            if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
+        // if (Input.GetMouseButtonDown(0)){
+        //     if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
                 
-                ColorOnClick();
+        //         ColorOnClick();
 
-                roomCheck(currentRoom);
-                if (CompareColorValues()== true)
-                {
-                    victoryUI.ShowVictoryMessage();
-                    AudioManager.instance.Play("LevelComplete");
-                }
+        //         roomCheck(currentRoom);
+        //         if (CompareColorValues()== true)
+        //         {
+        //             victoryUI.ShowVictoryMessage();
+        //             AudioManager.instance.Play("LevelComplete");
+        //         }
 
-                // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-                // {
-                //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-                // }
+        //         // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
+        //         // {
+        //         //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+        //         // }
 
-            }
-            else{
-                //Debug.Log("Not enough ammo to paint with " + currentGunColor);
-            }
-        }
+        //     }
+        //     else{
+        //         //Debug.Log("Not enough ammo to paint with " + currentGunColor);
+        //     }
+        // }
 
-        if (Input.GetMouseButtonDown(1)) 
-        {
-            roomCheck(currentRoom);
-            if (CompareColorValues()== false)
-            {
-                AbsorbColor();
-            }
+        // if (Input.GetMouseButtonDown(1)) 
+        // {
+        //     roomCheck(currentRoom);
+        //     if (CompareColorValues()== false)
+        //     {
+        //         AbsorbColor();
+        //     }
 
-        }
+        // }
 
     }
 
@@ -377,9 +385,9 @@ public class Click_2 : MonoBehaviour
         //Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
     }
 
-    void ColorOnClick()
+    void ColorOnClick(InputAction.CallbackContext context)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
 
@@ -516,12 +524,24 @@ public class Click_2 : MonoBehaviour
                 //Debug.Log("No subparent found for " + clickedObject.name + ", skipping paint.");
             }
         }
+        roomCheck(currentRoom);
+        if (CompareColorValues() == true)
+        {
+            victoryUI.ShowVictoryMessage();
+            AudioManager.instance.Play("LevelComplete");
+        }
     }
 
-    void AbsorbColor()
+    void AbsorbColor(InputAction.CallbackContext context)
     {   
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
+
+        roomCheck(currentRoom);
+        if (isRoomComplete == true)
+        {
+            return;
+        }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
