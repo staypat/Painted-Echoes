@@ -10,14 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: StringTable_en
+  m_Name: LangTableMenu_fr
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: en
-  m_SharedData: {fileID: 11400000, guid: a0dfa26b9341ac64d9b5900943965562, type: 2}
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: ee0e9835e7dd2dc49b6f7df0e12b2f67, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 13382918144
+    m_Localized: Bonjour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374072792784896
+    m_Localized: Jouer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374115062980608
+    m_Localized: Option
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

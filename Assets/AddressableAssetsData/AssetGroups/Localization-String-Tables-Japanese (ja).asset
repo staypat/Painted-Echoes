@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 2d06f1aec91032846897b18631cbaf8a
   m_SerializeEntries:
   - m_GUID: 2bfcd537f5ca6a04fbe965614b95420a
-    m_Address: LangTable_ja
+    m_Address: LangTableMenu_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
