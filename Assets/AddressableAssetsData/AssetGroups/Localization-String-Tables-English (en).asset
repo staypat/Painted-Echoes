@@ -17,21 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 7c46e72c61eb12942ba9c56988c5013e
   m_SerializeEntries:
-  - m_GUID: ad2225b7f99489c4699c80792dab4888
-    m_Address: StringTable_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c163c9e008c9be0458de4f30b353e7f4
-    m_Address: Table_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a4604e97cac1fe478cf7af0c43ac3b7
-    m_Address: LangTable_en
+    m_Address: LangTableMenu_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LangTableMenu_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: ee0e9835e7dd2dc49b6f7df0e12b2f67, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 13382918144
+    m_Localized: Hello
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374072792784896
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374115062980608
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374134121897984
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374149678571520
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377229719576576
+    m_Localized: Paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377257922076672
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378024095588352
+    m_Localized: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381583742672896
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380499720609792
+    m_Localized: Video
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380818970058752
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381352124817408
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382020583628800
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382240105111552
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382453729402880
+    m_Localized: Enable Subtitles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382845225738240
+    m_Localized: Key Bindings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383054781554688
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383212906815488
+    m_Localized: Keyboard Bindings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383715120193536
+    m_Localized: Apply and Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383995652022272
+    m_Localized: Edit
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
