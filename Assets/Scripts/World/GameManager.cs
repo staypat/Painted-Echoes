@@ -211,26 +211,34 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // Save all Renderer components (materials/colors)
-        gameState.rendererNames.Clear(); // Clear the list before saving
-        gameState.rendererColors.Clear(); // Clear the list before saving
+        GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
 
-        Renderer[] renderers = GameObject.FindObjectsOfType<Renderer>(); // Get all renderers in the scene
-
-        foreach (Renderer rend in renderers)
+        if (mismatchedHouse != null)
         {
-            // Track the name of the Renderer
+            // Clear previous data
+            gameState.rendererNames.Clear();
+            gameState.rendererColors.Clear();
 
-            gameState.rendererNames.Add(rend.gameObject.name);
-            // Track the color of the Renderer (assuming you want to save the color, you can adjust for other properties)
-            if (rend.material.HasProperty("_Color"))
+            // Get all Renderer components within MismatchedHouse
+            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer rend in renderers)
             {
-                gameState.rendererColors.Add(rend.material.color); // Save color of the material
+                gameState.rendererNames.Add(rend.gameObject.name);
+
+                if (rend.material.HasProperty("_Color"))
+                {
+                    gameState.rendererColors.Add(rend.material.color);
+                }
+                else
+                {
+                    gameState.rendererColors.Add(Color.white);
+                }
             }
-            else
-            {
-                gameState.rendererColors.Add(Color.white); // Default to white if no color property
-            }
+        }
+        else
+        {
+            Debug.LogWarning("MismatchedHouse not found in the scene.");
         }
 
         // Save ammo data
@@ -359,17 +367,23 @@ public class GameManager : MonoBehaviour
 
 
             // Load Renderer properties (color in this case)
-            Renderer[] renderers = GameObject.FindObjectsOfType<Renderer>();
+
+            GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
+            if (mismatchedHouse == null)
+            {
+                Debug.LogWarning("MismatchedHouse not found in the scene.");
+                return;
+            }
+
+            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
 
             for (int i = 0; i < renderers.Length && i < gameState.rendererNames.Count; i++)
             {
-                GameObject obj = GameObject.Find(gameState.rendererNames[i]);
-                if (obj != null)
+                if (renderers[i].gameObject.name == gameState.rendererNames[i])
                 {
-                    Renderer rend = obj.GetComponent<Renderer>();
-                    if (rend != null && rend.material.HasProperty("_Color"))
+                    if (renderers[i].material.HasProperty("_Color"))
                     {
-                        rend.material.color = gameState.rendererColors[i];
+                        renderers[i].material.color = gameState.rendererColors[i];
                     }
                 }
             }
@@ -389,11 +403,18 @@ public class GameManager : MonoBehaviour
                 
             }
 
+
+
             PhotoController photocontroller = FindObjectOfType<PhotoController>();
             //Debug.Log("Loading Photo Mode");
             holdingPaintbrush = false;
             photocontroller.EquipPaintbrush();
 
+            AmmoUI ammoUI = FindObjectOfType<AmmoUI>();
+            foreach (string color in gameState.absorbedColors)
+            {
+                ammoUI.DiscoverColor(color);
+            }
             //Debug.Log("Pallet is bricked");
             // Load PaletteManager data
             // PaletteManager paletteManager = FindObjectOfType<PaletteManager>();

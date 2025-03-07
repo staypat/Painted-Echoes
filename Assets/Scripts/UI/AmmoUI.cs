@@ -136,7 +136,7 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    private void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         Dictionary<string, int> ammoInventory = AmmoManager.Instance.GetAmmoInventory();
         for (int i = 0; i < colorIcons.Count; i++)
