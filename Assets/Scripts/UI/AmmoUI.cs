@@ -91,10 +91,10 @@ public class AmmoUI : MonoBehaviour
                     {
                         tabTutorialDisable.SetActive(false);
                     }
-                    if (photographTextEnable != null)
-                    {
-                        photographTextEnable.SetActive(true);
-                    }
+                    // if (photographTextEnable != null)
+                    // {
+                    //     photographTextEnable.SetActive(true);
+                    // }
                 }
             ToggleAmmoInventoryUI();
         }

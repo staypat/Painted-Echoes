@@ -42,6 +42,10 @@ public class Click_2 : MonoBehaviour
     public PaletteManager paletteManager;
     public InputActionReference fireAction; // fire color action
     public InputActionReference absorbAction; // Absorb color action
+
+    public GameObject AbsorbText;
+    private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+
     
     void Start()
     {   
@@ -236,7 +240,8 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void turnOffBarrier(){
+    void turnOffBarrier()
+    {
 
         // Get the parent of the current room
         Transform parentTransform = currentRoom.transform.parent;
@@ -368,10 +373,6 @@ public class Click_2 : MonoBehaviour
             }
         }
     }
-
-
-
-
 
 
     public void ApplyColor(Material newMaterial, string tag)
@@ -542,6 +543,15 @@ public class Click_2 : MonoBehaviour
         {
             return;
         }
+
+        // if (!hasPressedRightClickFirstTime)
+        // {
+        //     hasPressedRightClickFirstTime = true;
+        //     if (AbsorbText != null)
+        //     {
+        //         AbsorbText.SetActive(false);
+        //     }
+        // }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
