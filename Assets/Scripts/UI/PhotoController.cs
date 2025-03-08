@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PhotoController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PhotoController : MonoBehaviour
     public List<string> collectedPhotos = new List<string>();
     [SerializeField] public List<Image> photoIcons;
     public Sprite undiscoveredPhotoIcon;
+    public InputActionReference paintbrushAction;
+    public InputActionReference photoAction;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,18 +30,18 @@ public class PhotoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EquipPaintbrush();
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     EquipPaintbrush();
+        // }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            EquipPhoto(lastPhotoID);
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     EquipPhoto(lastPhotoID);
+        // }
     }
 
-    public void EquipPaintbrush()
+    public void EquipPaintbrush(InputAction.CallbackContext context)
     {
         if (GameManager.Instance.hasPaintbrush && !GameManager.Instance.holdingPaintbrush && !GameManager.inMenu) // Only switch if not already in paintbrush mode
         {
@@ -62,6 +65,12 @@ public class PhotoController : MonoBehaviour
 
             AudioManager.instance.Play("GunEquip");
         }
+    }
+
+    // Necessary for new input system
+    public void EquipPaintbrush()
+    {
+        EquipPaintbrush(default); // Calls EquipPaintbrush with a default (empty) InputAction.CallbackContext
     }
 
     public void CollectPhoto(string photoID)
@@ -105,6 +114,12 @@ public class PhotoController : MonoBehaviour
                 AudioManager.instance.Play("PhotoEquip");
             }
         }
+    }
+
+    // Necessary for new input system
+    public void EquipPhotoAction(InputAction.CallbackContext context)
+    {
+        EquipPhoto(lastPhotoID);
     }
 
     public void UpdatePhotoInventoryUI()
@@ -160,5 +175,17 @@ public class PhotoController : MonoBehaviour
             photoPanel.SetActive(true);
             ownedPhotos.SetActive(true);
         }
+    }
+
+    private void OnEnable()
+    {
+        paintbrushAction.action.started += EquipPaintbrush;
+        photoAction.action.started += EquipPhotoAction;
+    }
+
+    private void OnDisable()
+    {
+        paintbrushAction.action.started -= EquipPaintbrush;
+        photoAction.action.started -= EquipPhotoAction;
     }
 }
