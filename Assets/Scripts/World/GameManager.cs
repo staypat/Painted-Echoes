@@ -286,8 +286,19 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
+            OpenMenu openmenuscript = FindObjectOfType<OpenMenu>();
+
+            if (openmenuscript != null)
+            {
+                openmenuscript.UnPauseGame();
+            }
+
             // Load Click_2 data
-            Click_2 clickScript = FindObjectOfType<Click_2>();
+            PhotoController photocontroller = FindObjectOfType<PhotoController>();
+            photocontroller.EquipPaintbrush();
+            
+            clickScript = FindObjectOfType<Click_2>();
+            Debug.Log("CS2 is null: " + (clickScript == null));
             if (clickScript != null)
             {
                 clickScript.maxDistance = gameState.maxDistance;
@@ -302,6 +313,7 @@ public class GameManager : MonoBehaviour
                 clickScript.absorbedColors.Clear();
                 // Load absorbed colors
                 clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+                Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
                 foreach (string mat in gameState.absorbedColors)
                 {
                     //Debug.Log("Trying to load absorbed color: " + mat);
@@ -335,7 +347,7 @@ public class GameManager : MonoBehaviour
                     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
                 }
 
-                Debug.Log("Click 2 Loaded Successfully");
+                //Debug.Log("Click 2 Loaded Successfully");
             }
 
             // Load camera settings
@@ -350,7 +362,7 @@ public class GameManager : MonoBehaviour
                     playerCamera.playerBody.gameObject.name = gameState.playerBodyName;
                     playerCamera.playerBody.position = gameState.playerPosition;
                     playerCamera.playerBody.rotation = gameState.playerRotation;
-                    Debug.Log("Player loaded Siccessfully");
+                    //Debug.Log("Player loaded Siccessfully");
                 }
                 // else
                 // {
@@ -371,7 +383,7 @@ public class GameManager : MonoBehaviour
             GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
             if (mismatchedHouse == null)
             {
-                Debug.LogWarning("MismatchedHouse not found in the scene.");
+                //Debug.LogWarning("MismatchedHouse not found in the scene.");
                 return;
             }
 
@@ -403,22 +415,15 @@ public class GameManager : MonoBehaviour
                 
             }
 
-
-
-            PhotoController photocontroller = FindObjectOfType<PhotoController>();
-            //Debug.Log("Loading Photo Mode");
-            holdingPaintbrush = false;
-            photocontroller.EquipPaintbrush();
-
             AmmoUI ammoUI = FindObjectOfType<AmmoUI>();
             foreach (string color in gameState.absorbedColors)
             {
                 ammoUI.DiscoverColor(color);
             }
-            //Debug.Log("Pallet is bricked");
+
             // Load PaletteManager data
-            // PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
-            // paletteManager.updatePaletteUI();
+            PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
+            paletteManager.updatePaletteUI();
         
 
             if (photocontroller != null)
@@ -429,10 +434,10 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                     //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
-                    photocontroller.EquipPhoto(photoID);
+                    // photocontroller.EquipPhoto(photoID);
                 }
                 photocontroller.UpdatePhotoInventoryUI();
-                Debug.Log("Loaded Photo Inventory UI");
+                //Debug.Log("Loaded Photo Inventory UI");
             }
 
             //Debug.Log("Game State Loaded Successfully");
