@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
 
     public bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
     public bool hasPressedLeftClickFirstTime = false; // Absorb color for tutorial text
+    private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
+
 
 
 

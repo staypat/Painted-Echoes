@@ -184,10 +184,10 @@ public class AmmoUI : MonoBehaviour
                     AbsorbText.SetActive(true);
                 }
                 
-                if (photographTextEnable != null)
-                {
-                    photographTextEnable.SetActive(true);
-                }
+                // if (photographTextEnable != null)
+                // {
+                //     photographTextEnable.SetActive(true);
+                // }
             }
             ToggleAmmoInventoryUI();
         }

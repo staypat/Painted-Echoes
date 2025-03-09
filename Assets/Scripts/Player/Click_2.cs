@@ -45,6 +45,8 @@ public class Click_2 : MonoBehaviour
 
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public GameObject photographTextEnable;
+
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
     
@@ -399,6 +401,7 @@ public class Click_2 : MonoBehaviour
             if (ShootText != null)
             {
                 ShootText.SetActive(false);
+                photographTextEnable.SetActive(true);
             }
         }
         
@@ -565,6 +568,7 @@ public class Click_2 : MonoBehaviour
             if (AbsorbText != null)
             {
                 AbsorbText.SetActive(false);
+                ShootText.SetActive(true);
             }
         }
 
