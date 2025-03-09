@@ -47,16 +47,7 @@ public class SplitterInteract : ObjectInteract
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Escape) && SplitterUIPanel.activeSelf)
-        // {
-        //     ExitSplitter();
-        // }
-        // else if (Input.GetKeyDown(KeyCode.Escape) && ColorSelectionPanel.activeSelf)
-        // {
-        //     AudioManager.instance.Play("UIBack");
-        //     DestroyChildren();
-        //     CloseColorSelectionPanel("White");
-        // }
+        
     }
 
     public override void Interact()
@@ -609,11 +600,12 @@ public class SplitterInteract : ObjectInteract
     private void OnEnable()
     {
         exitAction.action.started += ExitSplitter;
-
+        exitAction.action.started += CloseColorSelectionPanelAction;
     }
 
     private void OnDisable()
     {
         exitAction.action.started -= ExitSplitter;
+        exitAction.action.started -= CloseColorSelectionPanelAction;
     }
 }
