@@ -736,6 +736,9 @@ MonoBehaviour:
   paletteManager: {fileID: 0}
   fireAction: {fileID: 0}
   absorbAction: {fileID: 0}
+  AbsorbText: {fileID: 0}
+  ShootText: {fileID: 0}
+  photographTextEnable: {fileID: 0}
 --- !u!23 &78929666
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1924,7 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 1.75
+  jumpForce: 5
   cameraTransform: {fileID: 1856166695}
   groundLayer:
     serializedVersion: 2
@@ -1932,6 +1935,7 @@ MonoBehaviour:
   groundCheckDistance: 0.5
   playerHeight: 0
   moveAction: {fileID: -3425850697012310824, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
+  jumpAction: {fileID: -851189423839364829, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
 --- !u!54 &290796143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5624,6 +5628,8 @@ MonoBehaviour:
   tutorialKey: 0
   holdingPaintbrush: 0
   holdingPhotograph: 0
+  hasPressedRightClickFirstTime: 0
+  hasPressedLeftClickFirstTime: 0
   whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
   blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
   redMaterial: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
@@ -5640,6 +5646,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  playerCamera: {fileID: 0}
 --- !u!65 &982423427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8659,7 +8666,7 @@ PrefabInstance:
       objectReference: {fileID: -3425850697012310824, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
     - target: {fileID: 7358236963696219017, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_BindingId
-      value: e19deb66-84db-40df-b85e-faabf3951ee1
+      value: 9a2b1237-997a-407e-b4bb-f98f1e23900a
       objectReference: {fileID: 0}
     - target: {fileID: 7358236963696219017, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_RebindText

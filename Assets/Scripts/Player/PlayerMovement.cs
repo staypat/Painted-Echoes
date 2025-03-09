@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 1.75f;
+    public float jumpForce = 5f;
     public Transform cameraTransform; // Assign in Inspector
     public LayerMask groundLayer; // Assign in Inspector
 
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     private Vector3 moveDirection;
     public InputActionReference moveAction; // Movement action
+    public InputActionReference jumpAction; // Jump action
 
     void Start()
     {
@@ -33,13 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moveDirection = moveAction.action.ReadValue<Vector3>();
-        // Jump (Spacebar)
-        if (moveDirection.y > 0.5f && isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
-        }
+        moveDirection = moveAction.action.ReadValue<Vector2>();
     }
 
     void FixedUpdate()
@@ -58,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        Vector3 movement = (camForward * moveDirection.z + camRight * moveDirection.x) * moveSpeed;
+        Vector3 movement = (camForward * moveDirection.y + camRight * moveDirection.x) * moveSpeed;
         rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
 
         // Improved Ground Check - Raycast from player's base
@@ -69,13 +64,24 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
     }
 
+    private void Jump(InputAction.CallbackContext context)
+    {
+        if (isGrounded && !GameManager.inMenu)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
+    }
+
     private void OnEnable()
     {
         moveAction.action.Enable();
+        jumpAction.action.started += Jump;
     }
 
     private void OnDisable()
     {
         moveAction.action.Disable();
+        jumpAction.action.started -= Jump;
     }
 }
