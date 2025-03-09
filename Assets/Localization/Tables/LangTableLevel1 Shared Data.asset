@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: LangTableLevel1 Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: LangTableLevel1
+  m_TableCollectionNameGuidString: baaca0144f6f7d54eaa6814cc7efff18
+  m_Entries:
+  - m_Id: 8283346661376
+    m_Key: PickUpPaintbrushText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8482492215296
+    m_Key: PickUpPhotographText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8919760990208
+    m_Key: TabTutorialText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9970702577664
+    m_Key: InventoryNameText/PhotoPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10214630715392
+    m_Key: InstructionText/PhotoPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10590960447488
+    m_Key: SelectText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10782807912448
+    m_Key: EscTabText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11304466083840
+    m_Key: InventoryNameText/AmmoPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11619873550336
+    m_Key: InstructionsText/AmmoPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13705780621312
+    m_Key: TutorialText/AmmoInventoryUI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13974744559616
+    m_Key: KeyControlsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208673476608
+    m_Key: InventoryNameText/MixerUIPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14410461442048
+    m_Key: InstructionsText/MixerUIPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14878176669696
+    m_Key: EscTabText/MixerUIPanel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15977193369600
+    m_Key: EscTabText/ColorSelectionUI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16697959346176
+    m_Key: InventoryNameText/Splitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17046082383872
+    m_Key: InstructionsText/Splitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18135125028864
+    m_Key: RoomClearedText
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4887785690267385945
+  references:
+    version: 2
+    RefIds:
+    - rid: 4887785690267385945
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1741502904471

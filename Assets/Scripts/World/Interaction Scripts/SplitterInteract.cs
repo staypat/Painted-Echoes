@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-
+using UnityEngine.InputSystem;
 
 public class SplitterInteract : ObjectInteract
 {
@@ -30,6 +29,7 @@ public class SplitterInteract : ObjectInteract
 
     public GameObject notificationObj;
     private bool hasBeenInteracted = false;
+    public InputActionReference exitAction;
 
     private void Start()
     {
@@ -47,16 +47,7 @@ public class SplitterInteract : ObjectInteract
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SplitterUIPanel.activeSelf)
-        {
-            ExitSplitter();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape) && ColorSelectionPanel.activeSelf)
-        {
-            AudioManager.instance.Play("UIBack");
-            DestroyChildren();
-            CloseColorSelectionPanel("White");
-        }
+        
     }
 
     public override void Interact()
@@ -81,17 +72,22 @@ public class SplitterInteract : ObjectInteract
             Debug.Log("Splitting colors...");
             SplitColors();
         }
-        
     }
 
-    public void ExitSplitter()
+    public void ExitSplitter(InputAction.CallbackContext context)
     {
-        if (SplitterUIPanel != null)
+        if (SplitterUIPanel != null && SplitterUIPanel.activeSelf)
         {
             SplitterUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
             AudioManager.instance.Play("UIBack");
         }
+    }
+
+    // Necessary for new input system
+    public void ExitSplitter()
+    {
+        ExitSplitter(default); // Calls ExitSplitter with a default (empty) InputAction.CallbackContext
     }
 
     private void SplitColors()
@@ -425,6 +421,17 @@ public class SplitterInteract : ObjectInteract
         // We dont want this
     }
 
+    // Necessary for the input system
+    public void CloseColorSelectionPanelAction(InputAction.CallbackContext context)
+    {
+        if (ColorSelectionPanel.activeSelf)
+        {
+            AudioManager.instance.Play("UIBack");
+            DestroyChildren();
+            CloseColorSelectionPanel("White");
+        }
+    }
+
     private void SplitColor(string color)
     {
         if (color == "Orange")
@@ -588,5 +595,17 @@ public class SplitterInteract : ObjectInteract
             case "Brown": return GameManager.Instance.brownMaterial.color;
             default: return GameManager.Instance.grayMaterial.color; // Default to white if not found
         }
+    }
+
+    private void OnEnable()
+    {
+        exitAction.action.started += ExitSplitter;
+        exitAction.action.started += CloseColorSelectionPanelAction;
+    }
+
+    private void OnDisable()
+    {
+        exitAction.action.started -= ExitSplitter;
+        exitAction.action.started -= CloseColorSelectionPanelAction;
     }
 }
