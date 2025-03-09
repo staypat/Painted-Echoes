@@ -56,7 +56,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// <summary>
         /// Text component that receives the name of the action. Optional.
         /// </summary>
-        public Text actionLabel
+        public TMP_Text actionLabel
         {
             get => m_ActionLabel;
             set
@@ -379,7 +379,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         [Tooltip("Text label that will receive the name of the action. Optional. Set to None to have the "
             + "rebind UI not show a label for the action.")]
         [SerializeField]
-        private Text m_ActionLabel;
+        private TMP_Text m_ActionLabel;
 
         [Tooltip("Text label that will receive the current, formatted binding string.")]
         [SerializeField]
