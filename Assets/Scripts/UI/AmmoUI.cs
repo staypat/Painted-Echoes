@@ -24,6 +24,7 @@ public class AmmoUI : MonoBehaviour
     public GameObject tabTutorialDisable;
     public GameObject photographTextEnable;
     public GameObject AbsorbText;
+    public GameObject ShootText;
 
     [SerializeField] private Sprite redIcon;
     [SerializeField] private Sprite redOrangeIcon;

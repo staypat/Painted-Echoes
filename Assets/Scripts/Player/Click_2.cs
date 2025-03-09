@@ -44,6 +44,7 @@ public class Click_2 : MonoBehaviour
     public InputActionReference absorbAction; // Absorb color action
 
     public GameObject AbsorbText;
+    public GameObject ShootText;
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
     
@@ -391,6 +392,15 @@ public class Click_2 : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
+
+        if (!GameManager.Instance.hasPressedLeftClickFirstTime)
+        {
+            GameManager.Instance.hasPressedLeftClickFirstTime = true;
+            if (ShootText != null)
+            {
+                ShootText.SetActive(false);
+            }
+        }
         
         if(GameManager.inMenu)
         {
