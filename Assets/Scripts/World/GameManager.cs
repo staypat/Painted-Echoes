@@ -84,6 +84,11 @@ public class GameManager : MonoBehaviour
     private FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
 
+    public bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+    public bool hasPressedLeftClickFirstTime = false; // Absorb color for tutorial text
+    private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
+
+
 
 
     private string filePath;

@@ -42,6 +42,13 @@ public class Click_2 : MonoBehaviour
     public PaletteManager paletteManager;
     public InputActionReference fireAction; // fire color action
     public InputActionReference absorbAction; // Absorb color action
+
+    public GameObject AbsorbText;
+    public GameObject ShootText;
+    public GameObject photographTextEnable;
+
+    // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+
     
     void Start()
     {   
@@ -236,7 +243,8 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void turnOffBarrier(){
+    void turnOffBarrier()
+    {
 
         // Get the parent of the current room
         Transform parentTransform = currentRoom.transform.parent;
@@ -370,10 +378,6 @@ public class Click_2 : MonoBehaviour
     }
 
 
-
-
-
-
     public void ApplyColor(Material newMaterial, string tag)
     {
         currentGunColor = tag; // Update the current gun color
@@ -390,6 +394,16 @@ public class Click_2 : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
+
+        if (!GameManager.Instance.hasPressedLeftClickFirstTime)
+        {
+            GameManager.Instance.hasPressedLeftClickFirstTime = true;
+            if (ShootText != null)
+            {
+                ShootText.SetActive(false);
+                photographTextEnable.SetActive(true);
+            }
+        }
         
         if(GameManager.inMenu)
         {
@@ -546,6 +560,16 @@ public class Click_2 : MonoBehaviour
         if (isRoomComplete == true || GameManager.inMenu)
         {
             return;
+        }
+
+        if (!GameManager.Instance.hasPressedRightClickFirstTime)
+        {
+            GameManager.Instance.hasPressedRightClickFirstTime = true;
+            if (AbsorbText != null)
+            {
+                AbsorbText.SetActive(false);
+                ShootText.SetActive(true);
+            }
         }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
