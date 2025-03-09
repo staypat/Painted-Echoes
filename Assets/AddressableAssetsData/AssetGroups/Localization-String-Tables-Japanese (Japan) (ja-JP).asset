@@ -17,15 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: dafd5d9c7cfdfd24396c91e102f234ed
   m_SerializeEntries:
-  - m_GUID: 06c60759921240d449c4fc28bfbe8174
-    m_Address: StringTable_ja-JP
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja-JP
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5d538f01d300f04c8ae718021127689
-    m_Address: Table_ja-JP
+  - m_GUID: 5b5cc61c60e1b1e42b7f87d042008b76
+    m_Address: LangTableTutorial_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP

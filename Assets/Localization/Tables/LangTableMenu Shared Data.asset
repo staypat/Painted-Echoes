@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: LangTableMenu Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: LangTableMenu
+  m_TableCollectionNameGuidString: ee0e9835e7dd2dc49b6f7df0e12b2f67
+  m_Entries:
+  - m_Id: 13382918144
+    m_Key: langKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374072792784896
+    m_Key: PlayButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374115062980608
+    m_Key: OptionsButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374134121897984
+    m_Key: QuitButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374149678571520
+    m_Key: LoadButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377229719576576
+    m_Key: PausedText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377257922076672
+    m_Key: UnpauseButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378024095588352
+    m_Key: BackButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380499720609792
+    m_Key: VideoText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380818970058752
+    m_Key: ResolutionText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381352124817408
+    m_Key: AudioText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381583742672896
+    m_Key: LanguageText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382020583628800
+    m_Key: MusicVolumeText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382240105111552
+    m_Key: SFXVolumeText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382453729402880
+    m_Key: SubtitleText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382845225738240
+    m_Key: KeyBindsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383054781554688
+    m_Key: ControlsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383212906815488
+    m_Key: KeyboardBindingText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383715120193536
+    m_Key: ReturnButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383995652022272
+    m_Key: EditKeyBindsButtonText
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2438632267750048002
+  references:
+    version: 2
+    RefIds:
+    - rid: 2438632267750048002
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1741236280112
