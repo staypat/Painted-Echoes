@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactRange = 3f;
     [SerializeField] private TMP_Text interactPrompt; // Use TMP_Text instead of Text
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
     [SerializeField] private float fadeDuration = 0.3f;
 
     private ObjectInteract currentInteractable;
     private Coroutine currentFadeCoroutine;
+    public InputActionReference interactAction;
+
     void Start()
     {
         // Initialize the prompt as hidden
@@ -22,7 +24,16 @@ public class PlayerInteract : MonoBehaviour
     void Update()
     {
         HandleInteractionCheck();
-        HandleInteractionInput();
+    }
+
+    private void OnEnable()
+    {
+        interactAction.action.started += HandleInteractionInput;
+    }
+
+    private void OnDisable()
+    {
+        interactAction.action.started -= HandleInteractionInput;
     }
 
     private void HandleInteractionCheck()
@@ -41,6 +52,7 @@ public class PlayerInteract : MonoBehaviour
                 if (currentInteractable != interactable)
                 {
                     currentInteractable = interactable;
+                    string interactKey = interactAction.action.GetBindingDisplayString(0);
                     interactPrompt.text = $"Press {interactKey} to {interactable.interactionPrompt}";
                     
                     // Reset alpha and start fade-in
@@ -73,12 +85,18 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private void HandleInteractionInput()
+    private void HandleInteractionInput(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(interactKey) && currentInteractable != null)
+        if (currentInteractable != null)
         {
             currentInteractable.Interact();
         }
+    }
+
+    // Necessary for new input system
+    private void HandleInteractionInput()
+    {
+        HandleInteractionInput(default); // Calls HandleInteractionInput with a default (empty) context
     }
 
     private IEnumerator FadeIn()
