@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LangTableLevel1_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: baaca0144f6f7d54eaa6814cc7efff18, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8283346661376
+    m_Localized: Pick up the paintbrush!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8482492215296
+    m_Localized: Find the photograph!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8919760990208
+    m_Localized: Press Tab to Open Color Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9970702577664
+    m_Localized: Photo Collection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10214630715392
+    m_Localized: Select Photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10590960447488
+    m_Localized: Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10782807912448
+    m_Localized: ESC/TAB   Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11304466083840
+    m_Localized: Color Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11619873550336
+    m_Localized: Select Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13705780621312
+    m_Localized: 'Objective: fix a miscolored object by matching the base color similar
+      to the original object.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13974744559616
+    m_Localized: 'Left Click: Use selected color
+
+      Right Click: Absorb color
+
+      Scroll:
+      Alternate colors
+
+      Tab: Open Inventory'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208673476608
+    m_Localized: Mixer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14410461442048
+    m_Localized: Choose colors to mix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14878176669696
+    m_Localized: ESC/E     Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15977193369600
+    m_Localized: ESC   Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16697959346176
+    m_Localized: Splitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17046082383872
+    m_Localized: Choose color to split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18135125028864
+    m_Localized: 'Room Cleared!
+
+      Next Room Unlocked!'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
