@@ -30,15 +30,7 @@ public class PhotoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Alpha1))
-        // {
-        //     EquipPaintbrush();
-        // }
 
-        // if (Input.GetKeyDown(KeyCode.Alpha2))
-        // {
-        //     EquipPhoto(lastPhotoID);
-        // }
     }
 
     public void EquipPaintbrush(InputAction.CallbackContext context)

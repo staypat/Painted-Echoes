@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class OpenMenu : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class OpenMenu : MonoBehaviour
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
+    public InputActionReference exitAction;
 
     // Start is called before the first frame update
     void Start()
@@ -23,24 +25,7 @@ public class OpenMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameManager.inMenu)
-            {
-                if(menuUI.activeSelf)
-                {
-                    UnPauseGame();
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
+        
     }
 
     public void OpenOptions()
@@ -95,6 +80,25 @@ public class OpenMenu : MonoBehaviour
         AudioManager.instance.UnPause("Theme");
         AudioManager.instance.Play("UIBack");
     }
+
+    public void TogglePause(InputAction.CallbackContext context)
+    {
+        if (GameManager.inMenu)
+        {
+            if(menuUI.activeSelf)
+            {
+                UnPauseGame();
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
     
     public void OpenEditControls()
     {
@@ -126,5 +130,15 @@ public class OpenMenu : MonoBehaviour
     {
         AudioManager.sfxVolume = SFXVolumeSlider.value;
         AudioManager.instance.UpdateSFXVolume();
+    }
+
+    private void OnEnable()
+    {
+        exitAction.action.started += TogglePause;
+    }
+    
+    private void OnDisable()
+    {
+        exitAction.action.started -= TogglePause;
     }
 }
