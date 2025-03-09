@@ -70,7 +70,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// Text component that receives the display string of the binding. Can be <c>null</c> in which
         /// case the component entirely relies on <see cref="updateBindingUIEvent"/>.
         /// </summary>
-        public Text bindingText
+        public TMP_Text bindingText
         {
             get => m_BindingText;
             set
@@ -85,7 +85,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         /// <seealso cref="startRebindEvent"/>
         /// <seealso cref="rebindOverlay"/>
-        public Text rebindPrompt
+        public TMP_Text rebindPrompt
         {
             get => m_RebindText;
             set => m_RebindText = value;
@@ -237,6 +237,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         public void StartInteractiveRebind()
         {
+            m_Action.action.Disable();
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
 
@@ -255,12 +256,15 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private void PerformInteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts = false)
         {
+            action.Disable();
             m_RebindOperation?.Cancel(); // Will null out m_RebindOperation.
 
             void CleanUp()
             {
                 m_RebindOperation?.Dispose();
                 m_RebindOperation = null;
+                m_Action.action.Enable();
+                SaveActionBinding();
             }
 
             // Configure the rebind.
@@ -383,7 +387,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         [Tooltip("Text label that will receive the current, formatted binding string.")]
         [SerializeField]
-        private Text m_BindingText;
+        private TMP_Text m_BindingText;
 
         [Tooltip("Optional UI that will be shown while a rebind is in progress.")]
         [SerializeField]
@@ -391,7 +395,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         [Tooltip("Optional text label that will be updated with prompt for user input.")]
         [SerializeField]
-        private Text m_RebindText;
+        private TMP_Text m_RebindText;
 
         [Tooltip("Event that is triggered when the way the binding is display should be updated. This allows displaying "
             + "bindings in custom ways, e.g. using images instead of text.")]
@@ -429,6 +433,25 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             {
                 var action = m_Action?.action;
                 m_ActionLabel.text = action != null ? action.name : string.Empty;
+            }
+        }
+
+        private void Start()
+        {
+            LoadActionBinding();
+        }
+        private void SaveActionBinding()
+        {
+            var currentBindings = actionReference.action.actionMap.SaveBindingOverridesAsJson();
+            PlayerPrefs.SetString(m_Action.action.name + bindingId, currentBindings);
+        }
+
+        private void LoadActionBinding()
+        {
+            var savedBindings = PlayerPrefs.GetString(m_Action.action.name + bindingId);
+            if (!string.IsNullOrEmpty(savedBindings))
+            {
+                actionReference.action.actionMap.LoadBindingOverridesFromJson(savedBindings);
             }
         }
 
