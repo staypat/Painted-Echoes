@@ -20,6 +20,7 @@ public class OpenMenu : MonoBehaviour
     {
         MusicVolumeSlider.value = AudioManager.musicVolume;
         SFXVolumeSlider.value = AudioManager.sfxVolume;
+        controlsUI.SetActive(false); // Needed active controls UI start to process keybinds
     }
     
     // Update is called once per frame
