@@ -9,7 +9,16 @@
                     "name": "Move",
                     "type": "PassThrough",
                     "id": "dcdb7d5b-b7e5-477a-a57b-6365758ea3b7",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "26b0d366-7706-47d9-bf99-2e05086a7f60",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -24,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Photo",
+                    "name": "Photograph",
                     "type": "Button",
                     "id": "7b8119fe-d374-48c8-90ba-92c0398113e1",
                     "expectedControlType": "Button",
@@ -33,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fire",
+                    "name": "Shoot",
                     "type": "Button",
                     "id": "dfa772c9-61de-4788-9605-bf3c76ad7e28",
                     "expectedControlType": "Button",
@@ -69,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Exit",
+                    "name": "Return",
                     "type": "Button",
                     "id": "d3018ed1-a129-4910-859f-ade9da9b9c92",
                     "expectedControlType": "Button",
@@ -86,75 +95,9 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Exit",
+                    "action": "Return",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "3D Vector",
-                    "id": "e19deb66-84db-40df-b85e-faabf3951ee1",
-                    "path": "3DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "bc577784-de81-4c94-8af9-8de6bd602982",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "49015908-08b3-4efb-a96e-3e9b4a8c31be",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "02b460d1-4688-47f0-822c-3507454ac324",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "forward",
-                    "id": "ed3538cb-16d9-4639-a11a-c03cfebe187d",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "backward",
-                    "id": "7b86d6bc-3474-4a0b-ac68-ba0beeb40514",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Computer",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -185,7 +128,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Photo",
+                    "action": "Photograph",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -196,7 +139,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Computer",
-                    "action": "Fire",
+                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,6 +162,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "9a2b1237-997a-407e-b4bb-f98f1e23900a",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "78837718-11b8-458c-af49-b0760045d6ab",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "a83ae508-58ec-4f16-8ebc-1537ae77abcb",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "98b63273-958c-4fdf-837d-a29c9ea16c4d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "dc766297-3ba3-4953-ad92-112297714504",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "20d67bf3-cecb-4ccd-b394-e523434de860",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
