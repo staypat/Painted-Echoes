@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class AmmoUI : MonoBehaviour
 
     private bool hasPressedTabFirstTime = false;
     public PhotoController photoController;
+    public InputActionReference inventoryAction;
+    public InputActionReference exitAction;
 
     void Start()
     {
@@ -81,35 +84,7 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPaintbrush && GameManager.Instance.holdingPaintbrush)
-        {
-            if (!hasPressedTabFirstTime)
-                {
-                    hasPressedTabFirstTime = true;
 
-                    if (tabTutorialDisable != null) 
-                    {
-                        tabTutorialDisable.SetActive(false);
-                    }
-                    // if (photographTextEnable != null)
-                    // {
-                    //     photographTextEnable.SetActive(true);
-                    // }
-                }
-            ToggleAmmoInventoryUI();
-        }
-        if (Input.GetKeyDown(KeyCode.Tab) && GameManager.Instance.hasPhotograph && GameManager.Instance.holdingPhotograph)
-        {
-            photoController.TogglePhotoInventoryUI();
-        }
-        if (GameManager.inMenu && Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.holdingPhotograph)
-        {
-            photoController.TogglePhotoInventoryUI();
-        }
-        if (GameManager.inMenu && Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.holdingPaintbrush)
-        {
-            ToggleAmmoInventoryUI();
-        }
     }
 
     public void ToggleAmmoInventoryUI()
@@ -190,5 +165,56 @@ public class AmmoUI : MonoBehaviour
             discoveredColors[colorKey] = true;
             UpdateAmmoUI();
         }
+    }
+
+    private void OpenInventory(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.hasPaintbrush && GameManager.Instance.holdingPaintbrush)
+        {
+            if (!hasPressedTabFirstTime)
+            {
+                hasPressedTabFirstTime = true;
+
+                if (tabTutorialDisable != null) 
+                {
+                    tabTutorialDisable.SetActive(false);
+                }
+                if (photographTextEnable != null)
+                {
+                    photographTextEnable.SetActive(true);
+                }
+            }
+            ToggleAmmoInventoryUI();
+        }
+        else if (GameManager.Instance.hasPhotograph && GameManager.Instance.holdingPhotograph)
+        {
+            photoController.TogglePhotoInventoryUI();
+        }
+    }
+
+    private void CloseInventory(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.holdingPaintbrush && GameManager.inMenu)
+        {
+            ToggleAmmoInventoryUI();
+        }
+        if (GameManager.Instance.holdingPhotograph && GameManager.inMenu)
+        {
+            photoController.TogglePhotoInventoryUI();
+        }
+    }
+
+
+
+    private void OnEnable()
+    {
+        inventoryAction.action.started += OpenInventory;
+        exitAction.action.started += CloseInventory;
+    }
+
+    private void OnDisable()
+    {
+        inventoryAction.action.started -= OpenInventory;
+        exitAction.action.started -= CloseInventory;
     }
 }

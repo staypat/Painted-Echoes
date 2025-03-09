@@ -391,6 +391,11 @@ public class Click_2 : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
+        
+        if(GameManager.inMenu)
+        {
+            return;
+        }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
@@ -539,7 +544,7 @@ public class Click_2 : MonoBehaviour
         RaycastHit hit;
 
         roomCheck(currentRoom);
-        if (isRoomComplete == true)
+        if (isRoomComplete == true || GameManager.inMenu)
         {
             return;
         }
