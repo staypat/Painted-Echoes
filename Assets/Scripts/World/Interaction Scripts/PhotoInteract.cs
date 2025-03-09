@@ -8,6 +8,8 @@ public class PhotoInteract : ObjectInteract
     public string photoID;
     public GameObject paintbrush;
     public GameObject paletteUI;
+    public GameObject photographTextEnable;
+
     [SerializeField] private GameObject uiToDisable; // New: Assign UI Text to disable
 
     void Start()

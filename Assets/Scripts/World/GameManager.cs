@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.IO;  // For file handling
 using UnityEngine.UI;
 
 [System.Serializable]
 public class GameState
 {
+
+    //
+    public string sceneName;
+
     // Camera-related variables
     public float mouseSensitivity;
     public string playerBodyName;
@@ -61,7 +66,9 @@ public class GameManager : MonoBehaviour
     public bool tutorialKey = false; // Track if the player has picked up the tutorial key
     public bool holdingPaintbrush = false; // Track if the player is holding the paintbrush
     public bool holdingPhotograph = false; // Track if the player is holding the photograph
-
+    public bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+    public bool hasPressedLeftClickFirstTime = false; // Absorb color for tutorial text
+    private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
     public Material whiteMaterial; // Material for the white color
     public Material blackMaterial;
     public Material redMaterial;
@@ -81,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<string, Material> materialDictionary;
 
-    private FirstPerson playerCamera;
+    public FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
 
 
@@ -117,18 +124,20 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);  // Keeps it persistent across scenes
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
-    void Start()
+    public void Start()
     {
-    
+        
         playerCamera = FindObjectOfType<FirstPerson>();
+
         //Screen.fullScreen = true;
         clickScript = FindObjectOfType<Click_2>(); // Make sure Click_2 is attached to a GameObject in the scene
+
         filePath = Application.persistentDataPath + "/gameState.json"; // Path to save/load game state
     }
 
@@ -136,6 +145,8 @@ public class GameManager : MonoBehaviour
     public void SaveGameState()
     {
         GameState gameState = new GameState();
+
+        gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
         Click_2 clickScript = FindObjectOfType<Click_2>();
         if (clickScript != null)
@@ -175,39 +186,61 @@ public class GameManager : MonoBehaviour
                 gameState.mismatchedColorKeys.Add(pair.Key);
                 gameState.mismatchedColorValues.Add(pair.Value);
             }
+
+            Debug.Log("Click 2 Saved Successfully");
         }
 
         // Save camera settings
-        gameState.mouseSensitivity = playerCamera.mouseSensitivity;
-        gameState.xRotation = playerCamera.xRotation;
-        gameState.canLook = playerCamera.canLook;
-        gameState.playerBodyName = playerCamera.playerBody != null ? playerCamera.playerBody.gameObject.name : "";
-
-        // Save camera position and rotation
-        //gameState.cameraPosition = playerCamera.cameraTransform.position;
-        //gameState.cameraRotation = playerCamera.cameraTransform.rotation;
-
-        // Save player position and rotation
-        gameState.playerPosition = playerCamera.playerBody.position;
-        gameState.playerRotation = playerCamera.playerBody.rotation;
-
-        // Save all Renderer components (materials/colors)
-        Renderer[] renderers = GameObject.FindObjectsOfType<Renderer>(); // Get all renderers in the scene
-
-        foreach (Renderer rend in renderers)
+        Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
+        if (playerCamera != null)
         {
-            // Track the name of the Renderer
-            gameState.rendererNames.Add(rend.gameObject.name);
+            gameState.mouseSensitivity = playerCamera.mouseSensitivity;
+            gameState.xRotation = playerCamera.xRotation;
+            gameState.canLook = playerCamera.canLook;
 
-            // Track the color of the Renderer (assuming you want to save the color, you can adjust for other properties)
-            if (rend.material.HasProperty("_Color"))
+            if (playerCamera.playerBody != null)
             {
-                gameState.rendererColors.Add(rend.material.color); // Save color of the material
+                gameState.playerBodyName = playerCamera.playerBody.gameObject.name;
+                gameState.playerPosition = playerCamera.playerBody.position;
+                gameState.playerRotation = playerCamera.playerBody.rotation;
+                Debug.Log("Player saved Siccessfully");
             }
-            else
+            // else
+            // {
+            //     gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
+            //     Debug.LogWarning("playerCamera.playerBody is null");
+            // }
+        }
+
+
+        GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
+
+        if (mismatchedHouse != null)
+        {
+            // Clear previous data
+            gameState.rendererNames.Clear();
+            gameState.rendererColors.Clear();
+
+            // Get all Renderer components within MismatchedHouse
+            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
+
+            foreach (Renderer rend in renderers)
             {
-                gameState.rendererColors.Add(Color.white); // Default to white if no color property
+                gameState.rendererNames.Add(rend.gameObject.name);
+
+                if (rend.material.HasProperty("_Color"))
+                {
+                    gameState.rendererColors.Add(rend.material.color);
+                }
+                else
+                {
+                    gameState.rendererColors.Add(Color.white);
+                }
             }
+        }
+        else
+        {
+            Debug.LogWarning("MismatchedHouse not found in the scene.");
         }
 
         // Save ammo data
@@ -223,6 +256,7 @@ public class GameManager : MonoBehaviour
                 int count = ammoManager.colorCount.ContainsKey(color) ? ammoManager.colorCount[color] : 0;
                 gameState.colorCounts.Add(count);
             }
+            //Debug.Log("Ammo Saved Successfully");
         }
 
         PhotoController photocontroller = FindObjectOfType<PhotoController>();
@@ -233,99 +267,137 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("Saved Photo: " + photoID);
                 gameState.collectedPhotos.Add(photoID);
             }
-
+            //Debug.Log("Photo Saved Successfully");
 
 
         }
 
         // Serialize and save to file
+        Debug.Log("Game State Saved Successfully,");
         string json = JsonUtility.ToJson(gameState, true);
         File.WriteAllText(filePath, json);
+        Debug.Log(filePath);
     }
 
 
     public void LoadGameState()
     {
+
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
-        // Load Click_2 data
-        Click_2 clickScript = FindObjectOfType<Click_2>();
-        if (clickScript != null)
-        {
-            clickScript.maxDistance = gameState.maxDistance;
-            clickScript.currentGunColor = gameState.currentGunColor;
-            clickScript.currentTag = gameState.currentTag;
-            clickScript.currentIndex = gameState.currentIndex;
-            clickScript.currentIndex2 = gameState.currentIndex2;
-            clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
-            clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
-            clickScript.brushTip = GameObject.Find(gameState.brushTipName);
+            OpenMenu openmenuscript = FindObjectOfType<OpenMenu>();
 
-            clickScript.absorbedColors.Clear();
-            // Load absorbed colors
-            clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-            foreach (string mat in gameState.absorbedColors)
+            if (openmenuscript != null)
             {
-                //Debug.Log("Trying to load absorbed color: " + mat);
+                openmenuscript.UnPauseGame();
+            }
 
-                // Use GetMaterialByName to fetch the correct material
-                Material loadedMaterial = GetMaterialByName(mat);
+            // Load Click_2 data
+            PhotoController photocontroller = FindObjectOfType<PhotoController>();
+            photocontroller.EquipPaintbrush();
+            
+            clickScript = FindObjectOfType<Click_2>();
+            Debug.Log("CS2 is null: " + (clickScript == null));
+            if (clickScript != null)
+            {
+                clickScript.maxDistance = gameState.maxDistance;
+                clickScript.currentGunColor = gameState.currentGunColor;
+                clickScript.currentTag = gameState.currentTag;
+                clickScript.currentIndex = gameState.currentIndex;
+                clickScript.currentIndex2 = gameState.currentIndex2;
+                clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
+                clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
+                clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
-                // If the material wasn't found, default to whiteMaterial
-                if (loadedMaterial == null)
+                clickScript.absorbedColors.Clear();
+                // Load absorbed colors
+                clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
+                Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
+                foreach (string mat in gameState.absorbedColors)
                 {
-                    loadedMaterial = GetMaterialByName("gray");
-                    //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                    //Debug.Log("Trying to load absorbed color: " + mat);
+
+                    // Use GetMaterialByName to fetch the correct material
+                    Material loadedMaterial = GetMaterialByName(mat);
+
+                    // If the material wasn't found, default to whiteMaterial
+                    if (loadedMaterial == null)
+                    {
+                        loadedMaterial = GetMaterialByName("gray");
+                        //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                    }
+
+                    clickScript.absorbedColors.Add(loadedMaterial);
+                    //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
                 }
 
-                clickScript.absorbedColors.Add(loadedMaterial);
-                //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
-            }
 
+                // Load CorrectHouseColors dictionary
+                clickScript.CorrectHouseColors.Clear();
+                for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
+                {
+                    clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
+                }
 
-            // Load CorrectHouseColors dictionary
-            clickScript.CorrectHouseColors.Clear();
-            for (int i = 0; i < gameState.correctHouseColorKeys.Count; i++)
-            {
-                clickScript.CorrectHouseColors[gameState.correctHouseColorKeys[i]] = gameState.correctHouseColorValues[i];
-            }
+                // Load MismatchedColors dictionary
+                clickScript.MismatchedColors.Clear();
+                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+                {
+                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+                }
 
-            // Load MismatchedColors dictionary
-            clickScript.MismatchedColors.Clear();
-            for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-            {
-                clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+                //Debug.Log("Click 2 Loaded Successfully");
             }
-        }
 
             // Load camera settings
-            playerCamera.mouseSensitivity = gameState.mouseSensitivity;
-            playerCamera.xRotation = gameState.xRotation;
-            playerCamera.canLook = gameState.canLook;
-            playerCamera.playerBody = GameObject.Find(gameState.playerBodyName)?.transform;
+            if (playerCamera != null)
+            {
+                playerCamera.mouseSensitivity = gameState.mouseSensitivity;
+                playerCamera.xRotation= gameState.xRotation;
+                playerCamera.canLook= gameState.canLook;
 
-            // Load camera position and rotation
-            //playerCamera.cameraTransform.position = gameState.cameraPosition;
-            //playerCamera.cameraTransform.rotation = gameState.cameraRotation;
+                if (playerCamera.playerBody != null)
+                {
+                    playerCamera.playerBody.gameObject.name = gameState.playerBodyName;
+                    playerCamera.playerBody.position = gameState.playerPosition;
+                    playerCamera.playerBody.rotation = gameState.playerRotation;
+                    //Debug.Log("Player loaded Siccessfully");
+                }
+                // else
+                // {
+                //     gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
+                //     Debug.LogWarning("playerCamera.playerBody is null");
+                // }
+            }
 
-            // Load player position and rotation
-            playerCamera.playerBody.position = gameState.playerPosition;
-            playerCamera.playerBody.rotation = gameState.playerRotation;
+                // Load camera position and rotation
+                //playerCamera.cameraTransform.position = gameState.cameraPosition;
+                //playerCamera.cameraTransform.rotation = gameState.cameraRotation;
+
+                // Load player position and rotation
+
 
             // Load Renderer properties (color in this case)
-            Renderer[] renderers = GameObject.FindObjectsOfType<Renderer>();
+
+            GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
+            if (mismatchedHouse == null)
+            {
+                //Debug.LogWarning("MismatchedHouse not found in the scene.");
+                return;
+            }
+
+            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
+
             for (int i = 0; i < renderers.Length && i < gameState.rendererNames.Count; i++)
             {
-                Renderer rend = renderers[i];
-                if (rend.gameObject.name == gameState.rendererNames[i]) // Match renderer by name
+                if (renderers[i].gameObject.name == gameState.rendererNames[i])
                 {
-                    // Set the color back from saved data
-                    if (rend.material.HasProperty("_Color"))
+                    if (renderers[i].material.HasProperty("_Color"))
                     {
-                        rend.material.color = gameState.rendererColors[i];
+                        renderers[i].material.color = gameState.rendererColors[i];
                     }
                 }
             }
@@ -342,18 +414,19 @@ public class GameManager : MonoBehaviour
                 {
                     ammoManager.colorCount[gameState.colors[i]] = gameState.colorCounts[i];
                 }
+                
             }
 
-            PhotoController photocontroller = FindObjectOfType<PhotoController>();
-            //Debug.Log("Loading Photo Mode");
-            holdingPaintbrush = false;
-            photocontroller.EquipPaintbrush();
+            AmmoUI ammoUI = FindObjectOfType<AmmoUI>();
+            foreach (string color in gameState.absorbedColors)
+            {
+                ammoUI.DiscoverColor(color);
+            }
 
-            //Debug.Log("Pallet is bricked");
             // Load PaletteManager data
             PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
             paletteManager.updatePaletteUI();
-    
+        
 
             if (photocontroller != null)
             {
@@ -363,7 +436,7 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                     //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
-                    photocontroller.EquipPhoto(photoID);
+                    // photocontroller.EquipPhoto(photoID);
                 }
                 photocontroller.UpdatePhotoInventoryUI();
                 //Debug.Log("Loaded Photo Inventory UI");
@@ -424,15 +497,19 @@ public class GameManager : MonoBehaviour
         //     SaveGameState();
         //     Debug.Log("Game state saved.");
         // }
-        // if (Input.GetKeyDown(KeyCode.V)) // Load game state
-        // {
-        //     LoadGameState();
-        //     Debug.Log("Game state loaded.");
-        // }
+        if (Input.GetKeyDown(KeyCode.V)) // Load game state
+        {
+            LoadGameState();
+            Debug.Log("Game state loaded.");
+        }
     }
 
-    // void OnApplicationQuit()
-    // {
-    //     SaveGameState(); // Automatically save the game when the application is quitting
-    // }
+    public void OnApplicationQuit()
+    {
+        //SaveGameState(); // Automatically save the game when the application is quitting
+        Debug.Log("Application ending after " + Time.time + " seconds");
+        Application.Quit();
+
+
+    }
 }

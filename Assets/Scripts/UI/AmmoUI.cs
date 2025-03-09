@@ -23,6 +23,9 @@ public class AmmoUI : MonoBehaviour
     public Sprite undiscoveredColorIcon;
     public GameObject tabTutorialDisable;
     public GameObject photographTextEnable;
+    public GameObject AbsorbText;
+    public GameObject ShootText;
+
     [SerializeField] private Sprite redIcon;
     [SerializeField] private Sprite redOrangeIcon;
     [SerializeField] private Sprite orangeIcon;
@@ -178,11 +181,13 @@ public class AmmoUI : MonoBehaviour
                 if (tabTutorialDisable != null) 
                 {
                     tabTutorialDisable.SetActive(false);
+                    AbsorbText.SetActive(true);
                 }
-                if (photographTextEnable != null)
-                {
-                    photographTextEnable.SetActive(true);
-                }
+                
+                // if (photographTextEnable != null)
+                // {
+                //     photographTextEnable.SetActive(true);
+                // }
             }
             ToggleAmmoInventoryUI();
         }
