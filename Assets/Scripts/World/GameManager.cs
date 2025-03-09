@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
     private FirstPerson playerCamera;
     private Click_2 clickScript; // Reference to Click_2 script
 
+    public bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
 
     private string filePath;

@@ -44,7 +44,7 @@ public class Click_2 : MonoBehaviour
     public InputActionReference absorbAction; // Absorb color action
 
     public GameObject AbsorbText;
-    private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+    // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
     
     void Start()
@@ -549,14 +549,14 @@ public class Click_2 : MonoBehaviour
             return;
         }
 
-        // if (!hasPressedRightClickFirstTime)
-        // {
-        //     hasPressedRightClickFirstTime = true;
-        //     if (AbsorbText != null)
-        //     {
-        //         AbsorbText.SetActive(false);
-        //     }
-        // }
+        if (!GameManager.Instance.hasPressedRightClickFirstTime)
+        {
+            GameManager.Instance.hasPressedRightClickFirstTime = true;
+            if (AbsorbText != null)
+            {
+                AbsorbText.SetActive(false);
+            }
+        }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
