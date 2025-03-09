@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
 
 
 public class MixerInteract : ObjectInteract
@@ -13,6 +13,7 @@ public class MixerInteract : ObjectInteract
     public GameObject notificationObj;
     private bool hasBeenInteracted = false;
     public ColorButtonManager colorButtonManager;
+    public InputActionReference exitAction;
 
     private void Start()
     {
@@ -29,21 +30,6 @@ public class MixerInteract : ObjectInteract
 
     private void Update()
     {
-        if (mixerUIPanel.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                ExitMixer();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                colorButtonManager.ShowColorSelectionPanel(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                colorButtonManager.ShowColorSelectionPanel(2);
-            }
-        }
         
     }
 
@@ -72,9 +58,9 @@ public class MixerInteract : ObjectInteract
         
     }
 
-    public void ExitMixer()
+    public void ExitMixer(InputAction.CallbackContext context)
     {
-        if (mixerUIPanel != null)
+        if (mixerUIPanel != null && mixerUIPanel.activeSelf)
         {
             mixerUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
@@ -82,6 +68,12 @@ public class MixerInteract : ObjectInteract
             if (playerCamera != null)
                 playerCamera.SetCameraActive(true);
         }
+    }
+
+    // Necessary for new input system
+    public void ExitMixer()
+    {
+        ExitMixer(default); // Calls ExitSplitter with a default (empty) InputAction.CallbackContext
     }
 
     private void MixColors()
@@ -95,5 +87,15 @@ public class MixerInteract : ObjectInteract
             // disable the slotThreeButton
             //slotThreeButton.SetActive(false);
         }
+    }
+
+    private void OnEnable()
+    {
+        exitAction.action.started += ExitMixer;
+    }
+
+    private void OnDisable()
+    {
+        exitAction.action.started -= ExitMixer;
     }
 }
