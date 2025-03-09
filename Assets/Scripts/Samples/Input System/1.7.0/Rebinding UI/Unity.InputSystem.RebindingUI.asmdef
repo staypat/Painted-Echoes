@@ -2,7 +2,8 @@
     "name": "Unity.InputSystem.RebindingUI",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "GUID:9f26794c51aa0184b86e5b2d141d1c66"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

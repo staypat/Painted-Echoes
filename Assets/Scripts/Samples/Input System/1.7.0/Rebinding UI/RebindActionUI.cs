@@ -328,6 +328,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             s_RebindActionUIs.Add(this);
             if (s_RebindActionUIs.Count == 1)
                 InputSystem.onActionChange += OnActionChange;
+            LoadActionBinding();
         }
 
         protected void OnDisable()
@@ -442,17 +443,20 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         }
         private void SaveActionBinding()
         {
-            var currentBindings = actionReference.action.actionMap.SaveBindingOverridesAsJson();
-            PlayerPrefs.SetString(m_Action.action.name + bindingId, currentBindings);
+            // var currentBindings = actionReference.action.actionMap.SaveBindingOverridesAsJson();
+            // PlayerPrefs.SetString(m_Action.action.name + bindingId, currentBindings);
+            global::InputManager.Instance.SaveBindings();
         }
 
         private void LoadActionBinding()
         {
-            var savedBindings = PlayerPrefs.GetString(m_Action.action.name + bindingId);
-            if (!string.IsNullOrEmpty(savedBindings))
-            {
-                actionReference.action.actionMap.LoadBindingOverridesFromJson(savedBindings);
-            }
+            // var savedBindings = PlayerPrefs.GetString(m_Action.action.name + bindingId);
+            // if (!string.IsNullOrEmpty(savedBindings))
+            // {
+            //     actionReference.action.actionMap.LoadBindingOverridesFromJson(savedBindings);
+            // }
+            global::InputManager.Instance.LoadBindings();
+            UpdateBindingDisplay();
         }
 
         [Serializable]
