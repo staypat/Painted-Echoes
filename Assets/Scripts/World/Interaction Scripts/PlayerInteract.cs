@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private float interactRange = 3f;
+    [SerializeField] private float interactRange = 4.5f;
     [SerializeField] private TMP_Text interactPrompt; // Use TMP_Text instead of Text
     [SerializeField] private float fadeDuration = 0.3f;
 
@@ -23,6 +23,10 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.inMenu)
+        {
+            return;
+        }
         HandleInteractionCheck();
     }
 
