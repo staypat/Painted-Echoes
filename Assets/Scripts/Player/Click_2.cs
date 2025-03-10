@@ -394,16 +394,6 @@ public class Click_2 : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
-
-        if (!GameManager.Instance.hasPressedLeftClickFirstTime)
-        {
-            GameManager.Instance.hasPressedLeftClickFirstTime = true;
-            if (ShootText != null)
-            {
-                ShootText.SetActive(false);
-                photographTextEnable.SetActive(true);
-            }
-        }
         
         if(GameManager.inMenu)
         {
@@ -437,6 +427,17 @@ public class Click_2 : MonoBehaviour
 
                             if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == GameManager.Instance.grayMaterial.color)
                             {
+
+
+                                if (!GameManager.Instance.hasPressedLeftClickFirstTime)
+                                {
+                                    GameManager.Instance.hasPressedLeftClickFirstTime = true;
+                                    if (ShootText != null)
+                                    {
+                                        ShootText.SetActive(false);
+                                        // photographTextEnable.SetActive(true);
+                                    }
+                                }
                                 childRenderer.material.color = originalColor;
 
                                 //child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -562,16 +563,6 @@ public class Click_2 : MonoBehaviour
             return;
         }
 
-        if (!GameManager.Instance.hasPressedRightClickFirstTime)
-        {
-            GameManager.Instance.hasPressedRightClickFirstTime = true;
-            if (AbsorbText != null)
-            {
-                AbsorbText.SetActive(false);
-                ShootText.SetActive(true);
-            }
-        }
-
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
             GameObject clickedObject = hit.collider.gameObject;
@@ -645,6 +636,16 @@ public class Click_2 : MonoBehaviour
             // Turn the object and its subparent group gray
             if (subparent != null)
             {
+
+                if (!GameManager.Instance.hasPressedRightClickFirstTime)
+                {
+                    GameManager.Instance.hasPressedRightClickFirstTime = true;
+                    if (AbsorbText != null)
+                    {
+                        AbsorbText.SetActive(false);
+                        ShootText.SetActive(true);
+                    }
+                }
                 currentTag = subparent.tag; // Update target tag to match absorbed object
 
                 foreach (Transform child in subparent)

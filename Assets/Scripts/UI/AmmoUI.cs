@@ -22,7 +22,7 @@ public class AmmoUI : MonoBehaviour
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
     public Sprite undiscoveredColorIcon;
     public GameObject tabTutorialDisable;
-    public GameObject photographTextEnable;
+    // public GameObject photographTextEnable;
     public GameObject AbsorbText;
     public GameObject ShootText;
 
