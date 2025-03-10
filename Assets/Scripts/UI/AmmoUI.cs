@@ -44,6 +44,10 @@ public class AmmoUI : MonoBehaviour
 
     private bool hasPressedTabFirstTime = false;
     public PhotoController photoController;
+    public TMP_Text ammoInventoryText;
+    public TMP_Text photoInventoryText;
+    private string currentAmmoKeybind;
+    private string currentPhotoKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
 
@@ -82,12 +86,33 @@ public class AmmoUI : MonoBehaviour
         colorSprites["White"] = whiteIcon;
         colorSprites["Black"] = blackIcon;
         colorSprites["Brown"] = brownIcon;
+
+        InvokeRepeating("UpdateKeybinds", 0.5f, 2f);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void UpdateKeybinds()
+    {
+        var ammoBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newAmmoKeybind = inventoryAction.action.GetBindingDisplayString(ammoBindingIndex);
+        if (currentAmmoKeybind != newAmmoKeybind)
+        {
+            currentAmmoKeybind = newAmmoKeybind;
+            ammoInventoryText.text = newAmmoKeybind;
+        }
+
+        var photoBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newPhotoKeybind = inventoryAction.action.GetBindingDisplayString(photoBindingIndex);
+        if (currentPhotoKeybind != newPhotoKeybind)
+        {
+            currentPhotoKeybind = newPhotoKeybind;
+            photoInventoryText.text = newPhotoKeybind;
+        }
     }
 
     public void ToggleAmmoInventoryUI()
@@ -221,5 +246,6 @@ public class AmmoUI : MonoBehaviour
     {
         inventoryAction.action.started -= OpenInventory;
         exitAction.action.started -= CloseInventory;
+        CancelInvoke("UpdateKeybinds");
     }
 }

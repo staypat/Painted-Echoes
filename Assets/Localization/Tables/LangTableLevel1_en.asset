@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10782807912448
-    m_Localized: ESC/TAB   Exit
+    m_Localized: Exit
     m_Metadata:
       m_Items: []
   - m_Id: 11304466083840
@@ -79,11 +79,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14878176669696
-    m_Localized: ESC/E     Exit
+    m_Localized: Exit
     m_Metadata:
       m_Items: []
   - m_Id: 15977193369600
-    m_Localized: ESC   Return
+    m_Localized: Return
     m_Metadata:
       m_Items: []
   - m_Id: 16697959346176

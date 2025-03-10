@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PhotoController : MonoBehaviour
 {
@@ -12,18 +13,42 @@ public class PhotoController : MonoBehaviour
     public GameObject ownedPhotos;
     public GameObject ammoInventoryIcon;
     public GameObject photoInventoryIcon;
+    public TMP_Text paintbrushText;
+    public TMP_Text photoText;
     private string lastPhotoID = "";
     public List<string> collectedPhotos = new List<string>();
     [SerializeField] public List<Image> photoIcons;
     public Sprite undiscoveredPhotoIcon;
     public InputActionReference paintbrushAction;
     public InputActionReference photoAction;
+    private string currentPaintbrushKeybind;
+    private string currentPhotoKeybind;
     // Start is called before the first frame update
     void Start()
     {
         foreach (Image icon in photoIcons)
         {
             icon.sprite = undiscoveredPhotoIcon;
+        }
+        InvokeRepeating("UpdateKeybinds", 0.5f, 2f);
+    }
+
+    void UpdateKeybinds()
+    {
+        var paintbrushBindingIndex = paintbrushAction.action.GetBindingIndex();
+        string newPaintbrushKeybind = paintbrushAction.action.GetBindingDisplayString(paintbrushBindingIndex);
+        if (currentPaintbrushKeybind != newPaintbrushKeybind)
+        {
+            currentPaintbrushKeybind = newPaintbrushKeybind;
+            paintbrushText.text = newPaintbrushKeybind;
+        }
+
+        var photoBindingIndex = photoAction.action.GetBindingIndex();
+        string newPhotoKeybind = photoAction.action.GetBindingDisplayString(photoBindingIndex);
+        if (currentPhotoKeybind != newPhotoKeybind)
+        {
+            currentPhotoKeybind = newPhotoKeybind;
+            photoText.text = newPhotoKeybind;
         }
     }
 
@@ -179,5 +204,6 @@ public class PhotoController : MonoBehaviour
     {
         paintbrushAction.action.started -= EquipPaintbrush;
         photoAction.action.started -= EquipPhotoAction;
+        CancelInvoke("UpdateKeybinds");
     }
 }
