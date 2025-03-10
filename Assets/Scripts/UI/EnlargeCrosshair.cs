@@ -17,6 +17,10 @@ public class EnlargeCrosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.inMenu)
+        {
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
