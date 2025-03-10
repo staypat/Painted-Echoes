@@ -38,23 +38,30 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        bool hitSomething = Physics.Raycast(ray, out RaycastHit hit, interactRange);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
 
         Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
 
-        if (hitSomething)
+        if(Physics.Raycast(ray, out hit, interactRange))
         {
             ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
             
             if (interactable != null)
             {
+                string interactKey = interactAction.action.GetBindingDisplayString(0);
+                string newPromptText = $"Press {interactKey} to {interactable.interactionPrompt}";
+
+                // Always update the prompt text if it's different
+                if (interactPrompt.text != newPromptText)
+                {
+                    interactPrompt.text = newPromptText;
+                }
+
                 if (currentInteractable != interactable)
                 {
                     currentInteractable = interactable;
-                    string interactKey = interactAction.action.GetBindingDisplayString(0);
-                    interactPrompt.text = $"Press {interactKey} to {interactable.interactionPrompt}";
-                    
+
                     // Reset alpha and start fade-in
                     SetTextAlpha(0f);
                     if (currentFadeCoroutine != null)
@@ -69,7 +76,6 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            // Hide prompt if nothing is hit
             ClearInteractable();
         }
     }
@@ -101,19 +107,18 @@ public class PlayerInteract : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
-    interactPrompt.gameObject.SetActive(true);
-    float elapsedTime = 0f;
-    float startAlpha = interactPrompt.color.a;
+        interactPrompt.gameObject.SetActive(true);
+        SetTextAlpha(0f); // Ensure it starts from 0
+        float elapsedTime = 0f;
 
-    while (elapsedTime < fadeDuration)
-    {
-        elapsedTime += Time.deltaTime;
-        float newAlpha = Mathf.Lerp(startAlpha, 1f, elapsedTime / fadeDuration);
-        SetTextAlpha(newAlpha);
-        yield return null;
-    }
-    SetTextAlpha(1f);
-    currentFadeCoroutine = null;
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            SetTextAlpha(Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration));
+            yield return null;
+        }
+        SetTextAlpha(1f);
+        currentFadeCoroutine = null;
     }
 
     private IEnumerator FadeOut()
