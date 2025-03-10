@@ -50,6 +50,7 @@ public class AmmoUI : MonoBehaviour
     private string currentPhotoKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
+    public TMP_Text exitKeybindText;
 
     void Start()
     {
@@ -115,6 +116,13 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
+    void UpdateInventoryKeybinds()
+    {
+        string inventoryKey = inventoryAction.action.GetBindingDisplayString(inventoryAction.action.GetBindingIndex());
+        string returnKey = exitAction.action.GetBindingDisplayString(exitAction.action.GetBindingIndex());
+        exitKeybindText.text = $"{returnKey}/{inventoryKey}";
+    }
+
     public void ToggleAmmoInventoryUI()
     {
         if (GameManager.inMenu)
@@ -141,6 +149,7 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateAmmoUI()
     {
+        UpdateInventoryKeybinds();
         Dictionary<string, int> ammoInventory = AmmoManager.Instance.GetAmmoInventory();
         for (int i = 0; i < colorIcons.Count; i++)
         {
