@@ -61,7 +61,10 @@ public class Tutorial_WASD : MonoBehaviour
     }
     void Update()
     {
-        UpdateTutorialText();
+        if(tutorialText.gameObject.activeSelf)
+        {
+            UpdateTutorialText();
+        }
         // If the player has picked up the key, disable the tutorial text
         if (GameManager.Instance != null && GameManager.Instance.tutorialKey)
         {
