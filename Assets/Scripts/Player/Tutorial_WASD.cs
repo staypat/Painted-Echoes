@@ -14,6 +14,7 @@ public class Tutorial_WASD : MonoBehaviour
     private bool pressedA = false;
     private bool pressedS = false;
     private bool pressedD = false;
+    private bool movementTextShown = false; // Prevent enabling multiple times
     private bool walkToDoorTextShown = false; // Prevent enabling multiple times
     public InputActionReference moveAction;
     private void OnEnable()
@@ -36,9 +37,10 @@ public class Tutorial_WASD : MonoBehaviour
         if (input.x > 0) pressedD = true;  // Right movement
 
         // If all movement directions have been pressed
-        if (pressedW && pressedA && pressedS && pressedD)
+        if (pressedW && pressedA && pressedS && pressedD && !movementTextShown)
         {
             tutorialText.gameObject.SetActive(false);
+            movementTextShown = true; // Mark that it has been shown
 
             if (goodText != null)
             {

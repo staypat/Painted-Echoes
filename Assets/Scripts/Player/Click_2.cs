@@ -531,6 +531,15 @@ public class Click_2 : MonoBehaviour
                             if (ammoFlag)
                             {
                                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                                if (!GameManager.Instance.hasPressedLeftClickFirstTime)
+                                {
+                                    GameManager.Instance.hasPressedLeftClickFirstTime = true;
+                                    if (ShootText != null)
+                                    {
+                                        ShootText.SetActive(false);
+                                        // photographTextEnable.SetActive(true);
+                                    }
+                                }
                                 ammoFlag = false;
                             }
                             
