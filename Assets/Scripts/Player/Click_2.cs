@@ -45,6 +45,9 @@ public class Click_2 : MonoBehaviour
 
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public GameObject tabTutorialDisable;
+    public GameObject ScrollText;
+
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
@@ -352,6 +355,13 @@ public class Click_2 : MonoBehaviour
     void HandleScrollInput()
     {
         if (GameManager.inMenu) return;
+        if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
+        {
+            GameManager.Instance.hasScrolledFirstTime = true;
+            ScrollText.SetActive(false);
+            ShootText.SetActive(true);
+        }
+
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         if (scroll < 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
@@ -415,6 +425,10 @@ public class Click_2 : MonoBehaviour
 
     void ColorOnClick(InputAction.CallbackContext context)
     {
+        if (!GameManager.Instance.hasScrolledFirstTime){
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
@@ -670,13 +684,13 @@ public class Click_2 : MonoBehaviour
             if (subparent != null)
             {
 
-                if (!GameManager.Instance.hasPressedRightClickFirstTime)
+                if (!GameManager.Instance.hasPressedRightClickFirstTime && AmmoManager.Instance.GetCurrentAmmo("Green") == 1 && AmmoManager.Instance.GetCurrentAmmo("Brown") == 1)
                 {
                     GameManager.Instance.hasPressedRightClickFirstTime = true;
                     if (AbsorbText != null)
                     {
                         AbsorbText.SetActive(false);
-                        ShootText.SetActive(true);
+                        tabTutorialDisable.SetActive(true);
                     }
                 }
                 currentTag = subparent.tag; // Update target tag to match absorbed object

@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
     public bool holdingPhotograph = false; // Track if the player is holding the photograph
     public bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
     public bool hasPressedLeftClickFirstTime = false; // Absorb color for tutorial text
+    public bool hasPressedTabFirstTime = false;
+
+    public bool hasScrolledFirstTime = false; // Scroll first time
+    public bool tutorialComplete = false; // Tutorial complete
+
     private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
     public Material whiteMaterial; // Material for the white color
     public Material blackMaterial;
