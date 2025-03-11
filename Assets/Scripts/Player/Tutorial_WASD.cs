@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class Tutorial_WASD : MonoBehaviour
 {
-    public GameObject tutorialText; // Assign in Inspector
+    public TMP_Text tutorialText; // Assign in Inspector
     public GameObject goodText; // Assign in Inspector
     public GameObject walkToDoorText; // Assign in Inspector (New UI text to show after goodText disappears)
 
@@ -14,38 +15,64 @@ public class Tutorial_WASD : MonoBehaviour
     private bool pressedS = false;
     private bool pressedD = false;
     private bool walkToDoorTextShown = false; // Prevent enabling multiple times
+    public InputActionReference moveAction;
+    private void OnEnable()
+    {
+        moveAction.action.performed += HandleMovementInput;
+    }
 
+    private void OnDisable()
+    {
+        moveAction.action.performed -= HandleMovementInput;
+    }
+
+    private void HandleMovementInput(InputAction.CallbackContext context)
+    {
+        Vector2 input = context.ReadValue<Vector2>();
+
+        if (input.y > 0) pressedW = true;  // Up movement
+        if (input.x < 0) pressedA = true;  // Left movement
+        if (input.y < 0) pressedS = true;  // Down movement
+        if (input.x > 0) pressedD = true;  // Right movement
+
+        // If all movement directions have been pressed
+        if (pressedW && pressedA && pressedS && pressedD)
+        {
+            tutorialText.gameObject.SetActive(false);
+
+            if (goodText != null)
+            {
+                goodText.SetActive(true);
+                StartCoroutine(FadeOutText(goodText, 1.5f));
+            }
+        }
+    }
+
+    private void UpdateTutorialText()
+    {
+        if (tutorialText == null) return;
+
+        string upKey = moveAction.action.GetBindingDisplayString(1);
+        string leftKey = moveAction.action.GetBindingDisplayString(2);
+        string downKey = moveAction.action.GetBindingDisplayString(3);
+        string rightKey = moveAction.action.GetBindingDisplayString(4);
+
+        tutorialText.text = $"Use {upKey}, {leftKey}, {downKey}, {rightKey} to move.";
+    }
     void Update()
     {
+        if(tutorialText.gameObject.activeSelf)
+        {
+            UpdateTutorialText();
+        }
         // If the player has picked up the key, disable the tutorial text
         if (GameManager.Instance != null && GameManager.Instance.tutorialKey)
         {
             if (tutorialText != null)
             {
-                tutorialText.SetActive(false);
+                tutorialText.gameObject.SetActive(false);
             }
             return; // Exit early to prevent further UI updates
-        }
-
-        // Track each key press
-        if (Input.GetKeyDown(KeyCode.W)) pressedW = true;
-        if (Input.GetKeyDown(KeyCode.A)) pressedA = true;
-        if (Input.GetKeyDown(KeyCode.S)) pressedS = true;
-        if (Input.GetKeyDown(KeyCode.D)) pressedD = true;
-
-        // Disable tutorial text and show "goodText" when all keys have been pressed
-        if (pressedW && pressedA && pressedS && pressedD)
-        {
-            if (tutorialText != null)
-            {
-                tutorialText.SetActive(false);
-            }
-
-            if (goodText != null)
-            {
-                goodText.SetActive(true); // Show "goodText"
-                StartCoroutine(FadeOutText(goodText, 1.5f)); // Start fade-out after 1.5 seconds
-            }
         }
     }
 

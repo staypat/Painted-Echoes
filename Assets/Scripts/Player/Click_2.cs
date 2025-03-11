@@ -45,7 +45,11 @@ public class Click_2 : MonoBehaviour
 
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public TMP_Text shootTextComponent;
+    public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
+    private string currentShootKeybind;
+    private string currentAbsorbKeybind;
 
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
@@ -78,8 +82,27 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
+        InvokeRepeating("UpdateKeybinds", 0.5f, 2f);
 
+    }
 
+    void UpdateKeybinds()
+    {
+        var shootBindingIndex = fireAction.action.GetBindingIndex();
+        string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
+        if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
+        {
+            currentShootKeybind = newShootKeybind;
+            shootTextComponent.text = $"Press {newShootKeybind} to shoot out a color";
+        }
+
+        var absorbBindingIndex = absorbAction.action.GetBindingIndex();
+        string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
+        if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
+        {
+            currentShootKeybind = newAbsorbKeybind;
+            absorbTextComponent.text = $"Press {newAbsorbKeybind} to absorb a color";
+        }
     }
 
     private void OnEnable()
@@ -101,6 +124,7 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
+        CancelInvoke("UpdateKeybinds");
     }
 
     // Function to keep track what room the player is in

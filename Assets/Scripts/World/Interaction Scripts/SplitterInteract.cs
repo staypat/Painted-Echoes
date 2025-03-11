@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class SplitterInteract : ObjectInteract
 {
@@ -30,6 +31,9 @@ public class SplitterInteract : ObjectInteract
     public GameObject notificationObj;
     private bool hasBeenInteracted = false;
     public InputActionReference exitAction;
+    public InputActionReference interactAction;
+    public TMP_Text exitKeybindText;
+    public TMP_Text returnKeybindText;
 
     private void Start()
     {
@@ -95,6 +99,7 @@ public class SplitterInteract : ObjectInteract
         if (SplitterUIPanel != null)
         {
             GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
+            UpdateKeybindText();
             bool isActive = SplitterUIPanel.activeSelf;
             SplitterUIPanel.SetActive(!isActive); // Toggle UI visibility
             AudioManager.instance.Play("UIOpen");
@@ -321,6 +326,7 @@ public class SplitterInteract : ObjectInteract
             instructions.SetActive(true);
             exitButton.SetActive(true);
             SplitterUIPanel.SetActive(false);
+            UpdateReturnKeybindText();
             AudioManager.instance.Play("UIOpen");
             PopulateAmmoButtons();
         }
@@ -607,5 +613,16 @@ public class SplitterInteract : ObjectInteract
     {
         exitAction.action.started -= ExitSplitter;
         exitAction.action.started -= CloseColorSelectionPanelAction;
+    }
+    private void UpdateKeybindText()
+    {
+        string interactKey = interactAction.action.GetBindingDisplayString(0);
+        string exitKey = exitAction.action.GetBindingDisplayString(0);
+        exitKeybindText.text = $"{exitKey}/{interactKey}";
+    }
+    private void UpdateReturnKeybindText()
+    {
+        string exitKey = exitAction.action.GetBindingDisplayString(0);
+        returnKeybindText.text = $"{exitKey}";
     }
 }

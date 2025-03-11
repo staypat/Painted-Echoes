@@ -277,9 +277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cf3a5c9227383409f41879ddec097d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialText: {fileID: 1552570719}
+  tutorialText: {fileID: 1552570721}
   goodText: {fileID: 1380272112}
   walkToDoorText: {fileID: 1817931548}
+  moveAction: {fileID: -3425850697012310824, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
 --- !u!1 &39248420
 GameObject:
   m_ObjectHideFlags: 0

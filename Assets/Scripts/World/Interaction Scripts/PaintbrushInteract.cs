@@ -36,7 +36,7 @@ public class PaintbrushInteract : ObjectInteract
         Debug.Log($"Stored Start Local Position: {startLocalPosition}");
 
         // Ensure UI starts disabled
-        if (uiToEnable != null) uiToEnable.SetActive(false);
+        // if (uiToEnable != null) uiToEnable.SetActive(false);
         if (inventoryIconToEnable != null) inventoryIconToEnable.SetActive(false);
         if (paletteToEnable != null) paletteToEnable.SetActive(false);
     }

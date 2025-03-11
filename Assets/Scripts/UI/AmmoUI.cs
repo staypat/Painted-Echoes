@@ -22,6 +22,7 @@ public class AmmoUI : MonoBehaviour
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
     public Sprite undiscoveredColorIcon;
     public GameObject tabTutorialDisable;
+    public TMP_Text tabTutorialText;
     // public GameObject photographTextEnable;
     public GameObject AbsorbText;
     public GameObject ShootText;
@@ -44,8 +45,15 @@ public class AmmoUI : MonoBehaviour
 
     private bool hasPressedTabFirstTime = false;
     public PhotoController photoController;
+    public TMP_Text ammoInventoryText;
+    public TMP_Text photoInventoryText;
+    private string currentAmmoKeybind;
+    private string currentPhotoKeybind;
+    private string currentInventoryKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
+    public TMP_Text ammoExitKeybindText;
+    public TMP_Text photoExitKeybindText;
 
     void Start()
     {
@@ -82,12 +90,49 @@ public class AmmoUI : MonoBehaviour
         colorSprites["White"] = whiteIcon;
         colorSprites["Black"] = blackIcon;
         colorSprites["Brown"] = brownIcon;
+
+        InvokeRepeating("UpdateKeybinds", 0.5f, 2f);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    void UpdateKeybinds()
+    {
+        var ammoBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newAmmoKeybind = inventoryAction.action.GetBindingDisplayString(ammoBindingIndex);
+        if (currentAmmoKeybind != newAmmoKeybind)
+        {
+            currentAmmoKeybind = newAmmoKeybind;
+            ammoInventoryText.text = newAmmoKeybind;
+        }
+
+        var photoBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newPhotoKeybind = inventoryAction.action.GetBindingDisplayString(photoBindingIndex);
+        if (currentPhotoKeybind != newPhotoKeybind)
+        {
+            currentPhotoKeybind = newPhotoKeybind;
+            photoInventoryText.text = newPhotoKeybind;
+        }
+
+        var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
+        if (currentInventoryKeybind != newInventoryKeybind)
+        {
+            currentInventoryKeybind = newInventoryKeybind;
+            tabTutorialText.text = $"Press {newInventoryKeybind} to open Color Inventory";
+        }
+    }
+
+    public void UpdateInventoryKeybinds()
+    {
+        string inventoryKey = inventoryAction.action.GetBindingDisplayString(inventoryAction.action.GetBindingIndex());
+        string returnKey = exitAction.action.GetBindingDisplayString(exitAction.action.GetBindingIndex());
+        ammoExitKeybindText.text = $"{returnKey}/{inventoryKey}";
+        photoExitKeybindText.text = $"{returnKey}/{inventoryKey}";
     }
 
     public void ToggleAmmoInventoryUI()
@@ -116,6 +161,7 @@ public class AmmoUI : MonoBehaviour
 
     private void UpdateAmmoUI()
     {
+        UpdateInventoryKeybinds();
         Dictionary<string, int> ammoInventory = AmmoManager.Instance.GetAmmoInventory();
         for (int i = 0; i < colorIcons.Count; i++)
         {
@@ -221,5 +267,6 @@ public class AmmoUI : MonoBehaviour
     {
         inventoryAction.action.started -= OpenInventory;
         exitAction.action.started -= CloseInventory;
+        CancelInvoke("UpdateKeybinds");
     }
 }
