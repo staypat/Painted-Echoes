@@ -22,6 +22,7 @@ public class AmmoUI : MonoBehaviour
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
     public Sprite undiscoveredColorIcon;
     public GameObject tabTutorialDisable;
+    public TMP_Text tabTutorialText;
     // public GameObject photographTextEnable;
     public GameObject AbsorbText;
     public GameObject ShootText;
@@ -48,6 +49,7 @@ public class AmmoUI : MonoBehaviour
     public TMP_Text photoInventoryText;
     private string currentAmmoKeybind;
     private string currentPhotoKeybind;
+    private string currentInventoryKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
     public TMP_Text ammoExitKeybindText;
@@ -114,6 +116,14 @@ public class AmmoUI : MonoBehaviour
         {
             currentPhotoKeybind = newPhotoKeybind;
             photoInventoryText.text = newPhotoKeybind;
+        }
+
+        var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
+        if (currentInventoryKeybind != newInventoryKeybind)
+        {
+            currentInventoryKeybind = newInventoryKeybind;
+            tabTutorialText.text = $"Press {newInventoryKeybind} to open Color Inventory";
         }
     }
 
