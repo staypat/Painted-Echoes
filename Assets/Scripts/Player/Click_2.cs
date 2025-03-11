@@ -85,7 +85,7 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
-        InvokeRepeating("UpdateKeybinds", 0.5f, 2f);
+        InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
 
     }
 
