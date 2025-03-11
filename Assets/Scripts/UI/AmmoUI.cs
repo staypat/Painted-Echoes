@@ -117,7 +117,7 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    public  void UpdateInventoryKeybinds()
+    public void UpdateInventoryKeybinds()
     {
         string inventoryKey = inventoryAction.action.GetBindingDisplayString(inventoryAction.action.GetBindingIndex());
         string returnKey = exitAction.action.GetBindingDisplayString(exitAction.action.GetBindingIndex());

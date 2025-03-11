@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.InputSystem;
 
 public class ColorButtonManager : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class ColorButtonManager : MonoBehaviour
     public Click_2 colorTracker;
     public AmmoUI ammoUI;
     public PaletteManager paletteManager;
+    public InputActionReference exitAction;
+    public TMP_Text exitKeybindText;
 
     private void Start()
     {
@@ -40,13 +44,7 @@ public class ColorButtonManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && colorSelectionPanel.activeSelf)
-        {
-            AudioManager.instance.Play("UIBack");
-            DestroyChildren();
-            CloseColorSelectionPanel("White");
-            
-        }
+        
     }
 
     public void ShowColorSelectionPanel(int slot)
@@ -55,6 +53,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             bool isActive = colorSelectionPanel.activeSelf;
             colorSelectionPanel.SetActive(!isActive);
+            UpdateReturnKeybindText();
 
             if (colorSelectionPanel.activeSelf)
             {
@@ -85,7 +84,7 @@ public class ColorButtonManager : MonoBehaviour
 
     public void CloseColorSelectionPanel(string ammoType)
     {
-        if (colorSelectionPanel != null)
+        if (colorSelectionPanel != null && colorSelectionPanel.activeSelf)
         {
             Debug.Log("Hiding ColorSelectionPanel");
             colorSelectionPanel.SetActive(false);
@@ -117,6 +116,17 @@ public class ColorButtonManager : MonoBehaviour
         // if (playerCamera != null)
         // playerCamera.SetCameraActive(true);
         // We dont want this
+    }
+
+    // Necessary for the input system
+    public void CloseColorSelectionPanel(InputAction.CallbackContext context)
+    {
+        if (colorSelectionPanel.activeSelf)
+        {
+            AudioManager.instance.Play("UIBack");
+            DestroyChildren();
+            CloseColorSelectionPanel("White");
+        }
     }
 
     private void MixColors(string color1, string color2) { // Mix the two colors and add the new color to the ammo inventory }
@@ -335,5 +345,19 @@ public class ColorButtonManager : MonoBehaviour
             case "Brown": return GameManager.Instance.brownMaterial.color;
             default: return GameManager.Instance.grayMaterial.color; // Default to white if not found
         }
+    }
+
+    private void OnEnable()
+    {
+        exitAction.action.started += CloseColorSelectionPanel;
+    }
+    private void OnDisable()
+    {
+        exitAction.action.started -= CloseColorSelectionPanel;
+    }
+    private void UpdateReturnKeybindText()
+    {
+        string exitKey = exitAction.action.GetBindingDisplayString(0);
+        exitKeybindText.text = $"{exitKey}";
     }
 }
