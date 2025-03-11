@@ -17,6 +17,7 @@ public class PaintbrushInteract : ObjectInteract
 
     [SerializeField] private Axis floatAxis = Axis.Y;
     [SerializeField] private Axis rotateAxis = Axis.Y;
+    [SerializeField] private PhotoController photoController;
 
     private Vector3 startLocalPosition; // Store local position relative to the pivot
     private enum Axis { X, Y, Z }
@@ -82,6 +83,7 @@ public class PaintbrushInteract : ObjectInteract
         if (uiToDisable != null) uiToDisable.SetActive(false);
         if (GameManager.Instance.hasPhotograph && paintbrushIconToEnable != null)
         {
+            photoController.EquipPaintbrush();
             paintbrushIconToEnable.SetActive(true);
         }
         if (uiToEnable != null)
