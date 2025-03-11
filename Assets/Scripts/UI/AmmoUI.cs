@@ -26,6 +26,7 @@ public class AmmoUI : MonoBehaviour
     // public GameObject photographTextEnable;
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public GameObject ScrollText;
 
     [SerializeField] private Sprite redIcon;
     [SerializeField] private Sprite redOrangeIcon;
@@ -43,7 +44,6 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Sprite blackIcon;
     [SerializeField] private Sprite brownIcon;
 
-    private bool hasPressedTabFirstTime = false;
     public PhotoController photoController;
     public TMP_Text ammoInventoryText;
     public TMP_Text photoInventoryText;
@@ -144,6 +144,11 @@ public class AmmoUI : MonoBehaviour
                 ammoBar.SetActive(false); // Hide the UI if in menu
                 ammoPanel.SetActive(false);
                 GameManager.Instance.ExitMenu();
+                if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
+                {
+                    GameManager.Instance.hasPressedTabFirstTime = true;
+                    ScrollText.SetActive(true);
+                }
             }
             else
             {
@@ -197,6 +202,12 @@ public class AmmoUI : MonoBehaviour
             }
             clickInteraction.ApplyColor(selectedMaterial, colorKey);
             GameManager.Instance.ExitMenu();
+            if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
+            {
+                GameManager.Instance.hasPressedTabFirstTime = true;
+                ScrollText.SetActive(true);
+            }
+
             ammoBar.SetActive(false);
             ammoPanel.SetActive(false);
         }else
@@ -220,14 +231,14 @@ public class AmmoUI : MonoBehaviour
     {
         if (GameManager.Instance.hasPaintbrush && GameManager.Instance.holdingPaintbrush)
         {
-            if (!hasPressedTabFirstTime)
+            if (!GameManager.Instance.hasPressedTabFirstTime)
             {
-                hasPressedTabFirstTime = true;
+                // GameManager.Instance.hasPressedTabFirstTime = true;
 
                 if (tabTutorialDisable != null) 
                 {
                     tabTutorialDisable.SetActive(false);
-                    AbsorbText.SetActive(true);
+                    // AbsorbText.SetActive(true);
                 }
                 
                 // if (photographTextEnable != null)
@@ -247,7 +258,7 @@ public class AmmoUI : MonoBehaviour
     {
         if (GameManager.Instance.holdingPaintbrush && GameManager.inMenu)
         {
-            ToggleAmmoInventoryUI();
+            ToggleAmmoInventoryUI(); 
         }
         if (GameManager.Instance.holdingPhotograph && GameManager.inMenu)
         {
