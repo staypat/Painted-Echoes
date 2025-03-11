@@ -50,7 +50,8 @@ public class AmmoUI : MonoBehaviour
     private string currentPhotoKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
-    public TMP_Text exitKeybindText;
+    public TMP_Text ammoExitKeybindText;
+    public TMP_Text photoExitKeybindText;
 
     void Start()
     {
@@ -116,11 +117,12 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    void UpdateInventoryKeybinds()
+    public  void UpdateInventoryKeybinds()
     {
         string inventoryKey = inventoryAction.action.GetBindingDisplayString(inventoryAction.action.GetBindingIndex());
         string returnKey = exitAction.action.GetBindingDisplayString(exitAction.action.GetBindingIndex());
-        exitKeybindText.text = $"{returnKey}/{inventoryKey}";
+        ammoExitKeybindText.text = $"{returnKey}/{inventoryKey}";
+        photoExitKeybindText.text = $"{returnKey}/{inventoryKey}";
     }
 
     public void ToggleAmmoInventoryUI()
