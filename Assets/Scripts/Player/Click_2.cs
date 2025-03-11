@@ -355,12 +355,7 @@ public class Click_2 : MonoBehaviour
     void HandleScrollInput()
     {
         if (GameManager.inMenu) return;
-        if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
-        {
-            GameManager.Instance.hasScrolledFirstTime = true;
-            ScrollText.SetActive(false);
-            ShootText.SetActive(true);
-        }
+
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
@@ -372,6 +367,12 @@ public class Click_2 : MonoBehaviour
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
             paletteManager.updatePaletteUI();
             //Debug.Log("Current index: " + currentIndex);
+            if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
+            {
+                GameManager.Instance.hasScrolledFirstTime = true;
+                ScrollText.SetActive(false);
+                ShootText.SetActive(true);
+            }
         }
         else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
@@ -380,6 +381,12 @@ public class Click_2 : MonoBehaviour
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
             paletteManager.updatePaletteUI();
+            if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
+            {
+                GameManager.Instance.hasScrolledFirstTime = true;
+                ScrollText.SetActive(false);
+                ShootText.SetActive(true);
+            }
         }
     }
 
@@ -605,6 +612,10 @@ public class Click_2 : MonoBehaviour
         RaycastHit hit;
 
         roomCheck(currentRoom);
+        if (CompareColorValues() == true)
+        {
+            return;
+        }
         if (isRoomComplete == true || GameManager.inMenu)
         {
             return;
