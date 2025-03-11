@@ -72,7 +72,7 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "White"; // Default gun color
+        currentGunColor = "Gray"; // Default gun color
 
 
         // Store all objects and their original colors at the start
@@ -116,7 +116,6 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started += ColorOnClick;
         absorbAction.action.started += AbsorbColor;
-
     }
 
     private void OnDisable()
@@ -127,6 +126,7 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
+
         CancelInvoke("UpdateKeybinds");
     }
 
@@ -527,7 +527,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Gray"), "Gray");
                         }else
                         {
                             //GameManager.Instance.SaveGameState();
@@ -578,7 +578,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Gray"), "Gray");
                         }else
                         {
 
@@ -616,10 +616,10 @@ public class Click_2 : MonoBehaviour
         {
             return;
         }
-        if (isRoomComplete == true || GameManager.inMenu)
-        {
-            return;
-        }
+        // if (isRoomComplete == true || GameManager.inMenu)
+        // {
+        //     return;
+        // }
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {

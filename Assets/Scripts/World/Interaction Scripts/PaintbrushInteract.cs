@@ -73,6 +73,22 @@ public class PaintbrushInteract : ObjectInteract
         }
     }
 
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateLoaded2 += Interact;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateLoaded2 -= Interact;
+        }
+    }
+
     public override void Interact()
     {
         base.Interact();

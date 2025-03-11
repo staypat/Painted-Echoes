@@ -59,7 +59,9 @@ public class GameState
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public event System.Action OnGameStateLoaded;
 
+    public event System.Action OnGameStateLoaded2;
     public static bool inMenu = false; // Flag to check if the player is in the menu or not
     public bool hasPaintbrush = false; // Track if the player has picked up the paintbrush
     public bool hasPhotograph = false; // Track if the player has picked up the photograph
@@ -129,6 +131,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);  // Keeps it persistent across scenes
         }
+        
         // else
         // {
         //     Destroy(gameObject);
@@ -239,7 +242,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    gameState.rendererColors.Add(Color.white);
+                    gameState.rendererColors.Add(Color.gray);
                 }
             }
         }
@@ -284,15 +287,38 @@ public class GameManager : MonoBehaviour
         Debug.Log(filePath);
     }
 
-
-    public void LoadGameState()
+    public void LoadSavedScene()
     {
-
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
+            SceneManager.LoadScene(gameState.sceneName);
+        }
+    }
+
+    public void LoadGameListeners()
+    {
+        if (File.Exists(filePath))
+        {
+            Debug.Log("Loading Game Listeners");
+            OnGameStateLoaded?.Invoke();
+            OnGameStateLoaded2?.Invoke();
+        }
+        
+    }    
+
+    public void LoadGameState()
+    {
+        if (File.Exists(filePath))
+        {
+            OnGameStateLoaded?.Invoke();
+            OnGameStateLoaded2?.Invoke();
+            string json = File.ReadAllText(filePath);
+            GameState gameState = JsonUtility.FromJson<GameState>(json);
+
+            //OnGameStateLoaded?.Invoke();
             OpenMenu openmenuscript = FindObjectOfType<OpenMenu>();
 
             if (openmenuscript != null)
@@ -441,7 +467,7 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                     //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
-                    // photocontroller.EquipPhoto(photoID);
+                    photocontroller.EquipPhoto(photoID);
                 }
                 photocontroller.UpdatePhotoInventoryUI();
                 //Debug.Log("Loaded Photo Inventory UI");
@@ -504,8 +530,8 @@ public class GameManager : MonoBehaviour
         // }
         if (Input.GetKeyDown(KeyCode.V)) // Load game state
         {
-            LoadGameState();
             Debug.Log("Game state loaded.");
+            LoadGameState();
         }
     }
 
