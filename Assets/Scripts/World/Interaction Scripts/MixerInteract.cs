@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class MixerInteract : ObjectInteract
@@ -14,6 +15,8 @@ public class MixerInteract : ObjectInteract
     private bool hasBeenInteracted = false;
     public ColorButtonManager colorButtonManager;
     public InputActionReference exitAction;
+    public InputActionReference interactAction;
+    public TMP_Text exitKeybindText;
 
     private void Start()
     {
@@ -81,6 +84,7 @@ public class MixerInteract : ObjectInteract
         if (mixerUIPanel != null)
         {
             GameManager.Instance.EnterMenu(); // Set the flag to true when entering the menu
+            UpdateKeybindText();
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
             AudioManager.instance.Play("UIOpen");
@@ -97,5 +101,12 @@ public class MixerInteract : ObjectInteract
     private void OnDisable()
     {
         exitAction.action.started -= ExitMixer;
+    }
+
+    private void UpdateKeybindText()
+    {
+        string interactKey = interactAction.action.GetBindingDisplayString(0);
+        string exitKey = exitAction.action.GetBindingDisplayString(0);
+        exitKeybindText.text = $"{exitKey}/{interactKey}";
     }
 }

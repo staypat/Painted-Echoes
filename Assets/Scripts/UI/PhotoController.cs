@@ -7,6 +7,7 @@ using TMPro;
 
 public class PhotoController : MonoBehaviour
 {
+    public AmmoUI ammoUI;
     public GameObject paintbrush;
     public GameObject paletteUI;
     public GameObject photoPanel;
@@ -142,6 +143,7 @@ public class PhotoController : MonoBehaviour
     public void UpdatePhotoInventoryUI()
     {
         PhotoManager photoManager = FindObjectOfType<PhotoManager>();
+        ammoUI.UpdateInventoryKeybinds();
 
         foreach (Image icon in photoIcons)
         {
