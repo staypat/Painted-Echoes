@@ -124,6 +124,18 @@ MonoBehaviour:
     m_Localized: pick up
     m_Metadata:
       m_Items: []
+  - m_Id: 1092376356397056
+    m_Localized: Left click to shoot out a color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092452852113408
+    m_Localized: Right click to absorb a color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092567809597440
+    m_Localized: Scroll to switch color
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
