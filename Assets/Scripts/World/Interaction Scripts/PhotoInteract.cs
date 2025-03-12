@@ -15,6 +15,7 @@ public class PhotoInteract : ObjectInteract
     void Start()
     {
         photoIcon.SetActive(false);
+        actionTextKey = "pick up";
 
         // Ensure UI is enabled at start
         if (uiToDisable != null)

@@ -23,6 +23,7 @@ public class PresentTopInteract : ObjectInteract
 
     void Start()
     {
+        actionTextKey = "open";
         initialPosition = transform.localPosition;
         initialRotation = transform.localRotation;
         objectCollider = GetComponent<Collider>(); // Get collider component

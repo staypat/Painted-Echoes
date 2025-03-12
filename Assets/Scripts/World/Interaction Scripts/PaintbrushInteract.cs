@@ -24,6 +24,7 @@ public class PaintbrushInteract : ObjectInteract
 
     void Start()
     {
+        actionTextKey = "pick up";
         // If rotationTarget (empty parent) exists, use its position as the pivot point
         if (rotationTarget != null)
         {
