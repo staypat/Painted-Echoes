@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class ObjectInteract : MonoBehaviour
 {
-    [SerializeField] public string interactionPrompt = "Interact";
+    [SerializeField] public string actionTextKey = "interact"; // Default localization key
+    public string actionText = "Interact"; // Fallback text
 
-    // Start is called before the first frame update
-    void Start()
+    public string GetLocalizedActionText()
     {
-        
+        return LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", actionTextKey);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        actionTextKey = "interact"; // Default interaction text
     }
 
     public virtual void Interact()
     {
-        // Base interaction logic (override in derived classes)
         Debug.Log($"Interacted with {gameObject.name}");
     }
-    
 }

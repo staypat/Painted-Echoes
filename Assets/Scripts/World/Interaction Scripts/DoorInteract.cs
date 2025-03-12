@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DoorInteract : ObjectInteract
 {
-    [SerializeField] private float openAngle = 90f; // Adjust in Inspector
-    [SerializeField] private float openSpeed = 1f; // Time to open/close
-    [SerializeField] private Axis rotationAxis = Axis.Y; // Choose rotation axis (default: Y)
+    [SerializeField] private float openAngle = 90f;
+    [SerializeField] private float openSpeed = 0.7f; // Custom door speed
+    [SerializeField] private Axis rotationAxis = Axis.Y;
 
     private bool isOpen = false;
     private bool isMoving = false;
@@ -20,48 +20,25 @@ public class DoorInteract : ObjectInteract
         closedRotation = transform.rotation;
         Vector3 rotationVector = GetRotationVector(openAngle);
         openRotation = closedRotation * Quaternion.Euler(rotationVector);
+        actionTextKey = "open";
     }
 
     public override void Interact()
     {
-        if (isMoving) return; // Prevent interaction during movement
+        if (isMoving) return;
 
-        if (interactionPrompt == "open fridge") {
-            openSpeed = 0.95f;
-            if (isOpen){
-                AudioManager.instance.PlayOneShot("FridgeClose");
-            } 
-            else
-            {
-                AudioManager.instance.PlayOneShot("FridgeOpen");
-            }
-            
-        }
-        else if (interactionPrompt == "open door") {
-            openSpeed = 0.7f;
-            if (isOpen){
-                AudioManager.instance.PlayOneShot("DoorClose");
-            } 
-            else
-            {
-                AudioManager.instance.PlayOneShot("DoorOpen");
-            }
-        }
-        else if (interactionPrompt == "open cabinet")
+        if (isOpen)
         {
-            openSpeed = 0.65f;
-            if (isOpen){
-                AudioManager.instance.PlayOneShot("CupboardClose");
-            } 
-            else
-            {
-                AudioManager.instance.PlayOneShot("CupboardOpen");
-            }
+            AudioManager.instance.PlayOneShot("DoorClose");
+            actionTextKey = "open";
+        }
+        else
+        {
+            AudioManager.instance.PlayOneShot("DoorOpen");
+            actionTextKey = "close";
         }
 
         isOpen = !isOpen;
-        Debug.Log(interactionPrompt); // Log the interaction prompt set in the Inspector
-
         StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
     }
 
@@ -78,7 +55,7 @@ public class DoorInteract : ObjectInteract
             yield return null;
         }
 
-        transform.rotation = targetRotation; // Ensure exact rotation
+        transform.rotation = targetRotation;
         isMoving = false;
     }
 
