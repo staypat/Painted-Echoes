@@ -11330,7 +11330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c3ea48206b4504391994dae480fbe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionPrompt: open door
+  actionTextKey: interact
+  actionText: Interact
   openAngle: -90
   openSpeed: 2
   rotationAxis: 2
