@@ -98,6 +98,10 @@ MonoBehaviour:
     m_Localized: "Salle termin\xE9e\_!\r\nSalle suivante d\xE9verrouill\xE9e\_!"
     m_Metadata:
       m_Items: []
+  - m_Id: 1082531867729920
+    m_Localized: open french
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
