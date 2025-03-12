@@ -95,6 +95,38 @@ MonoBehaviour:
     m_Key: EditKeyBindsButtonText
     m_Metadata:
       m_Items: []
+  - m_Id: 2420439962820608
+    m_Key: move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420476335824896
+    m_Key: jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420503397474304
+    m_Key: paintbrush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420522502529024
+    m_Key: photograph
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420757433884672
+    m_Key: shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420772969586688
+    m_Key: absorb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420800316448768
+    m_Key: inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420829366198272
+    m_Key: return
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
