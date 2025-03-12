@@ -111,6 +111,18 @@ MonoBehaviour:
     m_Key: pick up
     m_Metadata:
       m_Items: []
+  - m_Id: 1092376356397056
+    m_Key: ShootTextTutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092452852113408
+    m_Key: AbsorbTextTutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092567809597440
+    m_Key: ScrollTextTutorial
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
