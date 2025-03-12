@@ -45,7 +45,14 @@ public class Click_2 : MonoBehaviour
 
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public GameObject tabTutorialDisable;
+    public GameObject ScrollText;
+
+    public TMP_Text shootTextComponent;
+    public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
+    private string currentShootKeybind;
+    private string currentAbsorbKeybind;
 
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
 
@@ -78,8 +85,27 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
+        InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
 
+    }
 
+    void UpdateKeybinds()
+    {
+        var shootBindingIndex = fireAction.action.GetBindingIndex();
+        string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
+        if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
+        {
+            currentShootKeybind = newShootKeybind;
+            shootTextComponent.text = $"Press {newShootKeybind} to shoot out a color";
+        }
+
+        var absorbBindingIndex = absorbAction.action.GetBindingIndex();
+        string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
+        if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
+        {
+            currentShootKeybind = newAbsorbKeybind;
+            absorbTextComponent.text = $"Press {newAbsorbKeybind} to absorb a color";
+        }
     }
 
     private void OnEnable()
@@ -101,6 +127,7 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
+        CancelInvoke("UpdateKeybinds");
     }
 
     // Function to keep track what room the player is in
@@ -328,6 +355,8 @@ public class Click_2 : MonoBehaviour
     void HandleScrollInput()
     {
         if (GameManager.inMenu) return;
+
+
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         if (scroll < 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
@@ -338,6 +367,12 @@ public class Click_2 : MonoBehaviour
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
             paletteManager.updatePaletteUI();
             //Debug.Log("Current index: " + currentIndex);
+            if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
+            {
+                GameManager.Instance.hasScrolledFirstTime = true;
+                ScrollText.SetActive(false);
+                ShootText.SetActive(true);
+            }
         }
         else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
@@ -346,6 +381,12 @@ public class Click_2 : MonoBehaviour
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
             paletteManager.updatePaletteUI();
+            if (!GameManager.Instance.hasScrolledFirstTime && GameManager.Instance.hasPressedTabFirstTime)
+            {
+                GameManager.Instance.hasScrolledFirstTime = true;
+                ScrollText.SetActive(false);
+                ShootText.SetActive(true);
+            }
         }
     }
 
@@ -391,6 +432,10 @@ public class Click_2 : MonoBehaviour
 
     void ColorOnClick(InputAction.CallbackContext context)
     {
+        if (!GameManager.Instance.hasScrolledFirstTime){
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         bool ammoFlag = true;
@@ -507,6 +552,15 @@ public class Click_2 : MonoBehaviour
                             if (ammoFlag)
                             {
                                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
+                                if (!GameManager.Instance.hasPressedLeftClickFirstTime)
+                                {
+                                    GameManager.Instance.hasPressedLeftClickFirstTime = true;
+                                    if (ShootText != null)
+                                    {
+                                        ShootText.SetActive(false);
+                                        // photographTextEnable.SetActive(true);
+                                    }
+                                }
                                 ammoFlag = false;
                             }
                             
@@ -558,6 +612,10 @@ public class Click_2 : MonoBehaviour
         RaycastHit hit;
 
         roomCheck(currentRoom);
+        if (CompareColorValues() == true)
+        {
+            return;
+        }
         if (isRoomComplete == true || GameManager.inMenu)
         {
             return;
@@ -637,13 +695,13 @@ public class Click_2 : MonoBehaviour
             if (subparent != null)
             {
 
-                if (!GameManager.Instance.hasPressedRightClickFirstTime)
+                if (!GameManager.Instance.hasPressedRightClickFirstTime && AmmoManager.Instance.GetCurrentAmmo("Green") == 1 && AmmoManager.Instance.GetCurrentAmmo("Brown") == 1)
                 {
                     GameManager.Instance.hasPressedRightClickFirstTime = true;
                     if (AbsorbText != null)
                     {
                         AbsorbText.SetActive(false);
-                        ShootText.SetActive(true);
+                        tabTutorialDisable.SetActive(true);
                     }
                 }
                 currentTag = subparent.tag; // Update target tag to match absorbed object

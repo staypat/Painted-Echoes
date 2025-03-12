@@ -5,7 +5,7 @@ using UnityEngine;
 public class MattressInteract : ObjectInteract
 {
     [SerializeField] private float moveDistance = 2f; // Distance to move
-    [SerializeField] private float moveSpeed = 2f; // Movement speed
+    [SerializeField] private float moveSpeed = 1.1f; // Movement speed
     [SerializeField] private bool moveOnXAxis = true; // Toggle X or Z axis
 
     private Vector3 startPosition;
@@ -22,6 +22,7 @@ public class MattressInteract : ObjectInteract
     public override void Interact()
     {
         if (isMoving) return; // Prevent multiple interactions at once
+        AudioManager.instance.Play("MatMove"); // Play sound effect
         StartCoroutine(MoveMattress(isAtStart ? targetPosition : startPosition));
         isAtStart = !isAtStart;
     }

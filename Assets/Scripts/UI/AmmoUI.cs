@@ -22,9 +22,11 @@ public class AmmoUI : MonoBehaviour
     public Dictionary<string, Sprite> colorSprites = new Dictionary<string, Sprite>();
     public Sprite undiscoveredColorIcon;
     public GameObject tabTutorialDisable;
+    public TMP_Text tabTutorialText;
     // public GameObject photographTextEnable;
     public GameObject AbsorbText;
     public GameObject ShootText;
+    public GameObject ScrollText;
 
     [SerializeField] private Sprite redIcon;
     [SerializeField] private Sprite redOrangeIcon;
@@ -42,12 +44,12 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Sprite blackIcon;
     [SerializeField] private Sprite brownIcon;
 
-    private bool hasPressedTabFirstTime = false;
     public PhotoController photoController;
     public TMP_Text ammoInventoryText;
     public TMP_Text photoInventoryText;
     private string currentAmmoKeybind;
     private string currentPhotoKeybind;
+    private string currentInventoryKeybind;
     public InputActionReference inventoryAction;
     public InputActionReference exitAction;
     public TMP_Text ammoExitKeybindText;
@@ -115,6 +117,14 @@ public class AmmoUI : MonoBehaviour
             currentPhotoKeybind = newPhotoKeybind;
             photoInventoryText.text = newPhotoKeybind;
         }
+
+        var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
+        string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
+        if (currentInventoryKeybind != newInventoryKeybind)
+        {
+            currentInventoryKeybind = newInventoryKeybind;
+            tabTutorialText.text = $"Press {newInventoryKeybind} to open Color Inventory";
+        }
     }
 
     public void UpdateInventoryKeybinds()
@@ -134,6 +144,11 @@ public class AmmoUI : MonoBehaviour
                 ammoBar.SetActive(false); // Hide the UI if in menu
                 ammoPanel.SetActive(false);
                 GameManager.Instance.ExitMenu();
+                if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
+                {
+                    GameManager.Instance.hasPressedTabFirstTime = true;
+                    ScrollText.SetActive(true);
+                }
             }
             else
             {
@@ -187,6 +202,12 @@ public class AmmoUI : MonoBehaviour
             }
             clickInteraction.ApplyColor(selectedMaterial, colorKey);
             GameManager.Instance.ExitMenu();
+            if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
+            {
+                GameManager.Instance.hasPressedTabFirstTime = true;
+                ScrollText.SetActive(true);
+            }
+
             ammoBar.SetActive(false);
             ammoPanel.SetActive(false);
         }else
@@ -210,14 +231,14 @@ public class AmmoUI : MonoBehaviour
     {
         if (GameManager.Instance.hasPaintbrush && GameManager.Instance.holdingPaintbrush)
         {
-            if (!hasPressedTabFirstTime)
+            if (!GameManager.Instance.hasPressedTabFirstTime)
             {
-                hasPressedTabFirstTime = true;
+                // GameManager.Instance.hasPressedTabFirstTime = true;
 
                 if (tabTutorialDisable != null) 
                 {
                     tabTutorialDisable.SetActive(false);
-                    AbsorbText.SetActive(true);
+                    // AbsorbText.SetActive(true);
                 }
                 
                 // if (photographTextEnable != null)
@@ -237,7 +258,7 @@ public class AmmoUI : MonoBehaviour
     {
         if (GameManager.Instance.holdingPaintbrush && GameManager.inMenu)
         {
-            ToggleAmmoInventoryUI();
+            ToggleAmmoInventoryUI(); 
         }
         if (GameManager.Instance.holdingPhotograph && GameManager.inMenu)
         {

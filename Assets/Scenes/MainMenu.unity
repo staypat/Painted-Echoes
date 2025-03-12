@@ -4653,7 +4653,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -392}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347342354
 MonoBehaviour:
@@ -9445,10 +9445,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 31.55
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -9637,7 +9637,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: GunEquip
-    clip: {fileID: 8300000, guid: f209b4d2694c7b14c81a02040e891a99, type: 3}
+    clip: {fileID: 8300000, guid: b17d3ef76613ba148b26624939e60218, type: 3}
     loop: 0
     source: {fileID: 0}
   - name: PhotoEquip
@@ -9710,6 +9710,18 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: FridgeClose
     clip: {fileID: 8300000, guid: a0fad0145012318448ca7b2f0c8a859a, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: KeyAcquire
+    clip: {fileID: 8300000, guid: 73ad296b431e1f64fb2fbb02213729c5, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: MatMove
+    clip: {fileID: 8300000, guid: 3c37021cd97832846b3fdab990075c5c, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: PresentOpen
+    clip: {fileID: 8300000, guid: 96cb9749845f0eb419c8c28183c980a5, type: 3}
     loop: 0
     source: {fileID: 0}
 --- !u!4 &740280090
@@ -17752,7 +17764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -18276,6 +18288,9 @@ MonoBehaviour:
   holdingPhotograph: 0
   hasPressedRightClickFirstTime: 0
   hasPressedLeftClickFirstTime: 0
+  hasPressedTabFirstTime: 0
+  hasScrolledFirstTime: 0
+  tutorialComplete: 0
   whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
   blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
   redMaterial: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}

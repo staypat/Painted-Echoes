@@ -739,6 +739,10 @@ MonoBehaviour:
   absorbAction: {fileID: 0}
   AbsorbText: {fileID: 0}
   ShootText: {fileID: 0}
+  tabTutorialDisable: {fileID: 0}
+  ScrollText: {fileID: 0}
+  shootTextComponent: {fileID: 0}
+  absorbTextComponent: {fileID: 0}
   photographTextEnable: {fileID: 0}
 --- !u!23 &78929666
 MeshRenderer:
@@ -1782,10 +1786,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 31.55
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -3018,7 +3022,7 @@ MonoBehaviour:
   m_text: Open the door to go inside
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3042,10 +3046,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 40.05
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -3083,7 +3087,7 @@ MonoBehaviour:
   m_margin: {x: -22.619186, y: -8.481134, z: -13.67131, w: -124.248985}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &413826520
@@ -3120,7 +3124,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 413826519}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -4063,7 +4067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5049,7 +5053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0.65882355, g: 0.65882355, b: 0.65882355, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5490,12 +5494,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 647486286}
     - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: F
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_fontSize
       value: 44.75
       objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Interact
       objectReference: {fileID: 0}
     - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_fontSize
@@ -5813,9 +5825,17 @@ PrefabInstance:
       propertyPath: m_RebindOverlay
       value: 
       objectReference: {fileID: 647486286}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Shoot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6223,9 +6243,17 @@ PrefabInstance:
       propertyPath: m_RebindOverlay
       value: 
       objectReference: {fileID: 647486286}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Z
+      objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Inventory
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6298,6 +6326,9 @@ MonoBehaviour:
   holdingPhotograph: 0
   hasPressedRightClickFirstTime: 0
   hasPressedLeftClickFirstTime: 0
+  hasPressedTabFirstTime: 0
+  hasScrolledFirstTime: 0
+  tutorialComplete: 0
   whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
   blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
   redMaterial: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
@@ -6460,7 +6491,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.9912727, y: 0.14676405, z: 0.00033175157}
   m_Center: {x: -0.021346271, y: -0.05385917, z: 0.00016587578}
@@ -6813,163 +6844,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 1, z: 10}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1013526802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1013526804}
-  - component: {fileID: 1013526803}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1013526803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013526802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ebe0fa9cab9662498a4e7e15cbb61b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Paint1
-    clip: {fileID: 8300000, guid: f7c5ead4d8b314e4199fa8f4b2fb1dd9, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Paint2
-    clip: {fileID: 8300000, guid: 707933b1d9d116d4bbd02e31f0cc62f5, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Paint3
-    clip: {fileID: 8300000, guid: 4e62c8c539b3b7a44be0169ae8d0bec9, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb1
-    clip: {fileID: 8300000, guid: fbf575c9cf723a145a8b426c22fd001d, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb2
-    clip: {fileID: 8300000, guid: b09a4fabfb96eb54f98334682f9c706c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb3
-    clip: {fileID: 8300000, guid: d3f442975cc57c044b62483f3c9ace17, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Select
-    clip: {fileID: 8300000, guid: 82d6e37d62bd9ec4fab92e43f6ac4e8c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Theme
-    clip: {fileID: 8300000, guid: e7a4b719f9d646648b7c2420b7e53bc6, type: 3}
-    loop: 1
-    source: {fileID: 0}
-  - name: LevelComplete
-    clip: {fileID: 8300000, guid: ee9b000f848596142b81a72f7f07d713, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: GunEquip
-    clip: {fileID: 8300000, guid: f209b4d2694c7b14c81a02040e891a99, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: PhotoEquip
-    clip: {fileID: 8300000, guid: 040b577de262e04469e9f11cc3de7a86, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerOpen
-    clip: {fileID: 8300000, guid: 0662906dc44163d4ba204f0d5adaccff, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerClose
-    clip: {fileID: 8300000, guid: 93f3213e967d07f46b8fc410138e565c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerLocked
-    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIMove
-    clip: {fileID: 8300000, guid: 7ba1bdaa05dee0d4a9f00933dd969ee6, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIOpen
-    clip: {fileID: 8300000, guid: 690996778ddc5d04b99dcfb094d8969a, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIBack
-    clip: {fileID: 8300000, guid: 13133882c59d3bc41afb6dbac3b0a118, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIConfirm
-    clip: {fileID: 8300000, guid: e3d67d252ddb93f458da3436f8fc99e3, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIApply
-    clip: {fileID: 8300000, guid: 3e41a6d3d070dc24397af2a3b9aa13fd, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIError
-    clip: {fileID: 8300000, guid: e99adfad27b57ac44bee730686b2ed7e, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: ColorCorrect
-    clip: {fileID: 8300000, guid: 57b660d3ce5ff994a837f67fa0e0d724, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorOpen
-    clip: {fileID: 8300000, guid: b28a627cbe2317748ba4ffb1fb6a9298, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorClose
-    clip: {fileID: 8300000, guid: a9f9da6de06b1484ebba6178206a8609, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorLocked
-    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: CupboardOpen
-    clip: {fileID: 8300000, guid: 7c80a41ec1badb74589f36e2a6416109, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: CupboardClose
-    clip: {fileID: 8300000, guid: a46f2f1a21d9ceb4bb82542ef1bedf6d, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: FridgeOpen
-    clip: {fileID: 8300000, guid: 20a47cc6fe7cd0e48873fcc94970c525, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: FridgeClose
-    clip: {fileID: 8300000, guid: a0fad0145012318448ca7b2f0c8a859a, type: 3}
-    loop: 0
-    source: {fileID: 0}
---- !u!4 &1013526804
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1013526802}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -7423,7 +7297,7 @@ MonoBehaviour:
   m_text: Find the key
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7447,10 +7321,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 47.2
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -7488,7 +7362,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: -32.201252, z: 11.145882, w: -62.917923}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1057456492
@@ -9444,9 +9318,17 @@ PrefabInstance:
       propertyPath: m_RebindOverlay
       value: 
       objectReference: {fileID: 647486286}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Photograph
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10083,9 +9965,17 @@ PrefabInstance:
       propertyPath: m_RebindOverlay
       value: 
       objectReference: {fileID: 647486286}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Absorb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10765,7 +10655,7 @@ MonoBehaviour:
   m_text: Press E to Interact
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10789,10 +10679,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.25
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -10827,7 +10717,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -7.791664, y: -13.341808, z: -6.097351, w: -46.88317}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 1
@@ -10942,7 +10832,7 @@ MonoBehaviour:
   m_text: Good!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10966,10 +10856,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 52.4
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -12163,7 +12053,7 @@ MonoBehaviour:
   m_text: Uh oh, looks like the door is locked...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12187,10 +12077,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 37.4
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -12228,7 +12118,7 @@ MonoBehaviour:
   m_margin: {x: -38.3368, y: -15.10709, z: -16.501022, w: -134.27582}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1504773896
@@ -12364,10 +12254,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 45.8
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -13602,7 +13492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPrompt: move mattress
   moveDistance: 0.5
-  moveSpeed: 2
+  moveSpeed: 1.1
   moveOnXAxis: 1
 --- !u!222 &1777732683
 CanvasRenderer:
@@ -13850,7 +13740,7 @@ MonoBehaviour:
   m_text: Open the door
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13874,10 +13764,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 47.45
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -13915,7 +13805,7 @@ MonoBehaviour:
   m_margin: {x: -11.845566, y: -25.705463, z: -3.632721, w: -89.45061}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1817931551
@@ -14533,12 +14423,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 647486286}
     - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_fontSize
       value: 44.75
       objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Paintbrush
       objectReference: {fileID: 0}
     - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_fontSize
@@ -14910,9 +14808,17 @@ PrefabInstance:
       propertyPath: m_RebindOverlay
       value: 
       objectReference: {fileID: 647486286}
+    - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Esc
+      objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
       value: KeyRebind (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6949718721501705588, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
+      propertyPath: m_text
+      value: Return
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15068,7 +14974,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -392}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2004256221
 MonoBehaviour:
@@ -15613,27 +15519,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077007917}
   m_CullTransparentMesh: 1
---- !u!65 &2083945206
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4008304127520395246}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9912727, y: 0.10676407, z: 0.0066933553}
-  m_Center: {x: -0.021346271, y: -0.05385917, z: -0.0033466776}
 --- !u!1 &2116434813
 GameObject:
   m_ObjectHideFlags: 0
@@ -15811,6 +15696,175 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &2146313378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146313380}
+  - component: {fileID: 2146313379}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2146313379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146313378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebe0fa9cab9662498a4e7e15cbb61b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Paint1
+    clip: {fileID: 8300000, guid: f7c5ead4d8b314e4199fa8f4b2fb1dd9, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Paint2
+    clip: {fileID: 8300000, guid: 707933b1d9d116d4bbd02e31f0cc62f5, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Paint3
+    clip: {fileID: 8300000, guid: 4e62c8c539b3b7a44be0169ae8d0bec9, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb1
+    clip: {fileID: 8300000, guid: fbf575c9cf723a145a8b426c22fd001d, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb2
+    clip: {fileID: 8300000, guid: b09a4fabfb96eb54f98334682f9c706c, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Absorb3
+    clip: {fileID: 8300000, guid: d3f442975cc57c044b62483f3c9ace17, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Select
+    clip: {fileID: 8300000, guid: 82d6e37d62bd9ec4fab92e43f6ac4e8c, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: Theme
+    clip: {fileID: 8300000, guid: e7a4b719f9d646648b7c2420b7e53bc6, type: 3}
+    loop: 1
+    source: {fileID: 0}
+  - name: LevelComplete
+    clip: {fileID: 8300000, guid: ee9b000f848596142b81a72f7f07d713, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: GunEquip
+    clip: {fileID: 8300000, guid: b17d3ef76613ba148b26624939e60218, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: PhotoEquip
+    clip: {fileID: 8300000, guid: 040b577de262e04469e9f11cc3de7a86, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DrawerOpen
+    clip: {fileID: 8300000, guid: 0662906dc44163d4ba204f0d5adaccff, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DrawerClose
+    clip: {fileID: 8300000, guid: 93f3213e967d07f46b8fc410138e565c, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DrawerLocked
+    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIMove
+    clip: {fileID: 8300000, guid: 7ba1bdaa05dee0d4a9f00933dd969ee6, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIOpen
+    clip: {fileID: 8300000, guid: 690996778ddc5d04b99dcfb094d8969a, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIBack
+    clip: {fileID: 8300000, guid: 13133882c59d3bc41afb6dbac3b0a118, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIConfirm
+    clip: {fileID: 8300000, guid: e3d67d252ddb93f458da3436f8fc99e3, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIApply
+    clip: {fileID: 8300000, guid: 3e41a6d3d070dc24397af2a3b9aa13fd, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: UIError
+    clip: {fileID: 8300000, guid: e99adfad27b57ac44bee730686b2ed7e, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: ColorCorrect
+    clip: {fileID: 8300000, guid: 57b660d3ce5ff994a837f67fa0e0d724, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorOpen
+    clip: {fileID: 8300000, guid: b28a627cbe2317748ba4ffb1fb6a9298, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorClose
+    clip: {fileID: 8300000, guid: a9f9da6de06b1484ebba6178206a8609, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorLocked
+    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: CupboardOpen
+    clip: {fileID: 8300000, guid: 7c80a41ec1badb74589f36e2a6416109, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: CupboardClose
+    clip: {fileID: 8300000, guid: a46f2f1a21d9ceb4bb82542ef1bedf6d, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: FridgeOpen
+    clip: {fileID: 8300000, guid: 20a47cc6fe7cd0e48873fcc94970c525, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: FridgeClose
+    clip: {fileID: 8300000, guid: a0fad0145012318448ca7b2f0c8a859a, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: KeyAcquire
+    clip: {fileID: 8300000, guid: 73ad296b431e1f64fb2fbb02213729c5, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: MatMove
+    clip: {fileID: 8300000, guid: 3c37021cd97832846b3fdab990075c5c, type: 3}
+    loop: 0
+    source: {fileID: 0}
+  - name: PresentOpen
+    clip: {fileID: 8300000, guid: 96cb9749845f0eb419c8c28183c980a5, type: 3}
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &2146313380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146313378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2835549813848164
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22283,7 +22337,6 @@ GameObject:
   - component: {fileID: 9087831589237909691}
   - component: {fileID: 6419099934521773772}
   - component: {fileID: 452465794882496375}
-  - component: {fileID: 2083945206}
   m_Layer: 0
   m_Name: road
   m_TagString: Untagged
@@ -30932,7 +30985,7 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1013526804}
+  - {fileID: 2146313380}
   - {fileID: 982423430}
   - {fileID: 349256782}
   - {fileID: 290796148}

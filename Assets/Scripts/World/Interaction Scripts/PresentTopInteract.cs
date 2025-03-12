@@ -6,7 +6,7 @@ public class PresentTopInteract : ObjectInteract
 {
     [SerializeField] private Axis moveAxis = Axis.X; // Choose X, Y, or Z in Inspector
     [SerializeField] private float moveDistance = 1f; // Distance to move
-    [SerializeField] private float moveSpeed = 2f; // Speed of movement
+    [SerializeField] private float moveSpeed = 1.25f; // Speed of movement
 
     [SerializeField] private Axis rotateAxis = Axis.Y; // Choose X, Y, or Z for rotation
     [SerializeField] private float rotationAmount = 90f; // Degrees to rotate
@@ -33,6 +33,7 @@ public class PresentTopInteract : ObjectInteract
         if (hasInteracted) return; // Prevent further interactions
 
         hasInteracted = true; // Lock interaction after first use
+        AudioManager.instance.Play("PresentOpen"); // Play sound effect
         StartCoroutine(MoveThenRotate());
 
         // Disable collider after interaction, preventing further interaction
