@@ -38,7 +38,7 @@ public class SplitterInteract : ObjectInteract
     private void Start()
     {
         currentColor = null;
-        interactionPrompt = "Split a Color"; // Interaction text
+        actionTextKey = "split"; // Interaction text
         if (SplitterUIPanel != null)
             SplitterUIPanel.SetActive(false); // Ensure the UI is hidden initially
 

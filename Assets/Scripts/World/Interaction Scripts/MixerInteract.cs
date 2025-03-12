@@ -20,7 +20,7 @@ public class MixerInteract : ObjectInteract
 
     private void Start()
     {
-        interactionPrompt = "Mix Colors"; // Interaction text
+        actionTextKey = "mix";
         if (mixerUIPanel != null)
             mixerUIPanel.SetActive(false); // Ensure the UI is hidden initially
 

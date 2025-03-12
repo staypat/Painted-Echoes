@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorInteract : ObjectInteract
+public class FridgeInteract : ObjectInteract
 {
     [SerializeField] private float openAngle = 90f;
-    [SerializeField] private float openSpeed = 0.7f; // Custom door speed
+    [SerializeField] private float openSpeed = 0.95f; // Custom fridge speed
     [SerializeField] private Axis rotationAxis = Axis.Y;
 
     private bool isOpen = false;
@@ -29,12 +29,12 @@ public class DoorInteract : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.PlayOneShot("DoorClose");
+            AudioManager.instance.PlayOneShot("FridgeClose");
             actionTextKey = "open";
         }
         else
         {
-            AudioManager.instance.PlayOneShot("DoorOpen");
+            AudioManager.instance.PlayOneShot("FridgeOpen");
             actionTextKey = "close";
         }
 

@@ -23,7 +23,7 @@ public class DoorInteractTutorial : ObjectInteract
     {
         closedRotation = transform.rotation;
         openRotation = closedRotation * Quaternion.Euler(0, 0, openAngle);
-        interactionPrompt = "Open Door";
+        actionTextKey = "open"; // Default to "Open"
     }
 
     public override void Interact()
@@ -35,8 +35,8 @@ public class DoorInteractTutorial : ObjectInteract
         // Check if the player has the key
         if (GameManager.Instance != null && GameManager.Instance.tutorialKey)
         {
-            Debug.Log("Player has the key! Opening the door.");
-            OpenDoor();
+            Debug.Log("Player has the key! Opening or closing the door.");
+            ToggleDoor();
         }
         else
         {
@@ -46,28 +46,31 @@ public class DoorInteractTutorial : ObjectInteract
         }
     }
 
-    private void OpenDoor()
+    private void ToggleDoor()
     {
         if (!GameManager.Instance.tutorialKey)
         {
-            Debug.Log("Player does not have the key, door cannot open.");
+            Debug.Log("Player does not have the key, door cannot be operated.");
             return;
+        }
+
+        Debug.Log(isOpen ? "Closing the door..." : "Opening the door...");
+
+        if (findKey != null) findKey.SetActive(false);
+
+        if (isOpen)
+        {
+            AudioManager.instance.Play("DoorClose");
+            actionTextKey = "open"; // Change prompt back to "Open"
         }
         else
         {
-            Debug.Log("Opening the door...");
-
-            if (findKey != null) findKey.SetActive(false);
-
-            if (isOpen){
-                AudioManager.instance.Play("DoorClose");
-            } else {
-                AudioManager.instance.Play("DoorOpen");
-            }
-            isOpen = !isOpen;
-            interactionPrompt = isOpen ? "Close Door" : "Open Door";
-            StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
+            AudioManager.instance.Play("DoorOpen");
+            actionTextKey = "close"; // Change prompt to "Close"
         }
+
+        isOpen = !isOpen;
+        StartCoroutine(MoveDoor(isOpen ? openRotation : closedRotation));
     }
 
     private void ShowNoKeyMessage()
@@ -77,19 +80,16 @@ public class DoorInteractTutorial : ObjectInteract
             removeLastText.SetActive(false);
         }
 
-        // Show "findKey" message
         if (findKey != null)
         {
             findKey.SetActive(true);
         }
 
-        // Disable movement tutorial
         if (disableMovementTutorial != null)
         {
             disableMovementTutorial.SetActive(false);
         }
 
-        // Disable assigned script
         if (scriptToDisable != null)
         {
             scriptToDisable.enabled = false;
@@ -103,23 +103,19 @@ public class DoorInteractTutorial : ObjectInteract
             Debug.Log("MoveDoor called, but player does not have the key. Aborting.");
             yield break;
         }
-        else
+
+        isMoving = true;
+        Quaternion startRotation = transform.rotation;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 1f)
         {
-            Debug.Log("Moving the door...");
-
-            isMoving = true;
-            Quaternion startRotation = transform.rotation;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < 1f)
-            {
-                elapsedTime += Time.deltaTime * openSpeed;
-                transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime);
-                yield return null;
-            }
-
-            transform.rotation = targetRotation;
-            isMoving = false;
+            elapsedTime += Time.deltaTime * openSpeed;
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime);
+            yield return null;
         }
+
+        transform.rotation = targetRotation;
+        isMoving = false;
     }
 }
