@@ -4539,8 +4539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ad675a585486f4fae017e88dd09d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionTextKey: interact
-  actionText: Interact
+  actionTextKey: pick up
+  actionText: pick up
   disableObject: {fileID: 1057456489}
   disableTutorialText: {fileID: 32727126}
   enableObject: {fileID: 413826517}
@@ -12730,7 +12730,7 @@ MonoBehaviour:
   m_text: Action Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
-  m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12761,7 +12761,7 @@ MonoBehaviour:
   m_fontSizeMin: 22
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

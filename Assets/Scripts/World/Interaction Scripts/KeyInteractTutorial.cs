@@ -8,6 +8,11 @@ public class KeyInteractTutorial : ObjectInteract
     [SerializeField] private GameObject disableTutorialText; // Second object to disable
     [SerializeField] private GameObject enableObject;  // Object to enable
 
+    void Start()
+    {
+        actionTextKey = "pick up"; // Ensure correct action text from the start
+    }
+
     public override void Interact()
     {
         if (GameManager.Instance != null)
