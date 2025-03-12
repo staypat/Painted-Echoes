@@ -6881,6 +6881,15 @@ MonoBehaviour:
   victoryUI: {fileID: 918531956}
   PaintSplatterPS: {fileID: 0}
   paletteManager: {fileID: 1484309129}
+  fireAction: {fileID: 0}
+  absorbAction: {fileID: 0}
+  AbsorbText: {fileID: 0}
+  ShootText: {fileID: 0}
+  tabTutorialDisable: {fileID: 0}
+  ScrollText: {fileID: 0}
+  shootTextComponent: {fileID: 0}
+  absorbTextComponent: {fileID: 0}
+  photographTextEnable: {fileID: 0}
 --- !u!1 &528212611
 GameObject:
   m_ObjectHideFlags: 0
@@ -12583,6 +12592,7 @@ MonoBehaviour:
   controlsUI: {fileID: 1827595678}
   MusicVolumeSlider: {fileID: 2125294049}
   SFXVolumeSlider: {fileID: 17888525}
+  exitAction: {fileID: 0}
 --- !u!1 &968974781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14130,18 +14140,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628e3259df5dff74b863c62bed8a7f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoUI: {fileID: 0}
   paintbrush: {fileID: 520842376}
   paletteUI: {fileID: 1484309128}
   photoPanel: {fileID: 131038200}
   ownedPhotos: {fileID: 464701049}
   ammoInventoryIcon: {fileID: 1555520048}
   photoInventoryIcon: {fileID: 1294030977}
+  paintbrushText: {fileID: 0}
+  photoText: {fileID: 0}
   collectedPhotos: []
   photoIcons:
   - {fileID: 1486397229}
   - {fileID: 325747983}
   - {fileID: 1383484699}
   undiscoveredPhotoIcon: {fileID: 21300000, guid: 32e6ccef1ebca44439f774c85cb89e47, type: 3}
+  paintbrushAction: {fileID: 0}
+  photoAction: {fileID: 0}
 --- !u!114 &1080938194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14154,9 +14169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f75bfb6e07f9143b3c65065506985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hallwayPhoto: {fileID: 0}
   livingRoomPhoto: {fileID: 1468878757}
   kitchenPhoto1: {fileID: 736223648}
   kitchenPhoto2: {fileID: 653097528}
+  kitchenPhoto3: {fileID: 0}
 --- !u!4 &1080938195
 Transform:
   m_ObjectHideFlags: 0
@@ -15712,6 +15729,8 @@ MonoBehaviour:
   colorTracker: {fileID: 520842380}
   ammoUI: {fileID: 1445022137}
   paletteManager: {fileID: 1484309129}
+  exitAction: {fileID: 0}
+  exitKeybindText: {fileID: 0}
 --- !u!1 &1236660367
 GameObject:
   m_ObjectHideFlags: 0
@@ -17969,7 +17988,10 @@ MonoBehaviour:
   Crosshair: {fileID: 760065791}
   undiscoveredColorIcon: {fileID: 21300000, guid: 32e6ccef1ebca44439f774c85cb89e47, type: 3}
   tabTutorialDisable: {fileID: 276828946}
-  photographTextEnable: {fileID: 877256975}
+  tabTutorialText: {fileID: 0}
+  AbsorbText: {fileID: 0}
+  ShootText: {fileID: 0}
+  ScrollText: {fileID: 0}
   redIcon: {fileID: 21300000, guid: 8afb6599ff75265409ef8b89d201c665, type: 3}
   redOrangeIcon: {fileID: 21300000, guid: 2a14ea49cb255d7498266bc8d180452b, type: 3}
   orangeIcon: {fileID: 21300000, guid: 6e2992f4935e26a4ab14d6051cf93e6e, type: 3}
@@ -17986,6 +18008,12 @@ MonoBehaviour:
   blackIcon: {fileID: 21300000, guid: e8d3ce9c40fd4dc46aeb2c3e364969f3, type: 3}
   brownIcon: {fileID: 21300000, guid: c3b236510b0d1ab49a28246ee3de9ac9, type: 3}
   photoController: {fileID: 1080938193}
+  ammoInventoryText: {fileID: 0}
+  photoInventoryText: {fileID: 0}
+  inventoryAction: {fileID: 0}
+  exitAction: {fileID: 0}
+  ammoExitKeybindText: {fileID: 0}
+  photoExitKeybindText: {fileID: 0}
 --- !u!224 &1445022138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24601,6 +24629,11 @@ MonoBehaviour:
   tutorialKey: 0
   holdingPaintbrush: 0
   holdingPhotograph: 0
+  hasPressedRightClickFirstTime: 0
+  hasPressedLeftClickFirstTime: 0
+  hasPressedTabFirstTime: 0
+  hasScrolledFirstTime: 0
+  tutorialComplete: 0
   whiteMaterial: {fileID: 2100000, guid: a46c066d6904530408eb47dc6d1f2c0a, type: 2}
   blackMaterial: {fileID: 2100000, guid: fb06ef63e5175344daf10914432125e0, type: 2}
   redMaterial: {fileID: 2100000, guid: ae5380c65ff501349bf66b96d51e77bc, type: 2}
@@ -24617,6 +24650,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  playerCamera: {fileID: 0}
 --- !u!4 &1913429219
 Transform:
   m_ObjectHideFlags: 0
@@ -24970,8 +25004,8 @@ MonoBehaviour:
   playerCamera: {fileID: 2136769531}
   interactRange: 3
   interactPrompt: {fileID: 1138139437}
-  interactKey: 101
   fadeDuration: 0.3
+  interactAction: {fileID: 0}
 --- !u!114 &2004297512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24992,6 +25026,8 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckDistance: 0.3
   playerHeight: 0
+  moveAction: {fileID: 0}
+  jumpAction: {fileID: 0}
 --- !u!54 &2004297513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26439,6 +26475,7 @@ GameObject:
   - component: {fileID: 2136769530}
   - component: {fileID: 2136769529}
   - component: {fileID: 2136769528}
+  - component: {fileID: 2136769532}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -26582,6 +26619,31 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2136769532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136769526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16142cfdd81ca46f8ac6acd18ae44068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _opacity: 1
+  _edgeColor: {r: 0, g: 0.1884594, b: 0.33962262, a: 1}
+  _edgeContrast: 2
+  _fillColor: {r: 1, g: 1, b: 1, a: 1}
+  _blurWidth: 0.2
+  _blurFrequency: 0.5
+  _hueShift: 0.05
+  _interval: 1
+  _iteration: 20
+  _overlayMode: 2
+  _overlayTexture: {fileID: 2800000, guid: 383414d98815fdc4ca89e1b4d135f47d, type: 3}
+  _overlayOpacity: 0.4
+  _shader: {fileID: -6465566751694194690, guid: 3e152a7c1e1bb4527901f4b4a55fbbc3, type: 3}
 --- !u!1 &2143107749
 GameObject:
   m_ObjectHideFlags: 0
