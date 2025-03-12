@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 91912892416
-    m_Localized: Use WASD to move
+    m_Localized: To move
     m_Metadata:
       m_Items: []
   - m_Id: 360432234496
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 11754355519488
-    m_Localized: Press E to Interact
+    m_Localized: to Interact
     m_Metadata:
       m_Items: []
   - m_Id: 12313783398400

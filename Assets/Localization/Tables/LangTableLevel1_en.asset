@@ -27,11 +27,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8919760990208
-    m_Localized: Press Tab to Open Color Inventory
+    m_Localized: to Open Color Inventory
     m_Metadata:
       m_Items: []
   - m_Id: 9970702577664
-    m_Localized: Photo Collection
+    m_Localized: Photo Album
     m_Metadata:
       m_Items: []
   - m_Id: 10214630715392
