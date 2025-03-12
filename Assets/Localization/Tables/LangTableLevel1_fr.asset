@@ -99,7 +99,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1082531867729920
-    m_Localized: open french
+    m_Localized: ouvrir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1087269304737792
+    m_Localized: fermer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088591076728832
+    m_Localized: "m\xE9langer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088600803319808
+    m_Localized: diviser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088625017036800
+    m_Localized: interagir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088650686177280
+    m_Localized: ramasser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092376356397056
+    m_Localized: left click french shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092452852113408
+    m_Localized: right click french absorb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092567809597440
+    m_Localized: "faites d\xE9filer pour changer de couleur"
     m_Metadata:
       m_Items: []
   references:
