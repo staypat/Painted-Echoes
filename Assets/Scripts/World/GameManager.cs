@@ -17,6 +17,12 @@ public class GameState
     public string playerBodyName;
     public float xRotation;
     public bool canLook;
+    public bool hasPressedRightClickFirstTime;
+    public bool hasPressedLeftClickFirstTime;
+    public bool hasPressedTabFirstTime;
+    public bool hasScrolledFirstTime;
+    // public bool tutorialComplete;
+    public bool hasPressedPhotoFirstTime;
     public Vector3 cameraPosition; // Store camera position
     public Quaternion cameraRotation; // Store camera rotation
 
@@ -38,6 +44,9 @@ public class GameState
 
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
+
+    public List<bool> rendererActiveStates = new List<bool>(); // Tracks MeshRenderer enabled states
+    public List<bool> colliderActiveStates = new List<bool>(); // Tracks Collider enabled states
 
     // AmmoManager-related variables
     public int currentAmmo;
@@ -167,8 +176,15 @@ public class GameManager : MonoBehaviour
             gameState.gunRendererName = clickScript.gunRenderer != null ? clickScript.gunRenderer.gameObject.name : "";
             gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
             gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
-
+            
+            gameState.hasPressedRightClickFirstTime = hasPressedRightClickFirstTime;
+            gameState.hasPressedLeftClickFirstTime = hasPressedLeftClickFirstTime;
+            gameState.hasPressedTabFirstTime = hasPressedTabFirstTime;
+            gameState.hasScrolledFirstTime = hasScrolledFirstTime;
+            // gameState.tutorialComplete = tutorialComplete;
+            gameState.hasPressedPhotoFirstTime = hasPressedPhotoFirstTime;
             // Save absorbed colors
+
             gameState.absorbedColorTags = new List<string>(clickScript.absorbedColorTags);
             gameState.absorbedColors.Clear();
             foreach (Material mat in clickScript.absorbedColors)
@@ -220,7 +236,6 @@ public class GameManager : MonoBehaviour
             // }
         }
 
-
         GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
 
         if (mismatchedHouse != null)
@@ -228,17 +243,42 @@ public class GameManager : MonoBehaviour
             // Clear previous data
             gameState.rendererNames.Clear();
             gameState.rendererColors.Clear();
+            gameState.rendererActiveStates.Clear(); // Tracks MeshRenderer
+            gameState.colliderActiveStates.Clear(); // Tracks Collider
 
-            // Get all Renderer components within MismatchedHouse
-            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
+            // Get all MeshRenderer components within MismatchedHouse (including inactive ones)
+            MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
 
-            foreach (Renderer rend in renderers)
+            foreach (MeshRenderer meshRenderer in meshRenderers)
             {
-                gameState.rendererNames.Add(rend.gameObject.name);
+                string objectName = meshRenderer.gameObject.name;
+                gameState.rendererNames.Add(objectName);
 
-                if (rend.material.HasProperty("_Color"))
+                // Only store states if the object name starts with "Barrier"
+                if (objectName.StartsWith("Barrier"))
                 {
-                    gameState.rendererColors.Add(rend.material.color);
+                    gameState.rendererActiveStates.Add(meshRenderer.enabled);
+
+                    // Check if the object has a Collider and store its state
+                    Collider collider = meshRenderer.GetComponent<Collider>();
+                    if (collider != null)
+                    {
+                        gameState.colliderActiveStates.Add(collider.enabled);
+                    }
+                    else
+                    {
+                        gameState.colliderActiveStates.Add(true); // Default to true if no collider is found
+                    }
+                }
+                else
+                {
+                    gameState.rendererActiveStates.Add(true);
+                    gameState.colliderActiveStates.Add(true);
+                }
+
+                if (meshRenderer.material.HasProperty("_Color"))
+                {
+                    gameState.rendererColors.Add(meshRenderer.material.color);
                 }
                 else
                 {
@@ -250,6 +290,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("MismatchedHouse not found in the scene.");
         }
+
+
+
+
 
         // Save ammo data
         AmmoManager ammoManager = AmmoManager.Instance;
@@ -294,27 +338,30 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.LoadScene(gameState.sceneName);
         }
     }
 
-    public void LoadGameListeners()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (File.Exists(filePath))
-        {
-            Debug.Log("Loading Game Listeners");
-            OnGameStateLoaded?.Invoke();
-            OnGameStateLoaded2?.Invoke();
-        }
-        
-    }    
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe to avoid multiple calls
+        StartCoroutine(DelayedLoadGameState());
+    }
 
+    private IEnumerator DelayedLoadGameState()
+    {
+        yield return new WaitForSeconds(0.5f); // Give time for objects to initialize
+        LoadGameState();
+    }
+   
     public void LoadGameState()
     {
         if (File.Exists(filePath))
         {
             OnGameStateLoaded?.Invoke();
             OnGameStateLoaded2?.Invoke();
+        
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
@@ -329,20 +376,37 @@ public class GameManager : MonoBehaviour
             // Load Click_2 data
             PhotoController photocontroller = FindObjectOfType<PhotoController>();
             photocontroller.EquipPaintbrush();
+
+            hasPressedRightClickFirstTime = gameState.hasPressedRightClickFirstTime;
+            hasPressedLeftClickFirstTime = gameState.hasPressedLeftClickFirstTime;
+            hasPressedTabFirstTime = gameState.hasPressedTabFirstTime;
+            hasScrolledFirstTime = gameState.hasScrolledFirstTime;
             
             clickScript = FindObjectOfType<Click_2>();
             Debug.Log("CS2 is null: " + (clickScript == null));
             if (clickScript != null)
             {
+                clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
+
                 clickScript.maxDistance = gameState.maxDistance;
                 clickScript.currentGunColor = gameState.currentGunColor;
                 clickScript.currentTag = gameState.currentTag;
                 clickScript.currentIndex = gameState.currentIndex;
                 clickScript.currentIndex2 = gameState.currentIndex2;
-                clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
+                string savedColorTag = gameState.currentGunColor;
+                string savedTag = gameState.currentTag;
+                
+                // Get the material based on the saved color tag (assuming you have a method like GetMaterialByTag)
+                Material savedMaterial = GetMaterialByName(savedColorTag);
+                if (savedMaterial != null)
+                {
+                    clickScript.ApplyColor(savedMaterial, savedMaterial.name);
+                }
+
                 clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
                 clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
+                
                 clickScript.absorbedColors.Clear();
                 // Load absorbed colors
                 clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
@@ -364,6 +428,7 @@ public class GameManager : MonoBehaviour
                     clickScript.absorbedColors.Add(loadedMaterial);
                     //Debug.Log("Loaded Absorbed Color: " + loadedMaterial.name);
                 }
+                
 
 
                 // Load CorrectHouseColors dictionary
@@ -380,6 +445,41 @@ public class GameManager : MonoBehaviour
                     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
                 }
 
+                if (gameState.hasPressedRightClickFirstTime)
+                {
+                    if (clickScript.AbsorbText != null)
+                    {
+                        clickScript.AbsorbText.SetActive(false);
+                    }
+                }
+
+                if (gameState.hasPressedTabFirstTime)
+                {
+                    Debug.Log("Tab Loaded Successfully");
+                    if (clickScript.tabTutorialDisable != null)
+                    {
+                        clickScript.tabTutorialDisable.SetActive(false);
+                    }
+                }
+
+                if (gameState.hasScrolledFirstTime)
+                {
+                    Debug.Log("Scroll Loaded Successfully");
+                    if (clickScript.ScrollText != null)
+                    {
+                        clickScript.ScrollText.SetActive(false);
+                    }
+                }
+
+                if (gameState.hasPressedLeftClickFirstTime)
+                {
+                    if (clickScript.ShootText != null)
+                    {
+                        clickScript.ShootText.SetActive(false);
+                    }
+
+   
+                }
                 //Debug.Log("Click 2 Loaded Successfully");
             }
 
@@ -416,22 +516,38 @@ public class GameManager : MonoBehaviour
             GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
             if (mismatchedHouse == null)
             {
-                //Debug.LogWarning("MismatchedHouse not found in the scene.");
                 return;
             }
 
-            Renderer[] renderers = mismatchedHouse.GetComponentsInChildren<Renderer>();
+            MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
 
-            for (int i = 0; i < renderers.Length && i < gameState.rendererNames.Count; i++)
+            for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
             {
-                if (renderers[i].gameObject.name == gameState.rendererNames[i])
+                if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
                 {
-                    if (renderers[i].material.HasProperty("_Color"))
+                    // Restore MeshRenderer's enabled state only for "Barrier" objects
+                    if (meshRenderers[i].gameObject.name.StartsWith("Barrier") && i < gameState.rendererActiveStates.Count)
                     {
-                        renderers[i].material.color = gameState.rendererColors[i];
+                        meshRenderers[i].enabled = gameState.rendererActiveStates[i];
+                    }
+
+                    // Restore Collider's enabled state
+                    Collider collider = meshRenderers[i].GetComponent<Collider>();
+                    if (collider != null && i < gameState.colliderActiveStates.Count)
+                    {
+                        collider.enabled = gameState.colliderActiveStates[i];
+                    }
+
+                    // Restore color
+                    if (meshRenderers[i].material.HasProperty("_Color"))
+                    {
+                        meshRenderers[i].material.color = gameState.rendererColors[i];
                     }
                 }
             }
+
+
+
 
             // Load ammo datav
             AmmoManager ammoManager = AmmoManager.Instance;
@@ -454,6 +570,25 @@ public class GameManager : MonoBehaviour
                 ammoUI.DiscoverColor(color);
             }
 
+            if (gameState.hasPressedTabFirstTime)
+            {
+                Debug.Log("Tab Loaded Successfully");
+                if (ammoUI.tabTutorialDisable != null)
+                {
+                    ammoUI.tabTutorialDisable.SetActive(false);
+                }
+
+            }
+
+            if (gameState.hasScrolledFirstTime)
+            {
+                Debug.Log("Scroll Loaded Successfully");
+                if (ammoUI.ScrollText != null)
+                {
+                    ammoUI.ScrollText.SetActive(false);
+                }
+
+            }
             // Load PaletteManager data
             PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
             paletteManager.updatePaletteUI();
@@ -523,15 +658,19 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Test Save and Load with key presses
-        // if (Input.GetKeyDown(KeyCode.C)) // Save game state
-        // {
-        //     SaveGameState();
-        //     Debug.Log("Game state saved.");
-        // }
+        if (Input.GetKeyDown(KeyCode.C)) // Save game state
+        {
+            clickScript = FindObjectOfType<Click_2>();
+            if (clickScript != null)
+            {
+                clickScript.GiveColor();
+            }
+        }
         if (Input.GetKeyDown(KeyCode.V)) // Load game state
         {
             Debug.Log("Game state loaded.");
             LoadGameState();
+
         }
     }
 
