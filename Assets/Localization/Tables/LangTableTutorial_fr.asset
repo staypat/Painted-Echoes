@@ -17,7 +17,43 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 6f6f411917770b0439a2e18b323a60f1, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 91912892416
+    m_Localized: "Pour vous d\xE9placer\r\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360432234496
+    m_Localized: Bien!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6304893464576
+    m_Localized: Ouvre la porte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6722574839808
+    m_Localized: Uh oh, looks like the door is locked...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8331463716864
+    m_Localized: "Trouver la cl\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11331259297792
+    m_Localized: Ouvrez la porte pour entrer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11754355519488
+    m_Localized: pour interagir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12313783398400
+    m_Localized: "\rSauver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13223376941056
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

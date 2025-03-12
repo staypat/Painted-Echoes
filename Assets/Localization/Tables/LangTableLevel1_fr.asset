@@ -17,7 +17,87 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: baaca0144f6f7d54eaa6814cc7efff18, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 8283346661376
+    m_Localized: Prenez le pinceau !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8482492215296
+    m_Localized: Trouvez la photo !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8919760990208
+    m_Localized: pour ouvrir l'inventaire des couleurs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9970702577664
+    m_Localized: Photo Album
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10214630715392
+    m_Localized: "S\xE9lectionnez une photo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10590960447488
+    m_Localized: "S\xE9lectionner"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10782807912448
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11304466083840
+    m_Localized: Inventaire des couleurs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11619873550336
+    m_Localized: "S\xE9lectionnez la couleur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13705780621312
+    m_Localized: 'Objective: fix a miscolored object by matching the base color similar
+      to the original object.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13974744559616
+    m_Localized: 'Left Click: Use selected color
+
+      Right Click: Absorb color
+
+      Scroll:
+      Alternate colors
+
+      Tab: Open Inventory'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208673476608
+    m_Localized: Mixer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14410461442048
+    m_Localized: "Choisissez les couleurs \xE0 m\xE9langer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14878176669696
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15977193369600
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16697959346176
+    m_Localized: Diviseur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17046082383872
+    m_Localized: "Choisissez la couleur \xE0 diviser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18135125028864
+    m_Localized: "Salle termin\xE9e\_!\r\nSalle suivante d\xE9verrouill\xE9e\_!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

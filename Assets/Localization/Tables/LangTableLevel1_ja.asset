@@ -17,7 +17,23 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: baaca0144f6f7d54eaa6814cc7efff18, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 13705780621312
+    m_Localized: 'Objective: fix a miscolored object by matching the base color similar
+      to the original object.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13974744559616
+    m_Localized: 'Left Click: Use selected color
+
+      Right Click: Absorb color
+
+      Scroll:
+      Alternate colors
+
+      Tab: Open Inventory'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
