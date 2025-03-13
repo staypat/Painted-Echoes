@@ -28,7 +28,7 @@ public class PhotoInteract : ObjectInteract
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnGameStateLoaded += Interact;
+            GameManager.Instance.OnGameStateLoaded2 += Interact;
         }
     }
 
@@ -36,7 +36,7 @@ public class PhotoInteract : ObjectInteract
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnGameStateLoaded -= Interact;
+            GameManager.Instance.OnGameStateLoaded2 -= Interact;
         }
     }
 

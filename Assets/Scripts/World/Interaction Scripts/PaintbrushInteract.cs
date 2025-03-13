@@ -78,7 +78,7 @@ public class PaintbrushInteract : ObjectInteract
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnGameStateLoaded2 += Interact;
+            GameManager.Instance.OnGameStateLoaded += Interact;
         }
     }
 
@@ -86,7 +86,7 @@ public class PaintbrushInteract : ObjectInteract
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.OnGameStateLoaded2 -= Interact;
+            GameManager.Instance.OnGameStateLoaded -= Interact;
         }
     }
 

@@ -360,7 +360,6 @@ public class GameManager : MonoBehaviour
         if (File.Exists(filePath))
         {
             OnGameStateLoaded?.Invoke();
-            OnGameStateLoaded2?.Invoke();
         
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
@@ -593,18 +592,21 @@ public class GameManager : MonoBehaviour
             PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
             paletteManager.updatePaletteUI();
         
-
+            OnGameStateLoaded2?.Invoke();
             if (photocontroller != null)
             {
                 photocontroller.collectedPhotos.Clear();
                 foreach (string photoID in gameState.collectedPhotos)
                 {
                     //Debug.Log("Loading Photo Mode 2");
-                    //Debug.Log("Loaded Photo: " + photoID);
+                
+        
+                    Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
                     photocontroller.EquipPhoto(photoID);
+                    photocontroller.UpdatePhotoInventoryUI();
                 }
-                photocontroller.UpdatePhotoInventoryUI();
+                //photocontroller.UpdatePhotoInventoryUI();
                 //Debug.Log("Loaded Photo Inventory UI");
             }
 
@@ -658,14 +660,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Test Save and Load with key presses
-        if (Input.GetKeyDown(KeyCode.C)) // Save game state
-        {
-            clickScript = FindObjectOfType<Click_2>();
-            if (clickScript != null)
-            {
-                clickScript.GiveColor();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.C)) // Save game state
+        // {
+        //     clickScript = FindObjectOfType<Click_2>();
+        //     if (clickScript != null)
+        //     {
+        //         SaveGameState();
+        //         Debug.Log("Game state saved.");
+        //     }
+        // }
         if (Input.GetKeyDown(KeyCode.V)) // Load game state
         {
             Debug.Log("Game state loaded.");

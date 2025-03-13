@@ -19,6 +19,36 @@ public class PaletteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // materialsDict.Add("Red", materialsList[0]);
+        // materialsDict.Add("Orange", materialsList[1]);
+        // materialsDict.Add("Yellow", materialsList[2]);
+        // materialsDict.Add("Green", materialsList[3]);
+        // materialsDict.Add("Blue", materialsList[4]);
+        // materialsDict.Add("Purple", materialsList[5]);
+        // materialsDict.Add("Brown", materialsList[6]);
+        // materialsDict.Add("White", materialsList[7]);
+        // materialsDict.Add("Gray", materialsList[8]);
+        // materialsDict.Add("Black", materialsList[9]);
+        // materialsDict.Add("RedOrange", materialsList[10]);
+        // materialsDict.Add("BlueGreen", materialsList[11]);
+        // materialsDict.Add("YellowGreen", materialsList[12]);
+        // materialsDict.Add("YellowOrange", materialsList[13]);
+        // materialsDict.Add("BluePurple", materialsList[14]);
+
+        // foreach (var targetObject in targetObjects)
+        // {
+        //     targetObject.SetActive(false);
+        // }
+        // for (int i = 0; i < targetObjects.Count; i++)
+        // {
+        //     originalScales[i] = targetObjects[i].transform.localScale;
+        // }
+
+        // Debug.Log("PaletteManager is called");
+    }
+
+    void Awake()
+    {
         materialsDict.Add("Red", materialsList[0]);
         materialsDict.Add("Orange", materialsList[1]);
         materialsDict.Add("Yellow", materialsList[2]);
@@ -39,11 +69,15 @@ public class PaletteManager : MonoBehaviour
         {
             targetObject.SetActive(false);
         }
+        
         for (int i = 0; i < targetObjects.Count; i++)
         {
             originalScales[i] = targetObjects[i].transform.localScale;
         }
+
+        Debug.Log("PaletteManager initialized in Awake");
     }
+
 
     // Update is called once per frame
     void Update()
