@@ -592,7 +592,6 @@ public class GameManager : MonoBehaviour
             PaletteManager paletteManager = FindObjectOfType<PaletteManager>();
             paletteManager.updatePaletteUI();
         
-            OnGameStateLoaded2?.Invoke();
             if (photocontroller != null)
             {
                 photocontroller.collectedPhotos.Clear();
@@ -603,8 +602,10 @@ public class GameManager : MonoBehaviour
         
                     Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
+                    OnGameStateLoaded2?.Invoke();
+                    photocontroller.CollectPhoto(photoID);
                     photocontroller.EquipPhoto(photoID);
-                    photocontroller.UpdatePhotoInventoryUI();
+                    //photocontroller.UpdatePhotoInventoryUI();
                 }
                 //photocontroller.UpdatePhotoInventoryUI();
                 //Debug.Log("Loaded Photo Inventory UI");
