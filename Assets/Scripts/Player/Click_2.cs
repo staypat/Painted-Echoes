@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
+
 // portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
@@ -93,18 +95,21 @@ public class Click_2 : MonoBehaviour
     {
         var shootBindingIndex = fireAction.action.GetBindingIndex();
         string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
+
+        string localizedShootText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "ShootTextTutorial");
         if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
         {
             currentShootKeybind = newShootKeybind;
-            shootTextComponent.text = $"Press {newShootKeybind} to shoot out a color";
+            shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
         }
 
         var absorbBindingIndex = absorbAction.action.GetBindingIndex();
         string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
+        string localizedAbsorbText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "AbsorbTextTutorial");
         if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
         {
             currentShootKeybind = newAbsorbKeybind;
-            absorbTextComponent.text = $"Press {newAbsorbKeybind} to absorb a color";
+            absorbTextComponent.text = $"{newAbsorbKeybind} {localizedAbsorbText}";
         }
     }
 

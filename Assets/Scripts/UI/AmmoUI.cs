@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -120,10 +121,11 @@ public class AmmoUI : MonoBehaviour
 
         var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
         string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
+        string localizedTabTutorialText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "TabTutorialText");
         if (currentInventoryKeybind != newInventoryKeybind)
         {
             currentInventoryKeybind = newInventoryKeybind;
-            tabTutorialText.text = $"Press {newInventoryKeybind} to open Color Inventory";
+            tabTutorialText.text = $"{newInventoryKeybind} {localizedTabTutorialText}";
         }
     }
 
