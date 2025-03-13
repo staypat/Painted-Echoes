@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8919760990208
-    m_Localized: to Open Color Inventory
+    m_Localized: to open color inventory
     m_Metadata:
       m_Items: []
   - m_Id: 9970702577664
@@ -125,11 +125,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1092376356397056
-    m_Localized: Left click to shoot out a color
+    m_Localized: to shoot out a color
     m_Metadata:
       m_Items: []
   - m_Id: 1092452852113408
-    m_Localized: Right click to absorb a color
+    m_Localized: to absorb a color
     m_Metadata:
       m_Items: []
   - m_Id: 1092567809597440

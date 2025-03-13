@@ -87,8 +87,19 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
-        InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
+        // InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
 
+    }
+
+    void Update()
+    {
+        HandleScrollInput();
+
+        if(ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
+        {
+            UpdateKeybinds();
+        }
+        
     }
 
     void UpdateKeybinds()
@@ -97,20 +108,18 @@ public class Click_2 : MonoBehaviour
         string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
 
         string localizedShootText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "ShootTextTutorial");
-        if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
-        {
-            currentShootKeybind = newShootKeybind;
-            shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
-        }
+
+        currentShootKeybind = newShootKeybind;
+        shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
+  
 
         var absorbBindingIndex = absorbAction.action.GetBindingIndex();
         string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
         string localizedAbsorbText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "AbsorbTextTutorial");
-        if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
-        {
-            currentShootKeybind = newAbsorbKeybind;
-            absorbTextComponent.text = $"{newAbsorbKeybind} {localizedAbsorbText}";
-        }
+
+        currentShootKeybind = newAbsorbKeybind;
+        absorbTextComponent.text = $"{newAbsorbKeybind} {localizedAbsorbText}";
+
     }
 
     private void OnEnable()
@@ -316,46 +325,6 @@ public class Click_2 : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        HandleScrollInput();
-        // HandleScrollInput();
-        // // UpdateBrushTip();
-
-        // if (Input.GetMouseButtonDown(0)){
-        //     if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
-                
-        //         ColorOnClick();
-
-        //         roomCheck(currentRoom);
-        //         if (CompareColorValues()== true)
-        //         {
-        //             victoryUI.ShowVictoryMessage();
-        //             AudioManager.instance.Play("LevelComplete");
-        //         }
-
-        //         // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-        //         // {
-        //         //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-        //         // }
-
-        //     }
-        //     else{
-        //         //Debug.Log("Not enough ammo to paint with " + currentGunColor);
-        //     }
-        // }
-
-        // if (Input.GetMouseButtonDown(1)) 
-        // {
-        //     roomCheck(currentRoom);
-        //     if (CompareColorValues()== false)
-        //     {
-        //         AbsorbColor();
-        //     }
-
-        // }
-
-    }
 
     void HandleScrollInput()
     {

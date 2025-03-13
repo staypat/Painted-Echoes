@@ -98,7 +98,10 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(tabTutorialText.gameObject.activeSelf)
+        {
+            TabKeybind();
+        }
     }
 
     void UpdateKeybinds()
@@ -118,15 +121,17 @@ public class AmmoUI : MonoBehaviour
             currentPhotoKeybind = newPhotoKeybind;
             photoInventoryText.text = newPhotoKeybind;
         }
+    }
 
+    void TabKeybind()
+    {
         var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
         string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
         string localizedTabTutorialText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "TabTutorialText");
-        if (currentInventoryKeybind != newInventoryKeybind)
-        {
-            currentInventoryKeybind = newInventoryKeybind;
-            tabTutorialText.text = $"{newInventoryKeybind} {localizedTabTutorialText}";
-        }
+
+        currentInventoryKeybind = newInventoryKeybind;
+        tabTutorialText.text = $"{newInventoryKeybind} {localizedTabTutorialText}";
+
     }
 
     public void UpdateInventoryKeybinds()
