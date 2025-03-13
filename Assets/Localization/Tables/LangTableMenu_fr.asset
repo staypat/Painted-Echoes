@@ -98,6 +98,38 @@ MonoBehaviour:
     m_Localized: Modifier
     m_Metadata:
       m_Items: []
+  - m_Id: 2420439962820608
+    m_Localized: "\rD\xE9placer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420476335824896
+    m_Localized: Saut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420503397474304
+    m_Localized: Pinceau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420522502529024
+    m_Localized: Photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420757433884672
+    m_Localized: Tirer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420772969586688
+    m_Localized: Absorber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420800316448768
+    m_Localized: Inventaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420829366198272
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

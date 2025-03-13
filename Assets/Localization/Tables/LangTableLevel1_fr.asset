@@ -55,19 +55,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13705780621312
-    m_Localized: 'Objective: fix a miscolored object by matching the base color similar
-      to the original object.'
+    m_Localized: "Objectif : r\xE9parer un objet mal color\xE9 en faisant correspondre
+      la couleur de base similaire \xE0 l'objet d'origine."
     m_Metadata:
       m_Items: []
   - m_Id: 13974744559616
-    m_Localized: 'Left Click: Use selected color
-
-      Right Click: Absorb color
-
-      Scroll:
-      Alternate colors
-
-      Tab: Open Inventory'
+    m_Localized: "Clic gauche : Utiliser la couleur s\xE9lectionn\xE9e\r\nClic droit
+      : Absorber la couleur\r\nD\xE9filer : Alterner les couleurs\nTab: Ouvrir l\u2019inventaire"
     m_Metadata:
       m_Items: []
   - m_Id: 14208673476608
@@ -99,19 +93,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1082531867729920
-    m_Localized: ouvrir
+    m_Localized: Ouvrir
     m_Metadata:
       m_Items: []
   - m_Id: 1087269304737792
-    m_Localized: fermer
+    m_Localized: Fermer
     m_Metadata:
       m_Items: []
   - m_Id: 1088591076728832
-    m_Localized: "m\xE9langer"
+    m_Localized: "M\xE9langer"
     m_Metadata:
       m_Items: []
   - m_Id: 1088600803319808
-    m_Localized: diviser
+    m_Localized: Diviser
     m_Metadata:
       m_Items: []
   - m_Id: 1088625017036800
@@ -119,19 +113,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1088650686177280
-    m_Localized: ramasser
+    m_Localized: Ramasser
     m_Metadata:
       m_Items: []
   - m_Id: 1092376356397056
-    m_Localized: left click french shoot
+    m_Localized: Cliquez avec le bouton gauche pour tirer une couleur
     m_Metadata:
       m_Items: []
   - m_Id: 1092452852113408
-    m_Localized: right click french absorb
+    m_Localized: Clic droit pour absorber une couleur
     m_Metadata:
       m_Items: []
   - m_Id: 1092567809597440
-    m_Localized: "faites d\xE9filer pour changer de couleur"
+    m_Localized: "Faites d\xE9filer pour changer de couleur"
     m_Metadata:
       m_Items: []
   references:
