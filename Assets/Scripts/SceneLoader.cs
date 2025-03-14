@@ -17,6 +17,11 @@ public class SceneLoader : MonoBehaviour
     {
         AudioManager.instance.Play("UIConfirm");
         SceneManager.LoadScene("MainMenu"); 
+        if (GameManager.Instance != null)
+        {
+            Destroy(GameManager.Instance.gameObject);
+        }
+        
     }
 
     // Start is called before the first frame update
