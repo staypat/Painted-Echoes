@@ -141,7 +141,6 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
-        CancelInvoke("UpdateKeybinds");
     }
 
     // Function to keep track what room the player is in
@@ -419,7 +418,7 @@ public class Click_2 : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        if (Physics.Raycast(ray, out hit, maxDistance) && AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0)
         {
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
@@ -501,7 +500,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
                             //GameManager.Instance.SaveGameState();
@@ -552,7 +551,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
 
@@ -738,7 +737,7 @@ public class Click_2 : MonoBehaviour
             case "BlueGreen":
                 return GameManager.Instance.blueGreenMaterial;
             default:
-                return GameManager.Instance.whiteMaterial;
+                return GameManager.Instance.defaultMaterial;
         }
     }
 }

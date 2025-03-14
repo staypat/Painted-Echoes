@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
     public Material bluePurpleMaterial;
     public Material blueGreenMaterial;
     public Material grayMaterial;
+    public Material defaultMaterial;
 
     private Dictionary<string, Material> materialDictionary;
 

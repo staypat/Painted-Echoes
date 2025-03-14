@@ -224,7 +224,7 @@ public class ColorButtonManager : MonoBehaviour
             }
             else if(colorTracker.absorbedColorTags.Count == 0)
             {
-                colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+                colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
             }else
             {
                 colorTracker.currentIndex = (colorTracker.currentIndex - 1 + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
@@ -243,7 +243,7 @@ public class ColorButtonManager : MonoBehaviour
             }
             else if(colorTracker.absorbedColorTags.Count == 0)
             {
-                colorTracker.ApplyColor(colorTracker.GetMaterialFromString("White"), "White");
+                colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
             }else
             {
                 colorTracker.currentIndex = (colorTracker.currentIndex - 1 + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
