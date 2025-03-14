@@ -127,6 +127,10 @@ MonoBehaviour:
     m_Key: return
     m_Metadata:
       m_Items: []
+  - m_Id: 2877336526069760
+    m_Key: CreditsButtonText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

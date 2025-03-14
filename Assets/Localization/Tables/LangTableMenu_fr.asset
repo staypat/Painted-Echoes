@@ -130,6 +130,10 @@ MonoBehaviour:
     m_Localized: Retour
     m_Metadata:
       m_Items: []
+  - m_Id: 2877336526069760
+    m_Localized: "Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
