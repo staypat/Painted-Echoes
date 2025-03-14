@@ -134,7 +134,6 @@ public class GameManager : MonoBehaviour
             { "Gray", grayMaterial }
         };
 
-
         //LoadGameState();
         if (Instance == null)
         {
@@ -150,7 +149,6 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        
         playerCamera = FindObjectOfType<FirstPerson>();
 
         //Screen.fullScreen = true;
@@ -164,8 +162,6 @@ public class GameManager : MonoBehaviour
     {
         GameState gameState = new GameState();
 
-        gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-
         Click_2 clickScript = FindObjectOfType<Click_2>();
         if (clickScript != null)
         {
@@ -178,12 +174,17 @@ public class GameManager : MonoBehaviour
             gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
             gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
             
-            gameState.hasPressedRightClickFirstTime = hasPressedRightClickFirstTime;
-            gameState.hasPressedLeftClickFirstTime = hasPressedLeftClickFirstTime;
-            gameState.hasPressedTabFirstTime = hasPressedTabFirstTime;
-            gameState.hasScrolledFirstTime = hasScrolledFirstTime;
+            gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            gameState.hasPressedRightClickFirstTime = Instance.hasPressedRightClickFirstTime;
+
+            gameState.hasPressedLeftClickFirstTime = Instance.hasPressedLeftClickFirstTime;
+
+            gameState.hasPressedTabFirstTime = Instance.hasPressedTabFirstTime;
+
+            gameState.hasScrolledFirstTime = Instance.hasScrolledFirstTime;
             // gameState.tutorialComplete = tutorialComplete;
-            gameState.hasPressedPhotoFirstTime = hasPressedPhotoFirstTime;
+            gameState.hasPressedPhotoFirstTime = Instance.hasPressedPhotoFirstTime;
             // Save absorbed colors
 
             gameState.absorbedColorTags = new List<string>(clickScript.absorbedColorTags);
@@ -421,7 +422,7 @@ public class GameManager : MonoBehaviour
                     // If the material wasn't found, default to whiteMaterial
                     if (loadedMaterial == null)
                     {
-                        loadedMaterial = GetMaterialByName("gray");
+                        loadedMaterial = GetMaterialByName("Default");
                         //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
                     }
 
