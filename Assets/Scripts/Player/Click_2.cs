@@ -74,7 +74,7 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "White"; // Default gun color
+        currentGunColor = "Gray"; // Default gun color
 
 
         // Store all objects and their original colors at the start
@@ -130,7 +130,6 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started += ColorOnClick;
         absorbAction.action.started += AbsorbColor;
-
     }
 
     private void OnDisable()
@@ -143,6 +142,15 @@ public class Click_2 : MonoBehaviour
         absorbAction.action.started -= AbsorbColor;
     }
 
+    public void GiveColor()
+    {
+        Debug.Log("GiveColor called");
+        currentGunColor = "Black";
+        absorbedColors.Add(GetMaterialFromString(currentGunColor));
+        absorbedColorTags.Add(currentGunColor);
+    
+
+    }
     // Function to keep track what room the player is in
     private void HandleRoomChanged(GameObject newRoom)
     {
@@ -183,7 +191,7 @@ public class Click_2 : MonoBehaviour
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")) 
                     {
-                        continue; // Skip the barrier object
+                        continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
                     //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
@@ -283,7 +291,7 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void turnOffBarrier()
+    public void turnOffBarrier()
     {
 
         // Get the parent of the current room
@@ -667,7 +675,6 @@ public class Click_2 : MonoBehaviour
             // Turn the object and its subparent group gray
             if (subparent != null)
             {
-
                 if (!GameManager.Instance.hasPressedRightClickFirstTime && AmmoManager.Instance.GetCurrentAmmo("Green") == 1 && AmmoManager.Instance.GetCurrentAmmo("Brown") == 1)
                 {
                     GameManager.Instance.hasPressedRightClickFirstTime = true;
@@ -677,6 +684,7 @@ public class Click_2 : MonoBehaviour
                         tabTutorialDisable.SetActive(true);
                     }
                 }
+
                 currentTag = subparent.tag; // Update target tag to match absorbed object
 
                 foreach (Transform child in subparent)

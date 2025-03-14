@@ -24183,7 +24183,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1507832931}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadGameState
+        m_MethodName: LoadSavedScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

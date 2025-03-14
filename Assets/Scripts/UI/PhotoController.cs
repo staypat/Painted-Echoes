@@ -200,6 +200,7 @@ public class PhotoController : MonoBehaviour
     {
         paintbrushAction.action.started += EquipPaintbrush;
         photoAction.action.started += EquipPhotoAction;
+
     }
 
     private void OnDisable()
