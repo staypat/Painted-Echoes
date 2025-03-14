@@ -90,11 +90,11 @@ public class PhotoInteract : ObjectInteract
             gameObject.SetActive(false); // Hide the object after pickup
             AudioManager.instance.Play("PhotoEquip");
 
-            Debug.Log("Photo picked up: " + photoID);
+            //Debug.Log("Photo picked up: " + photoID);
         }
         else
         {
-            Debug.Log("Photo ID not found in game state: " + photoID);
+            //Debug.Log("Photo ID not found in game state: " + photoID);
         }
     }
 
