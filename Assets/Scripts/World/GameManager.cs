@@ -134,7 +134,6 @@ public class GameManager : MonoBehaviour
             { "Gray", grayMaterial }
         };
 
-        //LoadGameState();
         if (Instance == null)
         {
             Instance = this;
