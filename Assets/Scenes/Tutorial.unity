@@ -6571,6 +6571,7 @@ MonoBehaviour:
   menuUI: {fileID: 683055606}
   optionsUI: {fileID: 1841475642}
   controlsUI: {fileID: 621715021}
+  creditsUI: {fileID: 0}
   MusicVolumeSlider: {fileID: 2040323045}
   SFXVolumeSlider: {fileID: 313429129}
   exitAction: {fileID: -9158828939078569517, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
@@ -7060,6 +7061,7 @@ MonoBehaviour:
   bluePurpleMaterial: {fileID: 2100000, guid: 8ba38d5b487c78b4ab2202eb5688493f, type: 2}
   blueGreenMaterial: {fileID: 2100000, guid: be0c5aa700973154b9cf7731ec55d553, type: 2}
   grayMaterial: {fileID: 2100000, guid: 58a24aa1b80f74b459751d11a33ad921, type: 2}
+  defaultMaterial: {fileID: 2100000, guid: 40a3d15511188ac4a9892a19619940e7, type: 2}
   playerCamera: {fileID: 0}
 --- !u!65 &982423427
 BoxCollider:
