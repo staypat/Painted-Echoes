@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -97,7 +98,10 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(tabTutorialText.gameObject.activeSelf)
+        {
+            TabKeybind();
+        }
     }
 
     void UpdateKeybinds()
@@ -117,14 +121,17 @@ public class AmmoUI : MonoBehaviour
             currentPhotoKeybind = newPhotoKeybind;
             photoInventoryText.text = newPhotoKeybind;
         }
+    }
 
+    void TabKeybind()
+    {
         var inventoryBindingIndex = inventoryAction.action.GetBindingIndex();
         string newInventoryKeybind = inventoryAction.action.GetBindingDisplayString(inventoryBindingIndex);
-        if (currentInventoryKeybind != newInventoryKeybind)
-        {
-            currentInventoryKeybind = newInventoryKeybind;
-            tabTutorialText.text = $"Press {newInventoryKeybind} to open Color Inventory";
-        }
+        string localizedTabTutorialText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "TabTutorialText");
+
+        currentInventoryKeybind = newInventoryKeybind;
+        tabTutorialText.text = $"{newInventoryKeybind} {localizedTabTutorialText}";
+
     }
 
     public void UpdateInventoryKeybinds()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 
 public class Tutorial_WASD : MonoBehaviour
 {
@@ -59,7 +60,10 @@ public class Tutorial_WASD : MonoBehaviour
         string downKey = moveAction.action.GetBindingDisplayString(3);
         string rightKey = moveAction.action.GetBindingDisplayString(4);
 
-        tutorialText.text = $"Use {upKey}, {leftKey}, {downKey}, {rightKey} to move.";
+        string localizedMoveText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableTutorial", "WASDTutorialText");
+
+
+        tutorialText.text = $"{upKey}, {leftKey}, {downKey}, {rightKey} {localizedMoveText}";
     }
     void Update()
     {

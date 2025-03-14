@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
+
 // portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
@@ -85,27 +87,39 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
-        InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
+        // InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
 
+    }
+
+    void Update()
+    {
+        HandleScrollInput();
+
+        if(ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
+        {
+            UpdateKeybinds();
+        }
+        
     }
 
     void UpdateKeybinds()
     {
         var shootBindingIndex = fireAction.action.GetBindingIndex();
         string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
-        if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
-        {
-            currentShootKeybind = newShootKeybind;
-            shootTextComponent.text = $"Press {newShootKeybind} to shoot out a color";
-        }
+
+        string localizedShootText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "ShootTextTutorial");
+
+        currentShootKeybind = newShootKeybind;
+        shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
+  
 
         var absorbBindingIndex = absorbAction.action.GetBindingIndex();
         string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
-        if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
-        {
-            currentShootKeybind = newAbsorbKeybind;
-            absorbTextComponent.text = $"Press {newAbsorbKeybind} to absorb a color";
-        }
+        string localizedAbsorbText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "AbsorbTextTutorial");
+
+        currentShootKeybind = newAbsorbKeybind;
+        absorbTextComponent.text = $"{newAbsorbKeybind} {localizedAbsorbText}";
+
     }
 
     private void OnEnable()
@@ -126,7 +140,6 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
-        CancelInvoke("UpdateKeybinds");
     }
 
     public void GiveColor()
@@ -319,46 +332,6 @@ public class Click_2 : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        HandleScrollInput();
-        // HandleScrollInput();
-        // // UpdateBrushTip();
-
-        // if (Input.GetMouseButtonDown(0)){
-        //     if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
-                
-        //         ColorOnClick();
-
-        //         roomCheck(currentRoom);
-        //         if (CompareColorValues()== true)
-        //         {
-        //             victoryUI.ShowVictoryMessage();
-        //             AudioManager.instance.Play("LevelComplete");
-        //         }
-
-        //         // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-        //         // {
-        //         //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-        //         // }
-
-        //     }
-        //     else{
-        //         //Debug.Log("Not enough ammo to paint with " + currentGunColor);
-        //     }
-        // }
-
-        // if (Input.GetMouseButtonDown(1)) 
-        // {
-        //     roomCheck(currentRoom);
-        //     if (CompareColorValues()== false)
-        //     {
-        //         AbsorbColor();
-        //     }
-
-        // }
-
-    }
 
     void HandleScrollInput()
     {
@@ -453,7 +426,7 @@ public class Click_2 : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        if (Physics.Raycast(ray, out hit, maxDistance) && AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0)
         {
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
@@ -535,7 +508,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("Gray"), "Gray");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
                             //GameManager.Instance.SaveGameState();
@@ -586,7 +559,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("Gray"), "Gray");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
 
@@ -772,7 +745,7 @@ public class Click_2 : MonoBehaviour
             case "BlueGreen":
                 return GameManager.Instance.blueGreenMaterial;
             default:
-                return GameManager.Instance.whiteMaterial;
+                return GameManager.Instance.defaultMaterial;
         }
     }
 }

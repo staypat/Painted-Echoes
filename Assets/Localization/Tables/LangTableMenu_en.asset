@@ -98,6 +98,42 @@ MonoBehaviour:
     m_Localized: Edit
     m_Metadata:
       m_Items: []
+  - m_Id: 2420439962820608
+    m_Localized: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420476335824896
+    m_Localized: Jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420522502529024
+    m_Localized: Photograph
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420503397474304
+    m_Localized: Paintbrush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420757433884672
+    m_Localized: Shoot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420772969586688
+    m_Localized: Absorb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420800316448768
+    m_Localized: Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420829366198272
+    m_Localized: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2877336526069760
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

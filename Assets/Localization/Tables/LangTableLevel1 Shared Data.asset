@@ -123,6 +123,10 @@ MonoBehaviour:
     m_Key: ScrollTextTutorial
     m_Metadata:
       m_Items: []
+  - m_Id: 1408648763875328
+    m_Key: TabTutorialActionText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

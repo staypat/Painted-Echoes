@@ -10,6 +10,7 @@ public class OpenMenu : MonoBehaviour
     public GameObject menuUI;
     public GameObject optionsUI;
     public GameObject controlsUI;
+    public GameObject creditsUI;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
@@ -132,6 +133,18 @@ public class OpenMenu : MonoBehaviour
     {
         AudioManager.sfxVolume = SFXVolumeSlider.value;
         AudioManager.instance.UpdateSFXVolume();
+    }
+
+    public void OpenCredits()
+    {
+        creditsUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
+    }
+
+    public void CloseCredits()
+    {
+        creditsUI.SetActive(false);
+        AudioManager.instance.Play("UIBack");
     }
 
     private void OnEnable()
