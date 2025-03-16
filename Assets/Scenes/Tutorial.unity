@@ -797,6 +797,7 @@ MonoBehaviour:
   ShootText: {fileID: 0}
   tabTutorialDisable: {fileID: 0}
   ScrollText: {fileID: 0}
+  enableSaveButton: {fileID: 0}
   shootTextComponent: {fileID: 0}
   absorbTextComponent: {fileID: 0}
   photographTextEnable: {fileID: 0}
@@ -17432,6 +17433,7 @@ GameObject:
   - component: {fileID: 3545954308276447396}
   - component: {fileID: 4267586672457346430}
   - component: {fileID: 8803962198569951827}
+  - component: {fileID: 8803962198569951828}
   m_Layer: 0
   m_Name: window_panes
   m_TagString: Untagged
@@ -31160,6 +31162,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8803962198569951828
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312016088551123811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -924907576738080851, guid: 43f4b20658c3e914180bd35ac07298fa, type: 3}
 --- !u!4 &8814777720220207942
 Transform:
   m_ObjectHideFlags: 0

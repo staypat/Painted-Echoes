@@ -104,8 +104,6 @@ public class Click_2 : MonoBehaviour
         if (GameManager.Instance.hasPressedLeftClickFirstTime && enableSaveButton != null)
         {
             enableSaveButton.SetActive(true);
-            // Optional: Disable this check after first activation
-            enabled = false; // Disables this Update() check
         }
         
     }
