@@ -49,6 +49,7 @@ public class Click_2 : MonoBehaviour
     public GameObject ShootText;
     public GameObject tabTutorialDisable;
     public GameObject ScrollText;
+    public GameObject enableSaveButton;
 
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
@@ -98,6 +99,13 @@ public class Click_2 : MonoBehaviour
         if(ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
         {
             UpdateKeybinds();
+        }
+        
+        if (GameManager.Instance.hasPressedLeftClickFirstTime && enableSaveButton != null)
+        {
+            enableSaveButton.SetActive(true);
+            // Optional: Disable this check after first activation
+            enabled = false; // Disables this Update() check
         }
         
     }
