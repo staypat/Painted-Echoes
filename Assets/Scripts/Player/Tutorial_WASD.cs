@@ -62,28 +62,28 @@ public class Tutorial_WASD : MonoBehaviour
     {
         if (tutorialText == null || playerInput == null) return;
 
-        string currentControlScheme = playerInput.currentControlScheme; // Get active control scheme
+        string currentControlScheme = playerInput.currentControlScheme;
         string upKey, leftKey, downKey, rightKey;
 
         if (currentControlScheme == "Keyboard")
         {
-            upKey = moveAction.action.GetBindingDisplayString(1);
-            leftKey = moveAction.action.GetBindingDisplayString(2);
-            downKey = moveAction.action.GetBindingDisplayString(3);
-            rightKey = moveAction.action.GetBindingDisplayString(4);
+            // Use 2D Vector (Keyboard) Bindings
+            upKey = moveAction.action.GetBindingDisplayString(1);  // W
+            leftKey = moveAction.action.GetBindingDisplayString(2); // A
+            downKey = moveAction.action.GetBindingDisplayString(3); // S
+            rightKey = moveAction.action.GetBindingDisplayString(4); // D
         }
-        else // Gamepad
+        else // "Gamepad" (Using 2D Vector Controller Bindings)
         {
-            upKey = moveAction.action.GetBindingDisplayString(0, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
-            leftKey = moveAction.action.GetBindingDisplayString(1, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
-            downKey = moveAction.action.GetBindingDisplayString(2, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
-            rightKey = moveAction.action.GetBindingDisplayString(3, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
+            upKey = moveAction.action.GetBindingDisplayString(5, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);  // Left Stick Up
+            leftKey = moveAction.action.GetBindingDisplayString(6, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Left
+            downKey = moveAction.action.GetBindingDisplayString(7, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Down
+            rightKey = moveAction.action.GetBindingDisplayString(8, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Right
         }
 
         string localizedMoveText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableTutorial", "WASDTutorialText");
         tutorialText.text = $"{upKey}, {leftKey}, {downKey}, {rightKey} {localizedMoveText}";
     }
-
     void Update()
     {
         if(tutorialText.gameObject.activeSelf)
