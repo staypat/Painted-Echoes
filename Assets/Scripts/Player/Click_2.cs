@@ -425,6 +425,7 @@ public class Click_2 : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
         bool ammoFlag = true;
         
         if(GameManager.inMenu)
@@ -597,6 +598,7 @@ public class Click_2 : MonoBehaviour
     {   
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
 
         roomCheck(currentRoom);
         if (CompareColorValues() == true)

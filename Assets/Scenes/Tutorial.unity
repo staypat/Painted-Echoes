@@ -2295,7 +2295,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Computer
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -15134,10 +15134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e21f6e51372ff4c9eb62710cf47086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 500
+  mouseSensitivity: 100
   playerBody: {fileID: 290796148}
   xRotation: 0
   canLook: 1
+  lookAction: {fileID: 9202703465329861326, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
 --- !u!81 &1856166694
 AudioListener:
   m_ObjectHideFlags: 0
