@@ -344,9 +344,12 @@ public class Click_2 : MonoBehaviour
         if (GameManager.inMenu) return;
 
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        // Read input values
+        float scroll = Mouse.current != null ? Mouse.current.scroll.ReadValue().y : 0f;
+        bool scrollLeft = Gamepad.current != null && Gamepad.current.leftShoulder.wasPressedThisFrame;
+        bool scrollRight = Gamepad.current != null && Gamepad.current.rightShoulder.wasPressedThisFrame;
 
-        if (scroll < 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
+        if ((scroll < 0f || scrollRight) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
         {
             AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
@@ -361,7 +364,7 @@ public class Click_2 : MonoBehaviour
                 ShootText.SetActive(true);
             }
         }
-        else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
+        else if ((scroll > 0f || scrollLeft) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
             AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
