@@ -34,7 +34,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        moveDirection = moveAction.action.ReadValue<Vector2>();
+        if (!GameManager.inMenu)
+        {
+            moveDirection = moveAction.action.ReadValue<Vector2>();
+        }
     }
 
     void FixedUpdate()
