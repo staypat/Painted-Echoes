@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class SplitterInteract : ObjectInteract
 {
@@ -34,6 +35,8 @@ public class SplitterInteract : ObjectInteract
     public InputActionReference interactAction;
     public TMP_Text exitKeybindText;
     public TMP_Text returnKeybindText;
+    public GameObject splitterButtonFirst;
+    private GameObject selectedColorButtonFirst;
 
     private void Start()
     {
@@ -84,6 +87,7 @@ public class SplitterInteract : ObjectInteract
         {
             SplitterUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
+            EventSystem.current.SetSelectedGameObject(null);
             AudioManager.instance.Play("UIBack");
         }
     }
@@ -102,6 +106,7 @@ public class SplitterInteract : ObjectInteract
             UpdateKeybindText();
             bool isActive = SplitterUIPanel.activeSelf;
             SplitterUIPanel.SetActive(!isActive); // Toggle UI visibility
+            EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
             AudioManager.instance.Play("UIOpen");
         }
     }
@@ -370,6 +375,8 @@ public class SplitterInteract : ObjectInteract
                 newButton.GetComponent<Button>().onClick.AddListener(() => SelectAmmo(ammoType));
             }
         }
+        selectedColorButtonFirst = buttonContainer.GetChild(0).gameObject;
+        EventSystem.current.SetSelectedGameObject(selectedColorButtonFirst);
     }
 
     private void SelectAmmo(string ammoType)

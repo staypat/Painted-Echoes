@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.EventSystems;
 
 
 public class MixerInteract : ObjectInteract
@@ -17,6 +18,7 @@ public class MixerInteract : ObjectInteract
     public InputActionReference exitAction;
     public InputActionReference interactAction;
     public TMP_Text exitKeybindText;
+    public GameObject mixerButtonFirst;
 
     private void Start()
     {
@@ -67,6 +69,7 @@ public class MixerInteract : ObjectInteract
         {
             mixerUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
+            EventSystem.current.SetSelectedGameObject(null);
             AudioManager.instance.Play("UIBack");
             if (playerCamera != null)
                 playerCamera.SetCameraActive(true);
@@ -79,7 +82,7 @@ public class MixerInteract : ObjectInteract
         ExitMixer(default); // Calls ExitSplitter with a default (empty) InputAction.CallbackContext
     }
 
-    private void MixColors()
+    public void MixColors()
     {
         if (mixerUIPanel != null)
         {
@@ -87,6 +90,7 @@ public class MixerInteract : ObjectInteract
             UpdateKeybindText();
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
+            EventSystem.current.SetSelectedGameObject(mixerButtonFirst);
             AudioManager.instance.Play("UIOpen");
             // disable the slotThreeButton
             //slotThreeButton.SetActive(false);

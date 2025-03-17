@@ -44,44 +44,51 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+    Ray ray;
+    
+    // Check if using mouse or controller
+    if (Mouse.current != null && Mouse.current.delta.ReadValue() != Vector2.zero)
+    {
+        // Mouse Input: Raycast from the mouse position
+        ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+    }
+    else
+    {
+        // Controller Input: Raycast from the center of the screen
+        ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
+    }
 
-        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
+    RaycastHit hit;
+    Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
 
-        if(Physics.Raycast(ray, out hit, interactRange))
+    if (Physics.Raycast(ray, out hit, interactRange))
+    {
+        ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
+
+        if (interactable != null)
         {
-            ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
-            
-            if (interactable != null)
+            string interactKey = interactAction.action.GetBindingDisplayString(0);
+            string newPromptText = $"[{interactKey}]";
+
+            // Always update the prompt text if it's different
+            if (interactKeybindPrompt.text != newPromptText)
             {
-                string interactKey = interactAction.action.GetBindingDisplayString(0);
-                string newPromptText = $"[{interactKey}]";
-
-                // Always update the prompt text if it's different
-                if (interactKeybindPrompt.text != newPromptText)
-                {
-                    interactKeybindPrompt.text = newPromptText;
-                }
-
-                // Update the new interaction text
-                interactActionPrompt.text = interactable.GetLocalizedActionText();
-                interactActionPrompt.gameObject.SetActive(true); // Ensure visibility
-
-                if (currentInteractable != interactable)
-                {
-                    currentInteractable = interactable;
-
-                    // Reset alpha and start fade-in
-                    SetTextAlpha(0f);
-                    if (currentFadeCoroutine != null)
-                        StopCoroutine(currentFadeCoroutine);
-                    currentFadeCoroutine = StartCoroutine(FadeIn());
-                }
+                interactKeybindPrompt.text = newPromptText;
             }
-            else
+
+            // Update the new interaction text
+            interactActionPrompt.text = interactable.GetLocalizedActionText();
+            interactActionPrompt.gameObject.SetActive(true); // Ensure visibility
+
+            if (currentInteractable != interactable)
             {
-                ClearInteractable();
+                currentInteractable = interactable;
+
+                // Reset alpha and start fade-in
+                SetTextAlpha(0f);
+                if (currentFadeCoroutine != null)
+                    StopCoroutine(currentFadeCoroutine);
+                currentFadeCoroutine = StartCoroutine(FadeIn());
             }
         }
         else
@@ -89,6 +96,11 @@ public class PlayerInteract : MonoBehaviour
             ClearInteractable();
         }
     }
+    else
+    {
+        ClearInteractable();
+    }
+}
 
     private void ClearInteractable()
     {

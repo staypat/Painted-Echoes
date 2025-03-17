@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class PhotoController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PhotoController : MonoBehaviour
     public InputActionReference photoAction;
     private string currentPaintbrushKeybind;
     private string currentPhotoKeybind;
+    public GameObject photoButtonFirst;
     // Start is called before the first frame update
     void Start()
     {
@@ -181,6 +183,12 @@ public class PhotoController : MonoBehaviour
                 photoPanel.SetActive(false);
                 ownedPhotos.SetActive(false);
                 GameManager.Instance.ExitMenu();
+                GameObject lastSelected = EventSystem.current.currentSelectedGameObject;
+                if (lastSelected != null)
+                {
+                    lastSelected.transform.localScale = Vector3.one;
+                }
+                EventSystem.current.SetSelectedGameObject(null);
             }
             else
             {
@@ -193,6 +201,7 @@ public class PhotoController : MonoBehaviour
             UpdatePhotoInventoryUI();
             photoPanel.SetActive(true);
             ownedPhotos.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(photoButtonFirst);
         }
     }
 

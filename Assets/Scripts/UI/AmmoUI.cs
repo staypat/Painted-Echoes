@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
+using UnityEngine.EventSystems;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class AmmoUI : MonoBehaviour
     public InputActionReference exitAction;
     public TMP_Text ammoExitKeybindText;
     public TMP_Text photoExitKeybindText;
+    public GameObject ammoButtonFirst;
 
     void Start()
     {
@@ -148,9 +150,15 @@ public class AmmoUI : MonoBehaviour
         {
             if(ammoBar.activeSelf)
             {
-                ammoBar.SetActive(false); // Hide the UI if in menu
+                ammoBar.SetActive(false);
                 ammoPanel.SetActive(false);
                 GameManager.Instance.ExitMenu();
+                GameObject lastSelected = EventSystem.current.currentSelectedGameObject;
+                if (lastSelected != null)
+                {
+                    lastSelected.transform.localScale = new Vector3(2.272727f, 1.785714f, 1f);
+                }
+                EventSystem.current.SetSelectedGameObject(null);
                 if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
                 {
                     GameManager.Instance.hasPressedTabFirstTime = true;
@@ -168,6 +176,7 @@ public class AmmoUI : MonoBehaviour
             UpdateAmmoUI();
             ammoBar.SetActive(true);
             ammoPanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(ammoButtonFirst);
         }
     }
 
