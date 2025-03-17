@@ -18,21 +18,14 @@ public class Tutorial_WASD : MonoBehaviour
     private bool movementTextShown = false; // Prevent enabling multiple times
     private bool walkToDoorTextShown = false; // Prevent enabling multiple times
     public InputActionReference moveAction;
-    public PlayerInput playerInput;
     private void OnEnable()
     {
-        InputSystem.onDeviceChange += OnDeviceChange;
-        UpdateTutorialText(); // Ensure correct text at startup
+        moveAction.action.performed += HandleMovementInput;
     }
 
     private void OnDisable()
     {
-        InputSystem.onDeviceChange -= OnDeviceChange;
-    }
-
-    private void OnDeviceChange(InputDevice device, InputDeviceChange change)
-    {
-        UpdateTutorialText(); // Update tutorial keys when device changes
+        moveAction.action.performed -= HandleMovementInput;
     }
 
     private void HandleMovementInput(InputAction.CallbackContext context)
@@ -60,28 +53,16 @@ public class Tutorial_WASD : MonoBehaviour
 
     private void UpdateTutorialText()
     {
-        if (tutorialText == null || playerInput == null) return;
+        if (tutorialText == null) return;
 
-        string currentControlScheme = playerInput.currentControlScheme;
-        string upKey, leftKey, downKey, rightKey;
-
-        if (currentControlScheme == "Keyboard")
-        {
-            // Use 2D Vector (Keyboard) Bindings
-            upKey = moveAction.action.GetBindingDisplayString(1);  // W
-            leftKey = moveAction.action.GetBindingDisplayString(2); // A
-            downKey = moveAction.action.GetBindingDisplayString(3); // S
-            rightKey = moveAction.action.GetBindingDisplayString(4); // D
-        }
-        else // "Gamepad" (Using 2D Vector Controller Bindings)
-        {
-            upKey = moveAction.action.GetBindingDisplayString(5, InputBinding.DisplayStringOptions.DontUseShortDisplayNames);  // Left Stick Up
-            leftKey = moveAction.action.GetBindingDisplayString(6, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Left
-            downKey = moveAction.action.GetBindingDisplayString(7, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Down
-            rightKey = moveAction.action.GetBindingDisplayString(8, InputBinding.DisplayStringOptions.DontUseShortDisplayNames); // Left Stick Right
-        }
+        string upKey = moveAction.action.GetBindingDisplayString(1);
+        string leftKey = moveAction.action.GetBindingDisplayString(2);
+        string downKey = moveAction.action.GetBindingDisplayString(3);
+        string rightKey = moveAction.action.GetBindingDisplayString(4);
 
         string localizedMoveText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableTutorial", "WASDTutorialText");
+
+
         tutorialText.text = $"{upKey}, {leftKey}, {downKey}, {rightKey} {localizedMoveText}";
     }
     void Update()
