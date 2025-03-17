@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class ColorButtonManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class ColorButtonManager : MonoBehaviour
     public PaletteManager paletteManager;
     public InputActionReference exitAction;
     public TMP_Text exitKeybindText;
+    private GameObject selectedColorButtonFirst;
 
     private void Start()
     {
@@ -291,6 +293,8 @@ public class ColorButtonManager : MonoBehaviour
                 newButton.GetComponent<Button>().onClick.AddListener(() => SelectAmmo(ammoType));
             }
         }
+        selectedColorButtonFirst = buttonContainer.GetChild(0).gameObject;
+        EventSystem.current.SetSelectedGameObject(selectedColorButtonFirst);
     }
 
     public void DestroyChildren()
@@ -299,6 +303,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 

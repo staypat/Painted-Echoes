@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseOverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     private Vector3 originalScale;
     public float scaleFactor = 1.2f;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         originalScale = transform.localScale;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        if (originalScale == Vector3.zero)
+        {
+            originalScale = new Vector3(1f, 1f, 1f); 
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -26,6 +26,18 @@ public class MouseOverButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.localScale = originalScale;
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (originalScale == Vector3.zero) return;
+        transform.localScale = originalScale * scaleFactor;
+        FindObjectOfType<AudioManager>().Play("UIMove");
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         transform.localScale = originalScale;
     }
