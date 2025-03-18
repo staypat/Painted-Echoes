@@ -26,6 +26,7 @@ public class PhotoController : MonoBehaviour
     private string currentPaintbrushKeybind;
     private string currentPhotoKeybind;
     public GameObject photoButtonFirst;
+    public GameObject exitButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -186,7 +187,14 @@ public class PhotoController : MonoBehaviour
                 GameObject lastSelected = EventSystem.current.currentSelectedGameObject;
                 if (lastSelected != null)
                 {
-                    lastSelected.transform.localScale = Vector3.one;
+                    if(lastSelected == exitButton)
+                    {
+                        lastSelected.transform.localScale = new Vector3(0.0476f, 0.0774f, 1f);
+                    }
+                    else
+                    {
+                        lastSelected.transform.localScale = Vector3.one;
+                    }
                 }
                 EventSystem.current.SetSelectedGameObject(null);
             }
