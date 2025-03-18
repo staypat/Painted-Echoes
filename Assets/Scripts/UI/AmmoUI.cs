@@ -57,6 +57,7 @@ public class AmmoUI : MonoBehaviour
     public TMP_Text ammoExitKeybindText;
     public TMP_Text photoExitKeybindText;
     public GameObject ammoButtonFirst;
+    public GameObject exitButton;
 
     void Start()
     {
@@ -156,7 +157,14 @@ public class AmmoUI : MonoBehaviour
                 GameObject lastSelected = EventSystem.current.currentSelectedGameObject;
                 if (lastSelected != null)
                 {
-                    lastSelected.transform.localScale = new Vector3(2.272727f, 1.785714f, 1f);
+                    if (lastSelected == exitButton)
+                    {
+                        lastSelected.transform.localScale = new Vector3(0.0476f, 0.0774f, 1f);
+                    }
+                    else
+                    {
+                        lastSelected.transform.localScale = new Vector3(2.272727f, 1.785714f, 1f);
+                    }
                 }
                 EventSystem.current.SetSelectedGameObject(null);
                 if (!GameManager.Instance.hasPressedTabFirstTime && GameManager.Instance.hasPressedRightClickFirstTime)
