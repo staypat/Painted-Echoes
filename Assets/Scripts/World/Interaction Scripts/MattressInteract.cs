@@ -21,6 +21,7 @@ public class MattressInteract : ObjectInteract
 
     public override void Interact()
     {
+        actionTextKey = "interact";
         if (isMoving) return; // Prevent multiple interactions at once
         AudioManager.instance.Play("MatMove"); // Play sound effect
         StartCoroutine(MoveMattress(isAtStart ? targetPosition : startPosition));

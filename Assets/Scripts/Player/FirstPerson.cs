@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FirstPerson : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class FirstPerson : MonoBehaviour
     public float xRotation = 0f;
 
     public bool canLook = true; // Flag to enable/disable camera movement
+    private Vector2 lookInput;
+    public InputActionReference lookAction;
 
 
     void Start()
@@ -21,17 +24,18 @@ public class FirstPerson : MonoBehaviour
     void Update()
     {
         if (!GameManager.inMenu){
-            // Get mouse input
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            lookInput = lookAction.action.ReadValue<Vector2>();
 
-            // Rotate the camera vertically
+            float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
+            float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
+
+            // Rotate camera vertically
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -60f, 60f); // Limit vertical rotation
+            xRotation = Mathf.Clamp(xRotation, -60f, 60f);
 
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             
-            // Rotate the player horizontally
+            // Rotate player horizontally
             playerBody.Rotate(Vector3.up * mouseX);
         }
 

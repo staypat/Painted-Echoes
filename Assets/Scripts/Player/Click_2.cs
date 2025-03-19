@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
+
 // portions of this file were generated using GitHub Copilot
 
 public class Click_2 : MonoBehaviour
@@ -47,6 +49,7 @@ public class Click_2 : MonoBehaviour
     public GameObject ShootText;
     public GameObject tabTutorialDisable;
     public GameObject ScrollText;
+    public GameObject enableSaveButton;
 
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
@@ -72,7 +75,7 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "White"; // Default gun color
+        currentGunColor = "Gray"; // Default gun color
 
 
         // Store all objects and their original colors at the start
@@ -85,27 +88,44 @@ public class Click_2 : MonoBehaviour
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
 
-        InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
+        // InvokeRepeating("UpdateKeybinds", 0.0f, 2f);
 
+    }
+
+    void Update()
+    {
+        HandleScrollInput();
+
+        if(ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
+        {
+            UpdateKeybinds();
+        }
+        
+        if (GameManager.Instance.hasPressedLeftClickFirstTime && enableSaveButton != null)
+        {
+            enableSaveButton.SetActive(true);
+        }
+        
     }
 
     void UpdateKeybinds()
     {
         var shootBindingIndex = fireAction.action.GetBindingIndex();
         string newShootKeybind = fireAction.action.GetBindingDisplayString(shootBindingIndex);
-        if (currentShootKeybind != newShootKeybind && shootTextComponent != null)
-        {
-            currentShootKeybind = newShootKeybind;
-            shootTextComponent.text = $"Press {newShootKeybind} to shoot out a color";
-        }
+
+        string localizedShootText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "ShootTextTutorial");
+
+        currentShootKeybind = newShootKeybind;
+        shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
+  
 
         var absorbBindingIndex = absorbAction.action.GetBindingIndex();
         string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
-        if (currentAbsorbKeybind != newAbsorbKeybind && absorbTextComponent != null)
-        {
-            currentShootKeybind = newAbsorbKeybind;
-            absorbTextComponent.text = $"Press {newAbsorbKeybind} to absorb a color";
-        }
+        string localizedAbsorbText = LocalizationSettings.StringDatabase.GetLocalizedString("LangTableLevel1", "AbsorbTextTutorial");
+
+        currentShootKeybind = newAbsorbKeybind;
+        absorbTextComponent.text = $"{newAbsorbKeybind} {localizedAbsorbText}";
+
     }
 
     private void OnEnable()
@@ -116,7 +136,6 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started += ColorOnClick;
         absorbAction.action.started += AbsorbColor;
-
     }
 
     private void OnDisable()
@@ -127,9 +146,17 @@ public class Click_2 : MonoBehaviour
         }
         fireAction.action.started -= ColorOnClick;
         absorbAction.action.started -= AbsorbColor;
-        CancelInvoke("UpdateKeybinds");
     }
 
+    public void GiveColor()
+    {
+        Debug.Log("GiveColor called");
+        currentGunColor = "Black";
+        absorbedColors.Add(GetMaterialFromString(currentGunColor));
+        absorbedColorTags.Add(currentGunColor);
+    
+
+    }
     // Function to keep track what room the player is in
     private void HandleRoomChanged(GameObject newRoom)
     {
@@ -170,7 +197,7 @@ public class Click_2 : MonoBehaviour
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")) 
                     {
-                        continue; // Skip the barrier object
+                        continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
                     //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
@@ -270,7 +297,7 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void turnOffBarrier()
+    public void turnOffBarrier()
     {
 
         // Get the parent of the current room
@@ -311,55 +338,18 @@ public class Click_2 : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        HandleScrollInput();
-        // HandleScrollInput();
-        // // UpdateBrushTip();
-
-        // if (Input.GetMouseButtonDown(0)){
-        //     if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0 && !GameManager.inMenu){ // Check if there's enough ammo and if the player is not in the menu
-                
-        //         ColorOnClick();
-
-        //         roomCheck(currentRoom);
-        //         if (CompareColorValues()== true)
-        //         {
-        //             victoryUI.ShowVictoryMessage();
-        //             AudioManager.instance.Play("LevelComplete");
-        //         }
-
-        //         // foreach (KeyValuePair<string, Color> entry in MismatchedColors)
-        //         // {
-        //         //     Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
-        //         // }
-
-        //     }
-        //     else{
-        //         //Debug.Log("Not enough ammo to paint with " + currentGunColor);
-        //     }
-        // }
-
-        // if (Input.GetMouseButtonDown(1)) 
-        // {
-        //     roomCheck(currentRoom);
-        //     if (CompareColorValues()== false)
-        //     {
-        //         AbsorbColor();
-        //     }
-
-        // }
-
-    }
 
     void HandleScrollInput()
     {
         if (GameManager.inMenu) return;
 
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        // Read input values
+        float scroll = Mouse.current != null ? Mouse.current.scroll.ReadValue().y : 0f;
+        bool scrollLeft = Gamepad.current != null && Gamepad.current.leftShoulder.wasPressedThisFrame;
+        bool scrollRight = Gamepad.current != null && Gamepad.current.rightShoulder.wasPressedThisFrame;
 
-        if (scroll < 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
+        if ((scroll < 0f || scrollRight) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
         {
             AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
@@ -374,7 +364,7 @@ public class Click_2 : MonoBehaviour
                 ShootText.SetActive(true);
             }
         }
-        else if (scroll > 0f && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
+        else if ((scroll > 0f || scrollLeft) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
             AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
@@ -438,6 +428,7 @@ public class Click_2 : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
         bool ammoFlag = true;
         
         if(GameManager.inMenu)
@@ -445,7 +436,7 @@ public class Click_2 : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(ray, out hit, maxDistance))
+        if (Physics.Raycast(ray, out hit, maxDistance) && AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0)
         {
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
@@ -527,7 +518,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
                             //GameManager.Instance.SaveGameState();
@@ -578,7 +569,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("White"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "White");
                         }else
                         {
 
@@ -610,6 +601,7 @@ public class Click_2 : MonoBehaviour
     {   
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
 
         roomCheck(currentRoom);
         if (CompareColorValues() == true)
@@ -694,7 +686,6 @@ public class Click_2 : MonoBehaviour
             // Turn the object and its subparent group gray
             if (subparent != null)
             {
-
                 if (!GameManager.Instance.hasPressedRightClickFirstTime && AmmoManager.Instance.GetCurrentAmmo("Green") == 1 && AmmoManager.Instance.GetCurrentAmmo("Brown") == 1)
                 {
                     GameManager.Instance.hasPressedRightClickFirstTime = true;
@@ -704,6 +695,7 @@ public class Click_2 : MonoBehaviour
                         tabTutorialDisable.SetActive(true);
                     }
                 }
+
                 currentTag = subparent.tag; // Update target tag to match absorbed object
 
                 foreach (Transform child in subparent)
@@ -764,7 +756,7 @@ public class Click_2 : MonoBehaviour
             case "BlueGreen":
                 return GameManager.Instance.blueGreenMaterial;
             default:
-                return GameManager.Instance.whiteMaterial;
+                return GameManager.Instance.defaultMaterial;
         }
     }
 }

@@ -24,6 +24,7 @@ public class PaintbrushInteract : ObjectInteract
 
     void Start()
     {
+        actionTextKey = "pick up";
         // If rotationTarget (empty parent) exists, use its position as the pivot point
         if (rotationTarget != null)
         {
@@ -70,6 +71,22 @@ public class PaintbrushInteract : ObjectInteract
         else
         {
             transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateLoaded += Interact;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateLoaded -= Interact;
         }
     }
 

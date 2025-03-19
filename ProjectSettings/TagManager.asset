@@ -23,6 +23,7 @@ TagManager:
   - LivingRoom
   - Kitchen
   - EntranceHallway
+  - Gray
   layers:
   - Default
   - TransparentFX

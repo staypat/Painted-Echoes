@@ -27,7 +27,111 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 374115062980608
-    m_Localized: Option
+    m_Localized: "Param\xE8tres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374134121897984
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 374149678571520
+    m_Localized: Charger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377229719576576
+    m_Localized: En Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 377257922076672
+    m_Localized: Reprendre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378024095588352
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380499720609792
+    m_Localized: "Vid\xE9o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 380818970058752
+    m_Localized: "R\xE9solution"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381352124817408
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381583742672896
+    m_Localized: Langues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382020583628800
+    m_Localized: Volume de la Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382240105111552
+    m_Localized: Volume des Effets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382453729402880
+    m_Localized: "Activer les Sous-titres\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382845225738240
+    m_Localized: "Modifier les Contr\xF4les"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383054781554688
+    m_Localized: "Les Contr\xF4les"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383212906815488
+    m_Localized: Disposition du Clavier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383715120193536
+    m_Localized: Appliquer et Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383995652022272
+    m_Localized: Modifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420439962820608
+    m_Localized: "\rD\xE9placer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420476335824896
+    m_Localized: Saut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420503397474304
+    m_Localized: Pinceau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420522502529024
+    m_Localized: Photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420757433884672
+    m_Localized: Tirer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420772969586688
+    m_Localized: Absorber
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420800316448768
+    m_Localized: Inventaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2420829366198272
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2877336526069760
+    m_Localized: "Cr\xE9dits"
     m_Metadata:
       m_Items: []
   references:

@@ -8,7 +8,9 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float interactRange = 4.5f;
-    [SerializeField] private TMP_Text interactPrompt; // Use TMP_Text instead of Text
+    [SerializeField] private TMP_Text interactKeybindPrompt;
+    [SerializeField] private TMP_Text interactActionPrompt; // Displays "Pick up" or "Interact"
+
     [SerializeField] private float fadeDuration = 0.3f;
 
     private ObjectInteract currentInteractable;
@@ -18,7 +20,7 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         // Initialize the prompt as hidden
-        interactPrompt.gameObject.SetActive(false);
+        interactKeybindPrompt.gameObject.SetActive(false);
     }
 
     void Update()
@@ -42,40 +44,51 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleInteractionCheck()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+    Ray ray;
+    
+    // Check if using mouse or controller
+    if (Mouse.current != null && Mouse.current.delta.ReadValue() != Vector2.zero)
+    {
+        // Mouse Input: Raycast from the mouse position
+        ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+    }
+    else
+    {
+        // Controller Input: Raycast from the center of the screen
+        ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
+    }
 
-        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
+    RaycastHit hit;
+    Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
 
-        if(Physics.Raycast(ray, out hit, interactRange))
+    if (Physics.Raycast(ray, out hit, interactRange))
+    {
+        ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
+
+        if (interactable != null)
         {
-            ObjectInteract interactable = hit.collider.GetComponent<ObjectInteract>();
-            
-            if (interactable != null)
+            string interactKey = interactAction.action.GetBindingDisplayString(0);
+            string newPromptText = $"[{interactKey}]";
+
+            // Always update the prompt text if it's different
+            if (interactKeybindPrompt.text != newPromptText)
             {
-                string interactKey = interactAction.action.GetBindingDisplayString(0);
-                string newPromptText = $"Press {interactKey} to {interactable.interactionPrompt}";
-
-                // Always update the prompt text if it's different
-                if (interactPrompt.text != newPromptText)
-                {
-                    interactPrompt.text = newPromptText;
-                }
-
-                if (currentInteractable != interactable)
-                {
-                    currentInteractable = interactable;
-
-                    // Reset alpha and start fade-in
-                    SetTextAlpha(0f);
-                    if (currentFadeCoroutine != null)
-                        StopCoroutine(currentFadeCoroutine);
-                    currentFadeCoroutine = StartCoroutine(FadeIn());
-                }
+                interactKeybindPrompt.text = newPromptText;
             }
-            else
+
+            // Update the new interaction text
+            interactActionPrompt.text = interactable.GetLocalizedActionText();
+            interactActionPrompt.gameObject.SetActive(true); // Ensure visibility
+
+            if (currentInteractable != interactable)
             {
-                ClearInteractable();
+                currentInteractable = interactable;
+
+                // Reset alpha and start fade-in
+                SetTextAlpha(0f);
+                if (currentFadeCoroutine != null)
+                    StopCoroutine(currentFadeCoroutine);
+                currentFadeCoroutine = StartCoroutine(FadeIn());
             }
         }
         else
@@ -83,12 +96,18 @@ public class PlayerInteract : MonoBehaviour
             ClearInteractable();
         }
     }
+    else
+    {
+        ClearInteractable();
+    }
+}
 
     private void ClearInteractable()
     {
         if (currentInteractable != null)
         {
             currentInteractable = null;
+            interactActionPrompt.gameObject.SetActive(false);
             if (currentFadeCoroutine != null)
                 StopCoroutine(currentFadeCoroutine);
             currentFadeCoroutine = StartCoroutine(FadeOut());
@@ -111,24 +130,28 @@ public class PlayerInteract : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
-        interactPrompt.gameObject.SetActive(true);
+        interactKeybindPrompt.gameObject.SetActive(true);
+        interactActionPrompt.gameObject.SetActive(true);
         SetTextAlpha(0f); // Ensure it starts from 0
-        float elapsedTime = 0f;
 
+        float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             SetTextAlpha(Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration));
             yield return null;
         }
+
         SetTextAlpha(1f);
         currentFadeCoroutine = null;
     }
 
+
     private IEnumerator FadeOut()
     {
         float elapsedTime = 0f;
-        float startAlpha = interactPrompt.color.a;
+        float startAlpha = Mathf.Max(interactKeybindPrompt.color.a, interactActionPrompt.color.a);
+
 
         while (elapsedTime < fadeDuration)
         {
@@ -137,15 +160,24 @@ public class PlayerInteract : MonoBehaviour
             SetTextAlpha(newAlpha);
             yield return null;
         }
+
         SetTextAlpha(0f);
-        interactPrompt.gameObject.SetActive(false);
+        interactKeybindPrompt.gameObject.SetActive(false);
+        interactActionPrompt.gameObject.SetActive(false);
         currentFadeCoroutine = null;
     }
 
+
+
     private void SetTextAlpha(float alpha)
     {
-        Color color = interactPrompt.color;
-        color.a = alpha;
-        interactPrompt.color = color;
+        Color keybindColor = interactKeybindPrompt.color;
+        keybindColor.a = alpha;
+        interactKeybindPrompt.color = keybindColor;
+
+        Color actionColor = interactActionPrompt.color;
+        actionColor.a = alpha;
+        interactActionPrompt.color = actionColor;
     }
+
 }

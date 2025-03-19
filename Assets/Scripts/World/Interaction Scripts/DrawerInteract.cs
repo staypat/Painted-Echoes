@@ -17,6 +17,7 @@ public class DrawerInteract : ObjectInteract
     void Start()
     {
         closedLocalPosition = transform.localPosition;
+        actionTextKey = "open"; // Default state is closed, so prompt shows "Open"
     }
 
     public override void Interact()
@@ -26,13 +27,15 @@ public class DrawerInteract : ObjectInteract
         if (isOpen)
         {
             AudioManager.instance.PlayOneShot("DrawerClose");
+            actionTextKey = "open"; // When closing, set next prompt to "Open"
         }
         else
         {
             AudioManager.instance.PlayOneShot("DrawerOpen");
+            actionTextKey = "close"; // When opening, set next prompt to "Close"
         }
 
-        Debug.Log(interactionPrompt); // Logs the current interaction prompt
+        Debug.Log(actionTextKey); // Logs the current interaction prompt
         StartCoroutine(MoveDrawer());
     }
 
@@ -54,6 +57,7 @@ public class DrawerInteract : ObjectInteract
         }
 
         isOpen = !isOpen;
+        actionTextKey = isOpen ? "close" : "open"; // Swap text based on state
         isMoving = false;
     }
 

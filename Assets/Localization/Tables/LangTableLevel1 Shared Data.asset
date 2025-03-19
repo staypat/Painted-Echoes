@@ -87,6 +87,46 @@ MonoBehaviour:
     m_Key: RoomClearedText
     m_Metadata:
       m_Items: []
+  - m_Id: 1082531867729920
+    m_Key: open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1087269304737792
+    m_Key: close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088591076728832
+    m_Key: mix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088600803319808
+    m_Key: split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088625017036800
+    m_Key: interact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1088650686177280
+    m_Key: pick up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092376356397056
+    m_Key: ShootTextTutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092452852113408
+    m_Key: AbsorbTextTutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092567809597440
+    m_Key: ScrollTextTutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1408648763875328
+    m_Key: TabTutorialActionText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
