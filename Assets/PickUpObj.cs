@@ -11,6 +11,7 @@ public class PickUpObj : ObjectInteract
     [SerializeField] private float distanceInFront = 60f;
     private bool objPickedUp = false;
     private bool canPlace = true;
+    private bool canDrop = false;
     private Rigidbody rb;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float rotateX = 0f;
@@ -18,7 +19,7 @@ public class PickUpObj : ObjectInteract
     [SerializeField] private float rotateZ = 0f;
     [SerializeField] private float moveY = 0f;
     [SerializeField] private Transform room;
-    
+
     void Start()
     {
         rb = objectToMove.GetComponent<Rigidbody>();
@@ -26,22 +27,8 @@ public class PickUpObj : ObjectInteract
 
     void Update()
     {
-        // If the object is picked up and "E" key is pressed, drop the object
-        if (objPickedUp && Input.GetKeyDown(KeyCode.F) && canPlace)
-        {
-            objPickedUp = false;
-            // rb.useGravity = true;
-            rb.isKinematic = false;
-            objectToMove.SetParent(room);
-        }
-        else if (Input.GetKeyDown(KeyCode.F) && !canPlace)
-        {
-            Debug.LogWarning("Can't place inside another object!");
-        }
-
-        if (objPickedUp) 
+        if (objPickedUp)
         {    
-
             // Set the local position relative to the camera
             Vector3 targetPosition = new Vector3(0f, moveY, distanceInFront);
             objectToMove.localPosition = targetPosition;
@@ -60,11 +47,40 @@ public class PickUpObj : ObjectInteract
     {
         if (!objPickedUp)
         {
-            objPickedUp = true;
-            // rb.useGravity = false;
-            rb.isKinematic = true;
-            objectToMove.SetParent(playerCam);
+            PickUpObject();
         }
+        else if (objPickedUp && canDrop && canPlace)
+        {
+            DropObject();
+        }
+        else if (!canPlace)
+        {
+            Debug.LogWarning("Can't place inside another object!");
+        }
+    }
+
+    private void PickUpObject()
+    {
+        objPickedUp = true;
+        canDrop = false;  // Prevent immediate dropping
+        StartCoroutine(EnableDropDelay());
+
+        rb.isKinematic = true;
+        objectToMove.SetParent(playerCam);
+    }
+
+    private void DropObject()
+    {
+        objPickedUp = false;
+        canDrop = false;  // Reset drop ability
+        rb.isKinematic = false;
+        objectToMove.SetParent(room);
+    }
+
+    private IEnumerator EnableDropDelay()
+    {
+        yield return new WaitForSeconds(0.1f);  // Short delay before allowing drop
+        canDrop = true;
     }
 
     private void OnTriggerEnter(Collider other)
