@@ -26424,7 +26424,7 @@ MonoBehaviour:
   _iteration: 4
   _overlayMode: 2
   _overlayTexture: {fileID: 0}
-  _overlayOpacity: 0.15
+  _overlayOpacity: 0.3
   _shader: {fileID: -6465566751694194690, guid: 3e152a7c1e1bb4527901f4b4a55fbbc3, type: 3}
 --- !u!114 &1706785538
 MonoBehaviour:
