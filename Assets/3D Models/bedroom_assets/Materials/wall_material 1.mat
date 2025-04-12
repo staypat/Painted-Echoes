@@ -11,7 +11,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 51348128bd6e44d499d4df4d88a5c712, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - BOOLEAN_568FAFDE943840E4B4BD7C392F485EA8_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -24,8 +25,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Hatch0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Hatch1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: a8af8f851e2ebc94a9979528c83b22e1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,13 +51,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - BOOLEAN_568FAFDE943840E4B4BD7C392F485EA8: 1
     - _Blend: 1
-    - _Brightness: 0.05
+    - _Brightness: 0.02
+    - _HatchTiling: 3
+    - _HatchWeight: 0.6
+    - _OutlineThinkness: 1.2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Scale: 1
     - _Tile: 0.3
     m_Colors:
     - _Color: {r: 0.8666667, g: 0.7882353, b: 0.627451, a: 0}
+    - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Stroke_Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5892843022356513925
