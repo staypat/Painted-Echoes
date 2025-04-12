@@ -3,7 +3,7 @@
 void Hatching_float(float2 _uv, float _intensity, float _dist, UnityTexture2D _Hatch0, UnityTexture2D _Hatch1, UnitySamplerState ss, out float3 hatching)
 {
     // Define shadow threshold (adjust as needed)
-    float shadowThreshold = 0.5; // Values below this are shadows
+    float shadowThreshold = 0.3; // Values below this are shadows
     
     // Compute hatching as usual
     float log2_dist = log2(_dist);
