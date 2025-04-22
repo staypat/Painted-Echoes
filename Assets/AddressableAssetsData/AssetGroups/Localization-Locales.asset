@@ -35,18 +35,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2d73fe55e21ea08438886dc996208565
-    m_Address: Japanese (Japan) (ja-JP)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b05737e2ee16c194b9744cbceb1ac609
-    m_Address: Arabic (ar)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 88d699f34650a4c4498739d92d4b82a8, type: 2}
   m_SchemaSet:
