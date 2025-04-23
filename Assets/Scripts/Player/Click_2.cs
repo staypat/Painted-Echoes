@@ -40,6 +40,8 @@ public class Click_2 : MonoBehaviour
     public AmmoUI ammoUI;
     public VictoryUI victoryUI;
 
+    public ToyPlacementChecker toyPlacementChecker; // Reference to the ToyPlacementChecker script
+
     public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
     public PaletteManager paletteManager;
     public InputActionReference fireAction; // fire color action
@@ -164,7 +166,7 @@ public class Click_2 : MonoBehaviour
         currentRoom = newRoom;
         isRoomComplete = false;
         hasVictoryBeenTriggered = false;
-        //Debug.Log("Current room: " + currentRoom.name);
+        Debug.Log("Current room: " + currentRoom.name);
 
     }
 
@@ -283,6 +285,9 @@ public class Click_2 : MonoBehaviour
 
 
         Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
+        ToyPlacementChecker toyCheck = FindObjectOfType<ToyPlacementChecker>();
+        Debug.Log(toyCheck.toyTrainPlaced);
+        Debug.Log(toyCheck.stuffedBearPlaced);
 
         if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
