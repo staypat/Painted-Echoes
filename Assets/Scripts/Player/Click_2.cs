@@ -40,10 +40,10 @@ public class Click_2 : MonoBehaviour
     public AmmoUI ammoUI;
     public VictoryUI victoryUI;
 
-    public ToyPlacementChecker toyPlacementChecker; // Reference to the ToyPlacementChecker script
-
     public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
     public PaletteManager paletteManager;
+
+    public ToyManager toyManager; // Reference to the ToyManager script
     public InputActionReference fireAction; // fire color action
     public InputActionReference absorbAction; // Absorb color action
 
@@ -203,7 +203,7 @@ public class Click_2 : MonoBehaviour
                         continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
-                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                    Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
                 else
                 {
@@ -284,10 +284,22 @@ public class Click_2 : MonoBehaviour
         }
 
 
+        ToyManager toyManager = FindObjectOfType<ToyManager>();
+        if (toyManager.stuffedBearPlaced == true)
+        {
+            Debug.Log("Stuffed Bear Placed");
+            count += 1;
+        }
+
+        Debug.Log($"Stuffed Bear: {toyManager.stuffedBearPlaced}");
+
+        if (toyManager.toyTrainPlaced == true)
+        {
+            Debug.Log("Toy Train Placed");
+            count += 1;
+        }
+
         Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
-        ToyPlacementChecker toyCheck = FindObjectOfType<ToyPlacementChecker>();
-        Debug.Log(toyCheck.toyTrainPlaced);
-        Debug.Log(toyCheck.stuffedBearPlaced);
 
         if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
