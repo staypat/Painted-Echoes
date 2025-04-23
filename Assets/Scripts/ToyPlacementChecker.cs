@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class ToyPlacementChecker : MonoBehaviour
 {
-    public bool toyTrainPlaced = false;
-    public bool stuffedBearPlaced = false;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ToyTrain"))
         {
-            toyTrainPlaced = true;
+            ToyManager.Instance.toyTrainPlaced = true;
             Debug.Log("Toy train detected");
         }
         else if (other.CompareTag("StuffedBear"))
         {
-            stuffedBearPlaced = true;
+            ToyManager.Instance.stuffedBearPlaced = true;
             Debug.Log("Stuffed bear detected");
         }
     }
@@ -25,12 +22,12 @@ public class ToyPlacementChecker : MonoBehaviour
     {
         if (other.CompareTag("ToyTrain"))
         {
-            toyTrainPlaced = false;
+            ToyManager.Instance.toyTrainPlaced = false;
             Debug.Log("Toy train removed");
         }
         else if (other.CompareTag("StuffedBear"))
         {
-            stuffedBearPlaced = false;
+            ToyManager.Instance.stuffedBearPlaced = false;
             Debug.Log("Stuffed bear removed");
         }
     }

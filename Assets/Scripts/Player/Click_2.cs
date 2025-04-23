@@ -42,6 +42,8 @@ public class Click_2 : MonoBehaviour
 
     public ParticleSystem PaintSplatterPS; // Particle system for paint splatter
     public PaletteManager paletteManager;
+
+    public ToyManager toyManager; // Reference to the ToyManager script
     public InputActionReference fireAction; // fire color action
     public InputActionReference absorbAction; // Absorb color action
 
@@ -164,7 +166,7 @@ public class Click_2 : MonoBehaviour
         currentRoom = newRoom;
         isRoomComplete = false;
         hasVictoryBeenTriggered = false;
-        //Debug.Log("Current room: " + currentRoom.name);
+        Debug.Log("Current room: " + currentRoom.name);
 
     }
 
@@ -195,12 +197,13 @@ public class Click_2 : MonoBehaviour
                 {
                     if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
-                        || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")) 
+                        || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")
+                        || renderer.gameObject.name.StartsWith("ceiling")) 
                     {
                         continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
-                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                    Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
                 else
                 {
@@ -280,6 +283,21 @@ public class Click_2 : MonoBehaviour
             }
         }
 
+
+        ToyManager toyManager = FindObjectOfType<ToyManager>();
+        if (toyManager.stuffedBearPlaced == true)
+        {
+            Debug.Log("Stuffed Bear Placed");
+            count += 1;
+        }
+
+        Debug.Log($"Stuffed Bear: {toyManager.stuffedBearPlaced}");
+
+        if (toyManager.toyTrainPlaced == true)
+        {
+            Debug.Log("Toy Train Placed");
+            count += 1;
+        }
 
         Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
 
