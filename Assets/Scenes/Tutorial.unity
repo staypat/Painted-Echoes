@@ -15136,7 +15136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e21f6e51372ff4c9eb62710cf47086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
+  mouseSensitivity: 15
   playerBody: {fileID: 290796148}
   xRotation: 0
   canLook: 1
@@ -15172,7 +15172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856166690}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16142cfdd81ca46f8ac6acd18ae44068, type: 3}
   m_Name: 
