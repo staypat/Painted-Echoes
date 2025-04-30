@@ -220,7 +220,7 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    private bool CompareColorValues()
+    public bool CompareColorValues()
     {
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
@@ -305,6 +305,9 @@ public class Click_2 : MonoBehaviour
         {
             hasVictoryBeenTriggered = true; // Prevent multiple triggers
             isRoomComplete = true;
+
+            victoryUI.ShowVictoryMessage();
+            AudioManager.instance.Play("LevelComplete");
 
             turnOffBarrier();
             return true;
