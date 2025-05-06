@@ -10,7 +10,7 @@ public class GameState
 {
 
     //
-    public string sceneName;
+    //public string sceneName;
 
     // Camera-related variables
     public float mouseSensitivity;
@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
     public bool tutorialComplete = false; // Tutorial complete
 
     private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
+
+    public static bool isLoadingFromSave = false;
     public Material whiteMaterial; // Material for the white color
     public Material blackMaterial;
     public Material redMaterial;
@@ -173,7 +175,7 @@ public class GameManager : MonoBehaviour
             gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
             gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
             
-            gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            //gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             gameState.hasPressedRightClickFirstTime = Instance.hasPressedRightClickFirstTime;
 
@@ -336,11 +338,12 @@ public class GameManager : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
+            isLoadingFromSave = false;
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.LoadScene(gameState.sceneName);
+            SceneManager.LoadScene("Level 1");
         }
     }
 
@@ -353,6 +356,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator DelayedLoadGameState()
     {
         yield return new WaitForSeconds(0.5f); // Give time for objects to initialize
+
+        isLoadingFromSave = true;
         LoadGameState();
     }
    
@@ -398,6 +403,7 @@ public class GameManager : MonoBehaviour
                 
                 // Get the material based on the saved color tag (assuming you have a method like GetMaterialByTag)
                 Material savedMaterial = GetMaterialByName(savedColorTag);
+                Debug.Log("Saved Material: " + savedMaterial);
                 if (savedMaterial != null)
                 {
                     clickScript.ApplyColor(savedMaterial, savedMaterial.name);
@@ -484,6 +490,8 @@ public class GameManager : MonoBehaviour
             }
 
             // Load camera settings
+            playerCamera = FindObjectOfType<FirstPerson>();
+            Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
             if (playerCamera != null)
             {
                 playerCamera.mouseSensitivity = gameState.mouseSensitivity;
@@ -495,15 +503,19 @@ public class GameManager : MonoBehaviour
                     playerCamera.playerBody.gameObject.name = gameState.playerBodyName;
                     playerCamera.playerBody.position = gameState.playerPosition;
                     playerCamera.playerBody.rotation = gameState.playerRotation;
-                    //Debug.Log("Player loaded Siccessfully");
-                }
-                // else
-                // {
-                //     gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
-                //     Debug.LogWarning("playerCamera.playerBody is null");
-                // }
-            }
 
+                    Debug.Log("Player loaded Siccessfully");
+                }
+                else
+                {
+                    gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
+                    Debug.LogWarning("playerCamera.playerBody is null");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Player Camera not found 2.0");
+            }
                 // Load camera position and rotation
                 //playerCamera.cameraTransform.position = gameState.cameraPosition;
                 //playerCamera.cameraTransform.rotation = gameState.cameraRotation;

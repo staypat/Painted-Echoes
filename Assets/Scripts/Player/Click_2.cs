@@ -77,7 +77,10 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "Gray"; // Default gun color
+        if (!GameManager.isLoadingFromSave)
+        {
+            currentGunColor = "Gray";
+        }
 
 
         // Store all objects and their original colors at the start
@@ -198,7 +201,7 @@ public class Click_2 : MonoBehaviour
                     if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")
-                        || renderer.gameObject.name.StartsWith("ceiling")) 
+                        || renderer.gameObject.name.StartsWith("ceiling") || renderer.gameObject.name.StartsWith("HiddenPaint")) 
                     {
                         continue; 
                     }
