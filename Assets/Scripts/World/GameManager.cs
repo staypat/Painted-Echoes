@@ -260,12 +260,14 @@ public class GameManager : MonoBehaviour
                 // Only store states if the object name starts with "Barrier"
                 if (objectName.StartsWith("Barrier"))
                 {
-                    gameState.rendererActiveStates.Add(meshRenderer.enabled);
 
+                    gameState.rendererActiveStates.Add(meshRenderer.enabled);
+                    Debug.Log("MeshRenderer found for: " + objectName + ", enabled: " + meshRenderer.enabled);
                     // Check if the object has a Collider and store its state
                     Collider collider = meshRenderer.GetComponent<Collider>();
                     if (collider != null)
                     {
+                        Debug.Log("Collider found for: " + objectName + ", enabled: " + collider.enabled);
                         gameState.colliderActiveStates.Add(collider.enabled);
                     }
                     else
@@ -533,20 +535,53 @@ public class GameManager : MonoBehaviour
 
             MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
 
+            //for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
             for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
             {
+                
                 if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
                 {
-                    // Restore MeshRenderer's enabled state only for "Barrier" objects
-                    if (meshRenderers[i].gameObject.name.StartsWith("Barrier") && i < gameState.rendererActiveStates.Count)
+                    // // Restore MeshRenderer's enabled state only for "Barrier" objects
+
+                    Dictionary<string, int> nameToIndex = new();
+                    for (int j = 0; j < gameState.rendererNames.Count; j++)
                     {
-                        meshRenderers[i].enabled = gameState.rendererActiveStates[i];
+                        nameToIndex[gameState.rendererNames[j]] = j;
+                    }
+
+                    // if (meshRenderers[i].gameObject.name.StartsWith("Barrier"))
+                    // {
+            
+                    //     meshRenderers[i].enabled = gameState.rendererActiveStates[i];
+                    //     Debug.Log("MeshRenderer loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + meshRenderers[i].enabled);
+                    // }
+
+                    foreach (MeshRenderer mr in meshRenderers)
+                    {
+                        string name = mr.gameObject.name;
+                        if (!nameToIndex.ContainsKey(name)) continue;
+
+                        int index = nameToIndex[name];
+
+                        // Restore MeshRenderer's enabled state (only for Barriers)
+                        if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+                        {
+                            mr.enabled = gameState.rendererActiveStates[index];
+                            Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
+                        }
+
+                        Collider col = mr.GetComponent<Collider>();
+                        if (col != null && index < gameState.colliderActiveStates.Count)
+                        {
+                            col.enabled = gameState.colliderActiveStates[index];
+                        }
                     }
 
                     // Restore Collider's enabled state
                     Collider collider = meshRenderers[i].GetComponent<Collider>();
                     if (collider != null && i < gameState.colliderActiveStates.Count)
                     {
+                        //Debug.Log("Collider loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + collider.enabled);
                         collider.enabled = gameState.colliderActiveStates[i];
                     }
 
@@ -555,6 +590,42 @@ public class GameManager : MonoBehaviour
                     {
                         meshRenderers[i].material.color = gameState.rendererColors[i];
                     }
+
+
+                    // Dictionary<string, int> nameToIndex = new();
+                    // for (int j = 0; j < gameState.rendererNames.Count; j++)
+                    // {
+                    //     nameToIndex[gameState.rendererNames[j]] = j;
+                    // }
+
+                    // foreach (MeshRenderer mr in meshRenderers)
+                    // {
+                    //     string name = mr.gameObject.name;
+                    //     if (!nameToIndex.ContainsKey(name)) continue;
+
+                    //     int index = nameToIndex[name];
+
+                    //     // Restore MeshRenderer's enabled state (only for Barriers)
+                    //     if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+                    //     {
+                    //         mr.enabled = gameState.rendererActiveStates[index];
+                    //         Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
+                    //     }
+
+                    //     // Always restore collider if it exists
+                    //     Collider col = mr.GetComponent<Collider>();
+                    //     if (col != null && index < gameState.colliderActiveStates.Count)
+                    //     {
+                    //         col.enabled = gameState.colliderActiveStates[index];
+                    //     }
+
+                    //     // Always restore color
+                    //     if (mr.material.HasProperty("_Color") && index < gameState.rendererColors.Count)
+                    //     {
+                    //         mr.material.color = gameState.rendererColors[index];
+                    //     }
+
+                    // }
                 }
             }
 
@@ -613,7 +684,7 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                 
         
-                    Debug.Log("Loaded Photo: " + photoID);
+                    //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
                     OnGameStateLoaded2?.Invoke();
                     photocontroller.CollectPhoto(photoID);

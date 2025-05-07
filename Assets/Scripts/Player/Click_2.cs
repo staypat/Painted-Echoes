@@ -255,12 +255,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
                     count += 1;
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -616,6 +616,7 @@ public class Click_2 : MonoBehaviour
         roomCheck(currentRoom);
         if (CompareColorValues() == true)
         {
+
             victoryUI.ShowVictoryMessage();
             AudioManager.instance.Play("LevelComplete");
         }
