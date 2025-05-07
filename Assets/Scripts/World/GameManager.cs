@@ -262,12 +262,12 @@ public class GameManager : MonoBehaviour
                 {
 
                     gameState.rendererActiveStates.Add(meshRenderer.enabled);
-                    Debug.Log("MeshRenderer found for: " + objectName + ", enabled: " + meshRenderer.enabled);
+                    //Debug.Log("MeshRenderer found for: " + objectName + ", enabled: " + meshRenderer.enabled);
                     // Check if the object has a Collider and store its state
                     Collider collider = meshRenderer.GetComponent<Collider>();
                     if (collider != null)
                     {
-                        Debug.Log("Collider found for: " + objectName + ", enabled: " + collider.enabled);
+                        //Debug.Log("Collider found for: " + objectName + ", enabled: " + collider.enabled);
                         gameState.colliderActiveStates.Add(collider.enabled);
                     }
                     else
@@ -418,7 +418,7 @@ public class GameManager : MonoBehaviour
                 clickScript.absorbedColors.Clear();
                 // Load absorbed colors
                 clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-                Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
+                //Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
                 foreach (string mat in gameState.absorbedColors)
                 {
                     //Debug.Log("Trying to load absorbed color: " + mat);
@@ -450,7 +450,9 @@ public class GameManager : MonoBehaviour
                 clickScript.MismatchedColors.Clear();
                 for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
                 {
+                    Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
                     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+
                 }
 
                 if (gameState.hasPressedRightClickFirstTime)
@@ -567,7 +569,7 @@ public class GameManager : MonoBehaviour
                         if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
                         {
                             mr.enabled = gameState.rendererActiveStates[index];
-                            Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
+                            //Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
                         }
 
                         Collider col = mr.GetComponent<Collider>();
