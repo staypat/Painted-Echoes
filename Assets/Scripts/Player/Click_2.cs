@@ -81,6 +81,10 @@ public class Click_2 : MonoBehaviour
         {
             currentGunColor = "Gray";
         }
+        else
+        {
+            HandleRoomChanged(currentRoom);
+        }
 
 
         // Store all objects and their original colors at the start
@@ -163,7 +167,7 @@ public class Click_2 : MonoBehaviour
 
     }
     // Function to keep track what room the player is in
-    private void HandleRoomChanged(GameObject newRoom)
+    public void HandleRoomChanged(GameObject newRoom)
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
         currentRoom = newRoom;
@@ -174,7 +178,7 @@ public class Click_2 : MonoBehaviour
     }
 
     // Function to store all colors of objects in a dictionary in mismatched room
-    private void roomCheck(GameObject Room)
+    public void roomCheck(GameObject Room)
     {
         MismatchedColors.Clear();
         //Debug.Log("Cleared MismatchedColors dictionary.");
@@ -206,7 +210,7 @@ public class Click_2 : MonoBehaviour
                         continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
-                    Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
                 else
                 {
@@ -228,6 +232,10 @@ public class Click_2 : MonoBehaviour
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
 
+        for(int i = 0; i < MismatchedColors.Count; i++)
+        {
+            Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
+        }
         // Iterate through each key-value pair in the CorrectHouseColors dictionary
         foreach (var correctPair in CorrectHouseColors)
         {
@@ -255,12 +263,12 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
                     count += 1;
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else

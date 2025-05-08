@@ -158,6 +158,14 @@ public class GameManager : MonoBehaviour
         filePath = Application.persistentDataPath + "/gameState.json"; // Path to save/load game state
     }
 
+
+    string GetFullPath(Transform transform)
+    {
+        if (transform.parent == null)
+            return transform.name;
+        return GetFullPath(transform.parent) + "/" + transform.name;
+    }
+
     // Method to save the game state
     public void SaveGameState()
     {
@@ -254,25 +262,22 @@ public class GameManager : MonoBehaviour
 
             foreach (MeshRenderer meshRenderer in meshRenderers)
             {
-                string objectName = meshRenderer.gameObject.name;
-                gameState.rendererNames.Add(objectName);
-
+                string fullPath = GetFullPath(meshRenderer.transform);
+                gameState.rendererNames.Add(fullPath);
+                
                 // Only store states if the object name starts with "Barrier"
-                if (objectName.StartsWith("Barrier"))
+                if (meshRenderer.gameObject.name.StartsWith("Barrier"))
                 {
-
                     gameState.rendererActiveStates.Add(meshRenderer.enabled);
-                    //Debug.Log("MeshRenderer found for: " + objectName + ", enabled: " + meshRenderer.enabled);
-                    // Check if the object has a Collider and store its state
+
                     Collider collider = meshRenderer.GetComponent<Collider>();
                     if (collider != null)
                     {
-                        //Debug.Log("Collider found for: " + objectName + ", enabled: " + collider.enabled);
                         gameState.colliderActiveStates.Add(collider.enabled);
                     }
                     else
                     {
-                        gameState.colliderActiveStates.Add(true); // Default to true if no collider is found
+                        gameState.colliderActiveStates.Add(true); // Default to true
                     }
                 }
                 else
@@ -290,6 +295,7 @@ public class GameManager : MonoBehaviour
                     gameState.rendererColors.Add(Color.gray);
                 }
             }
+
         }
         else
         {
@@ -450,7 +456,7 @@ public class GameManager : MonoBehaviour
                 clickScript.MismatchedColors.Clear();
                 for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
                 {
-                    Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
+                    //Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
                     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
 
                 }
@@ -529,107 +535,120 @@ public class GameManager : MonoBehaviour
 
             // Load Renderer properties (color in this case)
 
+
             GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
-            if (mismatchedHouse == null)
+            if (mismatchedHouse != null)
+            {
+                MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
+
+                // Create name -> index map from saved state
+                Dictionary<string, int> nameToIndex = new();
+                for (int j = 0; j < gameState.rendererNames.Count; j++)
+                {
+                    nameToIndex[gameState.rendererNames[j]] = j;
+                }
+
+                foreach (MeshRenderer mr in meshRenderers)
+                {
+                    string fullPath = GetFullPath(mr.transform);
+                    if (!nameToIndex.TryGetValue(fullPath, out int index)) continue;
+
+                    // Restore enabled state (only for Barriers)
+                    string objectName = mr.gameObject.name;
+
+                    if (objectName.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+                    {
+                        mr.enabled = gameState.rendererActiveStates[index];
+                    }
+
+                    // Restore Collider state
+                    Collider col = mr.GetComponent<Collider>();
+                    if (col != null && index < gameState.colliderActiveStates.Count)
+                    {
+                        col.enabled = gameState.colliderActiveStates[index];
+                    }
+
+                    // Restore color
+                    if (mr.material.HasProperty("_Color") && index < gameState.rendererColors.Count)
+                    {
+                        mr.material.color = gameState.rendererColors[index];
+                    }
+                }
+            }
+            else
             {
                 return;
             }
 
-            MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
+            // GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
+            // if (mismatchedHouse != null)
+            // {
+            //     MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
 
-            //for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
-            for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
-            {
+            //     //for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
+            //     for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
+            //     {
+                    
+            //         if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
+            //         {
+            //             // // Restore MeshRenderer's enabled state only for "Barrier" objects
+
+            //             Dictionary<string, int> nameToIndex = new();
+            //             for (int j = 0; j < gameState.rendererNames.Count; j++)
+            //             {
+            //                 nameToIndex[gameState.rendererNames[j]] = j;
+            //             }
+
+            //             // if (meshRenderers[i].gameObject.name.StartsWith("Barrier"))
+            //             // {
                 
-                if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
-                {
-                    // // Restore MeshRenderer's enabled state only for "Barrier" objects
+            //             //     meshRenderers[i].enabled = gameState.rendererActiveStates[i];
+            //             //     Debug.Log("MeshRenderer loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + meshRenderers[i].enabled);
+            //             // }
 
-                    Dictionary<string, int> nameToIndex = new();
-                    for (int j = 0; j < gameState.rendererNames.Count; j++)
-                    {
-                        nameToIndex[gameState.rendererNames[j]] = j;
-                    }
+            //             foreach (MeshRenderer mr in meshRenderers)
+            //             {
+            //                 string name = mr.gameObject.name;
+            //                 if (!nameToIndex.ContainsKey(name)) continue;
 
-                    // if (meshRenderers[i].gameObject.name.StartsWith("Barrier"))
-                    // {
-            
-                    //     meshRenderers[i].enabled = gameState.rendererActiveStates[i];
-                    //     Debug.Log("MeshRenderer loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + meshRenderers[i].enabled);
-                    // }
+            //                 int index = nameToIndex[name];
 
-                    foreach (MeshRenderer mr in meshRenderers)
-                    {
-                        string name = mr.gameObject.name;
-                        if (!nameToIndex.ContainsKey(name)) continue;
+            //                 // Restore MeshRenderer's enabled state (only for Barriers)
+            //                 if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+            //                 {
+            //                     mr.enabled = gameState.rendererActiveStates[index];
+            //                     //Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
+            //                 }
 
-                        int index = nameToIndex[name];
+            //                 Collider col = mr.GetComponent<Collider>();
+            //                 if (col != null && index < gameState.colliderActiveStates.Count)
+            //                 {
+            //                     col.enabled = gameState.colliderActiveStates[index];
+            //                 }
 
-                        // Restore MeshRenderer's enabled state (only for Barriers)
-                        if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
-                        {
-                            mr.enabled = gameState.rendererActiveStates[index];
-                            //Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
-                        }
+            //             }
 
-                        Collider col = mr.GetComponent<Collider>();
-                        if (col != null && index < gameState.colliderActiveStates.Count)
-                        {
-                            col.enabled = gameState.colliderActiveStates[index];
-                        }
-                    }
+            //             // Restore Collider's enabled state
+            //             Collider collider = meshRenderers[i].GetComponent<Collider>();
+            //             if (collider != null && i < gameState.colliderActiveStates.Count)
+            //             {
+            //                 //Debug.Log("Collider loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + collider.enabled);
+            //                 collider.enabled = gameState.colliderActiveStates[i];
+            //             }
 
-                    // Restore Collider's enabled state
-                    Collider collider = meshRenderers[i].GetComponent<Collider>();
-                    if (collider != null && i < gameState.colliderActiveStates.Count)
-                    {
-                        //Debug.Log("Collider loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + collider.enabled);
-                        collider.enabled = gameState.colliderActiveStates[i];
-                    }
+            //             // Restore color
+            //             if (meshRenderers[i].material.HasProperty("_Color"))
+            //             {
+            //                 meshRenderers[i].material.color = gameState.rendererColors[i];
+            //             }
 
-                    // Restore color
-                    if (meshRenderers[i].material.HasProperty("_Color"))
-                    {
-                        meshRenderers[i].material.color = gameState.rendererColors[i];
-                    }
-
-
-                    // Dictionary<string, int> nameToIndex = new();
-                    // for (int j = 0; j < gameState.rendererNames.Count; j++)
-                    // {
-                    //     nameToIndex[gameState.rendererNames[j]] = j;
-                    // }
-
-                    // foreach (MeshRenderer mr in meshRenderers)
-                    // {
-                    //     string name = mr.gameObject.name;
-                    //     if (!nameToIndex.ContainsKey(name)) continue;
-
-                    //     int index = nameToIndex[name];
-
-                    //     // Restore MeshRenderer's enabled state (only for Barriers)
-                    //     if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
-                    //     {
-                    //         mr.enabled = gameState.rendererActiveStates[index];
-                    //         Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
-                    //     }
-
-                    //     // Always restore collider if it exists
-                    //     Collider col = mr.GetComponent<Collider>();
-                    //     if (col != null && index < gameState.colliderActiveStates.Count)
-                    //     {
-                    //         col.enabled = gameState.colliderActiveStates[index];
-                    //     }
-
-                    //     // Always restore color
-                    //     if (mr.material.HasProperty("_Color") && index < gameState.rendererColors.Count)
-                    //     {
-                    //         mr.material.color = gameState.rendererColors[index];
-                    //     }
-
-                    // }
-                }
-            }
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     return;
+            // }
 
 
 
