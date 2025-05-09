@@ -268,7 +268,7 @@ public class Click_2 : MonoBehaviour
                 else
                 {
                     count += 1;
-                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else

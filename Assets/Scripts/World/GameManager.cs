@@ -418,6 +418,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
+                clickScript.roomCheck(clickScript.currentRoom);
+                
                 clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
                 
@@ -454,12 +456,14 @@ public class GameManager : MonoBehaviour
 
                 // Load MismatchedColors dictionary
                 clickScript.MismatchedColors.Clear();
-                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-                {
-                    //Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
-                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+                // for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+                // {
+                //     Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
+                //     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
 
-                }
+                // }
+            
+
 
                 if (gameState.hasPressedRightClickFirstTime)
                 {
