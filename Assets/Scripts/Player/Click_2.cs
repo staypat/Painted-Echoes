@@ -77,7 +77,14 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "Gray"; // Default gun color
+        if (!GameManager.isLoadingFromSave)
+        {
+            currentGunColor = "Gray";
+        }
+        else
+        {
+            HandleRoomChanged(currentRoom);
+        }
 
 
         // Store all objects and their original colors at the start
@@ -160,7 +167,7 @@ public class Click_2 : MonoBehaviour
 
     }
     // Function to keep track what room the player is in
-    private void HandleRoomChanged(GameObject newRoom)
+    public void HandleRoomChanged(GameObject newRoom)
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
         currentRoom = newRoom;
@@ -171,7 +178,7 @@ public class Click_2 : MonoBehaviour
     }
 
     // Function to store all colors of objects in a dictionary in mismatched room
-    private void roomCheck(GameObject Room)
+    public void roomCheck(GameObject Room)
     {
         MismatchedColors.Clear();
         //Debug.Log("Cleared MismatchedColors dictionary.");
@@ -198,12 +205,12 @@ public class Click_2 : MonoBehaviour
                     if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")
-                        || renderer.gameObject.name.StartsWith("ceiling")) 
+                        || renderer.gameObject.name.StartsWith("ceiling") || renderer.gameObject.name.StartsWith("HiddenPaint")) 
                     {
                         continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
-                    Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
                 else
                 {
@@ -225,6 +232,10 @@ public class Click_2 : MonoBehaviour
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
 
+        for(int i = 0; i < MismatchedColors.Count; i++)
+        {
+            Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
+        }
         // Iterate through each key-value pair in the CorrectHouseColors dictionary
         foreach (var correctPair in CorrectHouseColors)
         {
@@ -252,7 +263,7 @@ public class Click_2 : MonoBehaviour
                 // Compare child object colors
                 if (correctPair.Value != mismatchColor)
                 {
-                    Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
+                    //Debug.Log($"❌ Mismatch found for key '{objectName}': Correct value = {correctPair.Value}, Mismatch value = {mismatchColor}");
                 }
                 else
                 {
@@ -613,6 +624,7 @@ public class Click_2 : MonoBehaviour
         roomCheck(currentRoom);
         if (CompareColorValues() == true)
         {
+
             victoryUI.ShowVictoryMessage();
             AudioManager.instance.Play("LevelComplete");
         }

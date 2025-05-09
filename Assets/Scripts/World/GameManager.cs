@@ -10,7 +10,7 @@ public class GameState
 {
 
     //
-    public string sceneName;
+    //public string sceneName;
 
     // Camera-related variables
     public float mouseSensitivity;
@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
     public bool tutorialComplete = false; // Tutorial complete
 
     private bool hasPressedPhotoFirstTime = false; // Pick up photo for tutorial 
+
+    public static bool isLoadingFromSave = false;
     public Material whiteMaterial; // Material for the white color
     public Material blackMaterial;
     public Material redMaterial;
@@ -156,6 +158,14 @@ public class GameManager : MonoBehaviour
         filePath = Application.persistentDataPath + "/gameState.json"; // Path to save/load game state
     }
 
+
+    string GetFullPath(Transform transform)
+    {
+        if (transform.parent == null)
+            return transform.name;
+        return GetFullPath(transform.parent) + "/" + transform.name;
+    }
+
     // Method to save the game state
     public void SaveGameState()
     {
@@ -173,7 +183,7 @@ public class GameManager : MonoBehaviour
             gameState.currentRoomName = clickScript.currentRoom != null ? clickScript.currentRoom.name : "";
             gameState.brushTipName = clickScript.brushTip != null ? clickScript.brushTip.name : "";
             
-            gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            //gameState.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             gameState.hasPressedRightClickFirstTime = Instance.hasPressedRightClickFirstTime;
 
@@ -252,15 +262,14 @@ public class GameManager : MonoBehaviour
 
             foreach (MeshRenderer meshRenderer in meshRenderers)
             {
-                string objectName = meshRenderer.gameObject.name;
-                gameState.rendererNames.Add(objectName);
-
+                string fullPath = GetFullPath(meshRenderer.transform);
+                gameState.rendererNames.Add(fullPath);
+                
                 // Only store states if the object name starts with "Barrier"
-                if (objectName.StartsWith("Barrier"))
+                if (meshRenderer.gameObject.name.StartsWith("Barrier"))
                 {
                     gameState.rendererActiveStates.Add(meshRenderer.enabled);
 
-                    // Check if the object has a Collider and store its state
                     Collider collider = meshRenderer.GetComponent<Collider>();
                     if (collider != null)
                     {
@@ -268,7 +277,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        gameState.colliderActiveStates.Add(true); // Default to true if no collider is found
+                        gameState.colliderActiveStates.Add(true); // Default to true
                     }
                 }
                 else
@@ -286,6 +295,7 @@ public class GameManager : MonoBehaviour
                     gameState.rendererColors.Add(Color.gray);
                 }
             }
+
         }
         else
         {
@@ -336,11 +346,12 @@ public class GameManager : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
+            isLoadingFromSave = false;
             string json = File.ReadAllText(filePath);
             GameState gameState = JsonUtility.FromJson<GameState>(json);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.LoadScene(gameState.sceneName);
+            SceneManager.LoadScene("Level 1");
         }
     }
 
@@ -353,6 +364,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator DelayedLoadGameState()
     {
         yield return new WaitForSeconds(0.5f); // Give time for objects to initialize
+
+        isLoadingFromSave = true;
         LoadGameState();
     }
    
@@ -398,19 +411,22 @@ public class GameManager : MonoBehaviour
                 
                 // Get the material based on the saved color tag (assuming you have a method like GetMaterialByTag)
                 Material savedMaterial = GetMaterialByName(savedColorTag);
+                Debug.Log("Saved Material: " + savedMaterial);
                 if (savedMaterial != null)
                 {
                     clickScript.ApplyColor(savedMaterial, savedMaterial.name);
                 }
 
                 clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
+                clickScript.roomCheck(clickScript.currentRoom);
+                
                 clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
                 
                 clickScript.absorbedColors.Clear();
                 // Load absorbed colors
                 clickScript.absorbedColorTags = new List<string>(gameState.absorbedColorTags);
-                Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
+                //Debug.Log("Absorbed Color Tags num cs2: " + gameState.absorbedColorTags.Count);
                 foreach (string mat in gameState.absorbedColors)
                 {
                     //Debug.Log("Trying to load absorbed color: " + mat);
@@ -440,10 +456,14 @@ public class GameManager : MonoBehaviour
 
                 // Load MismatchedColors dictionary
                 clickScript.MismatchedColors.Clear();
-                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-                {
-                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
-                }
+                // for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+                // {
+                //     Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
+                //     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+
+                // }
+            
+
 
                 if (gameState.hasPressedRightClickFirstTime)
                 {
@@ -484,6 +504,8 @@ public class GameManager : MonoBehaviour
             }
 
             // Load camera settings
+            playerCamera = FindObjectOfType<FirstPerson>();
+            Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
             if (playerCamera != null)
             {
                 playerCamera.mouseSensitivity = gameState.mouseSensitivity;
@@ -495,15 +517,19 @@ public class GameManager : MonoBehaviour
                     playerCamera.playerBody.gameObject.name = gameState.playerBodyName;
                     playerCamera.playerBody.position = gameState.playerPosition;
                     playerCamera.playerBody.rotation = gameState.playerRotation;
-                    //Debug.Log("Player loaded Siccessfully");
-                }
-                // else
-                // {
-                //     gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
-                //     Debug.LogWarning("playerCamera.playerBody is null");
-                // }
-            }
 
+                    Debug.Log("Player loaded Siccessfully");
+                }
+                else
+                {
+                    gameState.playerBodyName = "";  // Or provide a default value if playerBody is not set
+                    Debug.LogWarning("playerCamera.playerBody is null");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Player Camera not found 2.0");
+            }
                 // Load camera position and rotation
                 //playerCamera.cameraTransform.position = gameState.cameraPosition;
                 //playerCamera.cameraTransform.rotation = gameState.cameraRotation;
@@ -513,38 +539,120 @@ public class GameManager : MonoBehaviour
 
             // Load Renderer properties (color in this case)
 
+
             GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
-            if (mismatchedHouse == null)
+            if (mismatchedHouse != null)
+            {
+                MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
+
+                // Create name -> index map from saved state
+                Dictionary<string, int> nameToIndex = new();
+                for (int j = 0; j < gameState.rendererNames.Count; j++)
+                {
+                    nameToIndex[gameState.rendererNames[j]] = j;
+                }
+
+                foreach (MeshRenderer mr in meshRenderers)
+                {
+                    string fullPath = GetFullPath(mr.transform);
+                    if (!nameToIndex.TryGetValue(fullPath, out int index)) continue;
+
+                    // Restore enabled state (only for Barriers)
+                    string objectName = mr.gameObject.name;
+
+                    if (objectName.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+                    {
+                        mr.enabled = gameState.rendererActiveStates[index];
+                    }
+
+                    // Restore Collider state
+                    Collider col = mr.GetComponent<Collider>();
+                    if (col != null && index < gameState.colliderActiveStates.Count)
+                    {
+                        col.enabled = gameState.colliderActiveStates[index];
+                    }
+
+                    // Restore color
+                    if (mr.material.HasProperty("_Color") && index < gameState.rendererColors.Count)
+                    {
+                        mr.material.color = gameState.rendererColors[index];
+                    }
+                }
+            }
+            else
             {
                 return;
             }
 
-            MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
+            // GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
+            // if (mismatchedHouse != null)
+            // {
+            //     MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
 
-            for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
-            {
-                if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
-                {
-                    // Restore MeshRenderer's enabled state only for "Barrier" objects
-                    if (meshRenderers[i].gameObject.name.StartsWith("Barrier") && i < gameState.rendererActiveStates.Count)
-                    {
-                        meshRenderers[i].enabled = gameState.rendererActiveStates[i];
-                    }
+            //     //for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
+            //     for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
+            //     {
+                    
+            //         if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
+            //         {
+            //             // // Restore MeshRenderer's enabled state only for "Barrier" objects
 
-                    // Restore Collider's enabled state
-                    Collider collider = meshRenderers[i].GetComponent<Collider>();
-                    if (collider != null && i < gameState.colliderActiveStates.Count)
-                    {
-                        collider.enabled = gameState.colliderActiveStates[i];
-                    }
+            //             Dictionary<string, int> nameToIndex = new();
+            //             for (int j = 0; j < gameState.rendererNames.Count; j++)
+            //             {
+            //                 nameToIndex[gameState.rendererNames[j]] = j;
+            //             }
 
-                    // Restore color
-                    if (meshRenderers[i].material.HasProperty("_Color"))
-                    {
-                        meshRenderers[i].material.color = gameState.rendererColors[i];
-                    }
-                }
-            }
+            //             // if (meshRenderers[i].gameObject.name.StartsWith("Barrier"))
+            //             // {
+                
+            //             //     meshRenderers[i].enabled = gameState.rendererActiveStates[i];
+            //             //     Debug.Log("MeshRenderer loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + meshRenderers[i].enabled);
+            //             // }
+
+            //             foreach (MeshRenderer mr in meshRenderers)
+            //             {
+            //                 string name = mr.gameObject.name;
+            //                 if (!nameToIndex.ContainsKey(name)) continue;
+
+            //                 int index = nameToIndex[name];
+
+            //                 // Restore MeshRenderer's enabled state (only for Barriers)
+            //                 if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
+            //                 {
+            //                     mr.enabled = gameState.rendererActiveStates[index];
+            //                     //Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
+            //                 }
+
+            //                 Collider col = mr.GetComponent<Collider>();
+            //                 if (col != null && index < gameState.colliderActiveStates.Count)
+            //                 {
+            //                     col.enabled = gameState.colliderActiveStates[index];
+            //                 }
+
+            //             }
+
+            //             // Restore Collider's enabled state
+            //             Collider collider = meshRenderers[i].GetComponent<Collider>();
+            //             if (collider != null && i < gameState.colliderActiveStates.Count)
+            //             {
+            //                 //Debug.Log("Collider loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + collider.enabled);
+            //                 collider.enabled = gameState.colliderActiveStates[i];
+            //             }
+
+            //             // Restore color
+            //             if (meshRenderers[i].material.HasProperty("_Color"))
+            //             {
+            //                 meshRenderers[i].material.color = gameState.rendererColors[i];
+            //             }
+
+            //         }
+            //     }
+            // }
+            // else
+            // {
+            //     return;
+            // }
 
 
 
@@ -601,7 +709,7 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Loading Photo Mode 2");
                 
         
-                    Debug.Log("Loaded Photo: " + photoID);
+                    //Debug.Log("Loaded Photo: " + photoID);
                     photocontroller.collectedPhotos.Add(photoID);
                     OnGameStateLoaded2?.Invoke();
                     photocontroller.CollectPhoto(photoID);
