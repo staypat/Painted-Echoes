@@ -11,6 +11,8 @@ public class OpenMenu : MonoBehaviour
     public GameObject menuUI;
     public GameObject optionsUI;
     public GameObject controlsUI;
+
+    public GameObject controllerControlsUI;
     public GameObject creditsUI;
 
     public Slider MusicVolumeSlider;
@@ -115,6 +117,21 @@ public class OpenMenu : MonoBehaviour
     public void CloseEditControls()
     {
         controlsUI.SetActive(false);
+        optionsUI.SetActive(true);
+        AudioManager.instance.Play("UIBack");
+    }
+
+    public void OpenEditControllerControls()
+    {
+        optionsUI.SetActive(false);
+        controllerControlsUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.Pause("Theme");
+    }
+
+    public void CloseEditControllerControls()
+    {
+        controllerControlsUI.SetActive(false);
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIBack");
     }
