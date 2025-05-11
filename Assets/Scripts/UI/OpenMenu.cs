@@ -19,6 +19,10 @@ public class OpenMenu : MonoBehaviour
     public Slider SFXVolumeSlider;
     public InputActionReference exitAction;
 
+    public GameObject mainMenuFirst;
+    public GameObject optionsFirst;
+    public GameObject creditsFirst;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,7 @@ public class OpenMenu : MonoBehaviour
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
         Debug.Log("Options Opened");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void CloseOptions()
@@ -48,7 +53,7 @@ public class OpenMenu : MonoBehaviour
         {
             optionsUI.SetActive(false);
             AudioManager.instance.Play("UIBack");
-
+            EventSystem.current.SetSelectedGameObject(mainMenuFirst);
             if(!AudioManager.instance.IsPaused("Theme"))
             {
                 //AudioManager.instance.Pause("Theme"); // this way for now until main menu music exists
@@ -157,12 +162,14 @@ public class OpenMenu : MonoBehaviour
     {
         creditsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
+        EventSystem.current.SetSelectedGameObject(creditsFirst);
     }
 
     public void CloseCredits()
     {
         creditsUI.SetActive(false);
         AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     private void OnEnable()
