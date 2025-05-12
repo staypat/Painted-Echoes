@@ -53,6 +53,9 @@ public class Click_2 : MonoBehaviour
     public GameObject ScrollText;
     public GameObject enableSaveButton;
 
+    public GameObject golem; // Drag the Golem GameObject into this field in the Inspector
+
+
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
@@ -66,6 +69,8 @@ public class Click_2 : MonoBehaviour
     {   
 
         gunRenderer = GetComponent<Renderer>();
+
+        // golem.SetActive(false); // Simple and clean
 
         if (gunRenderer == null)
         {
@@ -321,6 +326,8 @@ public class Click_2 : MonoBehaviour
             AudioManager.instance.Play("LevelComplete");
 
             turnOffBarrier();
+            golem.SetActive(true);
+
             return true;
         }
         else
@@ -348,6 +355,7 @@ public class Click_2 : MonoBehaviour
                 {
                     // Disable the renderer
                     renderer.enabled = false;
+
                     Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
                 }
             }
