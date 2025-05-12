@@ -11,7 +11,10 @@ public class GolemAI : MonoBehaviour
     private NavMeshAgent agent;
     private float roamTimer;
     private Renderer golemRenderer;
-    private Color? currentColor = null; // Nullable: null means no color
+    private Color? currentColor = null;
+
+    private float colorInteractionCooldown = 2f;
+    private float lastColorInteractionTime = -Mathf.Infinity;
 
     void Start()
     {
@@ -39,50 +42,53 @@ public class GolemAI : MonoBehaviour
             roamTimer = 0;
         }
 
-        // Right-click detection for absorbing color
-        if (Input.GetMouseButtonDown(1)) // Right-click (button 1)
+        // Right-click detection with cooldown
+        if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Right-click detected");
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Time.time >= lastColorInteractionTime + colorInteractionCooldown)
             {
-                Debug.Log("Raycast hit: " + hit.collider.gameObject.name); // Debug the object being hit by the ray
+                Debug.Log("Right-click detected");
 
-                // Check if the hit object is the Golem
-                if (hit.collider.CompareTag("Golem")) // Assuming the Golem is tagged as "Golem"
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.Log("Right-clicked on the Golem!");
+                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
 
-                    // You can add your logic to absorb color here
-                    AbsorbColor(hit.collider.gameObject);
+                    if (hit.collider.CompareTag("Golem"))
+                    {
+                        Debug.Log("Right-clicked on the Golem!");
+                        AbsorbColor(hit.collider.gameObject);
+                        lastColorInteractionTime = Time.time;
+                    }
+                    else
+                    {
+                        Debug.Log("Right-clicked on a different object.");
+                    }
                 }
                 else
                 {
-                    Debug.Log("Right-clicked on a different object.");
+                    Debug.Log("Raycast did not hit anything.");
                 }
             }
             else
             {
-                Debug.Log("Raycast did not hit anything.");
+                Debug.Log("Interaction on cooldown.");
             }
         }
     }
 
     void AbsorbColor(GameObject clickedObject)
     {
-        // Example method to absorb color from the clicked object (you can modify this as needed)
         Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-        if (clickedRenderer != null && currentColor == null) // Only absorb if no color has been absorbed
+        if (clickedRenderer != null && currentColor == null)
         {
             Color clickedColor = clickedRenderer.material.color;
-            // Absorb the first color that is not gray
             if (clickedColor != GameManager.Instance.grayMaterial.color)
             {
                 golemRenderer.material.color = clickedColor;
-                currentColor = clickedColor; // Store the absorbed color
+                currentColor = clickedColor;
                 Debug.Log("Absorbed color from " + clickedObject.name + ": " + clickedColor);
             }
         }
@@ -104,6 +110,14 @@ public class GolemAI : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (Time.time < lastColorInteractionTime + colorInteractionCooldown)
+        {
+            Debug.Log("OnTriggerEnter is on cooldown.");
+            return;
+        }
+
+        lastColorInteractionTime = Time.time;
+
         Debug.Log("Trigger Entered: " + other.gameObject.name);
 
         Transform parent = other.transform.parent;
@@ -141,7 +155,6 @@ public class GolemAI : MonoBehaviour
 
             if (golemColor == GameManager.Instance.grayMaterial.color)
             {
-                // Absorb
                 Debug.Log("Golem is empty, absorbing color from child.");
                 absorbedColor = childColor;
                 golemRenderer.material.color = absorbedColor;
@@ -149,10 +162,8 @@ public class GolemAI : MonoBehaviour
             }
             else
             {
-                // Only swap if the golem hasn't absorbed a color yet
                 if (currentColor == null)
                 {
-                    // Swap
                     Debug.Log("Swapping colors between Golem and child.");
                     absorbedColor = childColor;
                     Color tempColor = golemColor;
@@ -162,25 +173,23 @@ public class GolemAI : MonoBehaviour
                 }
             }
 
-            break; // only process the first valid child
+            break;
         }
 
         if (absorbedColor == Color.clear) return;
 
-        // If swapping, replace all matching child colors with golem's old color
         if (didSwap)
         {
             foreach (Renderer childRenderer in childRenderers)
             {
                 if (childRenderer.material.color == absorbedColor)
                 {
-                    childRenderer.material.color = golemColor; // the original golem color before swap
+                    childRenderer.material.color = golemColor;
                 }
             }
         }
         else
         {
-            // If just absorbing, gray out all children with that color
             foreach (Renderer childRenderer in childRenderers)
             {
                 if (childRenderer.material.color == absorbedColor)
