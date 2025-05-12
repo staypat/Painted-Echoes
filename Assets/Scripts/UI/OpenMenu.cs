@@ -21,7 +21,10 @@ public class OpenMenu : MonoBehaviour
 
     public GameObject mainMenuFirst;
     public GameObject optionsFirst;
+    public GameObject controlsFirst;
+    public GameObject controllerControlsFirst;
     public GameObject creditsFirst;
+    public GameObject pauseFirst;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +67,7 @@ public class OpenMenu : MonoBehaviour
             optionsUI.SetActive(false);
             menuUI.SetActive(true);
             AudioManager.instance.Play("UIBack");
+            EventSystem.current.SetSelectedGameObject(pauseFirst);
             // if the theme is unpaused
             
             if(!AudioManager.instance.IsPaused("Theme"))
@@ -81,7 +85,7 @@ public class OpenMenu : MonoBehaviour
         menuUI.SetActive(true);
         AudioManager.instance.Pause("Theme"); // Remove to hear theme music
         AudioManager.instance.Play("UIOpen");
-
+        EventSystem.current.SetSelectedGameObject(pauseFirst);
     }
 
     public void UnPauseGame()
@@ -90,6 +94,7 @@ public class OpenMenu : MonoBehaviour
         GameManager.Instance.ExitMenu();
         AudioManager.instance.UnPause("Theme");
         AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void TogglePause(InputAction.CallbackContext context)
@@ -117,6 +122,7 @@ public class OpenMenu : MonoBehaviour
         controlsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
         AudioManager.instance.Pause("Theme");
+        EventSystem.current.SetSelectedGameObject(controlsFirst);
     }
 
     public void CloseEditControls()
@@ -124,6 +130,8 @@ public class OpenMenu : MonoBehaviour
         controlsUI.SetActive(false);
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIBack");
+        AudioManager.instance.UnPause("Theme");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void OpenEditControllerControls()
@@ -132,6 +140,7 @@ public class OpenMenu : MonoBehaviour
         controllerControlsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
         AudioManager.instance.Pause("Theme");
+        EventSystem.current.SetSelectedGameObject(controllerControlsFirst);
     }
 
     public void CloseEditControllerControls()
@@ -139,6 +148,8 @@ public class OpenMenu : MonoBehaviour
         controllerControlsUI.SetActive(false);
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIBack");
+        AudioManager.instance.UnPause("Theme");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void ChangeMusicVolume()
