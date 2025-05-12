@@ -53,6 +53,9 @@ public class Click_2 : MonoBehaviour
     public GameObject ScrollText;
     public GameObject enableSaveButton;
 
+    public GameObject golem; // Drag the Golem GameObject into this field in the Inspector
+
+
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
@@ -67,6 +70,8 @@ public class Click_2 : MonoBehaviour
 
         gunRenderer = GetComponent<Renderer>();
 
+        // golem.SetActive(false); // Simple and clean
+
         if (gunRenderer == null)
         {
             //Debug.LogError("Gun Renderer not found.");
@@ -77,7 +82,14 @@ public class Click_2 : MonoBehaviour
             gunRenderer.material = new Material(gunRenderer.material);
         }
 
-        currentGunColor = "Gray"; // Default gun color
+        if (!GameManager.isLoadingFromSave)
+        {
+            currentGunColor = "Gray";
+        }
+        else
+        {
+            HandleRoomChanged(currentRoom);
+        }
 
 
         // Store all objects and their original colors at the start
@@ -160,7 +172,7 @@ public class Click_2 : MonoBehaviour
 
     }
     // Function to keep track what room the player is in
-    private void HandleRoomChanged(GameObject newRoom)
+    public void HandleRoomChanged(GameObject newRoom)
     {
         //Debug.Log("Click_2 received room change: " + newRoom.name);
         currentRoom = newRoom;
@@ -171,7 +183,7 @@ public class Click_2 : MonoBehaviour
     }
 
     // Function to store all colors of objects in a dictionary in mismatched room
-    private void roomCheck(GameObject Room)
+    public void roomCheck(GameObject Room)
     {
         MismatchedColors.Clear();
         //Debug.Log("Cleared MismatchedColors dictionary.");
@@ -198,12 +210,12 @@ public class Click_2 : MonoBehaviour
                     if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")
-                        || renderer.gameObject.name.StartsWith("ceiling")) 
+                        || renderer.gameObject.name.StartsWith("ceiling") || renderer.gameObject.name.StartsWith("HiddenPaint")) 
                     {
                         continue; 
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
-                    Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
+                    //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
                 }
                 else
                 {
@@ -220,11 +232,15 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    private bool CompareColorValues()
+    public bool CompareColorValues()
     {
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
 
+        for(int i = 0; i < MismatchedColors.Count; i++)
+        {
+            Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
+        }
         // Iterate through each key-value pair in the CorrectHouseColors dictionary
         foreach (var correctPair in CorrectHouseColors)
         {
@@ -306,7 +322,12 @@ public class Click_2 : MonoBehaviour
             hasVictoryBeenTriggered = true; // Prevent multiple triggers
             isRoomComplete = true;
 
+            victoryUI.ShowVictoryMessage();
+            AudioManager.instance.Play("LevelComplete");
+
             turnOffBarrier();
+            golem.SetActive(true);
+
             return true;
         }
         else
@@ -334,6 +355,7 @@ public class Click_2 : MonoBehaviour
                 {
                     // Disable the renderer
                     renderer.enabled = false;
+
                     Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
                 }
             }
@@ -610,6 +632,7 @@ public class Click_2 : MonoBehaviour
         roomCheck(currentRoom);
         if (CompareColorValues() == true)
         {
+
             victoryUI.ShowVictoryMessage();
             AudioManager.instance.Play("LevelComplete");
         }

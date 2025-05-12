@@ -11,11 +11,20 @@ public class OpenMenu : MonoBehaviour
     public GameObject menuUI;
     public GameObject optionsUI;
     public GameObject controlsUI;
+
+    public GameObject controllerControlsUI;
     public GameObject creditsUI;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
     public InputActionReference exitAction;
+
+    public GameObject mainMenuFirst;
+    public GameObject optionsFirst;
+    public GameObject controlsFirst;
+    public GameObject controllerControlsFirst;
+    public GameObject creditsFirst;
+    public GameObject pauseFirst;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +46,7 @@ public class OpenMenu : MonoBehaviour
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
         Debug.Log("Options Opened");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void CloseOptions()
@@ -46,7 +56,7 @@ public class OpenMenu : MonoBehaviour
         {
             optionsUI.SetActive(false);
             AudioManager.instance.Play("UIBack");
-
+            EventSystem.current.SetSelectedGameObject(mainMenuFirst);
             if(!AudioManager.instance.IsPaused("Theme"))
             {
                 //AudioManager.instance.Pause("Theme"); // this way for now until main menu music exists
@@ -57,6 +67,7 @@ public class OpenMenu : MonoBehaviour
             optionsUI.SetActive(false);
             menuUI.SetActive(true);
             AudioManager.instance.Play("UIBack");
+            EventSystem.current.SetSelectedGameObject(pauseFirst);
             // if the theme is unpaused
             
             if(!AudioManager.instance.IsPaused("Theme"))
@@ -74,7 +85,7 @@ public class OpenMenu : MonoBehaviour
         menuUI.SetActive(true);
         AudioManager.instance.Pause("Theme"); // Remove to hear theme music
         AudioManager.instance.Play("UIOpen");
-
+        EventSystem.current.SetSelectedGameObject(pauseFirst);
     }
 
     public void UnPauseGame()
@@ -83,6 +94,7 @@ public class OpenMenu : MonoBehaviour
         GameManager.Instance.ExitMenu();
         AudioManager.instance.UnPause("Theme");
         AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void TogglePause(InputAction.CallbackContext context)
@@ -110,6 +122,7 @@ public class OpenMenu : MonoBehaviour
         controlsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
         AudioManager.instance.Pause("Theme");
+        EventSystem.current.SetSelectedGameObject(controlsFirst);
     }
 
     public void CloseEditControls()
@@ -117,6 +130,26 @@ public class OpenMenu : MonoBehaviour
         controlsUI.SetActive(false);
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIBack");
+        AudioManager.instance.UnPause("Theme");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
+    }
+
+    public void OpenEditControllerControls()
+    {
+        optionsUI.SetActive(false);
+        controllerControlsUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.Pause("Theme");
+        EventSystem.current.SetSelectedGameObject(controllerControlsFirst);
+    }
+
+    public void CloseEditControllerControls()
+    {
+        controllerControlsUI.SetActive(false);
+        optionsUI.SetActive(true);
+        AudioManager.instance.Play("UIBack");
+        AudioManager.instance.UnPause("Theme");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void ChangeMusicVolume()
@@ -140,12 +173,14 @@ public class OpenMenu : MonoBehaviour
     {
         creditsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
+        EventSystem.current.SetSelectedGameObject(creditsFirst);
     }
 
     public void CloseCredits()
     {
         creditsUI.SetActive(false);
         AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     private void OnEnable()

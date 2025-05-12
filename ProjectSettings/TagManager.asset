@@ -26,6 +26,7 @@ TagManager:
   - Gray
   - ToyTrain
   - StuffedBear
+  - Golem
   layers:
   - Default
   - TransparentFX
