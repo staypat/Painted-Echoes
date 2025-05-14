@@ -6,7 +6,7 @@ using Unity.Services.Analytics;
 
 public class AnalyticsManager : MonoBehaviour
 {
-    public static AnalyticsManager Instance;
+    public static AnalyticsManager Instance { get; private set; }
 
     private bool isInitialized = false;
 
@@ -64,5 +64,33 @@ public class AnalyticsManager : MonoBehaviour
     public void PlayerRequestDataDeletion()
     {
         AnalyticsService.Instance.RequestDataDeletion();
+    }
+
+    public void TutorialCompleted()
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("TutorialCompleted", new Dictionary<string, object>
+        {
+            { "Completed", true },
+        });
+        Debug.Log("Tutorial Completed Event Sent");
+    }
+
+    public void LevelCompleted(string levelName)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("LevelCompleted", new Dictionary<string, object>
+        {
+            { "LevelName", levelName },
+        });
+        Debug.Log($"Level Completed Event Sent for Level: {levelName}");
     }
 }
