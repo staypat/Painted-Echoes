@@ -7130,6 +7130,7 @@ MonoBehaviour:
   victoryUI: {fileID: 1088991834}
   PaintSplatterPS: {fileID: 0}
   paletteManager: {fileID: 1818478567}
+  toyManager: {fileID: 0}
   fireAction: {fileID: 5111276642113714343, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
   absorbAction: {fileID: 5835286834332707820, guid: bab2cf53c6423d24cabd57f047663fc2, type: 3}
   AbsorbText: {fileID: 1568204734}
@@ -23334,10 +23335,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hallwayPhoto: {fileID: 349731371}
-  livingRoomPhoto: {fileID: 2077717729}
+  livingRoom1: {fileID: 0}
+  livingRoom2: {fileID: 0}
   kitchenPhoto1: {fileID: 821246184}
   kitchenPhoto2: {fileID: 1402374848}
   kitchenPhoto3: {fileID: 388958703}
+  MCbedroomPhoto1: {fileID: 0}
+  MCbedroomPhoto2: {fileID: 0}
 --- !u!1 &1522390315
 GameObject:
   m_ObjectHideFlags: 0
@@ -31132,6 +31136,164 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953810466}
   m_CullTransparentMesh: 1
+--- !u!1001 &1960376583
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.97
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.74
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -37.86
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      propertyPath: m_Name
+      value: golem_ai
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960376588}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960376587}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960376586}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1960376585}
+  m_SourcePrefab: {fileID: 100100000, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+--- !u!1 &1960376584 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 57a61bd285ddcb44b8d2d988d4181da9, type: 3}
+  m_PrefabInstance: {fileID: 1960376583}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1960376585
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960376584}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &1960376586
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960376584}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.006
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1960376587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960376584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e2fab76799e26d4f83504aa8f5700eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1960376588}
+  animationStateName: golemRoll
+--- !u!95 &1960376588
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960376584}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 188781a72c0b9c948af191a212ff5ef8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1964479298
 GameObject:
   m_ObjectHideFlags: 0
@@ -33389,3 +33551,4 @@ SceneRoots:
   - {fileID: 1541839189}
   - {fileID: 2026225584}
   - {fileID: 1779525781}
+  - {fileID: 1960376583}

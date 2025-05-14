@@ -6,7 +6,7 @@ public class GolemAI : MonoBehaviour
     public Transform player;
     public float followRadius = 10f;
     public float roamRadius = 5f;
-    public float roamInterval = 3f;
+    public float roamInterval = 5f;
 
     private NavMeshAgent agent;
     private float roamTimer;
@@ -15,6 +15,8 @@ public class GolemAI : MonoBehaviour
 
     private float colorInteractionCooldown = 2f;
     private float lastColorInteractionTime = -Mathf.Infinity;
+    public Animator animator;
+    private bool isRolling = false;
 
     void Start()
     {
@@ -76,6 +78,34 @@ public class GolemAI : MonoBehaviour
             {
                 Debug.Log("Interaction on cooldown.");
             }
+        }
+
+        Vector3 horizontalVelocity = new Vector3(agent.velocity.x, 0, agent.velocity.z);
+        bool isMoving = horizontalVelocity.magnitude > 0.3f;
+
+        animator.SetBool("roll", isMoving);
+
+        if (!isMoving) {
+            Transform childTransform = transform.GetChild(0);
+            
+            // Get the current rotation in Euler angles
+            Vector3 currentEuler = childTransform.eulerAngles;
+
+            // Set the target X rotation, while keeping Y and Z the same
+            float targetX = -90f;
+            float targetY = currentEuler.y;  // Keep current Y
+            float targetZ = currentEuler.z;  // Keep current Z
+
+            // Create the target rotation (ignoring Y and Z changes)
+            Quaternion targetRotation = Quaternion.Euler(targetX, targetY, targetZ);
+
+            // Smoothly rotate the child to the target rotation
+            float rotationSpeed = 50f; // Adjust speed
+            childTransform.rotation = Quaternion.RotateTowards(
+                childTransform.rotation, 
+                targetRotation, 
+                rotationSpeed * Time.deltaTime
+            );
         }
     }
 

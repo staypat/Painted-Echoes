@@ -63,6 +63,7 @@ public class Click_2 : MonoBehaviour
     private string currentAbsorbKeybind;
 
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+    public Animator animator;
 
     
     void Start()
@@ -478,6 +479,7 @@ public class Click_2 : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, maxDistance) && AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0)
         {
+            animator.Play("paintbrushPaint");
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
             Transform subparent = parent != null ? parent : null; // Get the subparent
@@ -511,6 +513,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
@@ -589,6 +592,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
@@ -707,6 +711,7 @@ public class Click_2 : MonoBehaviour
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);
             brushTip.GetComponent<Renderer>().material = GetMaterialFromString(currentGunColor);
+            animator.Play("paintbrushAbsorb");
 
             // Increse ammo count for the absorbed color
             AmmoManager.Instance.AddAmmo(1, currentGunColor);
