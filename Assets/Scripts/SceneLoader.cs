@@ -30,7 +30,9 @@ public class SceneLoader : MonoBehaviour
 
     void Awake()
     {   
-        if (PlayerPrefs.GetInt("PrivacyPolicyShown", 0) == 0)
+        Scene activeScene = SceneManager.GetActiveScene();
+        
+        if (PlayerPrefs.GetInt("PrivacyPolicyShown", 0) == 0 && activeScene.name == "MainMenu")
         {
             privacyNoticePromptUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(privacyAgreeButtonFirst);

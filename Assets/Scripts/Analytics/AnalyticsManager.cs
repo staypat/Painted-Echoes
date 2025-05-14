@@ -14,29 +14,22 @@ public class AnalyticsManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
-            return;
+            Destroy(gameObject);
         }
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
-    // async void Awake()
-	// {
-	// 	try
-	// 	{
-	// 		await UnityServices.InitializeAsync();
-	// 	}
-	// 	catch (System.Exception e)
-    //     {
-    //         Debug.LogException(e);
-    //     }
-	// }
     // Start is called before the first frame update
+
     private async void Start()
     {
-        
+        await UnityServices.InitializeAsync();
+        AnalyticsService.Instance.StartDataCollection();
+        isInitialized = true;
+        Debug.Log("Analytics Service Initialized");
     }
 
     // Update is called once per frame
@@ -45,33 +38,31 @@ public class AnalyticsManager : MonoBehaviour
         
     }
 
-    // void CheckServiceState()
-    // {
-    //     var currentState = UnityServices.State;
-    //     Debug.Log($"Current Unity Services State: {currentState}");
+    public void DisplayUnityPrivacyPolicy()
+    {
+        Application.OpenURL(AnalyticsService.Instance.PrivacyUrl);
+    }
 
-    //     if (currentState == ServicesInitializationState.Initialized)
-    //     {
-    //         Debug.Log("Unity Services are ready to use!");
-    //     }
-    //     else if (currentState == ServicesInitializationState.Initializing)
-    //     {
-    //         Debug.Log("Unity Services are still initializing...");
-    //     }
-    //     else if (currentState == ServicesInitializationState.Uninitialized)
-    //     {
-    //         Debug.Log("Unity Services have not been initialized yet.");
-    //     }
-    // }
+    public void PlayerOptIn()
+    {
+        // if (playerOptedOut)
+        // {
+        //     return; or continue
+        // }
+        // else
+        // {
+        //     AnalyticsService.Instance.StartDataCollection();
+        // }
+        AnalyticsService.Instance.StartDataCollection();
+    }
 
-    // IEnumerator WaitForInitialization()
-    // {
-    //     while (UnityServices.State != ServicesInitializationState.Initialized)
-    //     {
-    //         Debug.Log("Waiting for Unity Services to initialize...");
-    //         yield return new WaitForSeconds(0.5f);
-    //     }
+    public void PlayerOptOut()
+    {
+        AnalyticsService.Instance.StopDataCollection();
+    }
 
-    //     Debug.Log("Unity Services initialized!");
-    // }
+    public void PlayerRequestDataDeletion()
+    {
+        AnalyticsService.Instance.RequestDataDeletion();
+    }
 }
