@@ -513,6 +513,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
@@ -591,6 +592,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }

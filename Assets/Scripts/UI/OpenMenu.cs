@@ -14,6 +14,8 @@ public class OpenMenu : MonoBehaviour
 
     public GameObject controllerControlsUI;
     public GameObject creditsUI;
+    public GameObject privacyNoticeUI;
+    public GameObject privacyNoticePromptUI;
 
     public Slider MusicVolumeSlider;
     public Slider SFXVolumeSlider;
@@ -25,6 +27,8 @@ public class OpenMenu : MonoBehaviour
     public GameObject controllerControlsFirst;
     public GameObject creditsFirst;
     public GameObject pauseFirst;
+    public GameObject privacyNoticeFirst;
+    public GameObject privacyPromptFirst;
 
     // Start is called before the first frame update
     void Start()
@@ -181,6 +185,41 @@ public class OpenMenu : MonoBehaviour
         creditsUI.SetActive(false);
         AudioManager.instance.Play("UIBack");
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+    }
+
+    public void OpenPrivacyNotice()
+    {
+        privacyNoticeUI.SetActive(true);
+        AudioManager.instance.Play("UIOpen");
+        EventSystem.current.SetSelectedGameObject(privacyNoticeFirst);
+    }
+
+    public void DisagreeToPrivacyNotice()
+    {
+        privacyNoticePromptUI.SetActive(false);
+        AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+    }
+
+    public void AgreeToPrivacyNotice()
+    {
+        privacyNoticePromptUI.SetActive(false);
+        AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+    }
+
+    public void ClosePrivacyNoticeFromPrompt()
+    {
+        privacyNoticeUI.SetActive(false);
+        AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(privacyPromptFirst);
+    }
+
+    public void ClosePrivacyNoticeFromOptions()
+    {
+        privacyNoticeUI.SetActive(false);
+        AudioManager.instance.Play("UIBack");
+        EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     private void OnEnable()
