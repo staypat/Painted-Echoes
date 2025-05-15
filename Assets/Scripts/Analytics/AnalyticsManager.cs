@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Analytics;
+using UnityEngine.UI;
 
 public class AnalyticsManager : MonoBehaviour
 {
     public static AnalyticsManager Instance { get; private set; }
 
-    public bool playerOptedOut = false;
+    public bool playerOptedOut = true;
+
     public bool hasSeenPrivacyPolicy = false;
 
+    private bool hasStartedDataCollection = false;
+
     private bool isInitialized = false;
+
+    public Toggle privacyToggle;
 
     private int frameCount = 0;
     private float elapsedTime = 0f;
@@ -37,26 +43,53 @@ public class AnalyticsManager : MonoBehaviour
     private async void Start()
     {
         await UnityServices.InitializeAsync();
-        AnalyticsService.Instance.StartDataCollection();
         isInitialized = true;
         Debug.Log("Analytics Service Initialized");
+        playerOptedOut = PlayerPrefs.GetInt("PlayerOptedOut", 1) == 1;
+        
+        if (privacyToggle != null)
+        {
+            privacyToggle.isOn = !playerOptedOut;
+            privacyToggle.onValueChanged.AddListener(OnPrivacyToggleChanged);
+        }
+
+        if (playerOptedOut)
+        {
+            return;
+        }
+        else
+        {
+            AnalyticsService.Instance.StartDataCollection();
+            hasStartedDataCollection = true;
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
-        frameCount++;
-        elapsedTime += Time.unscaledDeltaTime;
-
-        if (elapsedTime >= fpsUpdateInterval)
+        if (!playerOptedOut)
         {
-            averageFps = frameCount / elapsedTime;
-            frameCount = 0;
-            elapsedTime = 0f;
+            frameCount++;
+            elapsedTime += Time.unscaledDeltaTime;
 
-            AvgFPS(Mathf.RoundToInt(averageFps));
-            Debug.Log($"[AnalyticsManager] Average FPS: {Mathf.RoundToInt(averageFps)}");
+            if (elapsedTime >= fpsUpdateInterval)
+            {
+                averageFps = frameCount / elapsedTime;
+                frameCount = 0;
+                elapsedTime = 0f;
+
+                AvgFPS(Mathf.RoundToInt(averageFps));
+                Debug.Log($"[AnalyticsManager] Average FPS: {Mathf.RoundToInt(averageFps)}");
+            }
         }
+    }
+
+    public void AssignPrivacyToggle(Toggle toggle)
+    {
+        privacyToggle = toggle;
+        privacyToggle.isOn = !playerOptedOut;
+        privacyToggle.onValueChanged.RemoveAllListeners();
+        privacyToggle.onValueChanged.AddListener(OnPrivacyToggleChanged);
     }
 
     public void DisplayUnityPrivacyPolicy()
@@ -66,20 +99,23 @@ public class AnalyticsManager : MonoBehaviour
 
     public void PlayerOptIn()
     {
-        // if (playerOptedOut)
-        // {
-        //     return; or continue
-        // }
-        // else
-        // {
-        //     AnalyticsService.Instance.StartDataCollection();
-        // }
+        playerOptedOut = false;
+        privacyToggle.isOn = true;
+        PlayerPrefs.SetInt("PlayerOptedOut", 0);
+        PlayerPrefs.Save();
         AnalyticsService.Instance.StartDataCollection();
+        hasStartedDataCollection = true;
+        Debug.Log("Player opted in to data collection");
     }
 
     public void PlayerOptOut()
     {
+        playerOptedOut = true;
+        privacyToggle.isOn = false;
+        PlayerPrefs.SetInt("PlayerOptedOut", 1);
+        PlayerPrefs.Save();
         AnalyticsService.Instance.StopDataCollection();
+        Debug.Log("Player opted out of data collection");
     }
 
     public void PlayerRequestDataDeletion()
@@ -87,11 +123,28 @@ public class AnalyticsManager : MonoBehaviour
         AnalyticsService.Instance.RequestDataDeletion();
     }
 
+    public void OnPrivacyToggleChanged(bool isOn)
+    {
+        if (isOn)
+        {
+            Debug.Log("OnPrivacyToggleChanged: Player agreed to data collection.");
+            PlayerOptIn();
+        }
+        else if (!isOn && !hasStartedDataCollection)
+        {
+            Debug.Log("OnPrivacyToggleChanged: Player opted out of data collection.");
+        }else
+        {
+            Debug.Log("OnPrivacyToggleChanged: Player opted out of data collection.");
+            PlayerOptOut();
+        }
+    }
+
     public void TutorialCompleted()
     {
-        if (!isInitialized)
+        if (!isInitialized && playerOptedOut)
         {
-            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
         }
         AnalyticsService.Instance.CustomData("TutorialCompleted", new Dictionary<string, object>
@@ -103,9 +156,9 @@ public class AnalyticsManager : MonoBehaviour
 
     public void LevelCompleted(string levelName)
     {
-        if (!isInitialized)
+        if (!isInitialized && playerOptedOut)
         {
-            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
         }
         AnalyticsService.Instance.CustomData("LevelCompleted", new Dictionary<string, object>
@@ -117,9 +170,9 @@ public class AnalyticsManager : MonoBehaviour
 
     public void ObjectInteracted(string objectName)
     {
-        if (!isInitialized)
+        if (!isInitialized && playerOptedOut)
         {
-            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
         }
         AnalyticsService.Instance.CustomData("ObjectInteracted", new Dictionary<string, object>
@@ -131,9 +184,9 @@ public class AnalyticsManager : MonoBehaviour
 
     public void AvgFPS(int averageFps)
     {
-        if (!isInitialized)
+        if (!isInitialized && playerOptedOut)
         {
-            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
         }
         AnalyticsService.Instance.CustomData("AverageFPS", new Dictionary<string, object>
