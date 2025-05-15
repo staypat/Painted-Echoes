@@ -11,12 +11,15 @@ public class GolemAI : MonoBehaviour
     private NavMeshAgent agent;
     private float roamTimer;
     private Renderer golemRenderer;
-    private Color? currentColor = null;
+    private Material currentColor;
 
     private float colorInteractionCooldown = 2f;
     private float lastColorInteractionTime = -Mathf.Infinity;
     public Animator animator;
     private bool isRolling = false;
+
+    private bool isClearing = false;
+
 
     void Start()
     {
@@ -24,6 +27,7 @@ public class GolemAI : MonoBehaviour
         golemRenderer = GetComponent<Renderer>();
         golemRenderer.enabled = false; // ← Hide the mesh
         roamTimer = roamInterval;
+        currentColor = GameManager.Instance.grayMaterial;
     }
 
     void Update()
@@ -105,59 +109,74 @@ public class GolemAI : MonoBehaviour
         }
     }
 
-
     void AbsorbColor(GameObject clickedObject)
     {
-        if (currentColor != null)
+        if (currentColor != GameManager.Instance.grayMaterial.color)
         {
-            Debug.Log("Golem has color, clearing to gray.");
-            ClearGolemColor(); // apply gray to all parts
+            Debug.Log("Golem has color, clearing to gray. Raycast temporarily disabled.");
+            isClearing = true;
+            ClearGolemColor();
             lastColorInteractionTime = Time.time;
+
+            StartCoroutine(DelayedAbsorb(clickedObject));
             return;
         }
 
-        Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
+        TryAbsorbColor(clickedObject);
+    }
+
+
+
+    void TryAbsorbColor(GameObject sourceObject)
+    {
+        Renderer clickedRenderer = sourceObject.GetComponent<Renderer>();
         if (clickedRenderer != null)
         {
             Color clickedColor = clickedRenderer.material.color;
-            if (clickedColor != GameManager.Instance.grayMaterial.color)
+            Color gray = GameManager.Instance.grayMaterial.color;
+
+            if (clickedColor != gray)
             {
-                ApplyColorToGolem(clickedColor);
-                Debug.Log("Absorbed color from " + clickedObject.name + ": " + clickedColor);
+                ApplyColorToGolem(clickedRenderer.material);
+                Debug.Log("Absorbed color from " + sourceObject.name + ": " + clickedColor);
                 lastColorInteractionTime = Time.time;
             }
+            else
+            {
+                Debug.Log("Clicked color is gray — nothing to absorb.");
+            }
+        }
+        else
+        {
+            Debug.Log("No renderer found on clicked object.");
         }
     }
 
-    void ApplyColorToGolem(Color color)
+    void ApplyColorToGolem(Material newMat)
     {
-        currentColor = color;
+        currentColor = newMat;
 
-        // Apply to all child and self renderers
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in allRenderers)
         {
-            renderer.material.color = color;
+            renderer.material.color = newMat.color;
         }
     }
 
     void ClearGolemColor()
     {
-        currentColor = null;
+        currentColor = GameManager.Instance.grayMaterial;
 
         Color gray = GameManager.Instance.grayMaterial.color;
 
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in allRenderers)
         {
-            renderer.material.color = gray; // force color update for each
+            renderer.material.color = gray;
         }
 
         Debug.Log("Golem color cleared to gray.");
     }
-
-
-
 
     Vector3 GetRandomPositionNearPlayer()
     {
@@ -175,6 +194,13 @@ public class GolemAI : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isClearing)
+        {
+            Debug.Log("OnTriggerEnter skipped during clear.");
+            return;
+        }
+
+
         if (Time.time < lastColorInteractionTime + colorInteractionCooldown)
         {
             Debug.Log("OnTriggerEnter is on cooldown.");
@@ -222,16 +248,15 @@ public class GolemAI : MonoBehaviour
             {
                 Debug.Log("Golem is empty, absorbing color from child.");
                 absorbedColor = childColor;
-                ApplyColorToGolem(absorbedColor);
+                ApplyColorToGolem(childRenderer.material);
             }
             else
             {
-                if (currentColor == null)
+                if (currentColor == GameManager.Instance.grayMaterial)
                 {
                     Debug.Log("Swapping colors between Golem and child.");
                     absorbedColor = childColor;
-                    Color tempColor = golemColor;
-                    ApplyColorToGolem(absorbedColor);
+                    ApplyColorToGolem(childRenderer.material);
                     didSwap = true;
                 }
             }
@@ -262,4 +287,14 @@ public class GolemAI : MonoBehaviour
             }
         }
     }
+
+    System.Collections.IEnumerator DelayedAbsorb(GameObject sourceObject)
+    {
+        yield return null;
+        TryAbsorbColor(sourceObject);
+        isClearing = false; // Flag OFF after absorb
+    }
+
+
+
 }
