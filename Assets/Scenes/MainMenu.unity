@@ -855,6 +855,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf09debeb6ab9704b83b2d879c634a97, type: 3}
+--- !u!1 &34187200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34187202}
+  - component: {fileID: 34187201}
+  m_Layer: 0
+  m_Name: AnalyticsHelperObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &34187201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34187200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f3f7a4baadd02b47861a7c7a642eb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  privacyToggle: {fileID: 52054208}
+--- !u!4 &34187202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34187200}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 367.8129, y: 36.2857, z: -56.603813}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &37009403
 GameObject:
   m_ObjectHideFlags: 0
@@ -7073,6 +7118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56aa772b6ea39241bdf071491702fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOptedOut: 0
+  hasSeenPrivacyPolicy: 0
+  privacyToggle: {fileID: 52054208}
+  fpsUpdateInterval: 10
 --- !u!1 &401439435
 GameObject:
   m_ObjectHideFlags: 0
@@ -8762,7 +8811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28, y: -19.4}
+  m_AnchoredPosition: {x: 29.65, y: -19.4}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &499057165
@@ -8811,7 +8860,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1748714544}
         m_TargetAssemblyTypeName: OpenMenu, Assembly-CSharp
-        m_MethodName: ClosePrivacyNoticeFromPrompt
+        m_MethodName: ClosePrivacyNoticeFromOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10229,7 +10278,7 @@ MonoBehaviour:
     to collect and analyze gameplay data. Unity acts as a data processor on our behalf.
     You can view Unity\u2019s Privacy Policy here.\n\nWe do not use this data to
     track users for advertising or sell it to third parties.\n\nYou have the right
-    to withdraw consent at any time through the Options menu."
+    to withdraw consent at any time through the Main Menu Options."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11723,7 +11772,7 @@ PrefabInstance:
       objectReference: {fileID: 1114910697}
     - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_text
-      value: 4
+      value: RMB
       objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
@@ -21959,8 +22008,8 @@ MonoBehaviour:
     analytics with us?
 
 
-    You can change your choice at any time in the Options
-    menu.'
+    You can change your choice at any time in the Main Menu
+    Options.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -26735,7 +26784,7 @@ PrefabInstance:
       objectReference: {fileID: 1114910697}
     - target: {fileID: 2324025714234196671, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_text
-      value: 3
+      value: LMB
       objectReference: {fileID: 0}
     - target: {fileID: 3270191666145056848, guid: 2a36e5dbc8948d04b91cfafc5316ff6c, type: 3}
       propertyPath: m_Name
@@ -29124,6 +29173,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1748714544}
         m_TargetAssemblyTypeName: OpenMenu, Assembly-CSharp
         m_MethodName: AgreeToPrivacyNotice
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 401216087}
+        m_TargetAssemblyTypeName: AnalyticsManager, Assembly-CSharp
+        m_MethodName: PlayerOptIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -34201,6 +34262,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 401216086}
+  - {fileID: 34187202}
   - {fileID: 740280090}
   - {fileID: 1507832932}
   - {fileID: 1161562420}

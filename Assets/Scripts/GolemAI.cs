@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class GolemAI : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GolemAI : MonoBehaviour
     private bool isRolling = false;
 
     private bool isClearing = false;
+    public InputActionReference absorbAction;
 
 
     void Start()
@@ -49,37 +51,31 @@ public class GolemAI : MonoBehaviour
             roamTimer = 0;
         }
 
-        // Right-click detection with cooldown
+        //Right-click detection with cooldown
         if (Input.GetMouseButtonDown(1))
         {
-            if (Time.time >= lastColorInteractionTime + colorInteractionCooldown)
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 4.5f))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                Transform root = hit.collider.transform.root;
 
-                if (Physics.Raycast(ray, out hit))
+                if (root.CompareTag("Golem"))
                 {
-                    Transform root = hit.collider.transform.root;
-
-                    if (root.CompareTag("Golem"))
-                    {
-                        Debug.Log("Right-clicked on the Golem or its child!");
-                        AbsorbColor(root.gameObject); // always pass the root Golem
-                        lastColorInteractionTime = Time.time;
-                    }
-                    else
-                    {
-                        Debug.Log("Right-clicked on a different object.");
-                    }
+                    Debug.Log("Right-clicked on the Golem or its child!");
+                    AbsorbColor(root.gameObject); // always pass the root Golem
+                    lastColorInteractionTime = Time.time;
                 }
                 else
                 {
-                    Debug.Log("Raycast did not hit anything.");
+                    Debug.Log("Right-clicked on a different object.");
                 }
             }
             else
             {
-                Debug.Log("Interaction on cooldown.");
+                Debug.Log("Raycast did not hit anything.");
             }
         }
 
@@ -109,9 +105,39 @@ public class GolemAI : MonoBehaviour
         }
     }
 
+    // void AbsorbGolem(InputAction.CallbackContext context)
+    // {
+    //     {
+
+    //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //         RaycastHit hit;
+
+    //         if (Physics.Raycast(ray, out hit, 4.5f))
+    //         {
+    //             Transform root = hit.collider.transform.root;
+
+    //             if (root.CompareTag("Golem"))
+    //             {
+    //                 Debug.Log("Right-clicked on the Golem or its child!");
+    //                 AbsorbColor(root.gameObject); // always pass the root Golem
+    //                 lastColorInteractionTime = Time.time;
+    //             }
+    //             else
+    //             {
+    //                 Debug.Log("Right-clicked on a different object.");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log("Raycast did not hit anything.");
+    //         }
+    //     }
+    // }
+
     void AbsorbColor(GameObject clickedObject)
     {
-        if (currentColor != GameManager.Instance.grayMaterial.color)
+        Debug.Log("AbsorbColor called on: " + currentColor);
+        if (currentColor != null && currentColor != GameManager.Instance.grayMaterial)
         {
             Debug.Log("Golem has color, clearing to gray. Raycast temporarily disabled.");
             isClearing = true;
@@ -295,6 +321,13 @@ public class GolemAI : MonoBehaviour
         isClearing = false; // Flag OFF after absorb
     }
 
+    // private void OnEnable()
+    // {
+    //     absorbAction.action.started += AbsorbGolem;
+    // }
 
-
+    // private void OnDisable()
+    // {
+    //     absorbAction.action.started -= AbsorbGolem;
+    // }
 }
