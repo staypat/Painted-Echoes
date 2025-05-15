@@ -22,6 +22,7 @@ public class GolemAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         golemRenderer = GetComponent<Renderer>();
+        golemRenderer.enabled = false; // ← Hide the mesh
         roamTimer = roamInterval;
     }
 
@@ -49,19 +50,17 @@ public class GolemAI : MonoBehaviour
         {
             if (Time.time >= lastColorInteractionTime + colorInteractionCooldown)
             {
-                Debug.Log("Right-click detected");
-
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+                    Transform root = hit.collider.transform.root;
 
-                    if (hit.collider.CompareTag("Golem"))
+                    if (root.CompareTag("Golem"))
                     {
-                        Debug.Log("Right-clicked on the Golem!");
-                        AbsorbColor(hit.collider.gameObject);
+                        Debug.Log("Right-clicked on the Golem or its child!");
+                        AbsorbColor(root.gameObject); // always pass the root Golem
                         lastColorInteractionTime = Time.time;
                     }
                     else
@@ -85,44 +84,80 @@ public class GolemAI : MonoBehaviour
 
         animator.SetBool("roll", isMoving);
 
-        if (!isMoving) {
+        if (!isMoving)
+        {
             Transform childTransform = transform.GetChild(0);
-            
-            // Get the current rotation in Euler angles
+
             Vector3 currentEuler = childTransform.eulerAngles;
 
-            // Set the target X rotation, while keeping Y and Z the same
             float targetX = -90f;
-            float targetY = currentEuler.y;  // Keep current Y
-            float targetZ = currentEuler.z;  // Keep current Z
+            float targetY = currentEuler.y;
+            float targetZ = currentEuler.z;
 
-            // Create the target rotation (ignoring Y and Z changes)
             Quaternion targetRotation = Quaternion.Euler(targetX, targetY, targetZ);
 
-            // Smoothly rotate the child to the target rotation
-            float rotationSpeed = 50f; // Adjust speed
+            float rotationSpeed = 50f;
             childTransform.rotation = Quaternion.RotateTowards(
-                childTransform.rotation, 
-                targetRotation, 
+                childTransform.rotation,
+                targetRotation,
                 rotationSpeed * Time.deltaTime
             );
         }
     }
 
+
     void AbsorbColor(GameObject clickedObject)
     {
+        if (currentColor != null)
+        {
+            Debug.Log("Golem has color, clearing to gray.");
+            ClearGolemColor(); // apply gray to all parts
+            lastColorInteractionTime = Time.time;
+            return;
+        }
+
         Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-        if (clickedRenderer != null && currentColor == null)
+        if (clickedRenderer != null)
         {
             Color clickedColor = clickedRenderer.material.color;
             if (clickedColor != GameManager.Instance.grayMaterial.color)
             {
-                golemRenderer.material.color = clickedColor;
-                currentColor = clickedColor;
+                ApplyColorToGolem(clickedColor);
                 Debug.Log("Absorbed color from " + clickedObject.name + ": " + clickedColor);
+                lastColorInteractionTime = Time.time;
             }
         }
     }
+
+    void ApplyColorToGolem(Color color)
+    {
+        currentColor = color;
+
+        // Apply to all child and self renderers
+        Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in allRenderers)
+        {
+            renderer.material.color = color;
+        }
+    }
+
+    void ClearGolemColor()
+    {
+        currentColor = null;
+
+        Color gray = GameManager.Instance.grayMaterial.color;
+
+        Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in allRenderers)
+        {
+            renderer.material.color = gray; // force color update for each
+        }
+
+        Debug.Log("Golem color cleared to gray.");
+    }
+
+
+
 
     Vector3 GetRandomPositionNearPlayer()
     {
@@ -187,8 +222,7 @@ public class GolemAI : MonoBehaviour
             {
                 Debug.Log("Golem is empty, absorbing color from child.");
                 absorbedColor = childColor;
-                golemRenderer.material.color = absorbedColor;
-                currentColor = absorbedColor;
+                ApplyColorToGolem(absorbedColor);
             }
             else
             {
@@ -197,8 +231,7 @@ public class GolemAI : MonoBehaviour
                     Debug.Log("Swapping colors between Golem and child.");
                     absorbedColor = childColor;
                     Color tempColor = golemColor;
-                    golemRenderer.material.color = absorbedColor;
-                    currentColor = absorbedColor;
+                    ApplyColorToGolem(absorbedColor);
                     didSwap = true;
                 }
             }
