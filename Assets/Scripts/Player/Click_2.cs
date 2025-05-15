@@ -639,6 +639,7 @@ public class Click_2 : MonoBehaviour
 
             victoryUI.ShowVictoryMessage();
             AudioManager.instance.Play("LevelComplete");
+            AnalyticsManager.Instance.LevelCompleted(currentRoom.name);
         }
     }
 

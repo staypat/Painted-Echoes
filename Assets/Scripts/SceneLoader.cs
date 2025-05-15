@@ -31,9 +31,14 @@ public class SceneLoader : MonoBehaviour
     void Awake()
     {   
         Scene activeScene = SceneManager.GetActiveScene();
+
+        AnalyticsManager.Instance.hasSeenPrivacyPolicy = PlayerPrefs.GetInt("HasSeenPrivacyPolicy", 0) == 1;
         
-        if (PlayerPrefs.GetInt("PrivacyPolicyShown", 0) == 0 && activeScene.name == "MainMenu")
+        if (!AnalyticsManager.Instance.hasSeenPrivacyPolicy && activeScene.name == "MainMenu")
         {
+            AnalyticsManager.Instance.hasSeenPrivacyPolicy = true;
+            PlayerPrefs.SetInt("HasSeenPrivacyPolicy", 1);
+            PlayerPrefs.Save();
             privacyNoticePromptUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(privacyAgreeButtonFirst);
         }
