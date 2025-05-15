@@ -11,18 +11,23 @@ public class GolemAI : MonoBehaviour
     private NavMeshAgent agent;
     private float roamTimer;
     private Renderer golemRenderer;
-    private Color? currentColor = null;
+    private Material currentColor;
 
     private float colorInteractionCooldown = 2f;
     private float lastColorInteractionTime = -Mathf.Infinity;
     public Animator animator;
     private bool isRolling = false;
 
+    private bool isClearing = false;
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         golemRenderer = GetComponent<Renderer>();
+        golemRenderer.enabled = false; // ← Hide the mesh
         roamTimer = roamInterval;
+        currentColor = GameManager.Instance.grayMaterial;
     }
 
     void Update()
@@ -47,36 +52,28 @@ public class GolemAI : MonoBehaviour
         // Right-click detection with cooldown
         if (Input.GetMouseButtonDown(1))
         {
-            if (Time.time >= lastColorInteractionTime + colorInteractionCooldown)
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 4.5f))
             {
-                Debug.Log("Right-click detected");
+                Transform root = hit.collider.transform.root;
 
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
+                if (root.CompareTag("Golem"))
                 {
-                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-
-                    if (hit.collider.CompareTag("Golem"))
-                    {
-                        Debug.Log("Right-clicked on the Golem!");
-                        AbsorbColor(hit.collider.gameObject);
-                        lastColorInteractionTime = Time.time;
-                    }
-                    else
-                    {
-                        Debug.Log("Right-clicked on a different object.");
-                    }
+                    Debug.Log("Right-clicked on the Golem or its child!");
+                    AbsorbColor(root.gameObject); // always pass the root Golem
+                    lastColorInteractionTime = Time.time;
                 }
                 else
                 {
-                    Debug.Log("Raycast did not hit anything.");
+                    Debug.Log("Right-clicked on a different object.");
                 }
             }
             else
             {
-                Debug.Log("Interaction on cooldown.");
+                Debug.Log("Raycast did not hit anything.");
             }
         }
 
@@ -85,43 +82,96 @@ public class GolemAI : MonoBehaviour
 
         animator.SetBool("roll", isMoving);
 
-        if (!isMoving) {
+        if (!isMoving)
+        {
             Transform childTransform = transform.GetChild(0);
-            
-            // Get the current rotation in Euler angles
+
             Vector3 currentEuler = childTransform.eulerAngles;
 
-            // Set the target X rotation, while keeping Y and Z the same
             float targetX = -90f;
-            float targetY = currentEuler.y;  // Keep current Y
-            float targetZ = currentEuler.z;  // Keep current Z
+            float targetY = currentEuler.y;
+            float targetZ = currentEuler.z;
 
-            // Create the target rotation (ignoring Y and Z changes)
             Quaternion targetRotation = Quaternion.Euler(targetX, targetY, targetZ);
 
-            // Smoothly rotate the child to the target rotation
-            float rotationSpeed = 50f; // Adjust speed
+            float rotationSpeed = 50f;
             childTransform.rotation = Quaternion.RotateTowards(
-                childTransform.rotation, 
-                targetRotation, 
+                childTransform.rotation,
+                targetRotation,
                 rotationSpeed * Time.deltaTime
             );
         }
     }
 
+
     void AbsorbColor(GameObject clickedObject)
     {
-        Renderer clickedRenderer = clickedObject.GetComponent<Renderer>();
-        if (clickedRenderer != null && currentColor == null)
+        Debug.Log("AbsorbColor called on: " + currentColor);
+        if (currentColor != null && currentColor != GameManager.Instance.grayMaterial)
+        {
+            Debug.Log("Golem has color, clearing to gray. Raycast temporarily disabled.");
+            isClearing = true;
+            ClearGolemColor();
+            lastColorInteractionTime = Time.time;
+
+            StartCoroutine(DelayedAbsorb(clickedObject));
+            return;
+        }
+
+        TryAbsorbColor(clickedObject);
+    }
+
+
+
+    void TryAbsorbColor(GameObject sourceObject)
+    {
+        Renderer clickedRenderer = sourceObject.GetComponent<Renderer>();
+        if (clickedRenderer != null)
         {
             Color clickedColor = clickedRenderer.material.color;
-            if (clickedColor != GameManager.Instance.grayMaterial.color)
+            Color gray = GameManager.Instance.grayMaterial.color;
+
+            if (clickedColor != gray)
             {
-                golemRenderer.material.color = clickedColor;
-                currentColor = clickedColor;
-                Debug.Log("Absorbed color from " + clickedObject.name + ": " + clickedColor);
+                ApplyColorToGolem(clickedRenderer.material);
+                Debug.Log("Absorbed color from " + sourceObject.name + ": " + clickedColor);
+                lastColorInteractionTime = Time.time;
+            }
+            else
+            {
+                Debug.Log("Clicked color is gray — nothing to absorb.");
             }
         }
+        else
+        {
+            Debug.Log("No renderer found on clicked object.");
+        }
+    }
+
+    void ApplyColorToGolem(Material newMat)
+    {
+        currentColor = newMat;
+
+        Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in allRenderers)
+        {
+            renderer.material.color = newMat.color;
+        }
+    }
+
+    void ClearGolemColor()
+    {
+        currentColor = GameManager.Instance.grayMaterial;
+
+        Color gray = GameManager.Instance.grayMaterial.color;
+
+        Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in allRenderers)
+        {
+            renderer.material.color = gray;
+        }
+
+        Debug.Log("Golem color cleared to gray.");
     }
 
     Vector3 GetRandomPositionNearPlayer()
@@ -140,6 +190,13 @@ public class GolemAI : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isClearing)
+        {
+            Debug.Log("OnTriggerEnter skipped during clear.");
+            return;
+        }
+
+
         if (Time.time < lastColorInteractionTime + colorInteractionCooldown)
         {
             Debug.Log("OnTriggerEnter is on cooldown.");
@@ -187,18 +244,15 @@ public class GolemAI : MonoBehaviour
             {
                 Debug.Log("Golem is empty, absorbing color from child.");
                 absorbedColor = childColor;
-                golemRenderer.material.color = absorbedColor;
-                currentColor = absorbedColor;
+                ApplyColorToGolem(childRenderer.material);
             }
             else
             {
-                if (currentColor == null)
+                if (currentColor == GameManager.Instance.grayMaterial)
                 {
                     Debug.Log("Swapping colors between Golem and child.");
                     absorbedColor = childColor;
-                    Color tempColor = golemColor;
-                    golemRenderer.material.color = absorbedColor;
-                    currentColor = absorbedColor;
+                    ApplyColorToGolem(childRenderer.material);
                     didSwap = true;
                 }
             }
@@ -229,4 +283,14 @@ public class GolemAI : MonoBehaviour
             }
         }
     }
+
+    System.Collections.IEnumerator DelayedAbsorb(GameObject sourceObject)
+    {
+        yield return null;
+        TryAbsorbColor(sourceObject);
+        isClearing = false; // Flag OFF after absorb
+    }
+
+
+
 }
