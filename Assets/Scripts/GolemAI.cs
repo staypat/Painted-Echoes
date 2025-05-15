@@ -51,33 +51,33 @@ public class GolemAI : MonoBehaviour
             roamTimer = 0;
         }
 
-        // Right-click detection with cooldown
-        // if (Input.GetMouseButtonDown(1))
-        // {
+        //Right-click detection with cooldown
+        if (Input.GetMouseButtonDown(1))
+        {
 
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-        //     if (Physics.Raycast(ray, out hit, 4.5f))
-        //     {
-        //         Transform root = hit.collider.transform.root;
+            if (Physics.Raycast(ray, out hit, 4.5f))
+            {
+                Transform root = hit.collider.transform.root;
 
-        //         if (root.CompareTag("Golem"))
-        //         {
-        //             Debug.Log("Right-clicked on the Golem or its child!");
-        //             AbsorbColor(root.gameObject); // always pass the root Golem
-        //             lastColorInteractionTime = Time.time;
-        //         }
-        //         else
-        //         {
-        //             Debug.Log("Right-clicked on a different object.");
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("Raycast did not hit anything.");
-        //     }
-        // }
+                if (root.CompareTag("Golem"))
+                {
+                    Debug.Log("Right-clicked on the Golem or its child!");
+                    AbsorbColor(root.gameObject); // always pass the root Golem
+                    lastColorInteractionTime = Time.time;
+                }
+                else
+                {
+                    Debug.Log("Right-clicked on a different object.");
+                }
+            }
+            else
+            {
+                Debug.Log("Raycast did not hit anything.");
+            }
+        }
 
         Vector3 horizontalVelocity = new Vector3(agent.velocity.x, 0, agent.velocity.z);
         bool isMoving = horizontalVelocity.magnitude > 0.3f;
@@ -105,34 +105,34 @@ public class GolemAI : MonoBehaviour
         }
     }
 
-    void AbsorbGolem(InputAction.CallbackContext context)
-    {
-        {
+    // void AbsorbGolem(InputAction.CallbackContext context)
+    // {
+    //     {
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+    //         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //         RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 4.5f))
-            {
-                Transform root = hit.collider.transform.root;
+    //         if (Physics.Raycast(ray, out hit, 4.5f))
+    //         {
+    //             Transform root = hit.collider.transform.root;
 
-                if (root.CompareTag("Golem"))
-                {
-                    Debug.Log("Right-clicked on the Golem or its child!");
-                    AbsorbColor(root.gameObject); // always pass the root Golem
-                    lastColorInteractionTime = Time.time;
-                }
-                else
-                {
-                    Debug.Log("Right-clicked on a different object.");
-                }
-            }
-            else
-            {
-                Debug.Log("Raycast did not hit anything.");
-            }
-        }
-    }
+    //             if (root.CompareTag("Golem"))
+    //             {
+    //                 Debug.Log("Right-clicked on the Golem or its child!");
+    //                 AbsorbColor(root.gameObject); // always pass the root Golem
+    //                 lastColorInteractionTime = Time.time;
+    //             }
+    //             else
+    //             {
+    //                 Debug.Log("Right-clicked on a different object.");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log("Raycast did not hit anything.");
+    //         }
+    //     }
+    // }
 
     void AbsorbColor(GameObject clickedObject)
     {
@@ -321,13 +321,13 @@ public class GolemAI : MonoBehaviour
         isClearing = false; // Flag OFF after absorb
     }
 
-    private void OnEnable()
-    {
-        absorbAction.action.started += AbsorbGolem;
-    }
+    // private void OnEnable()
+    // {
+    //     absorbAction.action.started += AbsorbGolem;
+    // }
 
-    private void OnDisable()
-    {
-        absorbAction.action.started -= AbsorbGolem;
-    }
+    // private void OnDisable()
+    // {
+    //     absorbAction.action.started -= AbsorbGolem;
+    // }
 }
