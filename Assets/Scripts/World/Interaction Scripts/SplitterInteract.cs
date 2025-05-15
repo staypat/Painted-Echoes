@@ -78,6 +78,7 @@ public class SplitterInteract : ObjectInteract
         else {
             Debug.Log("Splitting colors...");
             SplitColors();
+            AnalyticsManager.Instance.ObjectInteracted("Splitter");
         }
     }
 
