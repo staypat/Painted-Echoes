@@ -142,7 +142,7 @@ public class AnalyticsManager : MonoBehaviour
 
     public void TutorialCompleted()
     {
-        if (!isInitialized && playerOptedOut)
+        if (!isInitialized || playerOptedOut)
         {
             Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
@@ -156,7 +156,7 @@ public class AnalyticsManager : MonoBehaviour
 
     public void LevelCompleted(string levelName)
     {
-        if (!isInitialized && playerOptedOut)
+        if (!isInitialized || playerOptedOut)
         {
             Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
@@ -170,7 +170,7 @@ public class AnalyticsManager : MonoBehaviour
 
     public void ObjectInteracted(string objectName)
     {
-        if (!isInitialized && playerOptedOut)
+        if (!isInitialized || playerOptedOut)
         {
             Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
@@ -184,7 +184,7 @@ public class AnalyticsManager : MonoBehaviour
 
     public void AvgFPS(int averageFps)
     {
-        if (!isInitialized && playerOptedOut)
+        if (!isInitialized || playerOptedOut)
         {
             Debug.LogWarning("Analytics Service is not initialized or Player opted out. Cannot send event.");
             return;
