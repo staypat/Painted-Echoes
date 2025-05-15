@@ -8,7 +8,17 @@ public class AnalyticsManager : MonoBehaviour
 {
     public static AnalyticsManager Instance { get; private set; }
 
+    public bool playerOptedOut = false;
+    public bool hasSeenPrivacyPolicy = false;
+
     private bool isInitialized = false;
+
+    private int frameCount = 0;
+    private float elapsedTime = 0f;
+    private float averageFps = 0f;
+
+    public float fpsUpdateInterval = 10f;
+
 
     private void Awake()
     {
@@ -33,9 +43,20 @@ public class AnalyticsManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        frameCount++;
+        elapsedTime += Time.unscaledDeltaTime;
+
+        if (elapsedTime >= fpsUpdateInterval)
+        {
+            averageFps = frameCount / elapsedTime;
+            frameCount = 0;
+            elapsedTime = 0f;
+
+            AvgFPS(Mathf.RoundToInt(averageFps));
+            Debug.Log($"[AnalyticsManager] Average FPS: {Mathf.RoundToInt(averageFps)}");
+        }
     }
 
     public void DisplayUnityPrivacyPolicy()
@@ -89,8 +110,36 @@ public class AnalyticsManager : MonoBehaviour
         }
         AnalyticsService.Instance.CustomData("LevelCompleted", new Dictionary<string, object>
         {
-            { "LevelName", levelName },
+            { "Level_Name", levelName },
         });
         Debug.Log($"Level Completed Event Sent for Level: {levelName}");
+    }
+
+    public void ObjectInteracted(string objectName)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("ObjectInteracted", new Dictionary<string, object>
+        {
+            { "Object_Name", objectName },
+        });
+        Debug.Log($"Object Interacted Event Sent for Object: {objectName}");
+    }
+
+    public void AvgFPS(int averageFps)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("AverageFPS", new Dictionary<string, object>
+        {
+            { "FPS", averageFps },
+        });
+        Debug.Log($"Average FPS Event Sent: {averageFps}");
     }
 }
