@@ -13,6 +13,13 @@ public class AnalyticsManager : MonoBehaviour
 
     private bool isInitialized = false;
 
+    private int frameCount = 0;
+    private float elapsedTime = 0f;
+    private float averageFps = 0f;
+
+    public float fpsUpdateInterval = 10f;
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,9 +43,20 @@ public class AnalyticsManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        frameCount++;
+        elapsedTime += Time.unscaledDeltaTime;
+
+        if (elapsedTime >= fpsUpdateInterval)
+        {
+            averageFps = frameCount / elapsedTime;
+            frameCount = 0;
+            elapsedTime = 0f;
+
+            AvgFPS(Mathf.RoundToInt(averageFps));
+            Debug.Log($"[AnalyticsManager] Average FPS: {Mathf.RoundToInt(averageFps)}");
+        }
     }
 
     public void DisplayUnityPrivacyPolicy()
@@ -109,5 +127,19 @@ public class AnalyticsManager : MonoBehaviour
             { "Object_Name", objectName },
         });
         Debug.Log($"Object Interacted Event Sent for Object: {objectName}");
+    }
+
+    public void AvgFPS(int averageFps)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("AverageFPS", new Dictionary<string, object>
+        {
+            { "FPS", averageFps },
+        });
+        Debug.Log($"Average FPS Event Sent: {averageFps}");
     }
 }
