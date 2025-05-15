@@ -89,8 +89,22 @@ public class AnalyticsManager : MonoBehaviour
         }
         AnalyticsService.Instance.CustomData("LevelCompleted", new Dictionary<string, object>
         {
-            { "LevelName", levelName },
+            { "Level_Name", levelName },
         });
         Debug.Log($"Level Completed Event Sent for Level: {levelName}");
+    }
+
+    public void ObjectInteracted(string objectName)
+    {
+        if (!isInitialized)
+        {
+            Debug.LogWarning("Analytics Service is not initialized. Cannot send event.");
+            return;
+        }
+        AnalyticsService.Instance.CustomData("ObjectInteracted", new Dictionary<string, object>
+        {
+            { "ObjectName", objectName },
+        });
+        Debug.Log($"Object Interacted Event Sent for Object: {objectName}");
     }
 }
