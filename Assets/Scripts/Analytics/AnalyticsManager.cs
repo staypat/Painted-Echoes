@@ -8,6 +8,9 @@ public class AnalyticsManager : MonoBehaviour
 {
     public static AnalyticsManager Instance { get; private set; }
 
+    public bool playerOptedOut = false;
+    public bool hasSeenPrivacyPolicy = false;
+
     private bool isInitialized = false;
 
     private void Awake()
@@ -103,7 +106,7 @@ public class AnalyticsManager : MonoBehaviour
         }
         AnalyticsService.Instance.CustomData("ObjectInteracted", new Dictionary<string, object>
         {
-            { "ObjectName", objectName },
+            { "Object_Name", objectName },
         });
         Debug.Log($"Object Interacted Event Sent for Object: {objectName}");
     }
