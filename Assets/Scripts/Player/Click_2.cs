@@ -357,7 +357,7 @@ public class Click_2 : MonoBehaviour
                     // Disable the renderer
                     renderer.enabled = false;
 
-                    Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
+                    //Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
                 }
             }
 
