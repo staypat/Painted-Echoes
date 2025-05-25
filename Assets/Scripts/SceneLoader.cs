@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class SceneLoader : MonoBehaviour
 {
     public GameObject mainMenuButtonFirst;
+    public GameObject privacyAgreeButtonFirst;
+    public GameObject privacyNoticePromptUI;
     public void LoadScene()
     {
         AudioManager.instance.Play("UIConfirm");
@@ -27,8 +29,23 @@ public class SceneLoader : MonoBehaviour
     }
 
     void Awake()
-    {
-        EventSystem.current.SetSelectedGameObject(mainMenuButtonFirst);
+    {   
+        Scene activeScene = SceneManager.GetActiveScene();
+
+        AnalyticsManager.Instance.hasSeenPrivacyPolicy = PlayerPrefs.GetInt("HasSeenPrivacyPolicy", 0) == 1;
+        
+        if (!AnalyticsManager.Instance.hasSeenPrivacyPolicy && activeScene.name == "MainMenu")
+        {
+            AnalyticsManager.Instance.hasSeenPrivacyPolicy = true;
+            PlayerPrefs.SetInt("HasSeenPrivacyPolicy", 1);
+            PlayerPrefs.Save();
+            privacyNoticePromptUI.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(privacyAgreeButtonFirst);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(mainMenuButtonFirst);
+        }
     }
 
     // Start is called before the first frame update

@@ -53,6 +53,9 @@ public class Click_2 : MonoBehaviour
     public GameObject ScrollText;
     public GameObject enableSaveButton;
 
+    public GameObject golem; // Drag the Golem GameObject into this field in the Inspector
+
+
     public TMP_Text shootTextComponent;
     public TMP_Text absorbTextComponent;
     public GameObject photographTextEnable;
@@ -60,12 +63,15 @@ public class Click_2 : MonoBehaviour
     private string currentAbsorbKeybind;
 
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
+    public Animator animator;
 
     
     void Start()
     {   
 
         gunRenderer = GetComponent<Renderer>();
+
+        // golem.SetActive(false); // Simple and clean
 
         if (gunRenderer == null)
         {
@@ -321,6 +327,8 @@ public class Click_2 : MonoBehaviour
             AudioManager.instance.Play("LevelComplete");
 
             turnOffBarrier();
+            golem.SetActive(true);
+
             return true;
         }
         else
@@ -348,7 +356,8 @@ public class Click_2 : MonoBehaviour
                 {
                     // Disable the renderer
                     renderer.enabled = false;
-                    //Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
+
+                    Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
                 }
             }
 
@@ -470,6 +479,7 @@ public class Click_2 : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, maxDistance) && AmmoManager.Instance.GetCurrentAmmo(currentGunColor) > 0)
         {
+            animator.Play("paintbrushPaint");
             GameObject clickedObject = hit.collider.gameObject;
             Transform parent = clickedObject.transform.parent;
             Transform subparent = parent != null ? parent : null; // Get the subparent
@@ -503,6 +513,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
@@ -581,6 +592,7 @@ public class Click_2 : MonoBehaviour
                                     if (ShootText != null)
                                     {
                                         ShootText.SetActive(false);
+                                        AnalyticsManager.Instance.TutorialCompleted();
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
@@ -627,6 +639,7 @@ public class Click_2 : MonoBehaviour
 
             victoryUI.ShowVictoryMessage();
             AudioManager.instance.Play("LevelComplete");
+            AnalyticsManager.Instance.LevelCompleted(currentRoom.name);
         }
     }
 
@@ -699,6 +712,7 @@ public class Click_2 : MonoBehaviour
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);
             brushTip.GetComponent<Renderer>().material = GetMaterialFromString(currentGunColor);
+            animator.Play("paintbrushAbsorb");
 
             // Increse ammo count for the absorbed color
             AmmoManager.Instance.AddAmmo(1, currentGunColor);

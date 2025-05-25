@@ -78,6 +78,7 @@ public class SplitterInteract : ObjectInteract
         else {
             Debug.Log("Splitting colors...");
             SplitColors();
+            AnalyticsManager.Instance.ObjectInteracted("Splitter");
         }
     }
 
@@ -133,6 +134,7 @@ public class SplitterInteract : ObjectInteract
                 Debug.Log($"Collecting color from slot 1: {slotOneColor}");
                 AmmoManager.Instance.AddAmmo(1, slotOneColor);
                 ammoUI.DiscoverColor(slotOneColor);
+                EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
                 // Add color to the scrolling on brush and update the UI
                 if (!colorTracker.absorbedColorTags.Contains(slotOneColor))
                 {
@@ -166,6 +168,7 @@ public class SplitterInteract : ObjectInteract
                 Debug.Log($"Collecting color from slot 2: {slotTwoColor}");
                 AmmoManager.Instance.AddAmmo(1, slotTwoColor);
                 ammoUI.DiscoverColor(slotTwoColor);
+                EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
                 // Add color to the scrolling on brush and update the UI
                 if (!colorTracker.absorbedColorTags.Contains(slotTwoColor))
                 {
@@ -199,6 +202,7 @@ public class SplitterInteract : ObjectInteract
                 Debug.Log($"Collecting color from slot 3: {slotThreeColor}");
                 AmmoManager.Instance.AddAmmo(1, slotThreeColor);
                 ammoUI.DiscoverColor(slotThreeColor);
+                EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
                 // Add color to the scrolling on brush and update the UI
                 if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
                 {
@@ -316,6 +320,7 @@ public class SplitterInteract : ObjectInteract
         }
         paletteManager.updatePaletteUI();
         collectAllButton.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
     }
 
     private void PlaySelect()
@@ -416,6 +421,7 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log("Re-enabling SplitterUIPanel");
             SplitterUIPanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
         }
 
         currentColor = ammoType;

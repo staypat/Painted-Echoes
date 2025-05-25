@@ -31,6 +31,7 @@ public class ColorButtonManager : MonoBehaviour
     public InputActionReference exitAction;
     public TMP_Text exitKeybindText;
     private GameObject selectedColorButtonFirst;
+    public GameObject colorReturnButtonFirst;
 
     private void Start()
     {
@@ -98,6 +99,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             //Debug.Log("Re-enabling MixerUIPanel");
             mixerUIPanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(colorReturnButtonFirst);
         }
 
         if (currentSlot == 1) { slotOneColor = ammoType; } else { slotTwoColor = ammoType; }
@@ -202,6 +204,7 @@ public class ColorButtonManager : MonoBehaviour
         // Add the new color to the ammo inventory and update the UI
         AmmoManager.Instance.AddAmmo(1, slotThreeColor);
         ammoUI.DiscoverColor(slotThreeColor);
+        EventSystem.current.SetSelectedGameObject(colorReturnButtonFirst);
 
         // Add color to the scrolling on brush and update the UI
         if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
@@ -303,7 +306,7 @@ public class ColorButtonManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(colorReturnButtonFirst);
     }
 
 
