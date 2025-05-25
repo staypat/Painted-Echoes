@@ -358,22 +358,22 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Golem color saved: " + gameState.golemColor);
             }
 
-            if (golemAI != null)
-            {
-                gameState.followRadius = golemAI.followRadius;
-                gameState.roamRadius = golemAI.roamRadius;
-                gameState.roamInterval = golemAI.roamInterval;
-                gameState.lastColorInteractionTime = (float)typeof(GolemAI)
-                    .GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                    .GetValue(golemAI);
-                gameState.isClearing = (bool)typeof(GolemAI)
-                    .GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                    .GetValue(golemAI);
-                gameState.isRolling = (bool)typeof(GolemAI)
-                    .GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                    .GetValue(golemAI);
-                Debug.Log("Golem AI saved successfully");
-            }
+            // if (golemAI != null)
+            // {
+            //     gameState.followRadius = golemAI.followRadius;
+            //     gameState.roamRadius = golemAI.roamRadius;
+            //     gameState.roamInterval = golemAI.roamInterval;
+            //     gameState.lastColorInteractionTime = (float)typeof(GolemAI)
+            //         .GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     gameState.isClearing = (bool)typeof(GolemAI)
+            //         .GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     gameState.isRolling = (bool)typeof(GolemAI)
+            //         .GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     Debug.Log("Golem AI saved successfully");
+            // }
 
             if (agent != null)
             {
@@ -661,14 +661,23 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            GameObject golem = GameObject.Find("Golem");
-            Debug.Log("Golem found: " + golem);
-            
-            if (golem == null)
+            // GameObject golem = GameObject.Find("Golem");
+            GameObject golem = FindDisabledObjectByName("Golem");
+            if (golem != null)
             {
+                Debug.Log("Found disabled Golem:" + golem);
                 golem.SetActive(true);
-                Debug.Log("Golem found: " + (golem != null));
             }
+            else
+            {
+                Debug.Log("Golem not found.");
+            }
+            
+            // if (golem == null)
+            // {
+            //     golem.SetActive(true);
+            //     Debug.Log("Golem found: " + (golem != null));
+            // }
             
             if (golem != null)
             {
@@ -710,21 +719,21 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Golem color loaded: " + gameState.golemColor);
                 }
 
-                GolemAI golemAI = golem.GetComponent<GolemAI>();
-                if (golemAI != null)
-                {
-                    golemAI.followRadius = gameState.followRadius;
-                    golemAI.roamRadius = gameState.roamRadius;
-                    golemAI.roamInterval = gameState.roamInterval;
+                // GolemAI golemAI = golem.GetComponent<GolemAI>();
+                // if (golemAI != null)
+                // {
+                //     golemAI.followRadius = gameState.followRadius;
+                //     golemAI.roamRadius = gameState.roamRadius;
+                //     golemAI.roamInterval = gameState.roamInterval;
 
-                    typeof(GolemAI).GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                        .SetValue(golemAI, gameState.lastColorInteractionTime);
-                    typeof(GolemAI).GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                        .SetValue(golemAI, gameState.isClearing);
-                    typeof(GolemAI).GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                        .SetValue(golemAI, gameState.isRolling);
-                    Debug.Log("Golem AI loaded successfully");
-                }
+                //     typeof(GolemAI).GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.lastColorInteractionTime);
+                //     typeof(GolemAI).GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.isClearing);
+                //     typeof(GolemAI).GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.isRolling);
+                //     Debug.Log("Golem AI loaded successfully");
+                // }
 
                 Debug.Log("Golem loaded successfully");
             }
@@ -841,6 +850,23 @@ public class GameManager : MonoBehaviour
             //Debug.LogWarning("Material not found for color: " + colorName);
             return null; // You can change this to a default material if needed
         }
+    }
+
+    public static GameObject FindDisabledObjectByName(string name)
+    {
+        // Finds ALL objects of type Transform, including inactive ones.
+        Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>();
+
+        foreach (Transform obj in allObjects)
+        {
+            if (obj.name == name)
+            {
+                // Make sure it's not a prefab or asset, but an actual scene GameObject
+                if (obj.hideFlags == HideFlags.None)
+                    return obj.gameObject;
+            }
+        }
+        return null;
     }
 
     void Update()
