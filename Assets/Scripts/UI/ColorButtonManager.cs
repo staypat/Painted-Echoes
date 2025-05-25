@@ -60,7 +60,7 @@ public class ColorButtonManager : MonoBehaviour
             if (colorSelectionPanel.activeSelf)
             {
                 currentSlot = slot; // Set the current slot for color selection
-                Debug.Log("Opening ColorSelectionPanel");
+                //Debug.Log("Opening ColorSelectionPanel");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 instructions.SetActive(true);
@@ -88,15 +88,15 @@ public class ColorButtonManager : MonoBehaviour
     {
         if (colorSelectionPanel != null && colorSelectionPanel.activeSelf)
         {
-            Debug.Log("Hiding ColorSelectionPanel");
+            //Debug.Log("Hiding ColorSelectionPanel");
             colorSelectionPanel.SetActive(false);
             AudioManager.instance.Play("UIBack");
-            Debug.Log("Testing why this is active?" + colorSelectionPanel != null);
+            //Debug.Log("Testing why this is active?" + colorSelectionPanel != null);
         }
 
         if (mixerUIPanel != null)
         {
-            Debug.Log("Re-enabling MixerUIPanel");
+            //Debug.Log("Re-enabling MixerUIPanel");
             mixerUIPanel.SetActive(true);
         }
 
@@ -193,7 +193,7 @@ public class ColorButtonManager : MonoBehaviour
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
         }
         else{ 
-            Debug.Log("Invalid color combination"); 
+            //Debug.Log("Invalid color combination"); 
             slotThreeButton.SetActive(false);
         }
     }
@@ -268,7 +268,7 @@ public class ColorButtonManager : MonoBehaviour
         Dictionary<string, int> ammo = AmmoManager.Instance.GetAmmoInventory();
         foreach (var entry in ammo)
         {
-            Debug.Log($"Ammo Type: {entry.Key}, Count: {entry.Value}");
+            //Debug.Log($"Ammo Type: {entry.Key}, Count: {entry.Value}");
         }
 
         // Clear previous buttons
@@ -281,7 +281,7 @@ public class ColorButtonManager : MonoBehaviour
 
             if (amount > 0) // Only show ammo that the player has
             {
-                Debug.Log($"Spawning button for: {ammoType}");
+                //Debug.Log($"Spawning button for: {ammoType}");
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
                 // change the position of the button to be in a row across the screen
@@ -314,7 +314,7 @@ public class ColorButtonManager : MonoBehaviour
             AudioManager.instance.Play("UIError");
             return;
         }
-        Debug.Log($"Selected Ammo: {ammoType}");
+        //Debug.Log($"Selected Ammo: {ammoType}");
         // Here, you can set the player's ammo type or update the UI
 
         // Close the color selection panel after selection

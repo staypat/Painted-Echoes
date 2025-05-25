@@ -159,7 +159,7 @@ public class Click_2 : MonoBehaviour
 
     public void GiveColor()
     {
-        Debug.Log("GiveColor called");
+        //Debug.Log("GiveColor called");
         currentGunColor = "Black";
         absorbedColors.Add(GetMaterialFromString(currentGunColor));
         absorbedColorTags.Add(currentGunColor);
@@ -173,7 +173,7 @@ public class Click_2 : MonoBehaviour
         currentRoom = newRoom;
         isRoomComplete = false;
         hasVictoryBeenTriggered = false;
-        Debug.Log("Current room: " + currentRoom.name);
+        //Debug.Log("Current room: " + currentRoom.name);
 
     }
 
@@ -234,7 +234,7 @@ public class Click_2 : MonoBehaviour
 
         for(int i = 0; i < MismatchedColors.Count; i++)
         {
-            Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
+            //Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
         }
         // Iterate through each key-value pair in the CorrectHouseColors dictionary
         foreach (var correctPair in CorrectHouseColors)
@@ -268,7 +268,7 @@ public class Click_2 : MonoBehaviour
                 else
                 {
                     count += 1;
-                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -298,19 +298,19 @@ public class Click_2 : MonoBehaviour
         ToyManager toyManager = FindObjectOfType<ToyManager>();
         if (toyManager.stuffedBearPlaced == true)
         {
-            Debug.Log("Stuffed Bear Placed");
+            //Debug.Log("Stuffed Bear Placed");
             count += 1;
         }
 
-        Debug.Log($"Stuffed Bear: {toyManager.stuffedBearPlaced}");
+        //Debug.Log($"Stuffed Bear: {toyManager.stuffedBearPlaced}");
 
         if (toyManager.toyTrainPlaced == true)
         {
-            Debug.Log("Toy Train Placed");
+            //Debug.Log("Toy Train Placed");
             count += 1;
         }
 
-        Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
+        //Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
 
         if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
@@ -348,7 +348,7 @@ public class Click_2 : MonoBehaviour
                 {
                     // Disable the renderer
                     renderer.enabled = false;
-                    Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
+                    //Debug.Log($"Disabled Renderer on: {renderer.gameObject.name}");
                 }
             }
 
@@ -359,13 +359,13 @@ public class Click_2 : MonoBehaviour
                 {
                     // Disable the collider
                     collider.enabled = false;
-                    Debug.Log($"Disabled Collider on: {collider.gameObject.name}");
+                    //Debug.Log($"Disabled Collider on: {collider.gameObject.name}");
                 }
             }
         }
         else
         {
-            Debug.Log("The current room has no parent.");
+            //Debug.Log("The current room has no parent.");
         }
     }
 
@@ -460,7 +460,7 @@ public class Click_2 : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
+        //Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
         bool ammoFlag = true;
         
         if(GameManager.inMenu)
@@ -518,7 +518,7 @@ public class Click_2 : MonoBehaviour
                                     effect.GetComponent<ParticleSystem>().subEmitters.GetSubEmitterSystem(0).startColor = originalColor;
 
                                     effect.Play(); // Ensure it's playing
-                                    Debug.Log("Particle System Instantiated at: " + child.position);
+                                    //Debug.Log("Particle System Instantiated at: " + child.position);
 
                                     AudioManager.instance.PlayOneShot("ColorCorrect"); // Play paint splatter sound effect
 
@@ -634,7 +634,7 @@ public class Click_2 : MonoBehaviour
     {   
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
+        //Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
 
         roomCheck(currentRoom);
         if (CompareColorValues() == true)
@@ -739,13 +739,13 @@ public class Click_2 : MonoBehaviour
                         childRenderer.material = GameManager.Instance.grayMaterial; // Set color to gray
                     }
                 }
-                Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
+                //Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
             }
             else
             {
                 // If no subparent, just turn the clicked object gray
                 clickedRenderer.material = GameManager.Instance.grayMaterial;
-                Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
+                //Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
             
             // Update palette UI

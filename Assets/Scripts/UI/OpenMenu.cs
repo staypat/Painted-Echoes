@@ -38,7 +38,7 @@ public class OpenMenu : MonoBehaviour
         menuUI.SetActive(false);
         optionsUI.SetActive(true);
         AudioManager.instance.Play("UIOpen");
-        Debug.Log("Options Opened");
+        //Debug.Log("Options Opened");
     }
 
     public void CloseOptions()

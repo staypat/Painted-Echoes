@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(rayOrigin, Vector3.down, groundCheckDistance, groundLayer);
 
         // Debugging - Visualize Ray
-        Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
+        //Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
     }
 
     private void Jump(InputAction.CallbackContext context)

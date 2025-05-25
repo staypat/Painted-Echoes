@@ -75,7 +75,7 @@ public class PaletteManager : MonoBehaviour
             originalScales[i] = targetObjects[i].transform.localScale;
         }
 
-        Debug.Log("PaletteManager initialized in Awake");
+        //Debug.Log("PaletteManager initialized in Awake");
     }
 
 
