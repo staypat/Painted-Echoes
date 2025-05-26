@@ -15,13 +15,12 @@ public class GolemAI : MonoBehaviour
     private Material currentColor;
 
     private float colorInteractionCooldown = 2f;
-    private float lastColorInteractionTime = -Mathf.Infinity;
+    public float lastColorInteractionTime = -Mathf.Infinity;
     public Animator animator;
     private bool isRolling = false;
 
     private bool isClearing = false;
     public InputActionReference absorbAction;
-
 
     void Start()
     {
@@ -55,7 +54,7 @@ public class GolemAI : MonoBehaviour
         // if (Input.GetMouseButtonDown(1))
         // {
 
-        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         //     RaycastHit hit;
 
         //     if (Physics.Raycast(ray, out hit, 4.5f))
@@ -65,7 +64,7 @@ public class GolemAI : MonoBehaviour
         //         if (root.CompareTag("Golem"))
         //         {
         //             Debug.Log("Right-clicked on the Golem or its child!");
-        //             AbsorbColor(root.gameObject); // always pass the root Golem
+        //             GolemColor(root.gameObject); // always pass the root Golem
         //             lastColorInteractionTime = Time.time;
         //         }
         //         else
@@ -107,36 +106,34 @@ public class GolemAI : MonoBehaviour
 
     void AbsorbGolem(InputAction.CallbackContext context)
     {
+
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 4.5f))
         {
+            Transform root = hit.collider.transform.root;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 4.5f))
+            if (root.CompareTag("Golem"))
             {
-                Transform root = hit.collider.transform.root;
-
-                if (root.CompareTag("Golem"))
-                {
-                    Debug.Log("Right-clicked on the Golem or its child!");
-                    AbsorbColor(root.gameObject); // always pass the root Golem
-                    lastColorInteractionTime = Time.time;
-                }
-                else
-                {
-                    Debug.Log("Right-clicked on a different object.");
-                }
+                Debug.Log("Right-clicked on the Golem or its child!");
+                GolemColor(root.gameObject); // always pass the root Golem
+                lastColorInteractionTime = Time.time;
             }
             else
             {
-                Debug.Log("Raycast did not hit anything.");
+                Debug.Log("Right-clicked on a different object.");
             }
+        }
+        else
+        {
+            Debug.Log("Raycast did not hit anything.");
         }
     }
 
-    void AbsorbColor(GameObject clickedObject)
+    public void GolemColor(GameObject clickedObject)
     {
-        Debug.Log("AbsorbColor called on: " + currentColor);
+        Debug.Log("GolemColor called on: " + currentColor);
         if (currentColor != null && currentColor != GameManager.Instance.grayMaterial)
         {
             Debug.Log("Golem has color, clearing to gray. Raycast temporarily disabled.");
@@ -316,6 +313,7 @@ public class GolemAI : MonoBehaviour
 
     System.Collections.IEnumerator DelayedAbsorb(GameObject sourceObject)
     {
+        Debug.Log("Starting delayed absorb for: " + sourceObject.name);
         yield return null;
         TryAbsorbColor(sourceObject);
         isClearing = false; // Flag OFF after absorb
@@ -323,11 +321,11 @@ public class GolemAI : MonoBehaviour
 
     private void OnEnable()
     {
-        absorbAction.action.started += AbsorbGolem;
+        absorbAction.action.performed += AbsorbGolem;
     }
 
     private void OnDisable()
     {
-        absorbAction.action.started -= AbsorbGolem;
+        absorbAction.action.performed -= AbsorbGolem;
     }
 }
