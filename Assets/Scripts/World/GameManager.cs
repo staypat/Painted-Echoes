@@ -710,12 +710,17 @@ public class GameManager : MonoBehaviour
                 Renderer golemRenderer = golem.GetComponent<Renderer>();
                 if (golemRenderer != null)
                 {
-                    Material mat = Resources.Load<Material>("Materials/" + gameState.golemMaterialName);
-                    if (mat != null)
-                    {
-                        golemRenderer.material = new Material(mat);
-                    }
-                    golemRenderer.material.color = gameState.golemColor;
+                    // Material mat = Resources.Load<Material>("Materials/" + gameState.golemMaterialName);
+                    // if (mat != null)
+                    // {
+                    //     golemRenderer.material = new Material(mat);
+                    //     Debug.Log("Golem material loaded: " + gameState.golemMaterialName);
+                    // }
+                    GolemAI golemAI = golem.GetComponent<GolemAI>();
+                    clickScript = FindObjectOfType<Click_2>();
+                    golemAI.ApplyColorToGolem(clickScript.GetMaterialFromString(gameState.golemMaterialName));
+
+                    // golemRenderer.material.color = gameState.golemColor;
                     Debug.Log("Golem color loaded: " + gameState.golemColor);
                 }
 
