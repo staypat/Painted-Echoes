@@ -119,6 +119,7 @@ public class GolemAI : MonoBehaviour
                 Debug.Log("Right-clicked on the Golem or its child!");
                 GolemColor(root.gameObject); // always pass the root Golem
                 lastColorInteractionTime = Time.time;
+                ClearGolemColor();
             }
             else
             {
@@ -175,13 +176,15 @@ public class GolemAI : MonoBehaviour
         }
     }
 
-    void ApplyColorToGolem(Material newMat)
+    public void ApplyColorToGolem(Material newMat)
     {
+        Debug.Log("Color: " + newMat);
         currentColor = newMat;
 
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in allRenderers)
         {
+            renderer.material = newMat;
             renderer.material.color = newMat.color;
         }
     }
