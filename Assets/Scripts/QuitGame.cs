@@ -8,7 +8,7 @@ public class QuitGame : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Game is quitting..."); // Log message for testing in editor
+        //Debug.Log("Game is quitting..."); // Log message for testing in editor
         Application.Quit(); // Quits the game
 
         // NOTE: Application.Quit() only works in a built application.

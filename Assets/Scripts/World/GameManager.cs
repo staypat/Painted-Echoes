@@ -222,11 +222,11 @@ public class GameManager : MonoBehaviour
                 gameState.mismatchedColorValues.Add(pair.Value);
             }
 
-            Debug.Log("Click 2 Saved Successfully");
+            //Debug.Log("Click 2 Saved Successfully");
         }
 
         // Save camera settings
-        Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
+        //Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
         if (playerCamera != null)
         {
             gameState.mouseSensitivity = playerCamera.mouseSensitivity;
@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
                 gameState.playerBodyName = playerCamera.playerBody.gameObject.name;
                 gameState.playerPosition = playerCamera.playerBody.position;
                 gameState.playerRotation = playerCamera.playerBody.rotation;
-                Debug.Log("Player saved Siccessfully");
+                //Debug.Log("Player saved Siccessfully");
             }
             // else
             // {
@@ -336,10 +336,10 @@ public class GameManager : MonoBehaviour
         }
 
         // Serialize and save to file
-        Debug.Log("Game State Saved Successfully,");
+        //Debug.Log("Game State Saved Successfully,");
         string json = JsonUtility.ToJson(gameState, true);
         File.WriteAllText(filePath, json);
-        Debug.Log(filePath);
+        //Debug.Log(filePath);
     }
 
     public void LoadSavedScene()
@@ -396,7 +396,7 @@ public class GameManager : MonoBehaviour
             hasScrolledFirstTime = gameState.hasScrolledFirstTime;
             
             clickScript = FindObjectOfType<Click_2>();
-            Debug.Log("CS2 is null: " + (clickScript == null));
+            //Debug.Log("CS2 is null: " + (clickScript == null));
             if (clickScript != null)
             {
                 clickScript.gunRenderer = GameObject.Find(gameState.gunRendererName)?.GetComponent<Renderer>();
@@ -411,15 +411,13 @@ public class GameManager : MonoBehaviour
                 
                 // Get the material based on the saved color tag (assuming you have a method like GetMaterialByTag)
                 Material savedMaterial = GetMaterialByName(savedColorTag);
-                Debug.Log("Saved Material: " + savedMaterial);
+                //Debug.Log("Saved Material: " + savedMaterial);
                 if (savedMaterial != null)
                 {
                     clickScript.ApplyColor(savedMaterial, savedMaterial.name);
                 }
 
                 clickScript.currentRoom = GameObject.Find(gameState.currentRoomName);
-                clickScript.roomCheck(clickScript.currentRoom);
-                
                 clickScript.brushTip = GameObject.Find(gameState.brushTipName);
 
                 
@@ -438,7 +436,7 @@ public class GameManager : MonoBehaviour
                     if (loadedMaterial == null)
                     {
                         loadedMaterial = GetMaterialByName("Default");
-                        //Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
+                        Debug.LogWarning("Material not found for: " + mat + ", defaulting to White.");
                     }
 
                     clickScript.absorbedColors.Add(loadedMaterial);
@@ -456,14 +454,12 @@ public class GameManager : MonoBehaviour
 
                 // Load MismatchedColors dictionary
                 clickScript.MismatchedColors.Clear();
-                // for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
-                // {
-                //     Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
-                //     clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
+                for (int i = 0; i < gameState.mismatchedColorKeys.Count; i++)
+                {
+                    //Debug.Log("Loading Mismatched Color: " + gameState.mismatchedColorKeys[i] + " with value: " + gameState.mismatchedColorValues[i]);
+                    clickScript.MismatchedColors[gameState.mismatchedColorKeys[i]] = gameState.mismatchedColorValues[i];
 
-                // }
-            
-
+                }
 
                 if (gameState.hasPressedRightClickFirstTime)
                 {
@@ -475,7 +471,7 @@ public class GameManager : MonoBehaviour
 
                 if (gameState.hasPressedTabFirstTime)
                 {
-                    Debug.Log("Tab Loaded Successfully");
+                    //Debug.Log("Tab Loaded Successfully");
                     if (clickScript.tabTutorialDisable != null)
                     {
                         clickScript.tabTutorialDisable.SetActive(false);
@@ -484,7 +480,7 @@ public class GameManager : MonoBehaviour
 
                 if (gameState.hasScrolledFirstTime)
                 {
-                    Debug.Log("Scroll Loaded Successfully");
+                    //Debug.Log("Scroll Loaded Successfully");
                     if (clickScript.ScrollText != null)
                     {
                         clickScript.ScrollText.SetActive(false);
@@ -505,7 +501,7 @@ public class GameManager : MonoBehaviour
 
             // Load camera settings
             playerCamera = FindObjectOfType<FirstPerson>();
-            Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
+            //Debug.Log(playerCamera == null ? "Player Camera not found 2.0" : "Player Camera found 2.0");
             if (playerCamera != null)
             {
                 playerCamera.mouseSensitivity = gameState.mouseSensitivity;
@@ -518,7 +514,7 @@ public class GameManager : MonoBehaviour
                     playerCamera.playerBody.position = gameState.playerPosition;
                     playerCamera.playerBody.rotation = gameState.playerRotation;
 
-                    Debug.Log("Player loaded Siccessfully");
+                    //Debug.Log("Player loaded Siccessfully");
                 }
                 else
                 {
@@ -584,77 +580,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            // GameObject mismatchedHouse = GameObject.Find("MismatchedHouse");
-            // if (mismatchedHouse != null)
-            // {
-            //     MeshRenderer[] meshRenderers = mismatchedHouse.GetComponentsInChildren<MeshRenderer>(true);
-
-            //     //for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
-            //     for (int i = 0; i < meshRenderers.Length && i < gameState.rendererNames.Count; i++)
-            //     {
-                    
-            //         if (meshRenderers[i].gameObject.name == gameState.rendererNames[i])
-            //         {
-            //             // // Restore MeshRenderer's enabled state only for "Barrier" objects
-
-            //             Dictionary<string, int> nameToIndex = new();
-            //             for (int j = 0; j < gameState.rendererNames.Count; j++)
-            //             {
-            //                 nameToIndex[gameState.rendererNames[j]] = j;
-            //             }
-
-            //             // if (meshRenderers[i].gameObject.name.StartsWith("Barrier"))
-            //             // {
-                
-            //             //     meshRenderers[i].enabled = gameState.rendererActiveStates[i];
-            //             //     Debug.Log("MeshRenderer loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + meshRenderers[i].enabled);
-            //             // }
-
-            //             foreach (MeshRenderer mr in meshRenderers)
-            //             {
-            //                 string name = mr.gameObject.name;
-            //                 if (!nameToIndex.ContainsKey(name)) continue;
-
-            //                 int index = nameToIndex[name];
-
-            //                 // Restore MeshRenderer's enabled state (only for Barriers)
-            //                 if (name.StartsWith("Barrier") && index < gameState.rendererActiveStates.Count)
-            //                 {
-            //                     mr.enabled = gameState.rendererActiveStates[index];
-            //                     //Debug.Log("MeshRenderer loaded for: " + name + ", enabled: " + mr.enabled);
-            //                 }
-
-            //                 Collider col = mr.GetComponent<Collider>();
-            //                 if (col != null && index < gameState.colliderActiveStates.Count)
-            //                 {
-            //                     col.enabled = gameState.colliderActiveStates[index];
-            //                 }
-
-            //             }
-
-            //             // Restore Collider's enabled state
-            //             Collider collider = meshRenderers[i].GetComponent<Collider>();
-            //             if (collider != null && i < gameState.colliderActiveStates.Count)
-            //             {
-            //                 //Debug.Log("Collider loaded for: " + meshRenderers[i].gameObject.name + ", enabled: " + collider.enabled);
-            //                 collider.enabled = gameState.colliderActiveStates[i];
-            //             }
-
-            //             // Restore color
-            //             if (meshRenderers[i].material.HasProperty("_Color"))
-            //             {
-            //                 meshRenderers[i].material.color = gameState.rendererColors[i];
-            //             }
-
-            //         }
-            //     }
-            // }
-            // else
-            // {
-            //     return;
-            // }
-
-
 
 
             // Load ammo datav
@@ -680,7 +605,7 @@ public class GameManager : MonoBehaviour
 
             if (gameState.hasPressedTabFirstTime)
             {
-                Debug.Log("Tab Loaded Successfully");
+                //Debug.Log("Tab Loaded Successfully");
                 if (ammoUI.tabTutorialDisable != null)
                 {
                     ammoUI.tabTutorialDisable.SetActive(false);
@@ -690,7 +615,7 @@ public class GameManager : MonoBehaviour
 
             if (gameState.hasScrolledFirstTime)
             {
-                Debug.Log("Scroll Loaded Successfully");
+                //Debug.Log("Scroll Loaded Successfully");
                 if (ammoUI.ScrollText != null)
                 {
                     ammoUI.ScrollText.SetActive(false);
@@ -781,7 +706,7 @@ public class GameManager : MonoBehaviour
         // }
         if (Input.GetKeyDown(KeyCode.V)) // Load game state
         {
-            Debug.Log("Game state loaded.");
+            //Debug.Log("Game state loaded.");
             LoadGameState();
 
         }
@@ -790,7 +715,7 @@ public class GameManager : MonoBehaviour
     public void OnApplicationQuit()
     {
         //SaveGameState(); // Automatically save the game when the application is quitting
-        Debug.Log("Application ending after " + Time.time + " seconds");
+        //Debug.Log("Application ending after " + Time.time + " seconds");
         Application.Quit();
 
 
