@@ -643,7 +643,7 @@ public class Click_2 : MonoBehaviour
         }
     }
 
-    void AbsorbColor(InputAction.CallbackContext context)
+    public void AbsorbColor(InputAction.CallbackContext context)
     {   
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
