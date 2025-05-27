@@ -13153,131 +13153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ebe0fa9cab9662498a4e7e15cbb61b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: Paint1
-    clip: {fileID: 8300000, guid: f7c5ead4d8b314e4199fa8f4b2fb1dd9, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Paint2
-    clip: {fileID: 8300000, guid: 707933b1d9d116d4bbd02e31f0cc62f5, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Paint3
-    clip: {fileID: 8300000, guid: 4e62c8c539b3b7a44be0169ae8d0bec9, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb1
-    clip: {fileID: 8300000, guid: fbf575c9cf723a145a8b426c22fd001d, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb2
-    clip: {fileID: 8300000, guid: b09a4fabfb96eb54f98334682f9c706c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Absorb3
-    clip: {fileID: 8300000, guid: d3f442975cc57c044b62483f3c9ace17, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Select
-    clip: {fileID: 8300000, guid: 82d6e37d62bd9ec4fab92e43f6ac4e8c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: Theme
-    clip: {fileID: 8300000, guid: e7a4b719f9d646648b7c2420b7e53bc6, type: 3}
-    loop: 1
-    source: {fileID: 0}
-  - name: LevelComplete
-    clip: {fileID: 8300000, guid: ee9b000f848596142b81a72f7f07d713, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: GunEquip
-    clip: {fileID: 8300000, guid: b17d3ef76613ba148b26624939e60218, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: PhotoEquip
-    clip: {fileID: 8300000, guid: 040b577de262e04469e9f11cc3de7a86, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerOpen
-    clip: {fileID: 8300000, guid: 0662906dc44163d4ba204f0d5adaccff, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerClose
-    clip: {fileID: 8300000, guid: 93f3213e967d07f46b8fc410138e565c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DrawerLocked
-    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIMove
-    clip: {fileID: 8300000, guid: 7ba1bdaa05dee0d4a9f00933dd969ee6, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIOpen
-    clip: {fileID: 8300000, guid: 690996778ddc5d04b99dcfb094d8969a, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIBack
-    clip: {fileID: 8300000, guid: 13133882c59d3bc41afb6dbac3b0a118, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIConfirm
-    clip: {fileID: 8300000, guid: e3d67d252ddb93f458da3436f8fc99e3, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIApply
-    clip: {fileID: 8300000, guid: 3e41a6d3d070dc24397af2a3b9aa13fd, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: UIError
-    clip: {fileID: 8300000, guid: e99adfad27b57ac44bee730686b2ed7e, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: ColorCorrect
-    clip: {fileID: 8300000, guid: 57b660d3ce5ff994a837f67fa0e0d724, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorOpen
-    clip: {fileID: 8300000, guid: b28a627cbe2317748ba4ffb1fb6a9298, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorClose
-    clip: {fileID: 8300000, guid: a9f9da6de06b1484ebba6178206a8609, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: DoorLocked
-    clip: {fileID: 8300000, guid: aaa45defde80e5043b822f880b8d6616, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: CupboardOpen
-    clip: {fileID: 8300000, guid: 7c80a41ec1badb74589f36e2a6416109, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: CupboardClose
-    clip: {fileID: 8300000, guid: a46f2f1a21d9ceb4bb82542ef1bedf6d, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: FridgeOpen
-    clip: {fileID: 8300000, guid: 20a47cc6fe7cd0e48873fcc94970c525, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: FridgeClose
-    clip: {fileID: 8300000, guid: a0fad0145012318448ca7b2f0c8a859a, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: KeyAcquire
-    clip: {fileID: 8300000, guid: 73ad296b431e1f64fb2fbb02213729c5, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: MatMove
-    clip: {fileID: 8300000, guid: 3c37021cd97832846b3fdab990075c5c, type: 3}
-    loop: 0
-    source: {fileID: 0}
-  - name: PresentOpen
-    clip: {fileID: 8300000, guid: 96cb9749845f0eb419c8c28183c980a5, type: 3}
-    loop: 0
-    source: {fileID: 0}
 --- !u!4 &740280090
 Transform:
   m_ObjectHideFlags: 0
@@ -13290,7 +13165,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1516046049}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &744479775
@@ -25257,6 +25133,106 @@ Transform:
   - {fileID: 1750565155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &1516046048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1516046049}
+  - component: {fileID: 1516046050}
+  m_Layer: 0
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1516046049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516046048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 740280090}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1516046050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516046048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cdf2917561e5ba4aa16fda66dd09561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UIConfirmSound>k__BackingField:
+    Guid:
+      Data1: 1962809923
+      Data2: 1326520190
+      Data3: 776485795
+      Data4: -1336428110
+    Path: event:/UI/UIConfirm
+  <UIErrorSound>k__BackingField:
+    Guid:
+      Data1: 1641155780
+      Data2: 1263094743
+      Data3: -556639576
+      Data4: 115178460
+    Path: event:/UI/UIError
+  <UIBackSound>k__BackingField:
+    Guid:
+      Data1: -372131406
+      Data2: 1305937229
+      Data3: -9140301
+      Data4: 1546201508
+    Path: event:/UI/UIBack
+  <UIApplySound>k__BackingField:
+    Guid:
+      Data1: 1115574750
+      Data2: 1236923915
+      Data3: 693742767
+      Data4: 1108810546
+    Path: event:/UI/UIApply
+  <UIOpenSound>k__BackingField:
+    Guid:
+      Data1: -1477642014
+      Data2: 1089660145
+      Data3: -674921814
+      Data4: 733887260
+    Path: event:/UI/UIOpen
+  <UIMoveSound>k__BackingField:
+    Guid:
+      Data1: -1804793100
+      Data2: 1108934833
+      Data3: 984908957
+      Data4: -1825191085
+    Path: event:/UI/UIMove
+  <SelectSound>k__BackingField:
+    Guid:
+      Data1: 2138031345
+      Data2: 1289996658
+      Data3: 740620206
+      Data4: -1448736607
+    Path: event:/Select
+  <MenuMusic>k__BackingField:
+    Guid:
+      Data1: 19715991
+      Data2: 1144133402
+      Data3: -1248869222
+      Data4: -922756407
+    Path: event:/Music/MenuMusic
 --- !u!1001 &1522440785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27534,10 +27510,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1621430790}
   - component: {fileID: 1621430789}
-  - component: {fileID: 1621430788}
   - component: {fileID: 1621430792}
   - component: {fileID: 1621430791}
   - component: {fileID: 1621430793}
+  - component: {fileID: 1621430794}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -27545,14 +27521,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1621430788
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621430787}
-  m_Enabled: 1
 --- !u!20 &1621430789
 Camera:
   m_ObjectHideFlags: 0
@@ -27703,6 +27671,20 @@ MonoBehaviour:
   _overlayTexture: {fileID: 0}
   _overlayOpacity: 0.3
   _shader: {fileID: -6465566751694194690, guid: 3e152a7c1e1bb4527901f4b4a55fbbc3, type: 3}
+--- !u!114 &1621430794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621430787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 1621430787}
 --- !u!1 &1626948472
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,12 +26,12 @@ public class DrawerInteract : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.PlayOneShot("DrawerClose");
+            // AudioManager.instance.PlayOneShot("DrawerClose");
             actionTextKey = "open"; // When closing, set next prompt to "Open"
         }
         else
         {
-            AudioManager.instance.PlayOneShot("DrawerOpen");
+            // AudioManager.instance.PlayOneShot("DrawerOpen");
             actionTextKey = "close"; // When opening, set next prompt to "Close"
         }
 

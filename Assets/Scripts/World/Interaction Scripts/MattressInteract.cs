@@ -23,7 +23,7 @@ public class MattressInteract : ObjectInteract
     {
         actionTextKey = "interact";
         if (isMoving) return; // Prevent multiple interactions at once
-        AudioManager.instance.Play("MatMove"); // Play sound effect
+        // AudioManager.instance.Play("MatMove"); // Play sound effect
         StartCoroutine(MoveMattress(isAtStart ? targetPosition : startPosition));
         isAtStart = !isAtStart;
     }

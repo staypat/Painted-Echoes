@@ -19,7 +19,7 @@ public class KeyInteractTutorial : ObjectInteract
         {
             actionTextKey = "pick up";
             GameManager.Instance.tutorialKey = true; // Player picks up the key
-            AudioManager.instance.Play("KeyAcquire"); // Play sound effect
+            // AudioManager.instance.Play("KeyAcquire"); // Play sound effect
             Debug.Log("Key picked up! tutorialKey is now: " + GameManager.Instance.tutorialKey);
         }
         else

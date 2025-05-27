@@ -29,12 +29,12 @@ public class DoorInteract : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.PlayOneShot("DoorClose");
+            // AudioManager.instance.PlayOneShot("DoorClose");
             actionTextKey = "open";
         }
         else
         {
-            AudioManager.instance.PlayOneShot("DoorOpen");
+            // AudioManager.instance.PlayOneShot("DoorOpen");
             actionTextKey = "close";
         }
 

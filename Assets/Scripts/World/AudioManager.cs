@@ -1,14 +1,13 @@
 using UnityEngine.Audio;
 using System;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
+    private EventInstance musicEventInstance;
     public static AudioManager instance;
-    public Sound[] sounds;
-
-    public static float musicVolume = .1f; // temp disable music to save your sanity
-    public static float sfxVolume = 1f;
     void Awake()
     {
         if (instance == null)
@@ -18,76 +17,41 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
-        DontDestroyOnLoad(gameObject);
-        foreach (Sound s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
+    }
 
-            s.source.volume = (s.name == "Theme" ? musicVolume : sfxVolume);
-            s.source.loop = s.loop;
+    private void Start()
+    {
+        // Initialize music if it's not already playing
+        if (!musicEventInstance.isValid())
+        {
+            InitializeMusic(FMODEvents.instance.MenuMusic);
         }
     }
 
-    void Start()
+    private void InitializeMusic(EventReference musicEventReference)
     {
-        Play("Theme");
+        musicEventInstance = CreateInstance(musicEventReference);
+        musicEventInstance.start();
     }
 
-    public void Play(string name)
+    private void StopMusic()
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s.name == "Select")
+        if (musicEventInstance.isValid())
         {
-            s.source.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomize pitch for select sound
-        }
-        s.source.Play();
-    }
-
-    public void PlayOneShot(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.PlayOneShot(s.clip);
-    }
-
-    public void Pause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Pause();
-    }
-
-    public void UnPause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.UnPause();
-    }
-
-    public void UpdateMusicVolume()
-    {
-        foreach (Sound s in sounds)
-        {
-            if (s.name == "Theme")
-            {
-                s.source.volume = musicVolume;
-            }
+            musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            musicEventInstance.release();
         }
     }
 
-    public void UpdateSFXVolume()
+    public void PlayOneShot(EventReference sound, Vector3 worldPos)
     {
-        foreach (Sound s in sounds)
-        {
-            if (s.name != "Theme")
-            {
-                s.source.volume = sfxVolume;
-            }
-        }
+        RuntimeManager.PlayOneShot(sound, worldPos);
     }
 
-    public bool IsPaused(string name)
+    public EventInstance CreateInstance(EventReference eventReference)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        return !s.source.isPlaying;
+        EventInstance instance = RuntimeManager.CreateInstance(eventReference);
+        return instance;
     }
+
 }

@@ -70,7 +70,7 @@ public class MixerInteract : ObjectInteract
             mixerUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
             EventSystem.current.SetSelectedGameObject(null);
-            AudioManager.instance.Play("UIBack");
+            // AudioManager.instance.Play("UIBack");
             if (playerCamera != null)
                 playerCamera.SetCameraActive(true);
         }
@@ -91,7 +91,7 @@ public class MixerInteract : ObjectInteract
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
             EventSystem.current.SetSelectedGameObject(mixerButtonFirst);
-            AudioManager.instance.Play("UIOpen");
+            // AudioManager.instance.Play("UIOpen");
             // disable the slotThreeButton
             //slotThreeButton.SetActive(false);
         }

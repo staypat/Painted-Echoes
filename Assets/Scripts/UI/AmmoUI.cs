@@ -236,10 +236,10 @@ public class AmmoUI : MonoBehaviour
             ammoPanel.SetActive(false);
         }else
         {
-            AudioManager.instance.Play("UIError");
+            // AudioManager.instance.Play("UIError");
             return;
         }
-        AudioManager.instance.Play("Select");
+        // AudioManager.instance.Play("Select");
     }
 
     public void DiscoverColor(string colorKey)

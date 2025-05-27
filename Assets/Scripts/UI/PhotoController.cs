@@ -84,7 +84,7 @@ public class PhotoController : MonoBehaviour
             photoPanel.SetActive(false); // Ensure the photo UI is closed
             ownedPhotos.SetActive(false);
 
-            AudioManager.instance.Play("GunEquip");
+            //AudioManager.instance.Play("GunEquip");
         }
     }
 
@@ -132,7 +132,7 @@ public class PhotoController : MonoBehaviour
             {
                 photo.color = new Color(255, 255, 255, 255);
                 lastPhotoID = photoID;
-                AudioManager.instance.Play("PhotoEquip");
+                //AudioManager.instance.Play("PhotoEquip");
             }
         }
     }
@@ -172,7 +172,7 @@ public class PhotoController : MonoBehaviour
         photoPanel.SetActive(false);
         ownedPhotos.SetActive(false);
         EquipPhoto(photoID);
-        AudioManager.instance.Play("PhotoEquip");
+        //AudioManager.instance.Play("PhotoEquip");
     }
 
     public void TogglePhotoInventoryUI()

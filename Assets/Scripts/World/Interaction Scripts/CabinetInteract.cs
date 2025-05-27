@@ -29,12 +29,12 @@ public class CabinetInteract : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.PlayOneShot("CupboardClose");
+            // AudioManager.instance.PlayOneShot("CupboardClose");
             actionTextKey = "open";
         }
         else
         {
-            AudioManager.instance.PlayOneShot("CupboardOpen");
+            // AudioManager.instance.PlayOneShot("CupboardOpen");
             actionTextKey = "close";
         }
 

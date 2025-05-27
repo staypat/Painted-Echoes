@@ -22,7 +22,7 @@ public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         transform.localScale = originalScale * scaleFactor;
-        FindObjectOfType<AudioManager>().Play("UIMove");
+        //FindObjectOfType<AudioManager>().Play("UIMove");
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -34,7 +34,7 @@ public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (originalScale == Vector3.zero) return;
         transform.localScale = originalScale * scaleFactor;
-        FindObjectOfType<AudioManager>().Play("UIMove");
+        //FindObjectOfType<AudioManager>().Play("UIMove");
     }
 
     public void OnDeselect(BaseEventData eventData)

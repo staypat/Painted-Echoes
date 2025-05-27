@@ -59,7 +59,7 @@ public class PhotoInteract : ObjectInteract
         }
 
         gameObject.SetActive(false); // Hide the object after pickup
-        AudioManager.instance.Play("PhotoEquip");
+        // AudioManager.instance.Play("PhotoEquip");
     }
 
 
@@ -88,7 +88,7 @@ public class PhotoInteract : ObjectInteract
             }
 
             gameObject.SetActive(false); // Hide the object after pickup
-            AudioManager.instance.Play("PhotoEquip");
+            // AudioManager.instance.Play("PhotoEquip");
 
             //Debug.Log("Photo picked up: " + photoID);
         }

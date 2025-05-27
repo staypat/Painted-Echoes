@@ -89,7 +89,7 @@ public class SplitterInteract : ObjectInteract
             SplitterUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
             EventSystem.current.SetSelectedGameObject(null);
-            AudioManager.instance.Play("UIBack");
+            // AudioManager.instance.Play("UIBack");
         }
     }
 
@@ -108,7 +108,7 @@ public class SplitterInteract : ObjectInteract
             bool isActive = SplitterUIPanel.activeSelf;
             SplitterUIPanel.SetActive(!isActive); // Toggle UI visibility
             EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
-            AudioManager.instance.Play("UIOpen");
+            // AudioManager.instance.Play("UIOpen");
         }
     }
 
@@ -125,7 +125,7 @@ public class SplitterInteract : ObjectInteract
             }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
-            AudioManager.instance.Play("UIApply");
+            // AudioManager.instance.Play("UIApply");
         }
         if (slot == 1)
         {
@@ -235,13 +235,13 @@ public class SplitterInteract : ObjectInteract
         }
 
         paletteManager.updatePaletteUI();
-        AudioManager.instance.Play("Select");
+        // AudioManager.instance.Play("Select");
     }
 
     public void CollectAll()
     {
-        AudioManager.instance.Play("UIApply");
-        AudioManager.instance.Play("Select");
+        // AudioManager.instance.Play("UIApply");
+        // AudioManager.instance.Play("Select");
         // play select again after 200 milliseconds
         Invoke("PlaySelect", 0.2f);
         if (currentColor == "Brown")
@@ -325,7 +325,7 @@ public class SplitterInteract : ObjectInteract
 
     private void PlaySelect()
     {
-        AudioManager.instance.Play("Select");
+        // AudioManager.instance.Play("Select");
     }
 
     public void ChooseColor()
@@ -337,12 +337,12 @@ public class SplitterInteract : ObjectInteract
             exitButton.SetActive(true);
             SplitterUIPanel.SetActive(false);
             UpdateReturnKeybindText();
-            AudioManager.instance.Play("UIOpen");
+            // AudioManager.instance.Play("UIOpen");
             PopulateAmmoButtons();
         }
         else
         {
-            AudioManager.instance.Play("UIError");
+            // AudioManager.instance.Play("UIError");
         }
     }
 
@@ -388,7 +388,7 @@ public class SplitterInteract : ObjectInteract
     {
         if (ammoType == "White" || ammoType == "Black" || ammoType == "Red" || ammoType == "Blue" || ammoType == "Yellow")
         {
-            AudioManager.instance.Play("UIError");
+            // AudioManager.instance.Play("UIError");
             return;
         }
         Debug.Log($"Selected Ammo: {ammoType}");
@@ -403,7 +403,7 @@ public class SplitterInteract : ObjectInteract
             Destroy(child.gameObject);
         }
 
-        AudioManager.instance.Play("Select");
+        // AudioManager.instance.Play("Select");
     }
 
     public void CloseColorSelectionPanel(string ammoType)
@@ -414,7 +414,7 @@ public class SplitterInteract : ObjectInteract
             ColorSelectionPanel.SetActive(false);
             instructions.SetActive(false);
             exitButton.SetActive(false);
-            AudioManager.instance.Play("UIBack");
+            // AudioManager.instance.Play("UIBack");
         }
 
         if (SplitterUIPanel != null)
@@ -445,7 +445,7 @@ public class SplitterInteract : ObjectInteract
     {
         if (ColorSelectionPanel.activeSelf)
         {
-            AudioManager.instance.Play("UIBack");
+            // AudioManager.instance.Play("UIBack");
             DestroyChildren();
             CloseColorSelectionPanel("White");
         }

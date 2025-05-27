@@ -324,7 +324,7 @@ public class Click_2 : MonoBehaviour
             isRoomComplete = true;
 
             victoryUI.ShowVictoryMessage();
-            AudioManager.instance.Play("LevelComplete");
+            // AudioManager.instance.Play("LevelComplete");
 
             turnOffBarrier();
             golem.SetActive(true);
@@ -392,7 +392,7 @@ public class Click_2 : MonoBehaviour
 
         if ((scroll < 0f || scrollRight) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll down
         {
-            AudioManager.instance.Play("Select"); // Play scroll sound effect
+            // AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex + 1) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 + 1) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
@@ -407,7 +407,7 @@ public class Click_2 : MonoBehaviour
         }
         else if ((scroll > 0f || scrollLeft) && absorbedColors.Count >= 2 && absorbedColorTags.Count >= 2) // Scroll up
         {
-            AudioManager.instance.Play("Select"); // Play scroll sound effect
+            // AudioManager.instance.Play("Select"); // Play scroll sound effect
             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
             currentIndex2 = (currentIndex2 - 1 + absorbedColorTags.Count) % absorbedColorTags.Count;
             ApplyColor(absorbedColors[currentIndex], absorbedColorTags[currentIndex2]);
@@ -531,7 +531,7 @@ public class Click_2 : MonoBehaviour
                                     effect.Play(); // Ensure it's playing
                                     //Debug.Log("Particle System Instantiated at: " + child.position);
 
-                                    AudioManager.instance.PlayOneShot("ColorCorrect"); // Play paint splatter sound effect
+                                    // AudioManager.instance.PlayOneShot("ColorCorrect"); // Play paint splatter sound effect
 
                                     Destroy(effect.gameObject, effect.main.duration); // Destroy after it finishes
                                 }
@@ -542,7 +542,7 @@ public class Click_2 : MonoBehaviour
                                     ammoFlag = false;
                                 }
                                 
-                                AudioManager.instance.Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
+                                // AudioManager.instance.Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
                                 //Debug.Log($"Restored {child.name} to its original color: {originalColor}");
                             }
                         }
@@ -599,7 +599,7 @@ public class Click_2 : MonoBehaviour
                                 ammoFlag = false;
                             }
                             
-                            AudioManager.instance.Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
+                            // AudioManager.instance.Play("Paint" + Random.Range(1, 4)); // Play paint sound effect
                         }
                     }
                     //Debug.Log("Applied paintbrush color to the entire subparent.");
@@ -638,7 +638,7 @@ public class Click_2 : MonoBehaviour
         {
 
             victoryUI.ShowVictoryMessage();
-            AudioManager.instance.Play("LevelComplete");
+            // AudioManager.instance.Play("LevelComplete");
             AnalyticsManager.Instance.LevelCompleted(currentRoom.name);
         }
     }
@@ -728,7 +728,7 @@ public class Click_2 : MonoBehaviour
                 currentIndex2 = absorbedColorTags.Count - 1;
             }
 
-            AudioManager.instance.Play("Absorb" + Random.Range(1, 4)); // Play absorb sound effect
+            // AudioManager.instance.Play("Absorb" + Random.Range(1, 4)); // Play absorb sound effect
 
             // Turn the object and its subparent group gray
             if (subparent != null)
