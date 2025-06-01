@@ -17,15 +17,15 @@ public class Click_2 : MonoBehaviour
     public string currentTag = "Default"; // Track the target tag
 
     public GameObject currentRoom;
-    
+
     // Reference to the brush tip
     public GameObject brushTip;
 
     // Dictionary of Correctly colored house and objects
     public Dictionary<string, Color> CorrectHouseColors = new Dictionary<string, Color>();
-    
+
     // Dictionary of Mismatched House colors and objects
-    public Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>(); 
+    public Dictionary<string, Color> MismatchedColors = new Dictionary<string, Color>();
 
     // Two lists that help with scrolling through colors
     public List<Material> absorbedColors = new List<Material>();
@@ -33,7 +33,7 @@ public class Click_2 : MonoBehaviour
 
     public int currentIndex = 0;
     public int currentIndex2 = 0;
-    
+
     public bool isRoomComplete = false; // Flag to track completion
     private bool hasVictoryBeenTriggered = false; // Add this at the class level
 
@@ -65,9 +65,9 @@ public class Click_2 : MonoBehaviour
     // private bool hasPressedRightClickFirstTime = false; // Absorb color for tutorial text
     public Animator animator;
 
-    
+
     void Start()
-    {   
+    {
 
         gunRenderer = GetComponent<Renderer>();
 
@@ -98,7 +98,7 @@ public class Click_2 : MonoBehaviour
 
         // foreach (KeyValuePair<string, Color> entry in CorrectHouseColors)
         // {
-                //Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+        //Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
         // }
 
         //HandleRoomChanged(GameObject.Find("Livingroom"));
@@ -111,16 +111,16 @@ public class Click_2 : MonoBehaviour
     {
         HandleScrollInput();
 
-        if(ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
+        if (ShootText.gameObject.activeSelf || AbsorbText.gameObject.activeSelf)
         {
             UpdateKeybinds();
         }
-        
+
         if (GameManager.Instance.hasPressedLeftClickFirstTime && enableSaveButton != null)
         {
             enableSaveButton.SetActive(true);
         }
-        
+
     }
 
     void UpdateKeybinds()
@@ -132,7 +132,7 @@ public class Click_2 : MonoBehaviour
 
         currentShootKeybind = newShootKeybind;
         shootTextComponent.text = $"{newShootKeybind} {localizedShootText}";
-  
+
 
         var absorbBindingIndex = absorbAction.action.GetBindingIndex();
         string newAbsorbKeybind = absorbAction.action.GetBindingDisplayString(absorbBindingIndex);
@@ -169,7 +169,7 @@ public class Click_2 : MonoBehaviour
         currentGunColor = "Black";
         absorbedColors.Add(GetMaterialFromString(currentGunColor));
         absorbedColorTags.Add(currentGunColor);
-    
+
 
     }
     // Function to keep track what room the player is in
@@ -205,15 +205,15 @@ public class Click_2 : MonoBehaviour
                 Color color = renderer.material.color;
 
                 // Add to the dictionary with the object's name as the key (not the subparent's name)
- 
+
                 if (!MismatchedColors.ContainsKey(renderer.gameObject.name))
                 {
-                    if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window") 
+                    if (renderer.gameObject.name.StartsWith("Barrier") || renderer.gameObject.name.StartsWith("Wall") || renderer.gameObject.name.StartsWith("Window")
                         || renderer.gameObject.name.StartsWith("Floor") || renderer.gameObject.name.StartsWith("Ceiling") || renderer.gameObject.name.StartsWith("Entrance")
                         || renderer.gameObject.name.StartsWith("paintbrush") || renderer.gameObject.name.StartsWith("present") || renderer.gameObject.name.StartsWith("Collider")
-                        || renderer.gameObject.name.StartsWith("ceiling") || renderer.gameObject.name.StartsWith("HiddenPaint")) 
+                        || renderer.gameObject.name.StartsWith("ceiling") || renderer.gameObject.name.StartsWith("HiddenPaint") || renderer.gameObject.name.StartsWith("Colorblind"))
                     {
-                        continue; 
+                        continue;
                     }
                     MismatchedColors.Add(renderer.gameObject.name, color);
                     //Debug.Log($"Stored color for {renderer.gameObject.name}: {color}");
@@ -238,7 +238,7 @@ public class Click_2 : MonoBehaviour
         int count = 0;
         int CorrectTotal = MismatchedColors.Count;
 
-        for(int i = 0; i < MismatchedColors.Count; i++)
+        for (int i = 0; i < MismatchedColors.Count; i++)
         {
             //Debug.Log($"MismatchedColors: {MismatchedColors.ElementAt(i).Key} : {MismatchedColors.ElementAt(i).Value}");
         }
@@ -434,7 +434,7 @@ public class Click_2 : MonoBehaviour
         {
             // Traverse up the hierarchy to find the parent object
             Transform parent = renderer.transform;
-            
+
             // Check if the parent or any of its ancestors is named "CorrectHouse"
             while (parent != null)
             {
@@ -465,7 +465,8 @@ public class Click_2 : MonoBehaviour
 
     void ColorOnClick(InputAction.CallbackContext context)
     {
-        if (!GameManager.Instance.hasScrolledFirstTime){
+        if (!GameManager.Instance.hasScrolledFirstTime)
+        {
             return;
         }
 
@@ -473,8 +474,8 @@ public class Click_2 : MonoBehaviour
         RaycastHit hit;
         //Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
         bool ammoFlag = true;
-        
-        if(GameManager.inMenu)
+
+        if (GameManager.inMenu)
         {
             return;
         }
@@ -520,6 +521,12 @@ public class Click_2 : MonoBehaviour
                                     }
                                 }
                                 childRenderer.material.color = originalColor;
+                                var symbol = subparent.GetComponent<ColorBlindController>();
+                                Debug.Log("Symbol found: " + (symbol != null));
+                                if (symbol != null)
+                                {
+                                    symbol.UpdateSymbol(currentGunColor);
+                                }
 
                                 //child.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                                 if (PaintSplatterPS != null && ammoFlag)
@@ -542,7 +549,7 @@ public class Click_2 : MonoBehaviour
                                     AmmoManager.Instance.UseAmmo(1, currentGunColor);
                                     ammoFlag = false;
                                 }
-                                
+
                                 AudioManager.instance.PlayOneShot(FMODEvents.instance.Paint, this.transform.position);
                                 //Debug.Log($"Restored {child.name} to its original color: {originalColor}");
                             }
@@ -552,18 +559,19 @@ public class Click_2 : MonoBehaviour
                             //Debug.LogWarning($"Original color for {childKey} not found in dictionary.");
                         }
                     }
-                    if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
+                    if (AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
                     {
                         absorbedColors.Remove(GetMaterialFromString(currentGunColor));
                         absorbedColorTags.Remove(currentGunColor);
-                        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
+                        if (absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
                         {
                             ApplyColor(absorbedColors[0], absorbedColorTags[0]);
                         }
-                        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
+                        else if (absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
                             ApplyColor(GetMaterialFromString("Default"), "White");
-                        }else
+                        }
+                        else
                         {
                             //GameManager.Instance.SaveGameState();
                             currentIndex = (currentIndex - 1 + absorbedColors.Count) % absorbedColors.Count;
@@ -584,6 +592,12 @@ public class Click_2 : MonoBehaviour
                         {
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
+                            var symbol = subparent.GetComponent<ColorBlindController>();
+                            Debug.Log("Symbol found: " + (symbol != null));
+                            if (symbol != null)
+                            {
+                                symbol.UpdateSymbol(currentGunColor);
+                            }
                             if (ammoFlag)
                             {
                                 AmmoManager.Instance.UseAmmo(1, currentGunColor);
@@ -599,23 +613,24 @@ public class Click_2 : MonoBehaviour
                                 }
                                 ammoFlag = false;
                             }
-                            
+
                             AudioManager.instance.PlayOneShot(FMODEvents.instance.Paint, this.transform.position);
                         }
                     }
                     //Debug.Log("Applied paintbrush color to the entire subparent.");
-                    if(AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
+                    if (AmmoManager.Instance.GetCurrentAmmo(currentGunColor) == 0)
                     {
                         absorbedColors.Remove(GetMaterialFromString(currentGunColor));
                         absorbedColorTags.Remove(currentGunColor);
-                        if(absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
+                        if (absorbedColors.Count == 1 && absorbedColorTags.Count == 1)
                         {
                             ApplyColor(absorbedColors[0], absorbedColorTags[0]);
                         }
-                        else if(absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
+                        else if (absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
                             ApplyColor(GetMaterialFromString("Default"), "White");
-                        }else
+                        }
+                        else
                         {
 
                             //GameManager.Instance.SaveGameState();
@@ -645,7 +660,7 @@ public class Click_2 : MonoBehaviour
     }
 
     public void AbsorbColor(InputAction.CallbackContext context)
-    {   
+    {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         //Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
@@ -678,37 +693,67 @@ public class Click_2 : MonoBehaviour
             }
 
             // Set current gun color to the absorbed color, only if the color of the absorbed material matches one of the predefined materials
-            if (absorbedColor.color == GameManager.Instance.whiteMaterial.color) {
+            if (absorbedColor.color == GameManager.Instance.whiteMaterial.color)
+            {
                 currentGunColor = "White";
-            } else if (absorbedColor.color == GameManager.Instance.blackMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.blackMaterial.color)
+            {
                 currentGunColor = "Black";
-            } else if (absorbedColor.color == GameManager.Instance.redMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.redMaterial.color)
+            {
                 currentGunColor = "Red";
-            } else if (absorbedColor.color == GameManager.Instance.blueMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.blueMaterial.color)
+            {
                 currentGunColor = "Blue";
-            } else if (absorbedColor.color == GameManager.Instance.yellowMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.yellowMaterial.color)
+            {
                 currentGunColor = "Yellow";
-            } else if (absorbedColor.color == GameManager.Instance.orangeMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.orangeMaterial.color)
+            {
                 currentGunColor = "Orange";
-            } else if (absorbedColor.color == GameManager.Instance.purpleMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.purpleMaterial.color)
+            {
                 currentGunColor = "Purple";
-            } else if (absorbedColor.color == GameManager.Instance.greenMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.greenMaterial.color)
+            {
                 currentGunColor = "Green";
-            } else if (absorbedColor.color == GameManager.Instance.brownMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.brownMaterial.color)
+            {
                 currentGunColor = "Brown";
-            } else if (absorbedColor.color == GameManager.Instance.redOrangeMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.redOrangeMaterial.color)
+            {
                 currentGunColor = "RedOrange";
-            } else if (absorbedColor.color == GameManager.Instance.redPurpleMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.redPurpleMaterial.color)
+            {
                 currentGunColor = "RedPurple";
-            } else if (absorbedColor.color == GameManager.Instance.yellowOrangeMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.yellowOrangeMaterial.color)
+            {
                 currentGunColor = "YellowOrange";
-            } else if (absorbedColor.color == GameManager.Instance.yellowGreenMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.yellowGreenMaterial.color)
+            {
                 currentGunColor = "YellowGreen";
-            } else if (absorbedColor.color == GameManager.Instance.bluePurpleMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.bluePurpleMaterial.color)
+            {
                 currentGunColor = "BluePurple";
-            } else if (absorbedColor.color == GameManager.Instance.blueGreenMaterial.color) {
+            }
+            else if (absorbedColor.color == GameManager.Instance.blueGreenMaterial.color)
+            {
                 currentGunColor = "BlueGreen";
-            } else { return; } // If the color doesn't match any of the predefined materials, don't absorb the color
+            }
+            else { return; } // If the color doesn't match any of the predefined materials, don't absorb the color
 
             // Apply absorbed color to brush
             gunRenderer.material = GetMaterialFromString(currentGunColor);
@@ -762,7 +807,7 @@ public class Click_2 : MonoBehaviour
                 clickedRenderer.material = GameManager.Instance.grayMaterial;
                 //Debug.Log($"Absorbed {absorbedColor} and turned {clickedObject.name} gray");
             }
-            
+
             // Update palette UI
             paletteManager.updatePaletteUI();
         }
