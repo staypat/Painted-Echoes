@@ -22,7 +22,6 @@ public class ToyPlacementCheckBR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         // Prevent placement while the duck is being held
         PickUpObj pickup = other.GetComponent<PickUpObj>();
         if (pickup != null && pickup.isBeingHeld)
@@ -30,45 +29,66 @@ public class ToyPlacementCheckBR : MonoBehaviour
             Debug.Log($"{other.name} is being held — skipping placement.");
             return;
         }
-        
+
+        string duckTag = other.tag;
+
+        // Handle matching ducks
         switch (zoneType)
         {
             case DuckType.RubberDuck6:
-                if (other.CompareTag("RubberDuck6"))
+                if (duckTag == "RubberDuck6")
                 {
                     ToyManagerBR.Instance.rubberDuck6Placed = true;
-                    Debug.Log("Rubber Duck 6 detected");
+                    Debug.Log("Rubber Duck 6 correctly placed");
 
                     Vector3 targetPos = duck6SnapPoint != null ? duck6SnapPoint.position : other.transform.position;
                     PrepareAndSnapDuck(other.gameObject, targetPos);
 
                     HandleColorComparison();
+                    RegisterCorrectPlacement();
+                }
+                else if (duckTag.StartsWith("RubberDuck"))
+                {
+                    Debug.Log($"{duckTag} detected in Duck 6 zone — looking for RubberDuck6");
+                    RegisterWrongAttempt();
                 }
                 break;
 
             case DuckType.RubberDuck8:
-                if (other.CompareTag("RubberDuck8"))
+                if (duckTag == "RubberDuck8")
                 {
                     ToyManagerBR.Instance.rubberDuck8Placed = true;
-                    Debug.Log("Rubber Duck 8 detected");
+                    Debug.Log("Rubber Duck 8 correctly placed");
 
                     Vector3 targetPos = duck8SnapPoint != null ? duck8SnapPoint.position : other.transform.position;
                     PrepareAndSnapDuck(other.gameObject, targetPos);
 
                     HandleColorComparison();
+                    RegisterCorrectPlacement();
+                }
+                else if (duckTag.StartsWith("RubberDuck"))
+                {
+                    Debug.Log($"{duckTag} detected in Duck 8 zone — looking for RubberDuck8");
+                    RegisterWrongAttempt();
                 }
                 break;
 
             case DuckType.RubberDuck3:
-                if (other.CompareTag("RubberDuck3"))
+                if (duckTag == "RubberDuck3")
                 {
                     ToyManagerBR.Instance.rubberDuck3Placed = true;
-                    Debug.Log("Rubber Duck 3 detected");
+                    Debug.Log("Rubber Duck 3 correctly placed");
 
                     Vector3 targetPos = duck3SnapPoint != null ? duck3SnapPoint.position : other.transform.position;
                     PrepareAndSnapDuck(other.gameObject, targetPos);
 
                     HandleColorComparison();
+                    RegisterCorrectPlacement();
+                }
+                else if (duckTag.StartsWith("RubberDuck"))
+                {
+                    Debug.Log($"{duckTag} detected in Duck 3 zone — looking for RubberDuck3");
+                    RegisterWrongAttempt();
                 }
                 break;
         }
@@ -108,34 +128,27 @@ public class ToyPlacementCheckBR : MonoBehaviour
 
     private void PrepareAndSnapDuck(GameObject duck, Vector3 targetPosition)
     {
-        // Detach from parent if any
         duck.transform.SetParent(null);
 
-        // Handle Rigidbody
         Rigidbody rb = duck.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
-            rb.useGravity = false; // Disable gravity BEFORE teleport
-            rb.isKinematic = false; // Ensure it's not kinematic so constraints work
+            rb.useGravity = false;
+            rb.isKinematic = false;
         }
 
-        // Slight upward offset to avoid ground clipping
         Vector3 adjustedPosition = targetPosition + new Vector3(0f, 0.2f, 0f);
         duck.transform.position = adjustedPosition;
-
-        // Reset rotation to (0, 0, 0)
         duck.transform.rotation = Quaternion.identity;
 
-        // Freeze physics after placement
         if (rb != null)
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
 
-        // Disable collider to prevent raycast interaction
         Collider col = duck.GetComponent<Collider>();
         if (col != null)
         {
@@ -144,7 +157,6 @@ public class ToyPlacementCheckBR : MonoBehaviour
 
         Debug.Log($"Snapped {duck.name} to {duck.transform.position} with rotation reset");
     }
-
 
     private void HandleColorComparison()
     {
@@ -157,5 +169,31 @@ public class ToyPlacementCheckBR : MonoBehaviour
                 hasComparedColor = true;
             }
         }
+    }
+
+    private void RegisterCorrectPlacement()
+    {
+        if (ToyManagerBR.Instance.correctPlacements < 3)
+        {
+            ToyManagerBR.Instance.correctPlacements++;
+        }
+
+        PrintRoomAccuracy();
+    }
+
+    private void RegisterWrongAttempt()
+    {
+        ToyManagerBR.Instance.wrongAttempts++;
+        PrintRoomAccuracy();
+    }
+
+    private void PrintRoomAccuracy()
+    {
+        int correct = ToyManagerBR.Instance.correctPlacements;
+        int wrong = ToyManagerBR.Instance.wrongAttempts;
+        int total = correct + wrong;
+        float accuracy = ToyManagerBR.Instance.RoomAccuracy;
+
+        Debug.Log($"[Room Accuracy] {correct}/{total} ({accuracy * 100f:F1}%)");
     }
 }
