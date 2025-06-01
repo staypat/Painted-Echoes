@@ -33,8 +33,8 @@ public class OpenMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MusicVolumeSlider.value = AudioManager.musicVolume;
-        SFXVolumeSlider.value = AudioManager.sfxVolume;
+        MusicVolumeSlider.value = AudioManager.instance.MusicVolume;
+        SFXVolumeSlider.value = AudioManager.instance.SFXVolume;
         controlsUI.SetActive(false); // Needed active controls UI start to process keybinds
     }
     
@@ -48,7 +48,8 @@ public class OpenMenu : MonoBehaviour
     {
         menuUI.SetActive(false);
         optionsUI.SetActive(true);
-        AudioManager.instance.Play("UIOpen");
+        //AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         //Debug.Log("Options Opened");
         EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
@@ -59,26 +60,15 @@ public class OpenMenu : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             optionsUI.SetActive(false);
-            AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
             EventSystem.current.SetSelectedGameObject(mainMenuFirst);
-            if(!AudioManager.instance.IsPaused("Theme"))
-            {
-                //AudioManager.instance.Pause("Theme"); // this way for now until main menu music exists
-            }
         }
         else
         {
             optionsUI.SetActive(false);
             menuUI.SetActive(true);
-            AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
             EventSystem.current.SetSelectedGameObject(pauseFirst);
-            // if the theme is unpaused
-            
-            if(!AudioManager.instance.IsPaused("Theme"))
-            {
-                AudioManager.instance.Pause("Theme");
-            }
-
         }
 
     }
@@ -87,8 +77,7 @@ public class OpenMenu : MonoBehaviour
     {
         GameManager.Instance.EnterMenu();
         menuUI.SetActive(true);
-        AudioManager.instance.Pause("Theme"); // Remove to hear theme music
-        AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(pauseFirst);
     }
 
@@ -96,8 +85,7 @@ public class OpenMenu : MonoBehaviour
     {
         menuUI.SetActive(false);
         GameManager.Instance.ExitMenu();
-        AudioManager.instance.UnPause("Theme");
-        AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -124,8 +112,7 @@ public class OpenMenu : MonoBehaviour
     {
         optionsUI.SetActive(false);
         controlsUI.SetActive(true);
-        AudioManager.instance.Play("UIOpen");
-        AudioManager.instance.Pause("Theme");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(controlsFirst);
     }
 
@@ -133,8 +120,7 @@ public class OpenMenu : MonoBehaviour
     {
         controlsUI.SetActive(false);
         optionsUI.SetActive(true);
-        AudioManager.instance.Play("UIBack");
-        AudioManager.instance.UnPause("Theme");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
@@ -142,8 +128,7 @@ public class OpenMenu : MonoBehaviour
     {
         optionsUI.SetActive(false);
         controllerControlsUI.SetActive(true);
-        AudioManager.instance.Play("UIOpen");
-        AudioManager.instance.Pause("Theme");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(controllerControlsFirst);
     }
 
@@ -151,74 +136,73 @@ public class OpenMenu : MonoBehaviour
     {
         controllerControlsUI.SetActive(false);
         optionsUI.SetActive(true);
-        AudioManager.instance.Play("UIBack");
-        AudioManager.instance.UnPause("Theme");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 
     public void ChangeMusicVolume()
     {
-        // if theme is paused
-        if(AudioManager.instance.IsPaused("Theme"))
-        {
-            AudioManager.instance.UnPause("Theme");
-        }
-        AudioManager.musicVolume = MusicVolumeSlider.value;
-        AudioManager.instance.UpdateMusicVolume();
+        AudioManager.instance.MusicVolume = MusicVolumeSlider.value;
     }
 
     public void ChangeSFXVolume()
     {
-        AudioManager.sfxVolume = SFXVolumeSlider.value;
-        AudioManager.instance.UpdateSFXVolume();
+        AudioManager.instance.SFXVolume = SFXVolumeSlider.value;
     }
 
     public void OpenCredits()
     {
         creditsUI.SetActive(true);
-        AudioManager.instance.Play("UIOpen");
+        // AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(creditsFirst);
     }
 
     public void CloseCredits()
     {
         creditsUI.SetActive(false);
-        AudioManager.instance.Play("UIBack");
+        // AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     public void OpenPrivacyNotice()
     {
         privacyNoticeUI.SetActive(true);
-        AudioManager.instance.Play("UIOpen");
+        // AudioManager.instance.Play("UIOpen");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(privacyNoticeFirst);
     }
 
     public void DisagreeToPrivacyNotice()
     {
         privacyNoticePromptUI.SetActive(false);
-        AudioManager.instance.Play("UIBack");
+        // AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     public void AgreeToPrivacyNotice()
     {
         privacyNoticePromptUI.SetActive(false);
-        AudioManager.instance.Play("UIBack");
+        // AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     public void ClosePrivacyNoticeFromPrompt()
     {
         privacyNoticeUI.SetActive(false);
-        AudioManager.instance.Play("UIBack");
+        // AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(privacyPromptFirst);
     }
 
     public void ClosePrivacyNoticeFromOptions()
     {
         privacyNoticeUI.SetActive(false);
-        AudioManager.instance.Play("UIBack");
+        // AudioManager.instance.Play("UIBack");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         EventSystem.current.SetSelectedGameObject(optionsFirst);
     }
 

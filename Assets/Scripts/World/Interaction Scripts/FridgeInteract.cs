@@ -29,12 +29,12 @@ public class FridgeInteract : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.PlayOneShot("FridgeClose");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.FridgeClose, this.transform.position);
             actionTextKey = "open";
         }
         else
         {
-            AudioManager.instance.PlayOneShot("FridgeOpen");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.FridgeOpen, this.transform.position);
             actionTextKey = "close";
         }
 

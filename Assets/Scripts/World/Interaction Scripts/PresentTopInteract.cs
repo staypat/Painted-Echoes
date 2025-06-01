@@ -34,7 +34,7 @@ public class PresentTopInteract : ObjectInteract
         if (hasInteracted) return; // Prevent further interactions
 
         hasInteracted = true; // Lock interaction after first use
-        AudioManager.instance.Play("PresentOpen"); // Play sound effect
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.PresentOpen, this.transform.position);
         StartCoroutine(MoveThenRotate());
 
         // Disable collider after interaction, preventing further interaction

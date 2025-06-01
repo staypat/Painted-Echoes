@@ -77,11 +77,13 @@ public class ColorButtonManager : MonoBehaviour
                 // Populate ammo buttons dynamically
                 PopulateAmmoButtons();
 
-                AudioManager.instance.Play("UIOpen");
+                //AudioManager.instance.Play("UIOpen");
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
             }
         }
         else{
-            AudioManager.instance.Play("UIError");
+            //AudioManager.instance.Play("UIError");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIErrorSound, this.transform.position);
         }
     }
 
@@ -91,7 +93,8 @@ public class ColorButtonManager : MonoBehaviour
         {
             //Debug.Log("Hiding ColorSelectionPanel");
             colorSelectionPanel.SetActive(false);
-            AudioManager.instance.Play("UIBack");
+            //AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
             //Debug.Log("Testing why this is active?" + colorSelectionPanel != null);
         }
 
@@ -127,7 +130,8 @@ public class ColorButtonManager : MonoBehaviour
     {
         if (colorSelectionPanel.activeSelf)
         {
-            AudioManager.instance.Play("UIBack");
+            //AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
             DestroyChildren();
             CloseColorSelectionPanel("White");
         }
@@ -262,7 +266,8 @@ public class ColorButtonManager : MonoBehaviour
         // clear all slots and colors
         slotOneColor = null; slotTwoColor = null; slotThreeColor = null; currentSlot = 0; slotOneButton.GetComponent<Image>().color = Color.white; slotTwoButton.GetComponent<Image>().color = Color.white; slotThreeButton.GetComponent<Image>().color = Color.white; slotThreeButton.SetActive(false);
 
-        AudioManager.instance.Play("UIApply");
+        //AudioManager.instance.Play("UIApply");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIApplySound, this.transform.position);
     }
 
     private void PopulateAmmoButtons()
@@ -314,7 +319,8 @@ public class ColorButtonManager : MonoBehaviour
     {
         if ((ammoType == slotOneColor && currentSlot == 2)|| ammoType == slotTwoColor && currentSlot == 1)
         {
-            AudioManager.instance.Play("UIError");
+            //AudioManager.instance.Play("UIError");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIErrorSound, this.transform.position);
             return;
         }
         //Debug.Log($"Selected Ammo: {ammoType}");
@@ -329,7 +335,8 @@ public class ColorButtonManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        AudioManager.instance.Play("Select");
+        //AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
     }
 
     private Color GetColorFromAmmoType(string ammoType)

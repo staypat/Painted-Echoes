@@ -11,6 +11,7 @@ public class SceneChangeTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player")) // Check if the player entered the trigger
         {
+            AudioManager.instance.CleanUp(); // Clean up audio before changing scene
             SceneManager.LoadScene(sceneToLoad); // Load the specified scene
         }
     }

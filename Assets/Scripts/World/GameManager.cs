@@ -58,9 +58,29 @@ public class GameState
 
     public string rbName;
 
-
     public Vector3 playerPosition; // Store player position
     public Quaternion playerRotation; // Store player rotation
+
+
+    // Golem related variables
+    public Vector3 golemPosition;
+    public Quaternion golemRotation;
+
+    public Vector3 golemColliderCenter;
+    public Vector3 golemColliderSize;
+
+    public string golemMaterialName;
+    public Color golemColor;
+
+    public float followRadius;
+    public float roamRadius;
+    public float roamInterval;
+    public float lastColorInteractionTime;
+    public bool isRolling;
+    public bool isClearing;
+
+    public Vector3 navAgentVelocity;
+    public Vector3 navAgentDestination;
 }
 
 
@@ -139,7 +159,10 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // Keeps it persistent across scenes
+        }
+        else
+        {
+            Destroy(gameObject);
         }
         
         // else
@@ -303,6 +326,67 @@ public class GameManager : MonoBehaviour
         }
 
 
+        GameObject golem = GameObject.Find("Golem");
+
+        if (golem != null)
+        {
+            GolemAI golemAI = golem.GetComponent<GolemAI>();
+            UnityEngine.AI.NavMeshAgent agent = golem.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            Renderer golemRenderer = golem.GetComponent<Renderer>();
+
+            gameState.golemPosition = golem.transform.position;
+            gameState.golemRotation = golem.transform.rotation;
+
+
+            BoxCollider boxCollider = golem.GetComponent<BoxCollider>();
+            if (boxCollider != null)
+            {
+                gameState.golemColliderCenter = boxCollider.center;
+                gameState.golemColliderSize = boxCollider.size;
+                Debug.Log("Golem BoxCollider saved successfully");
+            }
+
+            Renderer renderer = golem.GetComponent<Renderer>();
+            if (renderer != null && renderer.material.HasProperty("_Color"))
+            {
+                gameState.golemColor = renderer.material.color;
+                Debug.Log("Golem renderer saved: " + gameState.golemColor);
+            }
+
+            if (golemRenderer != null)
+            {
+                Material currentMat = golemRenderer.material;
+                gameState.golemMaterialName = currentMat.name.Replace(" (Instance)", "");
+                gameState.golemColor = currentMat.color;
+                Debug.Log("Golem color saved: " + gameState.golemColor);
+            }
+
+            // if (golemAI != null)
+            // {
+            //     gameState.followRadius = golemAI.followRadius;
+            //     gameState.roamRadius = golemAI.roamRadius;
+            //     gameState.roamInterval = golemAI.roamInterval;
+            //     gameState.lastColorInteractionTime = (float)typeof(GolemAI)
+            //         .GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     gameState.isClearing = (bool)typeof(GolemAI)
+            //         .GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     gameState.isRolling = (bool)typeof(GolemAI)
+            //         .GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            //         .GetValue(golemAI);
+            //     Debug.Log("Golem AI saved successfully");
+            // }
+
+            if (agent != null)
+            {
+                gameState.navAgentVelocity = agent.velocity;
+                gameState.navAgentDestination = agent.destination;
+                Debug.Log("Golem NavMeshAgent saved successfully");
+            }
+            Debug.Log("Golem saved successfully");
+
+        }
 
 
 
@@ -580,7 +664,91 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
+            // GameObject golem = GameObject.Find("Golem");
+            GameObject golem = FindDisabledObjectByName("Golem");
+            if (golem != null)
+            {
+                Debug.Log("Found disabled Golem:" + golem);
+                golem.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("Golem not found.");
+            }
+            
+            // if (golem == null)
+            // {
+            //     golem.SetActive(true);
+            //     Debug.Log("Golem found: " + (golem != null));
+            // }
+            
+            if (golem != null)
+            {
+                golem.transform.position = gameState.golemPosition;
+                golem.transform.rotation = gameState.golemRotation;
 
+                BoxCollider boxCollider = golem.GetComponent<BoxCollider>();
+                if (boxCollider != null)
+                {
+                    boxCollider.center = gameState.golemColliderCenter;
+                    boxCollider.size = gameState.golemColliderSize;
+                    Debug.Log("Golem BoxCollider loaded successfully");
+                }
+
+                Renderer renderer = golem.GetComponent<Renderer>();
+                if (renderer != null && renderer.material.HasProperty("_Color"))
+                {
+                    renderer.material.color = gameState.golemColor;
+                    Debug.Log("Golem renderer loaded: " + gameState.golemColor);
+                }
+
+                UnityEngine.AI.NavMeshAgent agent = golem.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                if (agent != null)
+                {
+                    agent.velocity = gameState.navAgentVelocity;
+                    agent.SetDestination(gameState.navAgentDestination);
+                    Debug.Log("Golem NavMeshAgent loaded successfully");
+                }
+
+                Renderer golemRenderer = golem.GetComponent<Renderer>();
+                if (golemRenderer != null)
+                {
+                    // Material mat = Resources.Load<Material>("Materials/" + gameState.golemMaterialName);
+                    // if (mat != null)
+                    // {
+                    //     golemRenderer.material = new Material(mat);
+                    //     Debug.Log("Golem material loaded: " + gameState.golemMaterialName);
+                    // }
+                    GolemAI golemAI = golem.GetComponent<GolemAI>();
+                    clickScript = FindObjectOfType<Click_2>();
+                    golemAI.ApplyColorToGolem(clickScript.GetMaterialFromString(gameState.golemMaterialName));
+
+                    // golemRenderer.material.color = gameState.golemColor;
+                    Debug.Log("Golem color loaded: " + gameState.golemColor);
+                }
+
+                // GolemAI golemAI = golem.GetComponent<GolemAI>();
+                // if (golemAI != null)
+                // {
+                //     golemAI.followRadius = gameState.followRadius;
+                //     golemAI.roamRadius = gameState.roamRadius;
+                //     golemAI.roamInterval = gameState.roamInterval;
+
+                //     typeof(GolemAI).GetField("lastColorInteractionTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.lastColorInteractionTime);
+                //     typeof(GolemAI).GetField("isClearing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.isClearing);
+                //     typeof(GolemAI).GetField("isRolling", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                //         .SetValue(golemAI, gameState.isRolling);
+                //     Debug.Log("Golem AI loaded successfully");
+                // }
+
+                Debug.Log("Golem loaded successfully");
+            }
+            else
+            {
+                Debug.LogWarning("Golem not found in the scene.");
+            }
 
             // Load ammo datav
             AmmoManager ammoManager = AmmoManager.Instance;
@@ -690,6 +858,23 @@ public class GameManager : MonoBehaviour
             //Debug.LogWarning("Material not found for color: " + colorName);
             return null; // You can change this to a default material if needed
         }
+    }
+
+    public static GameObject FindDisabledObjectByName(string name)
+    {
+        // Finds ALL objects of type Transform, including inactive ones.
+        Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>();
+
+        foreach (Transform obj in allObjects)
+        {
+            if (obj.name == name)
+            {
+                // Make sure it's not a prefab or asset, but an actual scene GameObject
+                if (obj.hideFlags == HideFlags.None)
+                    return obj.gameObject;
+            }
+        }
+        return null;
     }
 
     void Update()
