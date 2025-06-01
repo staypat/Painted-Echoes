@@ -42,10 +42,6 @@ public class AudioManager : MonoBehaviour
         {
             InitializeMusic(FMODEvents.instance.MenuMusic);
         }
-        else if (SceneManager.GetActiveScene().name == "Tutorial")
-        {
-            InitializeMusic(FMODEvents.instance.TutorialMusic);
-        }
     }
 
     private void Update()
