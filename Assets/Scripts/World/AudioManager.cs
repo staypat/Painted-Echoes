@@ -37,10 +37,34 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void InitializeMusic(EventReference musicEventReference)
+    public void InitializeMusic(EventReference musicEventReference)
     {
         musicEventInstance = CreateInstance(musicEventReference);
         musicEventInstance.start();
+    }
+
+    public void PauseMusic()
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setPaused(true);
+        }
+    }
+
+    public void ResumeMusic()
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setPaused(false);
+        }
+    }
+
+    public void AddLayerToMusic(string layerName)
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setParameterByName(layerName, 1.0f);
+        }
     }
 
     private void StopMusic()
@@ -64,11 +88,11 @@ public class AudioManager : MonoBehaviour
         return instance;
     }
 
-    private void CleanUp()
+    public void CleanUp()
     {
         foreach (EventInstance instance in eventInstances)
         {
-            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             instance.release();
         }
     }

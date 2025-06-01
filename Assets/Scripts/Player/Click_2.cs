@@ -318,6 +318,27 @@ public class Click_2 : MonoBehaviour
 
         //Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
 
+        // at 20% completion, add a layer to the music
+        if (count >= CorrectTotal * 0.2f)
+        {
+            AudioManager.instance.AddLayerToMusic("Guitar Volume");
+        }
+        // at 40% completion, add a layer to the music
+        if (count >= CorrectTotal * 0.4f)
+        {
+            AudioManager.instance.AddLayerToMusic("Bass Volume");
+        }
+        // at 60% completion, add a layer to the music
+        if (count >= CorrectTotal * 0.6f)
+        {
+            AudioManager.instance.AddLayerToMusic("Marimba Volume");
+        }
+        // at 80% completion, add a layer to the music
+        if (count >= CorrectTotal * 0.8f)
+        {
+            AudioManager.instance.AddLayerToMusic("Cello Volume");
+        }
+
         if (count == CorrectTotal && !hasVictoryBeenTriggered)
         {
             hasVictoryBeenTriggered = true; // Prevent multiple triggers

@@ -22,6 +22,15 @@ public class CurrentRoom : MonoBehaviour
         if (RoomManager.Instance != null) // Check if GameManager exists
         {
             RoomManager.Instance.SetCurrentRoom(gameObject);
+
+            if (gameObject.name == "Collider (LivingRoom)")
+            {
+                AudioManager.instance.CleanUp();
+                AudioManager.instance.InitializeMusic(FMODEvents.instance.LivingRoom);
+            }
+            else {
+                AudioManager.instance.CleanUp();
+            }
         }
 
     }

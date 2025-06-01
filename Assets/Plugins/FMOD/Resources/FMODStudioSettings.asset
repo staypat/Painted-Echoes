@@ -708,6 +708,7 @@ MonoBehaviour:
   - Master
   Banks:
   - Menu
+  - Music
   - SFX
   - Tutorial
   BanksToLoad: []
