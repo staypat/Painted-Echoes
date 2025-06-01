@@ -10,16 +10,30 @@ public class ToyManagerBR : MonoBehaviour
     public bool rubberDuck8Placed = false;
     public bool rubberDuck3Placed = false;
 
-    private void Awake()
+    // Shared accuracy tracking
+    public int correctPlacements = 0;
+    public int wrongAttempts = 0;
+
+    public float RoomAccuracy
     {
-        if (Instance == null)
+        get
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); // Ensure only one manager exists
+            int totalAttempts = correctPlacements + wrongAttempts;
+            return totalAttempts > 0 ? (float)correctPlacements / totalAttempts : 1f;
         }
     }
+
+    public void ResetAccuracy()
+    {
+        correctPlacements = 0;
+        wrongAttempts = 0;
+    }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 }
+
 
