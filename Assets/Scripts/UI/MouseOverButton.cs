@@ -23,6 +23,7 @@ public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         transform.localScale = originalScale * scaleFactor;
         //FindObjectOfType<AudioManager>().Play("UIMove");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIMoveSound, transform.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -35,6 +36,7 @@ public class ButtonScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (originalScale == Vector3.zero) return;
         transform.localScale = originalScale * scaleFactor;
         //FindObjectOfType<AudioManager>().Play("UIMove");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIMoveSound, transform.position);
     }
 
     public void OnDeselect(BaseEventData eventData)

@@ -216,7 +216,8 @@ public class AmmoUI : MonoBehaviour
 
     private void SelectColor(string colorKey)
     {
-        if(AmmoManager.Instance.GetCurrentAmmo(colorKey) != 0){
+        if (AmmoManager.Instance.GetCurrentAmmo(colorKey) != 0)
+        {
             Material selectedMaterial = clickInteraction.GetMaterialFromString(colorKey);
             int index = clickInteraction.absorbedColorTags.IndexOf(colorKey);
             if (index != -1)
@@ -234,12 +235,13 @@ public class AmmoUI : MonoBehaviour
 
             ammoBar.SetActive(false);
             ammoPanel.SetActive(false);
-        }else
+        }
+        else
         {
-            // AudioManager.instance.Play("UIError");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIErrorSound, this.transform.position);
             return;
         }
-        // AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
     }
 
     public void DiscoverColor(string colorKey)

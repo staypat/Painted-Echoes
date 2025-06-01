@@ -89,7 +89,7 @@ public class SplitterInteract : ObjectInteract
             SplitterUIPanel.SetActive(false); // Hide the UI if in menu
             GameManager.Instance.ExitMenu(); // Set the flag to false when exiting the menu
             EventSystem.current.SetSelectedGameObject(null);
-            // AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         }
     }
 
@@ -108,7 +108,7 @@ public class SplitterInteract : ObjectInteract
             bool isActive = SplitterUIPanel.activeSelf;
             SplitterUIPanel.SetActive(!isActive); // Toggle UI visibility
             EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
-            // AudioManager.instance.Play("UIOpen");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         }
     }
 
@@ -118,14 +118,14 @@ public class SplitterInteract : ObjectInteract
         {
             AmmoManager.Instance.UseAmmo(1, currentColor);
             // Remove the colors to the scrolling on brush
-            if(AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
+            if (AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
             {
                 colorTracker.absorbedColors.Remove(colorTracker.GetMaterialFromString(currentColor));
                 colorTracker.absorbedColorTags.Remove(currentColor);
             }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
-            // AudioManager.instance.Play("UIApply");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIApplySound, this.transform.position);
         }
         if (slot == 1)
         {
@@ -144,14 +144,15 @@ public class SplitterInteract : ObjectInteract
                     colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
                 }
                 // Update brush
-                if(colorTracker.absorbedColorTags.Count == 1)
+                if (colorTracker.absorbedColorTags.Count == 1)
                 {
                     colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
                 }
-                else if(colorTracker.absorbedColorTags.Count == 0)
+                else if (colorTracker.absorbedColorTags.Count == 0)
                 {
                     colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
-                }else
+                }
+                else
                 {
                     colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
                     colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
@@ -178,14 +179,15 @@ public class SplitterInteract : ObjectInteract
                     colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
                 }
                 // Update brush
-                if(colorTracker.absorbedColorTags.Count == 1)
+                if (colorTracker.absorbedColorTags.Count == 1)
                 {
                     colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
                 }
-                else if(colorTracker.absorbedColorTags.Count == 0)
+                else if (colorTracker.absorbedColorTags.Count == 0)
                 {
                     colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
-                }else
+                }
+                else
                 {
                     colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
                     colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
@@ -212,14 +214,15 @@ public class SplitterInteract : ObjectInteract
                     colorTracker.currentIndex2 = colorTracker.absorbedColorTags.Count - 1;
                 }
                 // Update brush
-                if(colorTracker.absorbedColorTags.Count == 1)
+                if (colorTracker.absorbedColorTags.Count == 1)
                 {
                     colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
                 }
-                else if(colorTracker.absorbedColorTags.Count == 0)
+                else if (colorTracker.absorbedColorTags.Count == 0)
                 {
                     colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
-                }else
+                }
+                else
                 {
                     colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
                     colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
@@ -235,13 +238,13 @@ public class SplitterInteract : ObjectInteract
         }
 
         paletteManager.updatePaletteUI();
-        // AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
     }
 
     public void CollectAll()
     {
-        // AudioManager.instance.Play("UIApply");
-        // AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIApplySound, this.transform.position);
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
         // play select again after 200 milliseconds
         Invoke("PlaySelect", 0.2f);
         if (currentColor == "Brown")
@@ -325,7 +328,7 @@ public class SplitterInteract : ObjectInteract
 
     private void PlaySelect()
     {
-        // AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
     }
 
     public void ChooseColor()
@@ -337,12 +340,12 @@ public class SplitterInteract : ObjectInteract
             exitButton.SetActive(true);
             SplitterUIPanel.SetActive(false);
             UpdateReturnKeybindText();
-            // AudioManager.instance.Play("UIOpen");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
             PopulateAmmoButtons();
         }
         else
         {
-            // AudioManager.instance.Play("UIError");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIErrorSound, this.transform.position);
         }
     }
 
@@ -388,7 +391,7 @@ public class SplitterInteract : ObjectInteract
     {
         if (ammoType == "White" || ammoType == "Black" || ammoType == "Red" || ammoType == "Blue" || ammoType == "Yellow")
         {
-            // AudioManager.instance.Play("UIError");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIErrorSound, this.transform.position);
             return;
         }
         Debug.Log($"Selected Ammo: {ammoType}");
@@ -403,7 +406,7 @@ public class SplitterInteract : ObjectInteract
             Destroy(child.gameObject);
         }
 
-        // AudioManager.instance.Play("Select");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.SelectSound, this.transform.position);
     }
 
     public void CloseColorSelectionPanel(string ammoType)
@@ -414,7 +417,7 @@ public class SplitterInteract : ObjectInteract
             ColorSelectionPanel.SetActive(false);
             instructions.SetActive(false);
             exitButton.SetActive(false);
-            // AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
         }
 
         if (SplitterUIPanel != null)
@@ -445,7 +448,7 @@ public class SplitterInteract : ObjectInteract
     {
         if (ColorSelectionPanel.activeSelf)
         {
-            // AudioManager.instance.Play("UIBack");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.UIBackSound, this.transform.position);
             DestroyChildren();
             CloseColorSelectionPanel("White");
         }
