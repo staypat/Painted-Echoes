@@ -5,8 +5,8 @@ using UnityEngine;
 public class ColorBlindController : MonoBehaviour
 {
     public GameObject symbolQuad;
-    public Texture brownSymbol;
-    public Texture greenSymbol;
+    public Material brownSymbol;
+    public Material greenSymbol;
     private Renderer symbolRenderer;
     // Start is called before the first frame update
     void Start()
@@ -22,26 +22,27 @@ public class ColorBlindController : MonoBehaviour
 
     public void UpdateSymbol(string colorName)
     {
-        Texture symbol = null;
+        Material symbolMat = null;
 
         switch (colorName.ToLower())
         {
             case "brown":
-                symbol = brownSymbol;
+                symbolMat = brownSymbol;
+                Debug.Log("Setting symbol for brown color");
                 break;
             case "green":
-                symbol = greenSymbol;
+                symbolMat = greenSymbol;
+                Debug.Log("Setting symbol for green color");
                 break;
             default:
                 Debug.LogWarning("No symbol assigned for color " + colorName);
                 break;
         }
 
-        if (symbol != null)
+        if (symbolMat != null)
         {
-            Material newMat = new Material(symbolRenderer.sharedMaterial);
-            newMat.mainTexture = symbol;
-            symbolRenderer.material = newMat;
+            symbolRenderer.material = symbolMat;
+            Debug.Log("Symbol updated to " + colorName);
         }
     }
 }
