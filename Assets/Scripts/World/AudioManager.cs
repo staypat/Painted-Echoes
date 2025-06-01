@@ -1,93 +1,154 @@
 using UnityEngine.Audio;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using FMODUnity;
+using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
-    public Sound[] sounds;
-
-    public static float musicVolume = .1f; // temp disable music to save your sanity
-    public static float sfxVolume = 1f;
-    void Awake()
+    [field: Header("Volume")]
+    [Range(0, 1)]
+    [field: SerializeField] public float MusicVolume = 1;
+    [Range(0, 1)]
+    [field: SerializeField] public float SFXVolume = 1;
+    [Range(0, 1)]
+    private Bus musicBus;
+    private Bus sfxBus;
+    private List<EventInstance> eventInstances;
+    private EventInstance musicEventInstance;
+    public static AudioManager instance { get; private set; }
+    private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (instance != null && instance != this)
         {
+            Debug.LogWarning("Multiple instances of AudioManager detected. Destroying the new instance.");
             Destroy(gameObject);
             return;
         }
-        
+        instance = this;
         DontDestroyOnLoad(gameObject);
-        foreach (Sound s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
+        eventInstances = new List<EventInstance>();
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
+    }
 
-            s.source.volume = (s.name == "Theme" ? musicVolume : sfxVolume);
-            s.source.loop = s.loop;
+    private void Start()
+    {
+        // Initialize music if the scene is the main menu
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            InitializeMusic(FMODEvents.instance.MenuMusic);
         }
     }
 
-    void Start()
+    private void Update()
     {
-        Play("Theme");
+        musicBus.setVolume(MusicVolume);
+        sfxBus.setVolume(SFXVolume);
     }
 
-    public void Play(string name)
+    public void InitializeMusic(EventReference musicEventReference)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s.name == "Select")
+        musicEventInstance = CreateInstance(musicEventReference);
+        musicEventInstance.start();
+    }
+
+    public void AdaptAudio(int count, int total)
+    {
+        // at 20% completion, add a layer to the music
+        if (count >= total * 0.2f)
         {
-            s.source.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomize pitch for select sound
+            AddLayerToMusic("20");
         }
-        s.source.Play();
-    }
-
-    public void PlayOneShot(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.PlayOneShot(s.clip);
-    }
-
-    public void Pause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Pause();
-    }
-
-    public void UnPause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.UnPause();
-    }
-
-    public void UpdateMusicVolume()
-    {
-        foreach (Sound s in sounds)
+        // at 40% completion, add a layer to the music
+        if (count >= total * 0.4f)
         {
-            if (s.name == "Theme")
-            {
-                s.source.volume = musicVolume;
-            }
+            AddLayerToMusic("40");
         }
-    }
-
-    public void UpdateSFXVolume()
-    {
-        foreach (Sound s in sounds)
+        // at 60% completion, add a layer to the music
+        if (count >= total * 0.6f)
         {
-            if (s.name != "Theme")
-            {
-                s.source.volume = sfxVolume;
-            }
+            AddLayerToMusic("60");
+        }
+        // at 80% completion, add a layer to the music
+        if (count >= total * 0.8f)
+        {
+            AddLayerToMusic("80");
+        }
+
+        // if under 80% completion, remove the 80 layer
+        if (count < total * 0.8f)
+        {
+            RemoveLayerFromMusic("80");
+        }
+        // if under 60% completion, remove the 60 layer
+        if (count < total * 0.6f)
+        {
+            RemoveLayerFromMusic("60");
+        }
+        // if under 40% completion, remove the 40 layer
+        if (count < total * 0.4f)
+        {
+            RemoveLayerFromMusic("40");
+        }
+        // if under 20% completion, remove the 20 layer
+        if (count < total * 0.2f)
+        {
+            RemoveLayerFromMusic("20");
         }
     }
 
-    public bool IsPaused(string name)
+    private void AddLayerToMusic(string layerName)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        return !s.source.isPlaying;
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setParameterByName(layerName, 1.0f);
+        }
     }
+
+    private void RemoveLayerFromMusic(string layerName)
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setParameterByName(layerName, 0.0f);
+        }
+    }
+
+    private void StopMusic()
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            musicEventInstance.release();
+        }
+    }
+
+    public void PlayOneShot(EventReference sound, Vector3 worldPos)
+    {
+        RuntimeManager.PlayOneShot(sound, worldPos);
+    }
+
+    public EventInstance CreateInstance(EventReference eventReference)
+    {
+        EventInstance instance = RuntimeManager.CreateInstance(eventReference);
+        eventInstances.Add(instance);
+        return instance;
+    }
+
+    public void CleanUp()
+    {
+        foreach (EventInstance instance in eventInstances)
+        {
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            instance.release();
+        }
+    }
+
+    // private void OnDestroy()
+    // {
+    //     CleanUp();
+    // }
 }

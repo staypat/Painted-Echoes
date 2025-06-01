@@ -41,7 +41,7 @@ public class DoorInteractTutorial : ObjectInteract
         else
         {
             Debug.Log("Player does not have the key.");
-            AudioManager.instance.Play("DoorLocked");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.DoorLocked, this.transform.position);
             ShowNoKeyMessage();
         }
     }
@@ -60,12 +60,12 @@ public class DoorInteractTutorial : ObjectInteract
 
         if (isOpen)
         {
-            AudioManager.instance.Play("DoorClose");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.DoorClose, this.transform.position);
             actionTextKey = "open"; // Change prompt back to "Open"
         }
         else
         {
-            AudioManager.instance.Play("DoorOpen");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.DoorOpen, this.transform.position);
             actionTextKey = "close"; // Change prompt to "Close"
         }
 
