@@ -27,6 +27,9 @@ TagManager:
   - ToyTrain
   - StuffedBear
   - Golem
+  - RubberDuck8
+  - RubberDuck6
+  - RubberDuck3
   layers:
   - Default
   - TransparentFX

@@ -43,6 +43,8 @@ public class PickUpObj : ObjectInteract
         }
     }
 
+    public bool isBeingHeld => objPickedUp;
+
     public override void Interact()
     {
         if (!objPickedUp)

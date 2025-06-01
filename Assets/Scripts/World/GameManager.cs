@@ -159,7 +159,10 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // Keeps it persistent across scenes
+        }
+        else
+        {
+            Destroy(gameObject);
         }
         
         // else

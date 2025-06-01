@@ -11,15 +11,18 @@ public class SceneLoader : MonoBehaviour
     public GameObject privacyNoticePromptUI;
     public void LoadScene()
     {
-        AudioManager.instance.Play("UIConfirm");
+        AudioManager.instance.CleanUp();
+        AudioManager.instance.InitializeMusic(FMODEvents.instance.TutorialMusic);
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UIConfirmSound, this.transform.position);
         GameManager.Instance.ExitMenu();
         EventSystem.current.SetSelectedGameObject(null);
         SceneManager.LoadScene("Tutorial"); 
+
     }
 
     public void LoadMainMenu()
     {
-        AudioManager.instance.Play("UIConfirm");
+        //AudioManager.instance.Play("UIConfirm");
         SceneManager.LoadScene("MainMenu"); 
         if (GameManager.Instance != null)
         {

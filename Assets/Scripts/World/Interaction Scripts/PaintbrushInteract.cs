@@ -112,6 +112,6 @@ public class PaintbrushInteract : ObjectInteract
         objectToEnable.SetActive(true); // Enable paintbrush
         GameManager.Instance.holdingPaintbrush = true; // Mark that the player is now holding the paintbrush
         paintbrushIconToEnable.SetActive(true); // Enable paintbrush icon
-        AudioManager.instance.Play("GunEquip");
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.GunEquip, this.transform.position); // Play paintbrush equip sound
     }
 }
