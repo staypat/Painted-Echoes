@@ -43,27 +43,64 @@ public class AudioManager : MonoBehaviour
         musicEventInstance.start();
     }
 
-    public void PauseMusic()
+    public void AdaptAudio(int count, int total)
     {
-        if (musicEventInstance.isValid())
+        // at 20% completion, add a layer to the music
+        if (count >= total * 0.2f)
         {
-            musicEventInstance.setPaused(true);
+            AddLayerToMusic("20");
+        }
+        // at 40% completion, add a layer to the music
+        if (count >= total * 0.4f)
+        {
+            AddLayerToMusic("40");
+        }
+        // at 60% completion, add a layer to the music
+        if (count >= total * 0.6f)
+        {
+            AddLayerToMusic("60");
+        }
+        // at 80% completion, add a layer to the music
+        if (count >= total * 0.8f)
+        {
+            AddLayerToMusic("80");
+        }
+
+        // if under 80% completion, remove the 80 layer
+        if (count < total * 0.8f)
+        {
+            RemoveLayerFromMusic("80");
+        }
+        // if under 60% completion, remove the 60 layer
+        if (count < total * 0.6f)
+        {
+            RemoveLayerFromMusic("60");
+        }
+        // if under 40% completion, remove the 40 layer
+        if (count < total * 0.4f)
+        {
+            RemoveLayerFromMusic("40");
+        }
+        // if under 20% completion, remove the 20 layer
+        if (count < total * 0.2f)
+        {
+            RemoveLayerFromMusic("20");
         }
     }
 
-    public void ResumeMusic()
-    {
-        if (musicEventInstance.isValid())
-        {
-            musicEventInstance.setPaused(false);
-        }
-    }
-
-    public void AddLayerToMusic(string layerName)
+    private void AddLayerToMusic(string layerName)
     {
         if (musicEventInstance.isValid())
         {
             musicEventInstance.setParameterByName(layerName, 1.0f);
+        }
+    }
+
+    private void RemoveLayerFromMusic(string layerName)
+    {
+        if (musicEventInstance.isValid())
+        {
+            musicEventInstance.setParameterByName(layerName, 0.0f);
         }
     }
 

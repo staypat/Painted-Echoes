@@ -28,7 +28,18 @@ public class CurrentRoom : MonoBehaviour
                 AudioManager.instance.CleanUp();
                 AudioManager.instance.InitializeMusic(FMODEvents.instance.LivingRoom);
             }
-            else {
+            else if (gameObject.name == "Collider (Kitchen)" || gameObject.name == "Collider2 (Kitchen)")
+            {
+                AudioManager.instance.CleanUp();
+                AudioManager.instance.InitializeMusic(FMODEvents.instance.Kitchen);
+            }
+            else if (gameObject.name == "Collider (MC Room)")
+            {
+                AudioManager.instance.CleanUp();
+                AudioManager.instance.InitializeMusic(FMODEvents.instance.OldRoom);
+            }
+            else
+            {
                 AudioManager.instance.CleanUp();
             }
         }

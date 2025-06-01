@@ -17,6 +17,8 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference MenuMusic { get; private set; }
     [field: SerializeField] public EventReference TutorialMusic { get; private set; }
     [field: SerializeField] public EventReference LivingRoom { get; private set; }
+    [field: SerializeField] public EventReference Kitchen { get; private set; }
+    [field: SerializeField] public EventReference OldRoom { get; private set; }
 
     [field: Header("SFX")]
     [field: SerializeField] public EventReference PhotoEquip { get; private set; }

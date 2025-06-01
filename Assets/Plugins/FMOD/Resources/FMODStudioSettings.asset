@@ -680,10 +680,10 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 1
-  HasPlatforms: 1
+  HasSourceProject: 0
+  HasPlatforms: 0
   sourceProjectPath: C:/Users/Frank/Desktop/Painted-Echoes-FMOD/Painted-Echoes-FMOD.fspro
-  sourceBankPath: C:/Users/Frank/Desktop/Painted-Echoes-FMOD/Build
+  sourceBankPath: Assets/Audio/FMOD Banks
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
