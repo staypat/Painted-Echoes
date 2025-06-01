@@ -12,7 +12,7 @@ public class ToyPlacementChecker : MonoBehaviour
         if (other.CompareTag("ToyTrain"))
         {
             ToyManager.Instance.toyTrainPlaced = true;
-            //Debug.Log("Toy train detected");
+            Debug.Log("Toy train detected");
             if (!hasComparedColor)
             {
                 Click_2 click2Script = FindObjectOfType<Click_2>();
@@ -26,7 +26,7 @@ public class ToyPlacementChecker : MonoBehaviour
         else if (other.CompareTag("StuffedBear"))
         {
             ToyManager.Instance.stuffedBearPlaced = true;
-            //Debug.Log("Stuffed bear detected");
+            Debug.Log("Stuffed bear detected");
             if (!hasComparedColor)
             {
                 Click_2 click2Script = FindObjectOfType<Click_2>();
@@ -44,12 +44,12 @@ public class ToyPlacementChecker : MonoBehaviour
         if (other.CompareTag("ToyTrain"))
         {
             ToyManager.Instance.toyTrainPlaced = false;
-            //Debug.Log("Toy train removed");
+            Debug.Log("Toy train removed");
         }
         else if (other.CompareTag("StuffedBear"))
         {
             ToyManager.Instance.stuffedBearPlaced = false;
-            //Debug.Log("Stuffed bear removed");
+            Debug.Log("Stuffed bear removed");
         }
 
         hasComparedColor = false;
