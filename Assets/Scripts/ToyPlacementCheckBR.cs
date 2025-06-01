@@ -7,7 +7,8 @@ public class ToyPlacementCheckerDucks : MonoBehaviour
     public enum DuckType
     {
         RubberDuck6,
-        RubberDuck8
+        RubberDuck8,
+        RubberDuck3
     }
 
     public DuckType zoneType; // Set this in the Inspector
@@ -53,6 +54,24 @@ public class ToyPlacementCheckerDucks : MonoBehaviour
                     }
                 }
                 break;
+
+            case DuckType.RubberDuck3:
+                if (other.CompareTag("RubberDuck3"))
+                {
+                    ToyManager.Instance.rubberDuck3Placed = true;
+                    Debug.Log("Rubber Duck 3 detected");
+
+                    if (!hasComparedColor)
+                    {
+                        Click_2 click2Script = FindObjectOfType<Click_2>();
+                        if (click2Script != null)
+                        {
+                            click2Script.CompareColorValues();
+                            hasComparedColor = true;
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -73,6 +92,14 @@ public class ToyPlacementCheckerDucks : MonoBehaviour
                 {
                     ToyManager.Instance.rubberDuck8Placed = false;
                     Debug.Log("Rubber Duck 8 removed");
+                }
+                break;
+
+            case DuckType.RubberDuck3:
+                if (other.CompareTag("RubberDuck3"))
+                {
+                    ToyManager.Instance.rubberDuck3Placed = false;
+                    Debug.Log("Rubber Duck 3 removed");
                 }
                 break;
         }
