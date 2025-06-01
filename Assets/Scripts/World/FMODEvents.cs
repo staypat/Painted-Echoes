@@ -5,7 +5,7 @@ using FMODUnity;
 
 public class FMODEvents : MonoBehaviour
 {
-    [field: Header ("UISFX")]
+    [field: Header("UISFX")]
     [field: SerializeField] public EventReference UIConfirmSound { get; private set; }
     [field: SerializeField] public EventReference UIErrorSound { get; private set; }
     [field: SerializeField] public EventReference UIBackSound { get; private set; }

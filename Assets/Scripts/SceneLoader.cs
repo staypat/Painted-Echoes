@@ -15,6 +15,7 @@ public class SceneLoader : MonoBehaviour
         GameManager.Instance.ExitMenu();
         EventSystem.current.SetSelectedGameObject(null);
         SceneManager.LoadScene("Tutorial"); 
+        AudioManager.instance.CleanUp();
     }
 
     public void LoadMainMenu()

@@ -9,19 +9,30 @@ using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
+    [field: Header("Volume")]
+    [Range(0, 1)]
+    [field: SerializeField] public float MusicVolume = 1;
+    [Range(0, 1)]
+    [field: SerializeField] public float SFXVolume = 1;
+    [Range(0, 1)]
+    private Bus musicBus;
+    private Bus sfxBus;
     private List<EventInstance> eventInstances;
     private EventInstance musicEventInstance;
-    public static AudioManager instance;
-    void Awake()
+    public static AudioManager instance { get; private set; }
+    private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
+        if (instance != null && instance != this)
         {
+            Debug.LogWarning("Multiple instances of AudioManager detected. Destroying the new instance.");
             Destroy(gameObject);
             return;
         }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
         eventInstances = new List<EventInstance>();
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
     }
 
     private void Start()
@@ -35,6 +46,12 @@ public class AudioManager : MonoBehaviour
         {
             InitializeMusic(FMODEvents.instance.TutorialMusic);
         }
+    }
+
+    private void Update()
+    {
+        musicBus.setVolume(MusicVolume);
+        sfxBus.setVolume(SFXVolume);
     }
 
     public void InitializeMusic(EventReference musicEventReference)
@@ -134,8 +151,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        CleanUp();
-    }
+    // private void OnDestroy()
+    // {
+    //     CleanUp();
+    // }
 }
