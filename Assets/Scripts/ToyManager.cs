@@ -8,9 +8,6 @@ public class ToyManager : MonoBehaviour
 
     public bool toyTrainPlaced = false;
     public bool stuffedBearPlaced = false;
-    public bool rubberDuck6Placed = false;
-    public bool rubberDuck8Placed = false;
-    public bool rubberDuck3Placed = false;
 
     private void Awake()
     {
