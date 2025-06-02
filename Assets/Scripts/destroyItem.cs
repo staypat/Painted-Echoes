@@ -6,6 +6,7 @@ public class destroyItem : MonoBehaviour
 {
 
     public GameObject itemToDestroy; // Assign the item to destroy in the inspector
+    public GameObject colorblindSymbol; 
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class destroyItem : MonoBehaviour
         if (itemToDestroy.GetComponent<Renderer>().material.color == GameManager.Instance.grayMaterial.color)
         {
             Destroy(itemToDestroy);
+            Destroy(colorblindSymbol);
         }
         
     }
