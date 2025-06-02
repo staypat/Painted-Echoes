@@ -15,6 +15,10 @@ public class PhotoManager : MonoBehaviour
     public Image kitchenPhoto3;
     public Image MCbedroomPhoto1;
     public Image MCbedroomPhoto2;
+    public Image bathroomPhoto1;
+    public Image bathroomPhoto2;
+    public Image grandpaBedroomPhoto1;
+    public Image grandpaBedroomPhoto2;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,10 @@ public class PhotoManager : MonoBehaviour
         photoCollection.Add("Kitchen3", kitchenPhoto3);
         photoCollection.Add("MCBedroom1", MCbedroomPhoto1);
         photoCollection.Add("MCBedroom2", MCbedroomPhoto2);
+        photoCollection.Add("Bathroom1", bathroomPhoto1);
+        photoCollection.Add("Bathroom2", bathroomPhoto2);
+        photoCollection.Add("GrandpaBedroom1", grandpaBedroomPhoto1);
+        photoCollection.Add("GrandpaBedroom2", grandpaBedroomPhoto2);
     }
 
     // Update is called once per frame
