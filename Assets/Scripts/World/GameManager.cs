@@ -42,8 +42,9 @@ public class GameState
     public List<string> mismatchedColorKeys = new List<string>();
     public List<Color> mismatchedColorValues = new List<Color>();
 
-    public List<string> pickUpObjectPaths = new();
-    public List<Vector3> pickUpObjectPositions = new();
+    // Lists of positon of objects picked up. DOESN'T WORK
+    // public List<string> pickUpObjectPaths = new();
+    // public List<Vector3> pickUpObjectPositions = new();
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
 
@@ -328,18 +329,19 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("MismatchedHouse not found in the scene.");
         }
 
-        PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true); // `true` includes inactive objects
-        gameState.pickUpObjectPaths.Clear();
-        gameState.pickUpObjectPositions.Clear();
+        // Saving position of objects picked up. DOESN'T WORK
+        // PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true); // `true` includes inactive objects
+        // gameState.pickUpObjectPaths.Clear();
+        // gameState.pickUpObjectPositions.Clear();
 
-        foreach (PickUpObj obj in pickUpObjects)
-        {
-            Transform t = obj.transform;
-            string fullPath = GetFullPath(t); // Reuse your existing function
-            gameState.pickUpObjectPaths.Add(fullPath);
-            gameState.pickUpObjectPositions.Add(t.position);
-            Debug.Log("Saved PickUp Object: " + fullPath + " at position: " + t.position);
-        }
+        // foreach (PickUpObj obj in pickUpObjects)
+        // {
+        //     Transform t = obj.transform;
+        //     string fullPath = GetFullPath(t); // Reuse your existing function
+        //     gameState.pickUpObjectPaths.Add(fullPath);
+        //     gameState.pickUpObjectPositions.Add(t.position);
+        //     Debug.Log("Saved PickUp Object: " + fullPath + " at position: " + t.position);
+        // }
 
         GameObject golem = GameObject.Find("Golem");
 
@@ -768,34 +770,34 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Golem not found in the scene.");
             }
 
+            // Loading positon of objects picked up. DOESN'T WORK
+            // PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true);
 
-            PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true);
+            // Dictionary<string, int> nameToIndexPickUp = new();
+            // for (int i = 0; i < gameState.pickUpObjectPaths.Count; i++)
+            // {
+            //     nameToIndexPickUp[gameState.pickUpObjectPaths[i]] = i;
+            // }
 
-            Dictionary<string, int> nameToIndexPickUp = new();
-            for (int i = 0; i < gameState.pickUpObjectPaths.Count; i++)
-            {
-                nameToIndexPickUp[gameState.pickUpObjectPaths[i]] = i;
-            }
+            // foreach (PickUpObj obj in pickUpObjects)
+            // {
+            //     string fullPath = GetFullPath(obj.transform);
 
-            foreach (PickUpObj obj in pickUpObjects)
-            {
-                string fullPath = GetFullPath(obj.transform);
+            //     if (nameToIndexPickUp.TryGetValue(fullPath, out int index))
+            //     {
+            //         if (index < gameState.pickUpObjectPositions.Count)
+            //         {
+            //             // Move by the saved position offset instead of setting absolute position
+            //             obj.transform.position += gameState.pickUpObjectPositions[index];
 
-                if (nameToIndexPickUp.TryGetValue(fullPath, out int index))
-                {
-                    if (index < gameState.pickUpObjectPositions.Count)
-                    {
-                        // Move by the saved position offset instead of setting absolute position
-                        obj.transform.position += gameState.pickUpObjectPositions[index];
-
-                        Debug.Log($"[MOVED BY OFFSET] PickUpObj '{fullPath}' moved by {gameState.pickUpObjectPositions[index]}, new position: {obj.transform.position}");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("No saved PickUpObj data for: " + fullPath);
-                }
-            }
+            //             Debug.Log($"[MOVED BY OFFSET] PickUpObj '{fullPath}' moved by {gameState.pickUpObjectPositions[index]}, new position: {obj.transform.position}");
+            //         }
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning("No saved PickUpObj data for: " + fullPath);
+            //     }
+            // }
 
 
             // Load ammo datav
