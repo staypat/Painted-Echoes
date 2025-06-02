@@ -179,12 +179,12 @@ public class GolemAI : MonoBehaviour
     public void ApplyColorToGolem(Material newMat)
     {
         Debug.Log("Color: " + newMat);
-        currentColor = newMat;
+        currentColor = newMat; 
 
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in allRenderers)
         {
-            renderer.material = newMat;
+            renderer.material = currentColor;
             renderer.material.color = newMat.color;
         }
     }
