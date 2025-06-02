@@ -42,6 +42,9 @@ public class GameState
     public List<string> mismatchedColorKeys = new List<string>();
     public List<Color> mismatchedColorValues = new List<Color>();
 
+    // Lists of positon of objects picked up. DOESN'T WORK
+    // public List<string> pickUpObjectPaths = new();
+    // public List<Vector3> pickUpObjectPositions = new();
     public List<string> rendererNames = new List<string>(); // To track multiple renderer names
     public List<Color> rendererColors = new List<Color>();  // To track multiple renderer colors
 
@@ -159,11 +162,12 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); 
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
         
         // else
         // {
@@ -287,7 +291,7 @@ public class GameManager : MonoBehaviour
             {
                 string fullPath = GetFullPath(meshRenderer.transform);
                 gameState.rendererNames.Add(fullPath);
-                
+
                 // Only store states if the object name starts with "Barrier"
                 if (meshRenderer.gameObject.name.StartsWith("Barrier"))
                 {
@@ -325,6 +329,19 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("MismatchedHouse not found in the scene.");
         }
 
+        // Saving position of objects picked up. DOESN'T WORK
+        // PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true); // `true` includes inactive objects
+        // gameState.pickUpObjectPaths.Clear();
+        // gameState.pickUpObjectPositions.Clear();
+
+        // foreach (PickUpObj obj in pickUpObjects)
+        // {
+        //     Transform t = obj.transform;
+        //     string fullPath = GetFullPath(t); // Reuse your existing function
+        //     gameState.pickUpObjectPaths.Add(fullPath);
+        //     gameState.pickUpObjectPositions.Add(t.position);
+        //     Debug.Log("Saved PickUp Object: " + fullPath + " at position: " + t.position);
+        // }
 
         GameObject golem = GameObject.Find("Golem");
 
@@ -346,12 +363,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Golem BoxCollider saved successfully");
             }
 
-            Renderer renderer = golem.GetComponent<Renderer>();
-            if (renderer != null && renderer.material.HasProperty("_Color"))
-            {
-                gameState.golemColor = renderer.material.color;
-                Debug.Log("Golem renderer saved: " + gameState.golemColor);
-            }
+            // Renderer renderer = golem.GetComponent<Renderer>();
+            // if (renderer != null && renderer.material.HasProperty("_Color"))
+            // {
+            //     gameState.golemColor = renderer.material.color;
+            //     Debug.Log("Golem renderer saved: " + gameState.golemColor);
+            // }
 
             if (golemRenderer != null)
             {
@@ -378,17 +395,15 @@ public class GameManager : MonoBehaviour
             //     Debug.Log("Golem AI saved successfully");
             // }
 
-            if (agent != null)
-            {
-                gameState.navAgentVelocity = agent.velocity;
-                gameState.navAgentDestination = agent.destination;
-                Debug.Log("Golem NavMeshAgent saved successfully");
-            }
+            // if (agent != null)
+            // {
+            //     gameState.navAgentVelocity = agent.velocity;
+            //     gameState.navAgentDestination = agent.destination;
+            //     Debug.Log("Golem NavMeshAgent saved successfully");
+            // }
             Debug.Log("Golem saved successfully");
 
         }
-
-
 
         // Save ammo data
         AmmoManager ammoManager = AmmoManager.Instance;
@@ -637,6 +652,7 @@ public class GameManager : MonoBehaviour
                     string fullPath = GetFullPath(mr.transform);
                     if (!nameToIndex.TryGetValue(fullPath, out int index)) continue;
 
+
                     // Restore enabled state (only for Barriers)
                     string objectName = mr.gameObject.name;
 
@@ -695,20 +711,20 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Golem BoxCollider loaded successfully");
                 }
 
-                Renderer renderer = golem.GetComponent<Renderer>();
-                if (renderer != null && renderer.material.HasProperty("_Color"))
-                {
-                    renderer.material.color = gameState.golemColor;
-                    Debug.Log("Golem renderer loaded: " + gameState.golemColor);
-                }
+                // Renderer renderer = golem.GetComponent<Renderer>();
+                // if (renderer != null && renderer.material.HasProperty("_Color"))
+                // {
+                //     renderer.material.color = gameState.golemColor;
+                //     Debug.Log("Golem renderer loaded: " + gameState.golemColor);
+                // }
 
-                UnityEngine.AI.NavMeshAgent agent = golem.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                if (agent != null)
-                {
-                    agent.velocity = gameState.navAgentVelocity;
-                    agent.SetDestination(gameState.navAgentDestination);
-                    Debug.Log("Golem NavMeshAgent loaded successfully");
-                }
+                // UnityEngine.AI.NavMeshAgent agent = golem.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                // if (agent != null)
+                // {
+                //     agent.velocity = gameState.navAgentVelocity;
+                //     agent.SetDestination(gameState.navAgentDestination);
+                //     Debug.Log("Golem NavMeshAgent loaded successfully");
+                // }
 
                 Renderer golemRenderer = golem.GetComponent<Renderer>();
                 if (golemRenderer != null)
@@ -721,9 +737,13 @@ public class GameManager : MonoBehaviour
                     // }
                     GolemAI golemAI = golem.GetComponent<GolemAI>();
                     clickScript = FindObjectOfType<Click_2>();
-                    golemAI.ApplyColorToGolem(clickScript.GetMaterialFromString(gameState.golemMaterialName));
+                    if (gameState.golemMaterialName != "Gray")
+                    {
+                        golemAI.ApplyColorToGolem(clickScript.GetMaterialFromString(gameState.golemMaterialName));
+                    }
 
-                    // golemRenderer.material.color = gameState.golemColor;
+
+
                     Debug.Log("Golem color loaded: " + gameState.golemColor);
                 }
 
@@ -749,6 +769,36 @@ public class GameManager : MonoBehaviour
             {
                 Debug.LogWarning("Golem not found in the scene.");
             }
+
+            // Loading positon of objects picked up. DOESN'T WORK
+            // PickUpObj[] pickUpObjects = GameObject.FindObjectsOfType<PickUpObj>(true);
+
+            // Dictionary<string, int> nameToIndexPickUp = new();
+            // for (int i = 0; i < gameState.pickUpObjectPaths.Count; i++)
+            // {
+            //     nameToIndexPickUp[gameState.pickUpObjectPaths[i]] = i;
+            // }
+
+            // foreach (PickUpObj obj in pickUpObjects)
+            // {
+            //     string fullPath = GetFullPath(obj.transform);
+
+            //     if (nameToIndexPickUp.TryGetValue(fullPath, out int index))
+            //     {
+            //         if (index < gameState.pickUpObjectPositions.Count)
+            //         {
+            //             // Move by the saved position offset instead of setting absolute position
+            //             obj.transform.position += gameState.pickUpObjectPositions[index];
+
+            //             Debug.Log($"[MOVED BY OFFSET] PickUpObj '{fullPath}' moved by {gameState.pickUpObjectPositions[index]}, new position: {obj.transform.position}");
+            //         }
+            //     }
+            //     else
+            //     {
+            //         Debug.LogWarning("No saved PickUpObj data for: " + fullPath);
+            //     }
+            // }
+
 
             // Load ammo datav
             AmmoManager ammoManager = AmmoManager.Instance;
