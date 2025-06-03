@@ -204,8 +204,29 @@ public class ToyPlacementCheckGR : MonoBehaviour
             ToyManagerGR.Instance.correctPlacements++;
         }
 
+        // Check for 4 successful placements
+        if (ToyManagerGR.Instance.correctPlacements == 4)
+        {
+            Debug.Log("All 4 books correctly placed! Triggering victory sequence.");
+
+            if (clickScript != null)
+            {
+                Debug.Log("clickScript is assigned correctly.");
+                clickScript.victoryUI.ShowVictoryMessage();
+                clickScript.turnOffBarrier();
+
+                // Play the level complete sound
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.LevelComplete, this.transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("clickScript is NOT assigned! Check the Inspector.");
+            }
+        }
+
         PrintRoomAccuracy();
     }
+
 
     private void RegisterWrongAttempt()
     {

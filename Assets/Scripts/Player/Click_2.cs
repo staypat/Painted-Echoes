@@ -179,6 +179,7 @@ public class Click_2 : MonoBehaviour
         currentRoom = newRoom;
         isRoomComplete = false;
         hasVictoryBeenTriggered = false;
+        roomCheck(currentRoom);
         //Debug.Log("Current room: " + currentRoom.name);
 
     }
@@ -274,7 +275,7 @@ public class Click_2 : MonoBehaviour
                 else
                 {
                     count += 1;
-                    //Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
+                    Debug.Log($"✅ Match found for key '{objectName}': Correct value = {correctPair.Value}");
                 }
             }
             else
@@ -316,7 +317,7 @@ public class Click_2 : MonoBehaviour
             count += 1;
         }
 
-        //Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
+        Debug.Log($"Correct Colors: {count}/ {CorrectTotal}");
 
         AudioManager.instance.AdaptAudio(count, CorrectTotal);
 
