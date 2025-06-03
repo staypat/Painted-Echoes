@@ -37,6 +37,11 @@ public class SplitterInteract : ObjectInteract
     public TMP_Text returnKeybindText;
     public GameObject splitterButtonFirst;
     private GameObject selectedColorButtonFirst;
+    public Image button1Image;
+    public Image button2Image;
+    public Image button3Image;
+    public Image button4Image;
+    public List<Material> colorBlindMaterials;
 
     private void Start()
     {
@@ -108,6 +113,20 @@ public class SplitterInteract : ObjectInteract
             bool isActive = SplitterUIPanel.activeSelf;
             SplitterUIPanel.SetActive(!isActive); // Toggle UI visibility
             EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
+            if (ColorBlindToggle.colorBlindModeOn)
+            {
+                button1Image.gameObject.SetActive(true);
+                button2Image.gameObject.SetActive(true);
+                button3Image.gameObject.SetActive(true);
+                button4Image.gameObject.SetActive(true);
+            }
+            else
+            {
+                button1Image.gameObject.SetActive(false);
+                button2Image.gameObject.SetActive(false);
+                button3Image.gameObject.SetActive(false);
+                button4Image.gameObject.SetActive(false);
+            }
             AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
         }
     }
@@ -125,6 +144,7 @@ public class SplitterInteract : ObjectInteract
             }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
+            button1Image.material = GetMaterialFromAmmoType("Default");
             AudioManager.instance.PlayOneShot(FMODEvents.instance.UIApplySound, this.transform.position);
         }
         if (slot == 1)
@@ -253,13 +273,14 @@ public class SplitterInteract : ObjectInteract
         {
             AmmoManager.Instance.UseAmmo(1, currentColor);
             // Remove the colors to the scrolling on brush
-            if(AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
+            if (AmmoManager.Instance.GetCurrentAmmo(currentColor) == 0)
             {
                 colorTracker.absorbedColors.Remove(colorTracker.GetMaterialFromString(currentColor));
                 colorTracker.absorbedColorTags.Remove(currentColor);
             }
             currentColor = null;
             button.GetComponent<Image>().color = Color.white;
+            button1Image.material = GetMaterialFromAmmoType("Default");
         }
         if (slotOneColor != null)
         {
@@ -374,6 +395,24 @@ public class SplitterInteract : ObjectInteract
                 Debug.Log($"Spawning button for: {ammoType}");
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
+                if (ColorBlindToggle.colorBlindModeOn)
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(true);
+                    Transform child = newButton.transform.Find("ColorblindSymbol");
+                    if (child != null)
+                    {
+                        Image symbolImage = child.GetComponent<Image>();
+                        Material material = GetMaterialFromAmmoType(ammoType);
+                        if (material != null)
+                        {
+                            symbolImage.material = material;
+                        }
+                    }
+                }
+                else
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(false);
+                }
                 // change the position of the button to be in a row across the screen
                 newButton.transform.localPosition = new Vector3(-960 + 80 + 120 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
 
@@ -434,6 +473,9 @@ public class SplitterInteract : ObjectInteract
         // change the color of the button to the color of the ammo type selected
         button.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
 
+        // Colorblind Icon
+        button1Image.material = GetMaterialFromAmmoType(ammoType);
+
         // Give the player colors based the on current color
         SplitColor(currentColor);
 
@@ -461,9 +503,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.yellowMaterial.color;
             slotOneColor = "Yellow";
+            button2Image.material = GetMaterialFromAmmoType("Yellow");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.redMaterial.color;
             slotTwoColor = "Red";
+            button3Image.material = GetMaterialFromAmmoType("Red");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -473,9 +517,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.blueMaterial.color;
             slotOneColor = "Blue";
+            button2Image.material = GetMaterialFromAmmoType("Blue");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.redMaterial.color;
             slotTwoColor = "Red";
+            button3Image.material = GetMaterialFromAmmoType("Red");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -485,9 +531,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.yellowMaterial.color;
             slotOneColor = "Yellow";
+            button2Image.material = GetMaterialFromAmmoType("Yellow");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.blueMaterial.color;
             slotTwoColor = "Blue";
+            button3Image.material = GetMaterialFromAmmoType("Blue");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -497,9 +545,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.redMaterial.color;
             slotOneColor = "Red";
+            button2Image.material = GetMaterialFromAmmoType("Red");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.purpleMaterial.color;
             slotTwoColor = "Purple";
+            button3Image.material = GetMaterialFromAmmoType("Purple");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -509,9 +559,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.redMaterial.color;
             slotOneColor = "Red";
+            button2Image.material = GetMaterialFromAmmoType("Red");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.orangeMaterial.color;
             slotTwoColor = "Orange";
+            button3Image.material = GetMaterialFromAmmoType("Orange");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -521,9 +573,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.yellowMaterial.color;
             slotOneColor = "Yellow";
+            button2Image.material = GetMaterialFromAmmoType("Yellow");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.orangeMaterial.color;
             slotTwoColor = "Orange";
+            button3Image.material = GetMaterialFromAmmoType("Orange");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -533,9 +587,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.yellowMaterial.color;
             slotOneColor = "Yellow";
+            button2Image.material = GetMaterialFromAmmoType("Yellow");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.greenMaterial.color;
             slotTwoColor = "Green";
+            button3Image.material = GetMaterialFromAmmoType("Green");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -545,9 +601,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.blueMaterial.color;
             slotOneColor = "Blue";
+            button2Image.material = GetMaterialFromAmmoType("Blue");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.purpleMaterial.color;
             slotTwoColor = "Purple";
+            button3Image.material = GetMaterialFromAmmoType("Purple");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -557,9 +615,11 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.blueMaterial.color;
             slotOneColor = "Blue";
+            button2Image.material = GetMaterialFromAmmoType("Blue");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.greenMaterial.color;
             slotTwoColor = "Green";
+            button3Image.material = GetMaterialFromAmmoType("Green");
             slotThreeButton.SetActive(false);
             slotThreeColor = null;
             collectAllButton.SetActive(true);
@@ -569,12 +629,15 @@ public class SplitterInteract : ObjectInteract
             slotOneButton.SetActive(true);
             slotOneButton.GetComponent<Image>().color = GameManager.Instance.redMaterial.color;
             slotOneColor = "Red";
+            button2Image.material = GetMaterialFromAmmoType("Red");
             slotTwoButton.SetActive(true);
             slotTwoButton.GetComponent<Image>().color = GameManager.Instance.blueMaterial.color;
             slotTwoColor = "Blue";
+            button3Image.material = GetMaterialFromAmmoType("Blue");
             slotThreeButton.SetActive(true);
             slotThreeButton.GetComponent<Image>().color = GameManager.Instance.yellowMaterial.color;
             slotThreeColor = "Yellow";
+            button4Image.material = GetMaterialFromAmmoType("Yellow");
             collectAllButton.SetActive(true);
         }
         else 
@@ -616,6 +679,29 @@ public class SplitterInteract : ObjectInteract
             case "Black": return GameManager.Instance.blackMaterial.color;
             case "Brown": return GameManager.Instance.brownMaterial.color;
             default: return GameManager.Instance.grayMaterial.color; // Default to white if not found
+        }
+    }
+
+    private Material GetMaterialFromAmmoType(string ammoType)
+    {
+        switch (ammoType)
+        {
+            case "White": return colorBlindMaterials[0];
+            case "Black": return colorBlindMaterials[1];
+            case "Red": return colorBlindMaterials[2];
+            case "Blue": return colorBlindMaterials[3];
+            case "Yellow": return colorBlindMaterials[4];
+            case "Purple": return colorBlindMaterials[5];
+            case "Orange": return colorBlindMaterials[6];
+            case "Green": return colorBlindMaterials[7];
+            case "Brown": return colorBlindMaterials[8];
+            case "RedOrange": return colorBlindMaterials[9];
+            case "RedPurple": return colorBlindMaterials[10];
+            case "YellowOrange": return colorBlindMaterials[11];
+            case "YellowGreen": return colorBlindMaterials[12];
+            case "BluePurple": return colorBlindMaterials[13];
+            case "BlueGreen": return colorBlindMaterials[14];
+            default: return null;
         }
     }
 
