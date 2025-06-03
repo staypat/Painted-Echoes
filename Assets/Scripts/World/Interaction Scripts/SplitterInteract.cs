@@ -395,6 +395,24 @@ public class SplitterInteract : ObjectInteract
                 Debug.Log($"Spawning button for: {ammoType}");
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
+                if (ColorBlindToggle.colorBlindModeOn)
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(true);
+                    Transform child = newButton.transform.Find("ColorblindSymbol");
+                    if (child != null)
+                    {
+                        Image symbolImage = child.GetComponent<Image>();
+                        Material material = GetMaterialFromAmmoType(ammoType);
+                        if (material != null)
+                        {
+                            symbolImage.material = material;
+                        }
+                    }
+                }
+                else
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(false);
+                }
                 // change the position of the button to be in a row across the screen
                 newButton.transform.localPosition = new Vector3(-960 + 80 + 120 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
 
