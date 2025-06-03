@@ -242,7 +242,7 @@ public class ToyPlacementCheckAR : MonoBehaviour
             {
                 Debug.Log("clickScript is assigned correctly.");
                 clickScript.victoryUI.ShowVictoryMessage();
-                clickScript.turnOffBarrier();
+                // clickScript.turnOffBarrier();
 
                 AudioManager.instance.PlayOneShot(FMODEvents.instance.LevelComplete, this.transform.position);
             }
