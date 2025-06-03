@@ -19,6 +19,10 @@ public class MixerInteract : ObjectInteract
     public InputActionReference interactAction;
     public TMP_Text exitKeybindText;
     public GameObject mixerButtonFirst;
+    public Image button1Image;
+    public Image button2Image;
+    public Image button3Image;
+    public List<Material> colorBlindMaterials;
 
     private void Start()
     {
@@ -91,6 +95,18 @@ public class MixerInteract : ObjectInteract
             bool isActive = mixerUIPanel.activeSelf;
             mixerUIPanel.SetActive(!isActive); // Toggle UI visibility
             EventSystem.current.SetSelectedGameObject(mixerButtonFirst);
+            if (ColorBlindToggle.colorBlindModeOn)
+            {
+                button1Image.gameObject.SetActive(true);
+                button2Image.gameObject.SetActive(true);
+                button3Image.gameObject.SetActive(true);
+            }
+            else
+            {
+                button1Image.gameObject.SetActive(false);
+                button2Image.gameObject.SetActive(false);
+                button3Image.gameObject.SetActive(false);
+            }
             AudioManager.instance.PlayOneShot(FMODEvents.instance.UIOpenSound, this.transform.position);
             // disable the slotThreeButton
             //slotThreeButton.SetActive(false);

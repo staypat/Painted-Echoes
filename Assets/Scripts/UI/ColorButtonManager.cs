@@ -32,6 +32,10 @@ public class ColorButtonManager : MonoBehaviour
     public TMP_Text exitKeybindText;
     private GameObject selectedColorButtonFirst;
     public GameObject colorReturnButtonFirst;
+    public Image button1Image;
+    public Image button2Image;
+    public Image button3Image;
+    public List<Material> colorBlindMaterials;
 
     private void Start()
     {
@@ -112,9 +116,18 @@ public class ColorButtonManager : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
+
         // change the color of the button to the color of the ammo type selected
-        if (currentSlot == 1) { slotOneButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType); } else { slotTwoButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType); }
+        if (currentSlot == 1)
+        {
+            slotOneButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
+            button1Image.material = GetMaterialFromAmmoType(ammoType);
+        }
+        else
+        {
+            slotTwoButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
+            button2Image.material = GetMaterialFromAmmoType(ammoType);
+        }
 
         // If the player has selected two colors, mix them and add the new color to the ammo inventory
         if (slotOneColor != null && slotTwoColor != null) { MixColors(slotOneColor, slotTwoColor); }
@@ -138,67 +151,92 @@ public class ColorButtonManager : MonoBehaviour
     }
 
     private void MixColors(string color1, string color2) { // Mix the two colors and add the new color to the ammo inventory }
-        if (color1 == "Red" && color2 == "Blue" || color1 == "Blue" && color2 == "Red") { 
+        if (color1 == "Red" && color2 == "Blue" || color1 == "Blue" && color2 == "Red")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Purple";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Red" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Red"){
+        else if (color1 == "Red" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Red")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Orange";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Blue" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Blue") {
+        else if (color1 == "Blue" && color2 == "Yellow" || color1 == "Yellow" && color2 == "Blue")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Green";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Red" && color2 == "Purple" || color1 == "Purple" && color2 == "Red") {
+        else if (color1 == "Red" && color2 == "Purple" || color1 == "Purple" && color2 == "Red")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "RedPurple";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Red" && color2 == "Orange" || color1 == "Orange" && color2 == "Red") {
+        else if (color1 == "Red" && color2 == "Orange" || color1 == "Orange" && color2 == "Red")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "RedOrange";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Yellow" && color2 == "Orange" || color1 == "Orange" && color2 == "Yellow") {
+        else if (color1 == "Yellow" && color2 == "Orange" || color1 == "Orange" && color2 == "Yellow")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "YellowOrange";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Yellow" && color2 == "Green" || color1 == "Green" && color2 == "Yellow") {
+        else if (color1 == "Yellow" && color2 == "Green" || color1 == "Green" && color2 == "Yellow")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "YellowGreen";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Blue" && color2 == "Green" || color1 == "Green" && color2 == "Blue") {
+        else if (color1 == "Blue" && color2 == "Green" || color1 == "Green" && color2 == "Blue")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "BlueGreen";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Blue" && color2 == "Purple" || color1 == "Purple" && color2 == "Blue") {
+        else if (color1 == "Blue" && color2 == "Purple" || color1 == "Purple" && color2 == "Blue")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "BluePurple";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Red" && color2 == "Green" || color1 == "Green" && color2 == "Red") {
+        else if (color1 == "Red" && color2 == "Green" || color1 == "Green" && color2 == "Red")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Brown";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Yellow" && color2 == "Purple" || color1 == "Purple" && color2 == "Yellow") {
+        else if (color1 == "Yellow" && color2 == "Purple" || color1 == "Purple" && color2 == "Yellow")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Brown";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else if (color1 == "Blue" && color2 == "Orange" || color1 == "Orange" && color2 == "Blue") {
+        else if (color1 == "Blue" && color2 == "Orange" || color1 == "Orange" && color2 == "Blue")
+        {
             slotThreeButton.SetActive(true);
             slotThreeColor = "Brown";
             slotThreeButton.GetComponent<Image>().color = GetColorFromAmmoType(slotThreeColor);
+            button3Image.material = GetMaterialFromAmmoType(slotThreeColor);
         }
-        else{ 
+        else
+        {
             //Debug.Log("Invalid color combination"); 
             slotThreeButton.SetActive(false);
         }
@@ -265,6 +303,8 @@ public class ColorButtonManager : MonoBehaviour
         paletteManager.updatePaletteUI();
         // clear all slots and colors
         slotOneColor = null; slotTwoColor = null; slotThreeColor = null; currentSlot = 0; slotOneButton.GetComponent<Image>().color = Color.white; slotTwoButton.GetComponent<Image>().color = Color.white; slotThreeButton.GetComponent<Image>().color = Color.white; slotThreeButton.SetActive(false);
+        button1Image.material = GetMaterialFromAmmoType("Default");
+        button2Image.material = GetMaterialFromAmmoType("Default");
 
         //AudioManager.instance.Play("UIApply");
         AudioManager.instance.PlayOneShot(FMODEvents.instance.UIApplySound, this.transform.position);
@@ -292,6 +332,24 @@ public class ColorButtonManager : MonoBehaviour
                 //Debug.Log($"Spawning button for: {ammoType}");
                 GameObject newButton = Instantiate(ammoButtonPrefab, buttonContainer);
                 newButton.GetComponent<Image>().color = GetColorFromAmmoType(ammoType);
+                if (ColorBlindToggle.colorBlindModeOn)
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(true);
+                    Transform child = newButton.transform.Find("ColorblindSymbol");
+                    if (child != null)
+                    {
+                        Image symbolImage = child.GetComponent<Image>();
+                        Material material = GetMaterialFromAmmoType(ammoType);
+                        if (material != null)
+                        {
+                            symbolImage.material = material;
+                        }
+                    }
+                }
+                else
+                {
+                    newButton.transform.Find("ColorblindSymbol").gameObject.SetActive(false);
+                }
                 // change the position of the button to be in a row across the screen
                 newButton.transform.localPosition = new Vector3(-960 + 80 + 120 * (buttonContainer.childCount - 1), 0, 0); // Hardcoded values for now.
 
@@ -359,6 +417,29 @@ public class ColorButtonManager : MonoBehaviour
             case "Black": return GameManager.Instance.blackMaterial.color;
             case "Brown": return GameManager.Instance.brownMaterial.color;
             default: return GameManager.Instance.grayMaterial.color; // Default to white if not found
+        }
+    }
+
+    private Material GetMaterialFromAmmoType(string ammoType)
+    {
+        switch (ammoType)
+        {
+            case "White": return colorBlindMaterials[0];
+            case "Black": return colorBlindMaterials[1];
+            case "Red": return colorBlindMaterials[2];
+            case "Blue": return colorBlindMaterials[3];
+            case "Yellow": return colorBlindMaterials[4];
+            case "Purple": return colorBlindMaterials[5];
+            case "Orange": return colorBlindMaterials[6];
+            case "Green": return colorBlindMaterials[7];
+            case "Brown": return colorBlindMaterials[8];
+            case "RedOrange": return colorBlindMaterials[9];
+            case "RedPurple": return colorBlindMaterials[10];
+            case "YellowOrange": return colorBlindMaterials[11];
+            case "YellowGreen": return colorBlindMaterials[12];
+            case "BluePurple": return colorBlindMaterials[13];
+            case "BlueGreen": return colorBlindMaterials[14];
+            default: return null;
         }
     }
 
