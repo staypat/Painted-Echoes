@@ -34,6 +34,11 @@ TagManager:
   - Book3
   - Book5
   - Book8
+  - PaintBucket1
+  - PaintBucket2
+  - PaintBucket3
+  - PaintBucket6
+  - PaintBucket8
   layers:
   - Default
   - TransparentFX
