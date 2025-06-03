@@ -522,7 +522,6 @@ public class Click_2 : MonoBehaviour
                                 }
                                 childRenderer.material.color = originalColor;
                                 var symbol = subparent.GetComponent<ColorBlindController>();
-                                Debug.Log("Symbol found: " + (symbol != null));
                                 if (symbol != null)
                                 {
                                     symbol.UpdateSymbol(currentGunColor);
@@ -593,7 +592,6 @@ public class Click_2 : MonoBehaviour
                             // Apply the paintbrush color to all child objects
                             childRenderer.material.color = gunRenderer.material.color;
                             var symbol = subparent.GetComponent<ColorBlindController>();
-                            Debug.Log("Symbol found: " + (symbol != null));
                             if (symbol != null)
                             {
                                 symbol.UpdateSymbol(currentGunColor);

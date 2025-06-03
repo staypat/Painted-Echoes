@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class ColorBlindToggle : MonoBehaviour
 {
+    public static bool colorBlindModeOn = false;
     public Toggle colorBlindToggle;
     // Start is called before the first frame update
     void Start()
     {
+        colorBlindModeOn = colorBlindToggle.isOn;
         colorBlindToggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
@@ -18,5 +20,6 @@ public class ColorBlindToggle : MonoBehaviour
         {
             controller.SetColorblindMode(isOn);
         }
+        colorBlindModeOn = isOn;
     }
 }
