@@ -19,10 +19,7 @@ public class PaletteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // foreach (var targetObject in targetObjects)
-        // {
-        //     targetObject.SetActive(false);
-        // }
+    
     }
 
     void Awake()
@@ -47,7 +44,6 @@ public class PaletteManager : MonoBehaviour
         // {
         //     targetObject.SetActive(false);
         // }
-        
         for (int i = 0; i < targetObjects.Count; i++)
         {
             originalScales[i] = targetObjects[i].transform.localScale;
