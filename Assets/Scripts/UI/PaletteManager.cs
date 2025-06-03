@@ -57,7 +57,7 @@ public class PaletteManager : MonoBehaviour
         materialsDict.Add("Purple", materialsList[5]);
         materialsDict.Add("Brown", materialsList[6]);
         materialsDict.Add("White", materialsList[7]);
-        materialsDict.Add("Gray", materialsList[8]);
+        materialsDict.Add("RedPurple", materialsList[8]);
         materialsDict.Add("Black", materialsList[9]);
         materialsDict.Add("RedOrange", materialsList[10]);
         materialsDict.Add("BlueGreen", materialsList[11]);
