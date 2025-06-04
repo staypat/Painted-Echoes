@@ -800,13 +800,10 @@ public class Click_2 : MonoBehaviour
 
                 currentTag = subparent.tag; // Update target tag to match absorbed object
 
-                foreach (Transform child in subparent)
+                Renderer[] renderers = subparent.GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
                 {
-                    Renderer childRenderer = child.GetComponent<Renderer>();
-                    if (childRenderer != null)
-                    {
-                        childRenderer.material = GameManager.Instance.grayMaterial; // Set color to gray
-                    }
+                    renderer.material = GameManager.Instance.grayMaterial;
                 }
                 //Debug.Log($"Absorbed {absorbedColor} and turned {subparent.name} gray");
             }
