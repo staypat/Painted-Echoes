@@ -58,6 +58,8 @@ public class AmmoUI : MonoBehaviour
     public TMP_Text photoExitKeybindText;
     public GameObject ammoButtonFirst;
     public GameObject exitButton;
+    public List<Image> colorBlindIcons;
+    public List<Material> colorBlindMaterials;
 
     void Start()
     {
@@ -188,7 +190,7 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    private void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         UpdateInventoryKeybinds();
         Dictionary<string, int> ammoInventory = AmmoManager.Instance.GetAmmoInventory();
@@ -198,7 +200,7 @@ public class AmmoUI : MonoBehaviour
 
             if (ammoInventory.ContainsKey(colorKey))
             {
-                if(!discoveredColors[colorKey])
+                if (!discoveredColors[colorKey])
                 {
                     colorIcons[i].sprite = undiscoveredColorIcon;
                 }
@@ -210,6 +212,29 @@ public class AmmoUI : MonoBehaviour
                     iconButton.onClick.RemoveAllListeners();
                     iconButton.onClick.AddListener(() => SelectColor(colorKey));
                 }
+            }
+        }
+        if (ColorBlindToggle.colorBlindModeOn)
+        {
+            for (int i = 0; i < colorBlindIcons.Count; i++)
+            {
+                string colorKey = colorIcons[i].name;
+                if (ammoInventory.ContainsKey(colorKey) && discoveredColors[colorKey])
+                {
+                    colorBlindIcons[i].material = GetMaterialFromString(colorKey);
+                    colorBlindIcons[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    colorBlindIcons[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            foreach (Image icon in colorBlindIcons)
+            {
+                icon.gameObject.SetActive(false);
             }
         }
     }
@@ -289,6 +314,29 @@ public class AmmoUI : MonoBehaviour
         if (GameManager.Instance.holdingPhotograph && GameManager.inMenu)
         {
             photoController.TogglePhotoInventoryUI();
+        }
+    }
+
+    private Material GetMaterialFromString(string name)
+    {
+        switch (name)
+        {
+            case "White": return colorBlindMaterials[0];
+            case "Black": return colorBlindMaterials[1];
+            case "Red": return colorBlindMaterials[2];
+            case "Blue": return colorBlindMaterials[3];
+            case "Yellow": return colorBlindMaterials[4];
+            case "Purple": return colorBlindMaterials[5];
+            case "Orange": return colorBlindMaterials[6];
+            case "Green": return colorBlindMaterials[7];
+            case "Brown": return colorBlindMaterials[8];
+            case "RedOrange": return colorBlindMaterials[9];
+            case "RedPurple": return colorBlindMaterials[10];
+            case "YellowOrange": return colorBlindMaterials[11];
+            case "YellowGreen": return colorBlindMaterials[12];
+            case "BluePurple": return colorBlindMaterials[13];
+            case "BlueGreen": return colorBlindMaterials[14];
+            default: return null;
         }
     }
 
