@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+
 
 public class ToyPlacementCheckAR : MonoBehaviour
 {
@@ -23,6 +26,11 @@ public class ToyPlacementCheckAR : MonoBehaviour
     public Transform paint3SnapPoint;
     public Transform paint6SnapPoint;
     public Transform paint8SnapPoint;
+
+    public string WinScene= "WinScreen";
+
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -237,7 +245,7 @@ public class ToyPlacementCheckAR : MonoBehaviour
         if (ToyManagerAR.Instance.correctPlacements == 5)
         {
             Debug.Log("All 5 paint buckets correctly placed! Triggering victory sequence.");
-
+            SceneManager.LoadScene(WinScene);
             if (clickScript != null)
             {
                 Debug.Log("clickScript is assigned correctly.");
@@ -269,5 +277,14 @@ public class ToyPlacementCheckAR : MonoBehaviour
         float accuracy = ToyManagerAR.Instance.RoomAccuracy;
 
         Debug.Log($"[Room Accuracy] {correct}/{total} ({accuracy * 100f:F1}%)");
+
+        if (GameStats.Instance != null)
+        {
+            GameStats.Instance.YellowAccuracy = accuracy;
+        }
+        else
+        {
+            Debug.LogWarning("GameStats.Instance is null! Make sure GameStats is initialized in the scene.");
+        }
     }
 }
