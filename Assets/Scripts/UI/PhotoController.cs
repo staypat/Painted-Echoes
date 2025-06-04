@@ -80,6 +80,10 @@ public class PhotoController : MonoBehaviour
             {
                 photo.color = new Color(255, 255, 255, 0);
             }
+            foreach (var cbPhoto in photoManager.GetAllPhotos(true))
+            {
+                cbPhoto.color = new Color(255, 255, 255, 0);
+            }
 
             photoPanel.SetActive(false); // Ensure the photo UI is closed
             ownedPhotos.SetActive(false);
@@ -125,9 +129,14 @@ public class PhotoController : MonoBehaviour
             {
                 photoImage.color = new Color(255, 255, 255, 0);
             }
+            foreach (var cbPhotoImage in photoManager.GetAllPhotos(true))
+            {
+                cbPhotoImage.color = new Color(255, 255, 255, 0);
+            }
 
             // Show the selected photo
-            Image photo = photoManager.GetPhoto(photoID);
+            bool isCBMode = ColorBlindToggle.colorBlindModeOn;
+            Image photo = photoManager.GetPhoto(photoID, isCBMode);
             if (photo != null)
             {
                 photo.color = new Color(255, 255, 255, 255);

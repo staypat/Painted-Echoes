@@ -179,7 +179,7 @@ public class GolemAI : MonoBehaviour
     public void ApplyColorToGolem(Material newMat)
     {
         Debug.Log("Color: " + newMat);
-        currentColor = newMat; 
+        currentColor = newMat;
 
         Renderer[] allRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in allRenderers)
@@ -187,6 +187,18 @@ public class GolemAI : MonoBehaviour
             renderer.material = currentColor;
             renderer.material.color = newMat.color;
         }
+        
+        // if (ColorBlindToggle.colorBlindModeOn)
+        // {
+        //     ColorBlindController symbol = GetComponent<ColorBlindController>();
+        //     if (symbol != null)
+        //     {
+        //         string cleanName = newMat.name.Replace(" (Instance)", "").ToLower();
+        //         symbol.UpdateSymbol(cleanName);
+        //         Debug.Log("Updated colorblind symbol to: " + cleanName);
+        //         symbol.SetColorblindMode(true);
+        //     }
+        // }
     }
 
     void ClearGolemColor()
@@ -200,6 +212,16 @@ public class GolemAI : MonoBehaviour
         {
             renderer.material.color = gray;
         }
+
+        // if (ColorBlindToggle.colorBlindModeOn)
+        // {
+        //     ColorBlindController symbol = GetComponent<ColorBlindController>();
+        //     if (symbol != null)
+        //     {
+        //         symbol.UpdateSymbol("White");
+        //         symbol.SetColorblindMode(true);
+        //     }
+        // }
 
         Debug.Log("Golem color cleared to gray.");
     }
