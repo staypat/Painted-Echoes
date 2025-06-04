@@ -782,6 +782,11 @@ public class Click_2 : MonoBehaviour
                 currentIndex = absorbedColors.Count - 1;
                 currentIndex2 = absorbedColorTags.Count - 1;
             }
+            else
+            {
+                currentIndex = absorbedColors.IndexOf(GetMaterialFromString(currentGunColor));
+                currentIndex2 = absorbedColorTags.IndexOf(currentGunColor);
+            }
 
             AudioManager.instance.PlayOneShot(FMODEvents.instance.Absorb, this.transform.position);
 
