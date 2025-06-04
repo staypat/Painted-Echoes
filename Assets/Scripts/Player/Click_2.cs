@@ -462,6 +462,16 @@ public class Click_2 : MonoBehaviour
         currentTag = tag; // Update the brush's target tag
 
         //Debug.Log("Brush changed to " + newMaterial + " and will now paint objects tagged: " + currentTag);
+
+        if (ColorBlindToggle.colorBlindModeOn)
+        {
+            ColorBlindController symbol = GetComponent<ColorBlindController>();
+            if (symbol != null)
+            {
+                symbol.UpdateSymbol(tag);
+                symbol.SetColorblindMode(true);
+            }
+        }
     }
 
     void ColorOnClick(InputAction.CallbackContext context)
@@ -569,7 +579,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if (absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("Default"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "Default");
                         }
                         else
                         {
@@ -627,7 +637,7 @@ public class Click_2 : MonoBehaviour
                         }
                         else if (absorbedColors.Count == 0 && absorbedColorTags.Count == 0)
                         {
-                            ApplyColor(GetMaterialFromString("Default"), "White");
+                            ApplyColor(GetMaterialFromString("Default"), "Default");
                         }
                         else
                         {
@@ -809,6 +819,15 @@ public class Click_2 : MonoBehaviour
 
             // Update palette UI
             paletteManager.updatePaletteUI();
+            if (ColorBlindToggle.colorBlindModeOn)
+            {
+                ColorBlindController symbol = GetComponent<ColorBlindController>();
+                if (symbol != null)
+                {
+                    symbol.UpdateSymbol(currentGunColor);
+                    symbol.SetColorblindMode(true);
+                }
+            }
         }
     }
 
