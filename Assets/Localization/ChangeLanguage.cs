@@ -12,7 +12,7 @@ public class ChangeLanguage : MonoBehaviour
     {
         if (languageDropdown == null)
         {
-            //Debug.LogError("Dropdown not assigned! Drag your TMP_Dropdown into the inspector.");
+            Debug.LogError("Dropdown not assigned! Drag your TMP_Dropdown into the inspector.");
             return;
         }
 
