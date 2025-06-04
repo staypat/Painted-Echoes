@@ -170,7 +170,7 @@ public class SplitterInteract : ObjectInteract
                 }
                 else if (colorTracker.absorbedColorTags.Count == 0)
                 {
-                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "Default");
                 }
                 else
                 {
@@ -205,7 +205,7 @@ public class SplitterInteract : ObjectInteract
                 }
                 else if (colorTracker.absorbedColorTags.Count == 0)
                 {
-                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "Default");
                 }
                 else
                 {
@@ -240,7 +240,7 @@ public class SplitterInteract : ObjectInteract
                 }
                 else if (colorTracker.absorbedColorTags.Count == 0)
                 {
-                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
+                    colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "Default");
                 }
                 else
                 {
@@ -268,7 +268,7 @@ public class SplitterInteract : ObjectInteract
         // play select again after 200 milliseconds
         Invoke("PlaySelect", 0.2f);
         if (currentColor == "Brown")
-        Invoke("PlaySelect", 0.4f);
+            Invoke("PlaySelect", 0.4f);
         if (currentColor != null)
         {
             AmmoManager.Instance.UseAmmo(1, currentColor);
@@ -286,6 +286,7 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 1: {slotOneColor}");
             AmmoManager.Instance.AddAmmo(1, slotOneColor);
+            ammoUI.DiscoverColor(slotOneColor);
             // Add color to the scrolling on brush and update the UI
             if (!colorTracker.absorbedColorTags.Contains(slotOneColor))
             {
@@ -301,6 +302,7 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 2: {slotTwoColor}");
             AmmoManager.Instance.AddAmmo(1, slotTwoColor);
+            ammoUI.DiscoverColor(slotTwoColor);
             // Add color to the scrolling on brush and update the UI
             if (!colorTracker.absorbedColorTags.Contains(slotTwoColor))
             {
@@ -316,6 +318,7 @@ public class SplitterInteract : ObjectInteract
         {
             Debug.Log($"Collecting color from slot 3: {slotThreeColor}");
             AmmoManager.Instance.AddAmmo(1, slotThreeColor);
+            ammoUI.DiscoverColor(slotThreeColor);
             // Add color to the scrolling on brush and update the UI
             if (!colorTracker.absorbedColorTags.Contains(slotThreeColor))
             {
@@ -329,14 +332,14 @@ public class SplitterInteract : ObjectInteract
         }
 
         // Update brush color
-        if(colorTracker.absorbedColorTags.Count == 1)
+        if (colorTracker.absorbedColorTags.Count == 1)
         {
             colorTracker.ApplyColor(colorTracker.absorbedColors[0], colorTracker.absorbedColorTags[0]);
         }
-        else if(colorTracker.absorbedColorTags.Count == 0)
+        else if (colorTracker.absorbedColorTags.Count == 0)
         {
-            colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "White");
-        }else
+            colorTracker.ApplyColor(colorTracker.GetMaterialFromString("Default"), "Default");
+        } else
         {
             colorTracker.currentIndex = (colorTracker.currentIndex + colorTracker.absorbedColors.Count) % colorTracker.absorbedColors.Count;
             colorTracker.currentIndex2 = (colorTracker.currentIndex2 + colorTracker.absorbedColorTags.Count) % colorTracker.absorbedColorTags.Count;
@@ -345,6 +348,7 @@ public class SplitterInteract : ObjectInteract
         paletteManager.updatePaletteUI();
         collectAllButton.SetActive(false);
         EventSystem.current.SetSelectedGameObject(splitterButtonFirst);
+        ammoUI.UpdateAmmoUI();
     }
 
     private void PlaySelect()
@@ -640,7 +644,7 @@ public class SplitterInteract : ObjectInteract
             button4Image.material = GetMaterialFromAmmoType("Yellow");
             collectAllButton.SetActive(true);
         }
-        else 
+        else
         {
             slotOneButton.SetActive(false);
             slotOneColor = null;
