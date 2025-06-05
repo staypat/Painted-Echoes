@@ -140,6 +140,14 @@ MonoBehaviour:
     m_Localized: "Pr\xE9cision rouge:"
     m_Metadata:
       m_Items: []
+  - m_Id: 31878589331349504
+    m_Localized: Mode Daltonien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31878557303644160
+    m_Localized: "Mode couleur de l\u2019eau"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

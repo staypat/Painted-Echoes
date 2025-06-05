@@ -135,11 +135,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 32990353779400704
-    m_Localized: 
+    m_Localized: Affectations de la Manette
     m_Metadata:
       m_Items: []
   - m_Id: 32991247895961600
-    m_Localized: 
+    m_Localized: "Donn\xE9es utilisateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991413029904384
+    m_Localized: Envoyer les Analyses de Jeu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991708355043328
+    m_Localized: "Afficher la politique de confidentialit\xE9"
     m_Metadata:
       m_Items: []
   references:
