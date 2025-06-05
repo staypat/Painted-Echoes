@@ -31795,7 +31795,10 @@ MonoBehaviour:
     Jason Li: Engine Lead, Systems Programmer
 
     Patrick
-    Hu: Playtest Lead, UI Design'
+    Hu: Playtest Lead, UI Design''
+
+    Max-Emilien Kluiwstra-Descalle: Debugger,
+    Win Scene Design'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
   m_sharedMaterial: {fileID: 8327884909766421289, guid: 64139aca12b8b2349a35d4d0662012a1, type: 2}
