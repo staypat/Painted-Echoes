@@ -136,6 +136,18 @@ MonoBehaviour:
     m_Localized: Scroll to switch color
     m_Metadata:
       m_Items: []
+  - m_Id: 31745260515639296
+    m_Localized: 'Blue Accuracy:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745477130469376
+    m_Localized: 'Red Accuracy:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745480926314496
+    m_Localized: 'Yellow Accuracy:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

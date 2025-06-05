@@ -241,6 +241,15 @@ public class ToyPlacementCheckGR : MonoBehaviour
         int total = correct + wrong;
         float accuracy = ToyManagerGR.Instance.RoomAccuracy;
 
+        if (GameStats.Instance != null)
+        {
+            GameStats.Instance.RedAccuracy = accuracy;
+        }
+        else
+        {
+            Debug.LogWarning("GameStats.Instance is null! Make sure GameStats is initialized in the scene.");
+        }
+
         Debug.Log($"[Room Accuracy] {correct}/{total} ({accuracy * 100f:F1}%)");
     }
 }
