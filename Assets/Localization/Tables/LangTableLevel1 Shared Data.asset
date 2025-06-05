@@ -127,6 +127,18 @@ MonoBehaviour:
     m_Key: TabTutorialActionText
     m_Metadata:
       m_Items: []
+  - m_Id: 31745260515639296
+    m_Key: BlueAccu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745477130469376
+    m_Key: RedAccu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745480926314496
+    m_Key: YellowAccu
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

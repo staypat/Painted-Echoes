@@ -128,6 +128,18 @@ MonoBehaviour:
     m_Localized: "Faites d\xE9filer pour changer de couleur"
     m_Metadata:
       m_Items: []
+  - m_Id: 31745260515639296
+    m_Localized: "Pr\xE9cision bleue:\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745480926314496
+    m_Localized: "Pr\xE9cision jaune:\n\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31745477130469376
+    m_Localized: "Pr\xE9cision rouge:"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
