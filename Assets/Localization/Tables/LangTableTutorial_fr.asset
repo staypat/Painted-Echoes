@@ -54,6 +54,10 @@ MonoBehaviour:
     m_Localized: Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 31920750974279680
+    m_Localized: "Sensibilit\xE9 de la cam\xE9ra"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
