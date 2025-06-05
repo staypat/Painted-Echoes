@@ -23,12 +23,12 @@ public class CurrentRoom : MonoBehaviour
         {
             RoomManager.Instance.SetCurrentRoom(gameObject);
 
-            if (gameObject.name == "Collider (LivingRoom)")
+            if (gameObject.name == "Collider (LivingRoom)" || gameObject.name == "Collider (GrandpaRoom)")
             {
                 AudioManager.instance.CleanUp();
                 AudioManager.instance.InitializeMusic(FMODEvents.instance.LivingRoom);
             }
-            else if (gameObject.name == "Collider (Kitchen)" || gameObject.name == "Collider2 (Kitchen)")
+            else if (gameObject.name == "Collider (Kitchen)" || gameObject.name == "Collider2 (Kitchen)" || gameObject.name == "Collider (Bathroom)")
             {
                 AudioManager.instance.CleanUp();
                 AudioManager.instance.InitializeMusic(FMODEvents.instance.Kitchen);
@@ -37,6 +37,11 @@ public class CurrentRoom : MonoBehaviour
             {
                 AudioManager.instance.CleanUp();
                 AudioManager.instance.InitializeMusic(FMODEvents.instance.OldRoom);
+            }
+            else if (gameObject.name == "Collider (Studio)")
+            {
+                AudioManager.instance.CleanUp();
+                AudioManager.instance.InitializeMusic(FMODEvents.instance.MenuMusic);
             }
             else
             {
