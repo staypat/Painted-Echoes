@@ -531,7 +531,9 @@ public class Click_2 : MonoBehaviour
                                         // photographTextEnable.SetActive(true);
                                     }
                                 }
-                                childRenderer.material.color = originalColor;
+                                ApplyMaterialWithColor(childRenderer, GetMaterialFromString(currentGunColor), originalColor);
+
+                                //childRenderer.material.color = originalColor;
                                 var symbol = subparent.GetComponent<ColorBlindController>();
                                 if (symbol != null)
                                 {
@@ -601,7 +603,8 @@ public class Click_2 : MonoBehaviour
                         if (childRenderer != null && childRenderer.material.HasProperty("_Color") && childRenderer.material.color == GameManager.Instance.grayMaterial.color)
                         {
                             // Apply the paintbrush color to all child objects
-                            childRenderer.material.color = gunRenderer.material.color;
+                            ApplyMaterialWithColor(childRenderer, GetMaterialFromString(currentGunColor), gunRenderer.material.color);
+                            //childRenderer.material.color = gunRenderer.material.color;
                             var symbol = subparent.GetComponent<ColorBlindController>();
                             if (symbol != null)
                             {
@@ -666,6 +669,14 @@ public class Click_2 : MonoBehaviour
             AudioManager.instance.PlayOneShot(FMODEvents.instance.LevelComplete, this.transform.position);
             AnalyticsManager.Instance.LevelCompleted(currentRoom.name);
         }
+    }
+
+    // Helper function for ColorOnClick to update material name
+    void ApplyMaterialWithColor(Renderer renderer, Material sourceMaterial, Color color)
+    {
+        Material newMat = new Material(sourceMaterial);
+        newMat.color = color;
+        renderer.material = newMat;
     }
 
     public void AbsorbColor(InputAction.CallbackContext context)
