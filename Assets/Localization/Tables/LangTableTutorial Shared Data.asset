@@ -53,6 +53,10 @@ MonoBehaviour:
     m_Key: BackToMenuText
     m_Metadata:
       m_Items: []
+  - m_Id: 31920750974279680
+    m_Key: CameraSensitivityText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -139,6 +139,14 @@ MonoBehaviour:
     m_Key: YellowAccu
     m_Metadata:
       m_Items: []
+  - m_Id: 31878557303644160
+    m_Key: WaterColorModeText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31878589331349504
+    m_Key: ColorBlindModeText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

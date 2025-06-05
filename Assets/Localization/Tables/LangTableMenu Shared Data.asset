@@ -131,6 +131,22 @@ MonoBehaviour:
     m_Key: CreditsButtonText
     m_Metadata:
       m_Items: []
+  - m_Id: 32990353779400704
+    m_Key: ControllerKeybindingText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991247895961600
+    m_Key: UserDataText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991413029904384
+    m_Key: ToggleText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991708355043328
+    m_Key: ViewPrivacyPolicyText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

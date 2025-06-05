@@ -134,6 +134,22 @@ MonoBehaviour:
     m_Localized: Credits
     m_Metadata:
       m_Items: []
+  - m_Id: 32990353779400704
+    m_Localized: Controller Bindings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991247895961600
+    m_Localized: User Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991413029904384
+    m_Localized: Send gameplay analytics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32991708355043328
+    m_Localized: View Privacy Policy
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
