@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class SceneLoader : MonoBehaviour
 {
     public GameObject mainMenuButtonFirst;
-    public GameObject privacyAgreeButtonFirst;
-    public GameObject privacyNoticePromptUI;
+    // public GameObject privacyAgreeButtonFirst;
+    // public GameObject privacyNoticePromptUI;
     public void LoadScene()
     {
         AudioManager.instance.CleanUp();
@@ -32,23 +32,24 @@ public class SceneLoader : MonoBehaviour
     }
 
     void Awake()
-    {   
+    {
         Scene activeScene = SceneManager.GetActiveScene();
 
-        AnalyticsManager.Instance.hasSeenPrivacyPolicy = PlayerPrefs.GetInt("HasSeenPrivacyPolicy", 0) == 1;
-        
-        if (!AnalyticsManager.Instance.hasSeenPrivacyPolicy && activeScene.name == "MainMenu")
-        {
-            AnalyticsManager.Instance.hasSeenPrivacyPolicy = true;
-            PlayerPrefs.SetInt("HasSeenPrivacyPolicy", 1);
-            PlayerPrefs.Save();
-            privacyNoticePromptUI.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(privacyAgreeButtonFirst);
-        }
-        else
-        {
-            EventSystem.current.SetSelectedGameObject(mainMenuButtonFirst);
-        }
+        // AnalyticsManager.Instance.hasSeenPrivacyPolicy = PlayerPrefs.GetInt("HasSeenPrivacyPolicy", 0) == 1;
+
+        // if (!AnalyticsManager.Instance.hasSeenPrivacyPolicy && activeScene.name == "MainMenu")
+        // {
+        //     AnalyticsManager.Instance.hasSeenPrivacyPolicy = true;
+        //     PlayerPrefs.SetInt("HasSeenPrivacyPolicy", 1);
+        //     PlayerPrefs.Save();
+        //     privacyNoticePromptUI.SetActive(true);
+        //     EventSystem.current.SetSelectedGameObject(privacyAgreeButtonFirst);
+        // }
+        // else
+        // {
+        //     EventSystem.current.SetSelectedGameObject(mainMenuButtonFirst);
+        // }
+        EventSystem.current.SetSelectedGameObject(mainMenuButtonFirst);
     }
 
     // Start is called before the first frame update
